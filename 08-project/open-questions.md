@@ -11,7 +11,6 @@ Tài liệu này theo dõi các câu hỏi, giả định cần làm rõ hoặc 
 | **OQ-01** | Hạ tầng Server | Aurora University sẽ cung cấp Server vật lý nội bộ hay Hạ tầng Cloud (AWS/Azure)? Trình duyệt / OS hỗ trợ tối thiểu là gì? | Ảnh hưởng đến công tác đóng gói triển khai (Docker/Node.js) ở Tuần 14. | ⏳ Pending | Đại diện IT Aurora |
 | **OQ-02** | Khởi tạo Tài khoản | Dữ liệu sinh viên/nhân viên ban đầu được import qua file Excel hay Admin nhập tay trực tiếp trên giao diện M03? | Quyết định logic xây dựng chức năng Quản trị tài khoản ở M03. | ⏳ Pending | Ban Quản lý / Phòng Đào tạo |
 | **OQ-03** | Quy trình Chuyển phòng | Khi một Ticket bị chuyển nhầm phòng ban, nhân viên chuyển có cần bắt buộc nhập lý do chuyển giao hay không? | Ảnh hưởng đến thiết kế Database & UI màn hình Staff Operations. | ⏳ Pending | Đại diện Phòng Hỗ trợ |
-| **OQ-04** | Giới hạn Dung lượng File | Dung lượng tệp đính kèm tối đa cho phép là bao nhiêu (ví dụ: 5MB hay 10MB per file) và định dạng cụ thể ngoài PDF/PNG/JPG? | Tác động đến dung lượng lưu trữ Server và validate Form gửi Ticket. | ⏳ Pending | IT / Ban Quản lý |
 
 ---
 

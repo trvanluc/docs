@@ -8,7 +8,7 @@ Tại **Aurora University**, dịch vụ hỗ trợ sinh viên đóng vai trò c
 - **Phòng Tài chính - Kế toán**: Giải đáp thắc mắc về học phí, hóa đơn, hoàn phí, gia hạn nộp học phí.
 - **Trung tâm Công nghệ Thông tin**: Cấp lại mật khẩu tài khoản portal, lỗi kết nối Wi-Fi, hỗ trợ phần mềm học tập, email sinh viên.
 - **Thư viện & Bộ phận Khác**: Mượn trả giáo trình, cấp tài khoản thư viện số, xác nhận nghĩa vụ thư viện.
- 
+
 ---
 
 ## 2. Mục Tiêu Chuẩn Hóa Miền Nghiệp Vụ (Domain Objectives)
@@ -25,7 +25,7 @@ Trước khi triển khai UniSupport, quy trình trao đổi mang tính thủ c�
 ```
 
 1. **Định danh duy nhất (Single Identifier)**: Mọi yêu cầu từ sinh viên được đóng gói thành một đơn vị nghiệp vụ gọi là **Ticket** với một mã định danh duy nhất (Ticket ID).
-2. **Phân định trách nhiệm (Ownership Assignment)**: Mỗi Ticket tại một thời điểm bắt buộc phải thuộc về **01 Phòng ban phụ trách** và **01 Nhân viên thụ lý (Assignee)** chính.
+2. **Phân định trách nhiệm (Ownership Assignment)**: Mỗi Ticket luôn thuộc về **01 Phòng ban phụ trách**. Sau khi trải qua bước Tiếp nhận (Claim) hoặc Phân công (Assign), Ticket mới được gắn với **01 Nhân viên thụ lý (Assignee)** chính. Ở giai đoạn khởi tạo (`NEW`) hoặc khi đang chuyển phòng ban, trường Nhân viên thụ lý có thể để trống (`NULL`).
 3. **Lưu vết minh bạch (Complete Auditability)**: Tất cả hành động (chuyển trạng thái, nhắn phản hồi, chuyển phòng ban, đăng tải file) đều được ghi nhật ký và không thể sửa/xóa.
 4. **Vòng đời trạng thái rõ ràng (Strict Lifecycle)**: Ticket chuyển đổi trạng thái dựa trên các quy tắc nghiệp vụ chặt chẽ, tránh trạng thái mập mờ hoặc treo không thời hạn.
 

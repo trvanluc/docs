@@ -50,7 +50,7 @@ Tệp đính kèm (Ảnh/PDF) do sinh viên gửi chứa các thông tin cá nh�
 3. **Validate Định dạng & Dung lượng (Input Sanitization):**
    * Chỉ chấp nhận các định dạng MIME allowed: `image/png`, `image/jpeg`, `application/pdf`.
    * Chặn hoàn toàn các file thực thi (`.exe`, `.php`, `.js`, `.sh`...).
-   * Giới hạn dung lượng tối đa 5MB/file (hoặc theo cấu hình thống nhất).
+   * Giới hạn dung lượng tối đa 10MB/file (hoặc theo cấu hình thống nhất).
 
 ---
 

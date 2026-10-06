@@ -87,7 +87,7 @@ Tài liệu này mô tả chi tiết mô hình dữ liệu quan hệ (Relational
 | **department_id** | UUID / BIGINT | Foreign Key (`departments.id`), Nullable | Phòng ban tiếp nhận xử lý |
 | **assigned_staff_id**| UUID / BIGINT | Foreign Key (`users.id`), Nullable | Nhân viên trực tiếp phụ trách |
 | **priority** | ENUM | Default `'MEDIUM'` | Mức độ ưu tiên: `'LOW'`, `'MEDIUM'`, `'HIGH'`, `'URGENT'` |
-| **status** | ENUM | Default `'NEW'` | Trạng thái: `'NEW'`, `'IN_PROGRESS'`, `'PENDING_INFO'`, `'RESOLVED'`, `'CLOSED'` |
+| **status** | ENUM | Default `'NEW'` | Trạng thái: `'NEW'`, `'IN_PROGRESS'`, `'WAITING_STUDENT'`, `'RESOLVED'`, `'CLOSED'` |
 | **title** | VARCHAR(255) | Not Null | Tiêu đề yêu cầu |
 | **description** | TEXT | Not Null | Nội dung chi tiết |
 | **created_at** | TIMESTAMP | Default NOW() | Thời điểm gửi Ticket |

@@ -42,48 +42,7 @@ Nhân viên thuộc Phòng Đào tạo đăng nhập thành công.
 
 ---
 
-### [FR-STF-02] Tiếp nhận (Claim) & Phân công (Assign) Ticket
-
-**Mô tả**  
-Hệ thống cho phép Nhân viên chủ động tiếp nhận một Ticket chưa có người xử lý thuộc phòng ban của mình, hoặc cho phép Trưởng phòng phân công Ticket đó cho một nhân viên cụ thể.
-
-**Actor**  
-Nhân viên phụ trách / Trưởng phòng ban (Staff / Manager).
-
-**Preconditions**  
-- Ticket đang ở trạng thái `NEW` hoặc `IN_PROGRESS` nhưng trường `assigned_staff_id` đang để trống (`NULL`).
-- Ticket thuộc Phòng ban của Nhân viên/Trưởng phòng đó.
-
-**Luồng chính**  
-1. Nhân viên mở danh sách **Ticket Mới của Phòng ban**.
-2. Nhân viên chọn một Ticket cụ thể để xem tóm tắt.
-3. **Trường hợp 1 (Tự tiếp nhận)**: Nhân viên nhấn nút **Tiếp nhận xử lý (Claim)**.
-4. **Trường hợp 2 (Trưởng phòng phân công)**: Trưởng phòng chọn tên Nhân viên từ danh sách và nhấn **Phân công (Assign)**.
-5. Hệ thống kiểm tra điều kiện khả thi của Ticket.
-6. Hệ thống cập nhật trường `assigned_staff_id` bằng ID của nhân viên được gán.
-7. Hệ thống tự động chuyển trạng thái Ticket từ `NEW` sang `IN_PROGRESS` (nếu trước đó là `NEW`).
-8. Hệ thống ghi nhận sự kiện vào Nhật ký tra soát (Audit Log) và gửi thông báo In-app cho nhân viên được gán.
-
-**Business Rules**  
-- Một Ticket chỉ được tiếp nhận/phân công cho **01 nhân viên duy nhất** tại một thời điểm.
-- Nhân viên không thể Claim Ticket thuộc phòng ban khác.
-- Khi Ticket đã được Claim, nút **Claim** sẽ tự động ẩn đối với các nhân viên khác.
-
-**Alternative / Error Flows**  
-- **Ticket đã bị nhân viên khác Claim trước đó 1 giây**: Hệ thống báo lỗi "Ticket này đã được tiếp nhận bởi [Tên nhân viên khác]" và tải lại trang.
-
-**Acceptance Criteria**  
-- **AC-01**: Nhân viên bấm **Claim** -> Ticket chuyển sang trạng thái `IN_PROGRESS`, trường người phụ trách hiển thị tên nhân viên đó.
-- **AC-02**: Trưởng phòng chọn nhân viên A và bấm **Assign** -> Ticket gắn với tên nhân viên A, gửi thông báo cho nhân viên A.
-- **AC-03**: Hai nhân viên cùng bấm Claim 1 Ticket đồng thời -> Hệ thống áp dụng cơ chế khóa dữ liệu (Locking), chỉ ghi nhận người bấm trước, người bấm sau nhận thông báo Ticket đã có người nhận.
-
-**Ví dụ Edge Case**  
-Chuyên viên A và Chuyên viên B cùng mở chi tiết Ticket `TK-20261004-001` ở hai máy tính khác nhau. Chuyên viên A bấm nút **Claim** thành công. Chuyên viên B bấm nút **Claim** sau 2 giây.  
--> **Expected Result**: Hệ thống từ chối yêu cầu của Chuyên viên B và thông báo "Ticket đã được tiếp nhận bởi Chuyên viên A".
-
----
-
-### [FR-STF-03] Phân loại (Triage) & Đánh giá mức độ ưu tiên
+### [FR-STF-02] Phân loại (Triage) & Đánh giá mức độ ưu tiên
 
 **Mô tả**  
 Cho phép nhân viên xem xét chi tiết nội dung Ticket để điều chỉnh đúng Nhóm vấn đề / Phân loại chi tiết và thiết lập Mức độ ưu tiên để tính toán thời hạn SLA xử lý.
@@ -122,7 +81,7 @@ Nhân viên hạ độ ưu tiên từ `High` xuống `Low` khi Ticket đã gần
 
 ---
 
-### [FR-STF-04] Chuyển phòng ban chuyên trách (Transfer Department)
+### [FR-STF-03] Chuyển phòng ban chuyên trách (Transfer Department)
 
 **Mô tả**  
 Khi phát hiện sinh viên gửi nhầm phòng ban hoặc nội dung cần sự giải quyết của đơn vị khác, nhân viên có quyền chuyển Ticket sang Phòng ban chuyên trách kèm theo lý do chuyển.
@@ -167,7 +126,7 @@ Sinh viên gửi nhầm thắc mắc về Học phí vào Phòng Đào tạo. Ch
 
 ---
 
-### [FR-STF-05] Yêu cầu sinh viên bổ sung thông tin / hồ sơ
+### [FR-STF-04] Yêu cầu sinh viên bổ sung thông tin / hồ sơ
 
 **Mô tả**  
 Khi hồ sơ sinh viên gửi kèm bị thiếu, mờ, không hợp lệ hoặc cần làm rõ, nhân viên phát yêu cầu bổ sung thông tin tới sinh viên và hệ thống tạm dừng bộ đếm SLA.
@@ -206,7 +165,7 @@ Nhân viên yêu cầu sinh viên chụp lại mặt sau Thẻ sinh viên do ả
 
 ---
 
-### [FR-STF-06] Cập nhật kết quả giải quyết & Đóng Ticket (Resolve & Close)
+### [FR-STF-05] Cập nhật kết quả giải quyết & Đóng Ticket (Resolve & Close)
 
 **Mô tả**  
 Cho phép nhân viên nhập nội dung trả lời chính thức, đính kèm file kết quả (nếu có) và đánh dấu Ticket là đã giải quyết hoàn tất.

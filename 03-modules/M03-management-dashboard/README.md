@@ -2,7 +2,7 @@
 
 ## 1. Tổng Quan Phân Hệ
 
-Phân hệ **Quản lý (Management Dashboard)** là trung tâm điều hành dành riêng cho Ban Giám hiệu, Trưởng/Phó các Phòng ban chức năng và Quản trị viên hệ thống (Admin) tại **Aurora University**.
+Phân hệ **Quản lý (Management Dashboard)** là trung tâm điều hành dành riêng cho Ban Giám hiệu, Trưởng/Phó các Phòng ban chức năng và Quản trị viên hệ thống (Manager) tại **Aurora University**.
 
 Phân hệ cung cấp các báo cáo số liệu trực quan theo thời gian thực về tình hình tiếp nhận và giải quyết yêu cầu hỗ trợ sinh viên, đo lường hiệu suất làm việc của từng phòng ban/nhân viên, đồng thời cung cấp công cụ quản trị tài khoản, phân quyền vai trò (RBAC) và tra soát lịch sử thao tác toàn hệ thống.
 
@@ -21,11 +21,11 @@ Phân hệ cung cấp các báo cáo số liệu trực quan theo thời gian th
 
 | Mã Yêu Cầu | Tên Chức Năng | Tóm Tắt Nghiệp Vụ |
 | :--- | :--- | :--- |
-| **FR-MGT-01** | Đăng nhập tài khoản Quản lý | Đăng nhập bằng tài khoản có vai trò Quản lý (`MANAGER`) hoặc Quản trị viên (`ADMIN`). |
+| **FR-MGT-01** | Đăng nhập tài khoản Quản lý | Đăng nhập bằng tài khoản có vai trò Quản lý (`MANAGER`). |
 | **FR-MGT-02** | Dashboard tổng quan KPI | Xem các thẻ chỉ số (KPI Cards) và biểu đồ trực quan về khối lượng công việc, tình trạng quá hạn theo phòng ban. |
 | **FR-MGT-03** | Báo cáo thời gian xử lý & Xu hướng | Báo cáo thời gian giải quyết trung bình (Average Resolution Time), xu hướng nhóm vấn đề và điểm CSAT trung bình. |
 | **FR-MGT-04** | Quản lý tài khoản người dùng | Tạo mới, cập nhật thông tin, kích hoạt hoặc khóa/mở khóa tài khoản Sinh viên, Nhân viên và Quản lý. |
-| **FR-MGT-05** | Phân quyền vai trò & Phòng ban | Gán vai trò (`STUDENT`, `STAFF`, `MANAGER`, `ADMIN`) và gán Phòng ban chuyên trách cho tài khoản. |
+| **FR-MGT-05** | Phân quyền vai trò & Phòng ban | Gán vai trò (`STUDENT`, `STAFF`, `MANAGER`) và gán Phòng ban chuyên trách cho tài khoản. |
 | **FR-MGT-06** | Tra soát nhật ký hệ thống (Audit Log) | Xem danh sách nhật ký ghi nhận các hành động quan trọng (Đổi trạng thái, Phân công, Chuyển phòng ban, Khóa tài khoản). |
 
 ---
@@ -54,4 +54,4 @@ Chỉ số CSAT toàn trường)       Top xu hướng vấn đề)             
    - Nhóm vấn đề (Category).
 3. **Phân vùng dữ liệu xem (Data Scope)**:
    - **Trưởng phòng ban**: Chỉ xem được Báo cáo & KPI thuộc Phòng ban của mình phụ trách.
-   - **Ban Giám hiệu / Admin**: Xem được Báo cáo & KPI toàn trường của tất cả phòng ban.
+   - **Ban Giám hiệu / MANAGER**: Xem được Báo cáo & KPI toàn trường của tất cả phòng ban.
