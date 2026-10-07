@@ -1,28 +1,22 @@
-# 06-acceptance: Tiêu chí & Kịch bản Nghiệm thu UniSupport
+# Nghiệm Thu & Kiểm Thử Hệ Thống (Acceptance & Testing)
 
-Thư mục này đóng vai trò làm bộ tài liệu căn cứ phục vụ cho quá trình kiểm thử nội bộ và **giai đoạn Nghiệm thu UAT 10 ngày làm việc** của Aurora University (được quy định tại Mục 5.2 của Project Proposal).
-
----
-
-## Danh mục Tài liệu
-
-| Tên File | Nội dung chính |
-| :--- | :--- |
-| **[traceability-matrix.md](./traceability-matrix.md)** | Ma trận truy xuất yêu cầu (RTM) liên kết giữa Yêu cầu nghiệp vụ, Quy trình, Phân hệ và Test Scenario. |
-| **[test-scenarios.md](./test-scenarios.md)** | Chi tiết các kịch bản kiểm thử UAT cho 3 phân hệ (Sinh viên, Nhân viên, Quản lý) và Bảo mật. |
+## 1. Tổng Quan
+Thư mục này tài liệu hóa ma trận truy xuất yêu cầu (Requirements Traceability Matrix - RTM) và các kịch bản kiểm thử chấp nhận người dùng (User Acceptance Testing - UAT) cho hệ thống **UniSupport** tại **Aurora University**[cite: 1].
 
 ---
 
-## Quy trình & Tiêu chí Nghiệm thu (Acceptance Process)
+## 2. Danh Sách Tài Liệu Trong Thư Mục
 
-### 1. Thời gian Nghiệm thu
-- Quý trường (Aurora University) có **10 ngày làm việc** kể từ ngày bàn giao chính thức để tiến hành kiểm thử UAT trên môi trường Staging/Production.
+| Mã Tài Liệu | Tên Tài Liệu | Nội Dung Trọng Tâm |
+| :--- | :--- | :--- |
+| **`traceability-matrix.md`** | Ma Trận Truy Xuất Yêu Cầu (RTM) | Ánh xạ giữa Yêu cầu nghiệp vụ (Proposal) -> PRD -> Kịch bản kiểm thử UAT[cite: 1]. |
+| **`test-scenarios.md`** | Kịch Bản Kiểm Thử & UAT Scenarios | Bộ test cases chính thức phục vụ đợt nghiệm thu 10 ngày làm việc của nhà trường[cite: 1]. |
 
-### 2. Tiêu chí Đạt Nghiệm thu (Pass Criteria)
-- Các luồng chính của 3 phân hệ (Sinh viên, Nhân viên, Quản lý) hoạt động đúng kịch bản và ổn định.
-- Phân quyền RBAC hoạt động chính xác theo từng vai trò; bảo mật tệp đính kèm được đảm bảo.
-- Không còn lỗi làm gián đoạn chức năng chính (Blocking/Critical bugs).
-- Bàn giao đầy đủ tài liệu hướng dẫn sử dụng, tài liệu cài đặt, ERD và mã nguồn theo cam kết.
+---
 
-### 3. Quy định xử lý lỗi phát sinh
-- Các lỗi kỹ thuật nhỏ phát sinh do phía đơn vị phát triển (nếu có) được ghi nhận và có kế hoạch khắc phục cụ thể, không tính là điều kiện từ chối nghiệm thu nếu không ảnh hưởng trực tiếp đến chức năng chính của hệ thống.
+## 3. Tiêu Chí Nghiệm Thu Chính (Acceptance Criteria)
+Theo mục 5.2 của Project Proposal, việc nghiệm thu đợt UAT 10 ngày làm việc dựa trên các tiêu chí bắt buộc sau[cite: 1]:
+1. **Chức năng:** Các luồng chính của ba phân hệ (Sinh viên, Nhân viên, Quản lý) hoạt động đúng và ổn định[cite: 1].
+2. **Bảo mật & Phân quyền:** Cơ chế đăng nhập và phân quyền RBAC 3 vai trò hoạt động chính xác[cite: 1].
+3. **Chất lượng:** Không còn lỗi làm gián đoạn chức năng chính (Critical/Blocker bugs)[cite: 1].
+4. **Tài liệu:** Bàn giao đầy đủ mã nguồn, cơ sở dữ liệu (ERD) và tài liệu hướng dẫn sử dụng theo cam kết[cite: 1].

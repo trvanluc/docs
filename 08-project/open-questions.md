@@ -1,20 +1,14 @@
-# [PRJ-04] Các vấn đề chờ thảo luận & Phê duyệt (Open Questions)
+# Các Vấn Đề Chờ Thảo Luận & Phê Duyệt (Open Questions)
 
-Tài liệu này theo dõi các câu hỏi, giả định cần làm rõ hoặc quyết định chờ phê duyệt từ đại diện **Aurora University** để đảm bảo dự án triển khai đúng tiến độ.
-
----
-
-## ❓ Danh sách các vấn đề chưa thống nhất (Open Questions Log)
-
-| ID | Nhóm vấn đề | Nội dung câu hỏi / Cần làm rõ | Tác động | Trạng thái | Người duyệt / Trả lời |
-| :---: | :--- | :--- | :--- | :---: | :--- |
-| **OQ-01** | Hạ tầng Server | Aurora University sẽ cung cấp Server vật lý nội bộ hay Hạ tầng Cloud (AWS/Azure)? Trình duyệt / OS hỗ trợ tối thiểu là gì? | Ảnh hưởng đến công tác đóng gói triển khai (Docker/Node.js) ở Tuần 14. | ⏳ Pending | Đại diện IT Aurora |
-| **OQ-02** | Khởi tạo Tài khoản | Dữ liệu sinh viên/nhân viên ban đầu được import qua file Excel hay Admin nhập tay trực tiếp trên giao diện M03? | Quyết định logic xây dựng chức năng Quản trị tài khoản ở M03. | ⏳ Pending | Ban Quản lý / Phòng Đào tạo |
-| **OQ-03** | Quy trình Chuyển phòng | Khi một Ticket bị chuyển nhầm phòng ban, nhân viên chuyển có cần bắt buộc nhập lý do chuyển giao hay không? | Ảnh hưởng đến thiết kế Database & UI màn hình Staff Operations. | ⏳ Pending | Đại diện Phòng Hỗ trợ |
+Tài liệu này ghi nhận các vấn đề cần sự phối hợp xác nhận hoặc phê duyệt từ đại diện **Aurora University** trong các giai đoạn triển khai[cite: 1]:
 
 ---
 
-## 📝 Quy trình xử lý Open Questions
-1. Các vấn đề mới phát sinh sẽ được ghi nhận vào bảng trên bởi PM hai bên.
-2. Hai bên thống nhất câu trả lời và ghi nhận phương án giải quyết vào biên bản cuộc họp tuần.
-3. Khi câu hỏi được chốt, trạng thái chuyển sang **Resolved** và thông tin được cập nhật chính thức vào tài liệu PRD/Architecture tương ứng.
+## Danh Sách Các Câu Hỏi & Vấn Đề Mở
+
+| STT | Vấn Đề Trao Đổi | Bên Phụ Trách | Trạng Thái | Ghi Chú / Kết Quả Xác Nhận |
+| :---: | :--- | :---: | :---: | :--- |
+| **01** | Cung cấp thông số cấu hình Hạ tầng Server và Tên miền (Domain) chính thức phục vụ triển khai Staging/Production[cite: 1]? | Aurora University | **Pending** | Cần chốt trước Tuần 11 để chuẩn bị môi trường[cite: 1]. |
+| **02** | Thống nhất danh sách tài khoản mẫu và phân quyền phòng ban ban đầu để import dữ liệu kiểm thử UAT[cite: 1]? | Aurora University | **Pending** | Cần bàn giao trước Tuần 12[cite: 1]. |
+| **03** | Xác nhận quy định thời gian xử lý tiêu chuẩn (SLA) mặc định cho từng nhóm vấn đề hỗ trợ[cite: 1]? | Aurora University | **In Progress** | Sử dụng làm căn cứ tính chỉ số Overdue Ticket trên Dashboard[cite: 1]. |
+| **04** | Thống nhất danh mục các định dạng file và giới hạn 5MB cho file đính kèm đợt UAT[cite: 1]? | Hai bên | **Confirmed** | Đã chốt file PDF, PNG, JPG, JPEG <= 5MB (`ADR-003`)[cite: 1]. |

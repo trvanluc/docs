@@ -1,24 +1,19 @@
-# [NFR-SEC] Yêu cầu về Bảo mật (Security Requirements)
+# Yêu Cầu Về Bảo Mật (Security Requirements)
 
-### 1. Tổng quan
-Tài liệu quy định các nguyên tắc bảo mật thông tin, phân quyền truy cập và an toàn dữ liệu áp dụng cho hệ thống UniSupport. Theo giả định dự án, hệ thống tuân thủ các quy chuẩn bảo mật cơ bản, không bao gồm kiểm thử bảo mật chuyên sâu hay chứng nhận bảo mật quốc tế.
+## 1. Xác Thực & Phân Quyền (Authentication & Authorization)
+* **Xác thực:** Người dùng bắt buộc phải đăng nhập bằng tài khoản và mật khẩu riêng trước khi sử dụng các chức năng hệ thống[cite: 1].
+* **Phân quyền 3 vai trò (RBAC):** Kiểm soát quyền hạn chặt chẽ dựa trên 3 vai trò: Sinh viên, Nhân viên và Quản lý[cite: 1]. Sinh viên chỉ được phép xem/thao tác trên Ticket do chính mình tạo[cite: 1].
+* **Mã hóa mật khẩu:** Mật khẩu người dùng phải được mã hóa bằng thuật toán băm an toàn (như Bcrypt) trước khi lưu vào cơ sở dữ liệu.
 
-### 2. Xác thực và Phân quyền (Authentication & Authorization)
-- **Đăng nhập:** Người dùng đăng nhập bằng tài khoản và mật khẩu riêng. Mật khẩu phải được mã hóa dạng hash (ví dụ: Bcrypt/Argon2) trước khi lưu vào CSDL.
-- **Mô hình RBAC (Role-Based Access Control):**
-  - **Sinh viên (Student):** Chỉ được xem, tạo và tương tác với các Ticket do chính tài khoản đó tạo ra.
-  - **Nhân viên (Staff):** Xem và xử lý các Ticket thuộc phòng ban được gán thẩm quyền.
-  - **Quản lý (Manager):** Xem báo cáo tổng quan, quản lý tài khoản và phân quyền hệ thống.
-- **Bảo mật tệp đính kèm:** Đường dẫn tệp đính kèm (PDF/Ảnh) phải được bảo vệ. Hệ thống xác thực quyền truy cập trước khi cho phép tải xuống/xem tệp; không công khai đường dẫn trực tiếp (Direct URL).
+---
 
-### 3. Tra soát và Nhật ký hoạt động (Audit Logging)
-- Hệ thống tự động ghi lại lịch sử đối với các thao tác quan trọng:
-  - Đăng nhập / Đăng xuất / Thay đổi mật khẩu.
-  - Thay đổi trạng thái Ticket, chuyển tiếp phòng ban.
-  - Cập nhật kết quả giải quyết và tạo/sửa tài khoản.
-- Nhật ký tra soát (Audit Log) bao gồm các thông tin: `User_ID`, `Action`, `Timestamp`, `IP_Address`, `Target_ID`.
+## 2. Kiểm Soát Quyền Truy Cập File Đính Kèm
+* **Private Storage:** Các file đính kèm (ảnh PNG/JPG, file PDF) tuyệt đối không được để công khai qua các đường dẫn tĩnh công cộng (Public URL)[cite: 1].
+* **Xác thực quyền xem File:** Mỗi truy vấn xem/tải file đính kèm đều phải thông qua API kiểm tra quyền truy cập: Chỉ Sinh viên tạo Ticket, Nhân viên thuộc phòng ban phụ trách và Quản lý hệ thống mới có quyền truy cập file[cite: 1].
 
-### 4. Tiêu chí Kiểm thử & Nghiệm thu
-- **NFR-SEC-01:** Sinh viên A nhập đường dẫn URL tệp đính kèm của Sinh viên B -> Hệ thống chặn truy cập và trả về lỗi `403 Forbidden`.
-- **NFR-SEC-02:** Tất cả mật khẩu trong cơ sở dữ liệu phải được lưu dưới dạng chuỗi mã hóa hash, không hiển thị plain-text.
-- **NFR-SEC-03:** Mọi thao tác đổi trạng thái Ticket đều sinh bản ghi trong bảng Audit Log.
+---
+
+## 3. An Toàn Dữ Liệu & Tra Soát
+* **Chống tạo dữ liệu rác/trùng lặp:** Áp dụng cơ chế Idempotency/Token để chặn việc bấm nút gửi nhiều lần (double-click) hoặc gửi lại request trùng lặp[cite: 1].
+* **Nhật ký tra soát (Audit Log):** Ghi vết các thao tác quan trọng (đăng nhập, chuyển phòng ban, đóng Ticket, thay đổi quyền) để phục vụ tra soát khi có sự cố[cite: 1].
+* **Phạm vi bảo mật:** Không bắt buộc các chứng nhận bảo mật quốc tế chuyên sâu (như ISO 27001, PCI-DSS) hay kiểm thử thâm nhập sâu (Penetration Testing) ngoài các quy định đã thống nhất[cite: 1].

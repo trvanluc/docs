@@ -1,20 +1,12 @@
-# [NFR-REL] Yêu cầu về Độ ổn định & Tin cậy (Reliability Requirements)
+# Yêu Cầu Về Độ Ổn Định & Tin Cậy (Reliability Requirements)
 
-### 1. Tổng quan
-Tài liệu định nghĩa các chỉ số và quy tắc nhằm đảm bảo hệ thống UniSupport duy trì trạng thái hoạt động ổn định và nhất quán trên hạ tầng do Aurora University cung cấp.
+## 1. Tính Sẵn Sàng Của Hệ Thống (Availability)
+* **Thời gian hoạt động (Uptime):** Hệ thống hướng tới duy trì độ sẵn sàng khoảng 98.5% trong thời gian vận hành chính thức tại nhà trường.
+* **Phụ thuộc hạ tầng:** Tính ổn định và độ sẵn sàng của hệ thống phụ thuộc trực tiếp vào chất lượng hạ tầng máy chủ, đường truyền mạng và Tên miền do Aurora University cung cấp[cite: 1].
 
-### 2. Chỉ số sẵn sàng & Tin cậy
+---
 
-| Chỉ số | Yêu cầu | Ghi chú |
-| :--- | :--- | :--- |
-| **Mức độ sẵn sàng (Availability)** | $\ge 98.5\%$ | Trong thời gian hoạt động hành chính của nhà trường |
-| **Toàn vẹn dữ liệu (Data Integrity)** | 100% | Không xảy ra mất mát dữ liệu Ticket trong điều kiện vận hành bình thường |
-| **Xử lý sự cố lỗi (Graceful Degradation)** | Hiển thị thông báo lỗi thân thiện | Không để lộ lỗi hệ thống (Stack trace/Code error) cho người dùng cuối |
-
-### 3. Toàn vẹn giao dịch & Khôi phục
-- **Đảm bảo giao dịch (Database Transaction):** Thao tác gửi Ticket bao gồm thông tin văn bản và lưu tệp đính kèm phải tuân thủ nguyên tắc All-or-Nothing (ACID). Nếu lưu tệp thất bại, thông tin Ticket sẽ không được tạo để tránh dữ liệu mống/rác.
-- **Hạ tầng & Sao lưu:** Tính ổn định, tên miền, chứng chỉ SSL và sao lưu dữ liệu máy chủ hoàn toàn phụ thuộc vào hạ tầng do Aurora University cung cấp (nằm ngoài phạm vi bảo trì dài hạn của nhà phát triển).
-
-### 4. Tiêu chí Kiểm thử & Nghiệm thu
-- **NFR-REL-01:** Khi xảy ra lỗi kết nối mạng trong quá trình gửi Ticket, hệ thống hủy giao dịch và không lưu Ticket ở trạng thái dở dang (dữ liệu không hoàn chỉnh).
-- **NFR-REL-02:** Giao diện người dùng hiển thị thông điệp lỗi rõ ràng (ví dụ: "Có lỗi xảy ra, vui lòng thử lại sau") thay vì lộ mã lỗi lập trình (Stack trace).
+## 2. Toàn Vẹn Dữ Liệu & Xử Lý Sự Cố
+* **Toàn vẹn giao dịch:** Các thao tác quan trọng như tạo Ticket, chuyển phòng ban, đóng Ticket phải đảm bảo tính toàn vẹn dữ liệu (Atomic Transaction). Nếu có lỗi xảy ra giữa chừng, hệ thống phải Rollback hoàn toàn dữ liệu về trạng thái trước đó.
+* **Khôi phục trạng thái:** Khi gặp sự cố ngắt kết nối mạng hoặc treo máy chủ, hệ thống không được làm mất mát dữ liệu đang ở trạng thái đã lưu thành công trước đó.
+* **Bảo trì & Sao lưu (Out of Scope):** Việc thiết lập cơ chế tự động sao lưu định kỳ (Auto Backup) và theo dõi vận hành máy chủ không thuộc phạm vi trách nhiệm của đơn vị phát triển[cite: 1].

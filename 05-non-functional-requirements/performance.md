@@ -1,22 +1,19 @@
-# [NFR-PERF] Yêu cầu về Hiệu năng (Performance Requirements)
+# Yêu Cầu Về Hiệu Năng (Performance Requirements)
 
-### 1. Tổng quan
-Tài liệu này xác định các chỉ số hiệu năng mục tiêu cho hệ thống UniSupport. Hệ thống được thiết kế tối ưu cho quy mô **3.000 sinh viên** tại Aurora University và không bao gồm yêu cầu tối ưu cho kiến trúc chịu tải lớn vượt quá phạm vi này.
+## 1. Quy Mô & Sức Chịu Tải
+* **Tải mục tiêu:** Hệ thống được thiết kế và tối ưu cho quy mô khoảng **3.000 sinh viên** của Aurora University cùng cán bộ nhân viên liên quan[cite: 1].
+* **Tải đồng thời (Concurrent Users):** Hệ thống đáp ứng khoảng 100 - 150 người dùng thao tác đồng thời trong các thời điểm cao điểm (ví dụ: đợt đăng ký học phần, đợt xét tốt nghiệp).
+* **Giới hạn phạm vi (Non-Goal):** Hệ thống không tối ưu và không chịu trách nhiệm cho các bài kiểm thử chịu tải lớn (Load test/Stress test) vượt quá quy mô 3.000 sinh viên[cite: 1].
 
-### 2. Chỉ số hiệu năng chính (KPIs)
+---
 
-| Chỉ số | Mục tiêu | Điều kiện thử nghiệm |
-| :--- | :--- | :--- |
-| **Thời gian phản hồi trang (Page Load Time)** | $\le 2.0$ giây | Tải trang trên kết nối mạng tiêu chuẩn ($\ge 10$ Mbps) |
-| **Thời gian xử lý API (API Response Time)** | $\le 500$ ms | Cho 95% các tác vụ CRUD thông thường (Read/Write Ticket) |
-| **Tải concurrent (Concurrent Users)** | 100 - 150 người dùng đồng thời | Tương ứng đỉnh điểm giờ cao điểm của trường |
-| **Dung lượng tệp đính kèm (File Attachment)** | Tối đa 10 MB / tệp | Định dạng cho phép: `.pdf`, `.jpg`, `.png` |
-| **Thời gian tải lên tệp (Upload Speed)** | $\le 5.0$ giây | Đối với tệp dung lượng tối đa 10 MB |
+## 2. Chỉ Số Thời Gian Phản Hồi (Response Time)
+* **Tải trang & Giao diện:** Thời gian tải giao diện lần đầu < 2.5 giây trên kết nối mạng tiêu chuẩn.
+* **Thao tác API thông thường:** Thời gian phản hồi đối với các tác vụ truy vấn dữ liệu (xem danh sách Ticket, xem chi tiết) < 1 giây.
+* **Tác vụ xử lý dữ liệu (Tạo Ticket, đính kèm file):** Thời gian phản hồi < 2 giây.
 
-### 3. Quy định về Giới hạn Tải (Load & Capacity Limits)
-- **Quy mô người dùng:** Hệ thống đảm bảo hoạt động mượt mà với cơ sở dữ liệu lên đến 3.000 tài khoản sinh viên và khoảng 50-100 tài khoản cán bộ/quản lý.
-- **Giới hạn chịu tải:** Hệ thống không cam kết duy trì hiệu năng nếu lượng truy cập đồng thời vượt quá 300 người dùng cùng thời điểm.
+---
 
-### 4. Tiêu chí Kiểm thử & Nghiệm thu
-- **NFR-PERF-01:** Khi 100 người dùng thực hiện thao tác gửi/xem Ticket cùng lúc, thời gian phản hồi trung bình của API không vượt quá 1.0 giây.
-- **NFR-PERF-02:** Thao tác tải lên tệp đính kèm PDF dung lượng 5 MB hoàn tất trong thời gian dưới 3 giây.
+## 3. Tối Ưu Hóa Dữ Liệu & Lưu Trữ
+* **Dung lượng File:** Giới hạn dung lượng tối đa **5MB/file** đính kèm để tránh gây quá tải đường truyền và tài nguyên lưu trữ của máy chủ[cite: 1].
+* **Phân trang dữ liệu:** Mọi danh sách (danh sách Ticket, danh sách thông báo, danh sách tài khoản) bắt buộc phải sử dụng phân trang (Pagination) với kích thước tối đa 20 - 50 bản ghi/trang.

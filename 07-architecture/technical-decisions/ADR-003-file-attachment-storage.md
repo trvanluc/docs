@@ -1,38 +1,35 @@
-# [ADR-003] Phương án lưu trữ & Phân quyền xem file đính kèm (File Attachment Storage Strategy)
+# ADR-003: Phương Án Lưu Trữ & Phân Quyền Xem File Đính Kèm
 
-* **Trạng thái:** Đã phê duyệt (Accepted)
-* **Ngày quyết định:** 2026-10-05
-* **Người quyết định:** Infrastructure Lead / Backend Lead
-* **Phân hệ liên quan:** `M01-student-portal`, `M02-staff-operations`, `05-non-functional-requirements/security.md`
+* **Trạng thái (Status):** Accepted (Đã chấp thuận)[cite: 1]
+* **Ngày quyết định:** Tuần 3 - Giai đoạn Thiết kế Kiến trúc[cite: 1]
 
 ---
 
-## 1. Bối cảnh (Context)
-Sinh viên và Nhân viên có nhu cầu tải lên tệp đính kèm (định dạng PDF, PNG, JPG) chứa giấy tờ cá nhân hoặc kết quả xử lý.
-- Giả định hệ thống triển khai trên hạ tầng máy chủ của Client (Aurora University).
-- Tệp đính kèm chứa thông tin nhạy cảm của sinh viên, **tuyệt đối không được công khai (Public URL)** để tránh truy cập trái phép.
+## 1. Bối Cảnh (Context)
+Khi tạo Ticket hoặc bổ sung hồ sơ, sinh viên và nhân viên có thể tải lên các file đính kèm minh chứng (ảnh PNG/JPG hoặc PDF, dung lượng <= 5MB)[cite: 1]. Các tài liệu này chứa thông tin cá nhân/học tập nhạy cảm của sinh viên, do đó bắt buộc phải đảm bảo an toàn, không được lộ đường dẫn công khai (Public Access)[cite: 1].
 
-## 2. Các phương án xem xét (Options Considered)
-1. **Phương án 1: Lưu file vào thư mục `public/` của Web Server**
-   - *Ưu điểm:* Dễ triển khai, trả về URL tĩnh cho Frontend dùng ngay.
-   - *Nhược điểm:* Mất an toàn thông tin, ai có link cũng tải được file (Lỗ hổng Direct Access).
-2. **Phương án 2: Lưu tệp trong Local Storage/NAS của Server + Truy xuất qua Proxy Stream API**
-   - *Ưu điểm:* Chi phí hạ tầng $0$ (dùng trực tiếp ổ cứng máy chủ), kiểm soát phân quyền 100% qua API Backend.
-   - *Nhược điểm:* Tốn băng thông Backend khi phải stream file.
-3. **Phương án 3: Dùng Object Storage (S3 / MinIO) + Presigned URL**
-   - *Ưu điểm:* Hiệu năng cao, bảo mật tốt, chuẩn enterprise.
-   - *Nhược điểm:* Yêu cầu Client phải trang bị thêm hạ tầng S3 hoặc cài đặt MinIO, vượt ngoài giả định hạ tầng cơ bản.
+---
 
-## 3. Quyết định (Decision)
-Lựa chọn **Phương án 2**:
-- Tệp đính kèm được lưu trong thư mục riêng biệt của Server (nằm ngoài thư mục Web Public).
-- Tên tệp trên đĩa được đổi thành chuỗi ngẫu nhiên (UUID) để tránh trùng tên và dò đoán file.
-- **Cơ chế truy cập:**
-  1. Client gọi API `GET /api/v1/attachments/{file_id}`.
-  2. Backend kiểm tra quyền (User có phải chủ Ticket hoặc Nhân viên phòng ban xử lý hay không).
-  3. Nếu hợp lệ, Backend đọc file và stream trực tiếp về Client (hoặc trả về chuỗi Base64 / File Blob).
-  4. Nếu không có quyền, trả về lỗi `403 Forbidden`.
+## 2. Các Phương Án Cân Nhắc (Options Considered)
+1. **Phương án A (Public Direct Link):** Lưu file vào thư mục Web public (`/public/uploads/...`) và lưu URL trực tiếp trong CSDL.
+   * *Ưu điểm:* Dễ cài đặt.
+   * *Nhược điểm:* Lộ bảo mật nghiêm trọng; bất kỳ ai có đường dẫn URL đều xem/tải được file.
+2. **Phương án B (Private Storage + Stream API Check - Lựa chọn):** Lưu file vào thư mục bảo vệ (Private Folder) trên server hoặc Object Storage riêng biệt. File chỉ được tải thông qua một API xác thực[cite: 1].
 
-## 4. Hệ quả (Consequences)
-* **Tích cực:** Đảm bảo an toàn tuyệt đối cho hồ sơ sinh viên, tuân thủ tiêu chí NFR-SEC-01, tương thích tốt với hạ tầng VPS/Server của nhà trường.
-* **Tiêu cực:** Tăng nhẹ tải CPU/RAM của Backend Service khi đọc/ghi file.
+---
+
+## 3. Quyết Định (Decision)
+Hệ thống chốt áp dụng **Phương án B (Private Storage + Stream API Check)**[cite: 1]:
+
+* **Lưu trữ:** File đính kèm được lưu ở thư mục bảo vệ ngoài Web Root trên Server của Aurora University[cite: 1].
+* **Giới hạn định dạng & dung lượng:** Bắt buộc kiểm tra định dạng file (**PDF, PNG, JPG, JPEG**) và dung lượng tối đa **5MB/file** từ cả Client và Backend Validator[cite: 1].
+* **Kiểm soát truy cập:** Người dùng nhấn xem file sẽ gọi đến API `/api/v1/attachments/{file_id}`.
+* Backend kiểm tra quyền trước khi trả fileStream:
+  * Cho phép: Nếu người dùng là Sinh viên sở hữu Ticket, Nhân viên thuộc phòng ban đang thụ lý Ticket, hoặc Quản lý hệ thống[cite: 1].
+  * Chặn (Trả về lỗi `403 Forbidden`): Nếu là người dùng khác hoặc chưa đăng nhập[cite: 1].
+
+---
+
+## 4. Hệ Quả & Đánh Giá (Consequences)
+* **Tích cực:** Đảm bảo bảo mật tuyệt đối cho dữ liệu cá nhân của sinh viên, ngăn chặn việc thu thập dữ liệu trái phép qua URL tĩnh[cite: 1].
+* **Hạn chế:** Tạo thêm tải xử lý nhẹ cho Server Backend khi phải đọc và stream file qua API kiểm tra xác thực.

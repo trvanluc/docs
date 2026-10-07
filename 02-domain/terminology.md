@@ -1,26 +1,17 @@
-# Thuật Ngữ Nghiệp Vụ (Domain Terminology)
+# Thuật Ngữ Nghiệp Vụ (Terminology)
 
-Tài liệu này định nghĩa toàn bộ các thuật ngữ, khái niệm và từ viết tắt được sử dụng nhất quán trong tài liệu thiết kế, mã nguồn và quy trình vận hành của hệ thống **UniSupport**.
+Dưới đây là bảng thuật ngữ tiêu chuẩn được sử dụng xuyên suốt trong tài liệu nghiệp vụ và hệ thống UniSupport:
 
-## 1. Danh Mục Thuật Ngữ Cốt Lõi
-
-| Thuật Ngữ (English) | Thuật Ngữ (Tiếng Việt) | Định Nghĩa & Giải Thích Chi Tiết |
-| :--- | :--- | :--- |
-| **Ticket** | Phiếu hỗ trợ / Yêu cầu | Đơn vị dữ liệu trung tâm đại diện cho 01 yêu cầu, thắc mắc hoặc đề nghị giải quyết thủ tục của sinh viên gửi tới nhà trường. |
-| **Ticket ID** | Mã phiếu hỗ trợ | Chuỗi ký tự định danh duy nhất được hệ thống tự động sinh ra khi sinh viên gửi yêu cầu thành công (Ví dụ: `TK-20261004-001`). |
-| **Category / Sub-category** | Nhóm vấn đề / Phân loại chi tiết | Cấu trúc phân loại yêu cầu theo lĩnh vực (Ví dụ: Nhóm *Đào tạo* $\rightarrow$ Loại *Cấp bảng điểm*). |
-| **Department** | Phòng ban chuyên trách | Đơn vị hành chính trong Aurora University có thẩm quyền xử lý Ticket (Ví dụ: Phòng Đào tạo, Phòng CTHSSV...). |
-| **Student** | Sinh viên | Người dùng khởi tạo Ticket và là người thụ hưởng kết quả xử lý. |
-| **Agent / Staff** | Nhân viên xử lý | Chuyên viên thuộc Phòng ban chức năng có nhiệm vụ tiếp nhận, xử lý và phản hồi Ticket. |
-| **Manager / Admin** | Quản lý / Quản trị viên | Trưởng phòng ban hoặc Ban Giám hiệu theo dõi chỉ số KPI, hiệu suất và quản trị phân quyền hệ thống. |
-| **Triage** | Phân loại & Điều phối | Quá trình kiểm tra nội dung Ticket mới để xác định đúng nhóm vấn đề, độ ưu tiên và gán cho nhân viên/phòng ban phù hợp. |
-| **Claim** | Tiếp nhận | Hành động nhân viên tự nhận một Ticket chưa có người phụ trách về cho chính mình xử lý. |
-| **Assign** | Phân công | Hành động gán trách nhiệm xử lý Ticket cho một nhân viên cụ thể trong cùng phòng ban. |
-| **Transfer** | Chuyển phòng ban | Hành động điều chuyển Ticket từ phòng ban hiện tại sang một phòng ban khác do gửi nhầm hoặc cần phối hợp. |
-| **Supplement Request** | Yêu cầu bổ sung | Yêu cầu từ nhân viên đề nghị sinh viên cung cấp thêm thông tin hoặc upload thêm giấy tờ minh chứng. |
-| **SLA (Service Level Agreement)** | Cam kết thời gian xử lý | Khung thời gian tiêu chuẩn quy định hạn chót nhân viên phải phản hồi hoặc xử lý xong Ticket. |
-| **Priority** | Mức độ ưu tiên | Tầm quan trọng/mức độ khẩn cấp của Ticket (Bao gồm 4 mức: *Thấp, Trung bình, Cao, Khẩn cấp*). |
-| **Resolution** | Kết quả giải quyết | Nội dung trả lời, quyết định hoặc tài liệu đính kèm do nhân viên cung cấp để hoàn thành yêu cầu của sinh viên. |
-| **CSAT (Customer Satisfaction)** | Mức độ hài lòng | Chỉ số đánh giá chất lượng dịch vụ do sinh viên chấm điểm (từ 1 đến 5 sao) sau khi Ticket đóng. |
-| **Audit Log / Activity Log** | Nhật ký tra soát | Bản ghi lịch sử ghi nhận lại từng hành động làm thay đổi dữ liệu hoặc trạng thái của Ticket. |
-| **UAT (User Acceptance Testing)** | Kiểm thử chấp nhận người dùng | Giai đoạn người dùng thực tế (sinh viên, nhân viên Aurora University) kiểm thử hệ thống trước khi vận hành chính thức. |
+| Thuật ngữ | Khái niệm / Giải thích |
+| :--- | :--- |
+| **Ticket (Phiếu hỗ trợ)** | Đơn vị dữ liệu cốt lõi đại diện cho một yêu cầu hỗ trợ do sinh viên khởi tạo, chứa đầy đủ thông tin mô tả, trạng thái, người phụ trách và file đính kèm. |
+| **Ticket ID (Mã Ticket)** | Mã định danh duy nhất (ví dụ: `TK-20261007-001`) được cấp tự động ngay khi sinh viên gửi yêu cầu thành công. |
+| **Category (Nhóm vấn đề)** | Phân loại nghiệp vụ của yêu cầu (Đào tạo, Học phí, CTTT, Kỹ thuật,...)[cite: 1]. |
+| **Priority (Độ ưu tiên)** | Mức độ khẩn cấp của yêu cầu (Thấp, Trung bình, Cao, Khẩn cấp) do nhân viên đánh giá và thiết lập[cite: 1]. |
+| **Assignee (Người phụ trách)** | Nhân viên được giao trách nhiệm trực tiếp xử lý và phản hồi Ticket[cite: 1]. |
+| **Department (Phòng ban)** | Đơn vị nghiệp vụ thụ lý Ticket (ví dụ: Phòng Đào tạo, Phòng Tài chính)[cite: 1]. |
+| **SLA (Service Level Agreement)** | Cam kết thời gian xử lý yêu cầu tối đa dựa trên loại dịch vụ và độ ưu tiên. |
+| **Overdue Ticket** | Ticket đã vượt quá thời gian xử lý cam kết (SLA) nhưng chưa hoàn thành[cite: 1]. |
+| **Attachment** | File đính kèm minh chứng cho yêu cầu (định dạng hỗ trợ: **PDF, Image (PNG/JPG)**)[cite: 1]. |
+| **Feedback / Rating** | Đánh giá mức độ hài lòng (sao/nhận xét) của sinh viên sau khi Ticket đóng[cite: 1]. |
+| **UAT (User Acceptance Testing)** | Kiểm thử chấp nhận người dùng được thực hiện bởi Aurora University trong 10 ngày làm việc[cite: 1]. |

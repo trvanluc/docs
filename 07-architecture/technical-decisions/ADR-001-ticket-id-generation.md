@@ -1,36 +1,39 @@
-# [ADR-001] Quy tắc sinh mã Ticket duy nhất (Ticket ID Generation Strategy)
+# ADR-001: Quy Tắc Sinh Mã Ticket Duy Nhất (Ticket ID Generation Strategy)
 
-* **Trạng thái:** Đã phê duyệt (Accepted)
-* **Ngày quyết định:** 2026-10-05
-* **Người quyết định:** Tech Lead / System Architect
-* **Phân hệ liên quan:** `02-domain`, `M01-student-portal`, `M02-staff-operations`
+* **Trạng thái (Status):** Accepted (Đã chấp thuận)[cite: 1]
+* **Ngày quyết định:** Tuần 3 - Giai đoạn Thiết kế Kiến trúc[cite: 1]
 
 ---
 
-## 1. Bối cảnh (Context)
-Hệ thống UniSupport yêu cầu mỗi phiếu hỗ trợ (Ticket) phải có một định danh duy nhất để sinh viên dễ dàng tra cứu, nhân viên tiện trao đổi và hệ thống dễ truy vấn.
-- Mã định danh trong CSDL sử dụng khóa chính dạng tự tăng (Auto-increment ID) hoặc UUID để tối ưu index.
-- Tuy nhiên, giao diện người dùng cần một mã Ticket ngắn gọn, dễ đọc, dễ giao tiếp qua điện thoại/email nhưng vẫn đảm bảo tính duy nhất và không thể đoán trước quá dễ dàng.
+## 1. Bối Cảnh (Context)
+Trong hệ thống UniSupport, mỗi yêu cầu hỗ trợ do sinh viên tạo ra cần một mã định danh duy nhất (Ticket ID) để sinh viên dễ dàng tra cứu, theo dõi tiến độ và để nhân viên/quản lý trao đổi, kiểm vết[cite: 1]. 
+Yêu cầu đặt ra:
+* Mã Ticket phải ngắn gọn, dễ đọc, dễ truyền đạt qua lời nói/văn bản[cite: 1].
+* Đảm bảo tính duy nhất tuyệt đối trong toàn bộ hệ thống[cite: 1].
+* Chống trùng lặp ngay cả khi có nhiều yêu cầu gửi đồng thời (Concurrent Request/Retry)[cite: 1].
 
-## 2. Các phương án xem xét (Options Considered)
-1. **Phương án 1: Dùng ID tự tăng của CSDL (Ví dụ: `1`, `2`, `1024`)**
-   - *Ưu điểm:* Đơn giản, ngắn gọn.
-   - *Nhược điểm:* Dễ lộ thông tin kinh doanh (số lượng Ticket của nhà trường), lộ quy luật số đếm.
-2. **Phương án 2: Dùng UUID v4 (Ví dụ: `c9bf9e57-1685-4c89-bafb-ff5af830be8a`)**
-   - *Ưu điểm:* Đảm bảo tính duy nhất tuyệt đối.
-   - *Nhược điểm:* Quá dài, khó nhớ, không thân thiện khi đọc hoặc tìm kiếm nhanh.
-3. **Phương án 3: Sinh mã định dạng Prefix + Timestamp/Random + Sequence (Ví dụ: `TK-202610-A89F`)**
-   - *Ưu điểm:* Thân thiện, dễ phân biệt theo thời gian, độ dài vừa phải, chuyên nghiệp.
-   - *Nhược điểm:* Cần xử lý logic sinh mã trùng lặp ở tầng ứng dụng hoặc DB constraint.
+---
 
-## 3. Quyết định (Decision)
-Lựa chọn **Phương án 3**. Cấu trúc mã Ticket hiển thị cho người dùng sẽ bao gồm:
-$$\text{Ticket Code} = \text{TK} + \text{[YYYYMM]} + \text{[4 Ký tự ngẫu nhiên AlphaNumeric/Sequence]}$$
-*(Ví dụ: `TK-202610-8F3A`)*
+## 2. Các Phương Án Cân Nhắc (Options Considered)
+1. **Phương án A (UUID v4):** Sử dụng chuỗi ngẫu nhiên dài (ví dụ: `c9bf9e57-1685-4c89-bafb-ff5af830be8a`).
+   * *Ưu điểm:* Duy nhất tuyệt đối.
+   * *Nhược điểm:* Quá dài, sinh viên rất khó nhớ và bất tiện khi đọc tra cứu thủ công.
+2. **Phương án B (Auto-increment ID):** Sử dụng số nguyên tăng dần của CSDL (ví dụ: `1`, `2`, `3`).
+   * *Ưu điểm:* Ngắn gọn.
+   * *Nhược điểm:* Dễ lộ quy mô giao dịch, không chứa thông tin ngữ cảnh thời gian.
+3. **Phương án C (Formatted Business Key - Lựa chọn):** Cấu trúc chuỗi gồm Tiền tố + Ngày tháng + Số thứ tự tự tăng trong ngày (ví dụ: `TK-20261007-0001`)[cite: 1].
 
-- Khóa chính CSDL (Primary Key) vẫn lưu bằng `UUID` hoặc `BigInt` để đảm bảo hiệu năng liên kết bảng.
-- Trường `ticket_code` lưu chuỗi trên, được gắn chỉ mục `UNIQUE INDEX` trong CSDL.
+---
 
-## 4. Hệ quả (Consequences)
-* **Tích cực:** Mã Ticket thân thiện với người dùng, hỗ trợ nhận diện thời gian tạo, chuyên nghiệp và an toàn.
-* **Tiêu cực:** Cần thêm bước validate hoặc hàm sinh mã bảo đảm không trùng lặp (retry mechanism nếu va chạm chuỗi ngẫu nhiên).
+## 3. Quyết Định (Decision)
+Hệ thống chốt lựa chọn **Phương án C**: Sinh mã Ticket định dạng `TK-YYYYMMDD-XXXX`[cite: 1].
+
+* `TK`: Tiền tố cố định đại diện cho Ticket UniSupport[cite: 1].
+* `YYYYMMDD`: Năm, tháng, ngày khởi tạo yêu cầu (ví dụ: `20261007`)[cite: 1].
+* `XXXX`: Số thứ tự tự tăng trong ngày (4 chữ số, từ `0001` đến `9999`), sử dụng Redis Sequence hoặc CSDL Atomic Increment để đảm bảo tính duy nhất khi xử lý đồng thời[cite: 1].
+
+---
+
+## 4. Hệ Quả & Đánh Giá (Consequences)
+* **Tích cực:** Mã Ticket trực quan, chuyên nghiệp, thể hiện rõ ngày tạo và dễ nhớ đối với sinh viên lẫn nhân viên[cite: 1].
+* **Hạn chế:** Giới hạn tối đa 9.999 Ticket/ngày (phù hợp hoàn toàn với quy mô 3.000 sinh viên của dự án)[cite: 1].

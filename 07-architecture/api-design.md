@@ -1,87 +1,42 @@
-# [ARC-04] Thiết kế RESTful API (API Design Standard)
+# Thiết Kế RESTful API (API Design)
 
-Tài liệu này chuẩn hóa quy cách thiết kế RESTful API cho toàn bộ các phân hệ trong hệ thống **UniSupport**, bao gồm chuẩn HTTP Status Codes, định dạng Request/Response và danh sách Endpoints chính.
+Danh mục các API Endpoints cốt lõi của hệ thống UniSupport, sử dụng chuẩn dữ liệu JSON truyền nhận qua HTTPS[cite: 1]:
 
 ---
 
-## 🌐 1. Quy chuẩn API Tổng quan
+## 1. Phân Hệ Xác Thực (`/api/v1/auth`)
+* `POST /api/v1/auth/login`: Đăng nhập hệ thống, trả về Token xác thực và Vai trò (`Role`)[cite: 1].
+* `POST /api/v1/auth/logout`: Đăng xuất và hủy phiên làm việc.
 
-* **Giao thức:** HTTPS
-* **Đường dẫn cơ sở (Base URL):** `https://unisupport.aurora.edu.vn/api/v1`
-* **Định dạng dữ liệu:** `application/json`
-* **Mã hóa:** UTF-8
+---
 
-### **1.1. Cấu trúc Response Chuẩn (Standard Response Format)**
+## 2. Phân Hệ Sinh Viên (`/api/v1/student`)
+* `POST /api/v1/student/tickets`: Tạo mới Ticket hỗ trợ (FormData chứa file đính kèm)[cite: 1].
+* `GET /api/v1/student/tickets`: Lấy danh sách Ticket cá nhân của sinh viên[cite: 1].
+* `GET /api/v1/student/tickets/{ticket_id}`: Xem chi tiết trạng thái và lịch sử xử lý Ticket[cite: 1].
+* `POST /api/v1/student/tickets/{ticket_id}/supplement`: Upload bổ sung tài liệu khi có yêu cầu (`NEED_MORE_INFO`)[cite: 1].
+* `POST /api/v1/student/tickets/{ticket_id}/rating`: Gửi đánh giá sao và nhận xét cho Ticket đã đóng (`CLOSED`)[cite: 1].
 
-#### Response Thành công (`200 OK`, `201 Created`):
-```json
-{
-  "success": true,
-  "code": 200,
-  "message": "Thao tác thành công",
-  "data": { ... }
-}
-Response Phân trang (Pagination Response):JSON{
-  "success": true,
-  "code": 200,
-  "data": [ ... ],
-  "pagination": {
-    "page": 1,
-    "limit": 10,
-    "total_items": 45,
-    "total_pages": 5
-  }
-}
-Response Lỗi (400 Bad Request, 401 Unauthorized, 403 Forbidden, 500 Internal Error):JSON{
-  "success": false,
-  "code": 400,
-  "error_code": "INVALID_INPUT",
-  "message": "Nội dung mô tả là bắt buộc.",
-  "errors": [
-    {
-      "field": "description",
-      "message": "Mô tả không được để trống"
-    }
-  ]
-}
-```
-# 📌 2. Danh sách API Endpoints Chính
+---
 
-## 2.1. Authentication & System (`/auth`)
+## 3. Phân Hệ Nhân Viên (`/api/v1/staff`)
+* `GET /api/v1/staff/tickets`: Lấy danh sách Ticket thuộc phòng ban / gán cho nhân viên[cite: 1].
+* `PUT /api/v1/staff/tickets/{ticket_id}/claim`: Tiếp nhận xử lý Ticket và gán mức độ ưu tiên[cite: 1].
+* `PUT /api/v1/staff/tickets/{ticket_id}/transfer`: Chuyển tiếp Ticket sang phòng ban khác[cite: 1].
+* `PUT /api/v1/staff/tickets/{ticket_id}/request-more-info`: Gửi yêu cầu sinh viên bổ sung thông tin[cite: 1].
+* `PUT /api/v1/staff/tickets/{ticket_id}/close`: Nhập ghi chú kết quả giải quyết và chính thức đóng Ticket[cite: 1].
 
-| Method | Endpoint | Quyền truy cập | Mô tả |
-| --- | --- | --- | --- |
-| **POST** | `/auth/login` | Public | Đăng nhập hệ thống & lấy JWT Token |
-| **GET** | `/auth/me` | Authenticated | Lấy thông tin tài khoản đang đăng nhập |
-| **POST** | `/auth/logout` | Authenticated | Đăng xuất |
+---
 
-## 2.2. Phân hệ Sinh viên (`/student`)
+## 4. Phân Hệ Quản Lý (`/api/v1/manager`)
+* `GET /api/v1/manager/dashboard/summary`: Lấy các chỉ số KPI tổng quan (Số Ticket mới, đang xử lý, quá hạn)[cite: 1].
+* `GET /api/v1/manager/reports/trends`: Lấy số liệu thống kê nhóm sự cố phổ biến[cite: 1].
+* `GET /api/v1/manager/reports/satisfaction`: Lấy điểm số đánh giá hài lòng trung bình[cite: 1].
+* `GET /api/v1/manager/users`: Danh sách tài khoản người dùng[cite: 1].
+* `POST /api/v1/manager/users`: Tạo mới tài khoản và phân quyền vai trò[cite: 1].
 
-| Method | Endpoint | Quyền truy cập | Mô tả |
-| --- | --- | --- | --- |
-| **POST** | `/student/tickets` | Student | Tạo mới Ticket hỗ trợ (kèm upload file) |
-| **GET** | `/student/tickets` | Student | Xem danh sách Ticket cá nhân đã gửi |
-| **GET** | `/student/tickets/{ticket_code}` | Student | Xem chi tiết tiến độ Ticket & lịch sử phản hồi |
-| **POST** | `/student/tickets/{id}/supplement` | Student | Bổ sung thông tin/giấy tờ theo yêu cầu Nhân viên |
-| **POST** | `/student/tickets/{id}/rating` | Student | Đánh giá mức độ hài lòng (1-5 sao) khi hoàn tất |
+---
 
-## 2.3. Phân hệ Nhân viên (`/staff`)
-
-| Method | Endpoint | Quyền truy cập | Mô tả |
-| --- | --- | --- | --- |
-| **GET** | `/staff/tickets` | Staff, Management | Lấy danh sách Ticket thuộc phòng ban phụ trách |
-| **POST** | `/staff/tickets/{id}/claim` | Staff | Nhận phụ trách (Claim) Ticket |
-| **PATCH** | `/staff/tickets/{id}/triage` | Staff | Phân loại & cập nhật độ ưu tiên Ticket |
-| **POST** | `/staff/tickets/{id}/transfer` | Staff | Chuyển Ticket sang phòng ban khác |
-| **POST** | `/staff/tickets/{id}/request-supplement` | Staff | Yêu cầu Sinh viên bổ sung giấy tờ/thông tin |
-| **POST** | `/staff/tickets/{id}/resolve` | Staff | Cập nhật kết quả giải quyết & Đóng Ticket |
-
-## 2.4. Phân hệ Quản lý & Admin (`/management`)
-
-| Method | Endpoint | Quyền truy cập | Mô tả |
-| --- | --- | --- | --- |
-| **GET** | `/management/dashboard/overview` | Management | Số liệu tổng quan (Ticket mới, đang xử lý, quá hạn) |
-| **GET** | `/management/dashboard/metrics` | Management | Báo cáo SLA, thời gian xử lý trung bình, điểm đánh giá |
-| **GET** | `/management/users` | Management | Danh sách tài khoản hệ thống |
-| **POST** | `/management/users` | Management | Tạo tài khoản mới & phân quyền vai trò |
-| **PATCH** | `/management/users/{id}` | Management | Cập nhật thông tin/trạng thái tài khoản |
+## 5. File & Thông Báo (`/api/v1/common`)
+* `GET /api/v1/attachments/{file_id}`: Stream file đính kèm (có kiểm tra quyền sở hữu `ADR-003`)[cite: 1].
+* `GET /api/v1/notifications`: Lấy danh sách thông báo in-app của người dùng[cite: 1].

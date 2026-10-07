@@ -1,44 +1,23 @@
-# [WF-03] Yêu cầu bổ sung thông tin/giấy tờ (Request Supplement)
+# QTTN 03: Yêu Cầu Sinh Viên Bổ Sung Thông Tin / Giấy Tờ (WF-03)
 
-### [FR-STF-03] Nhân viên yêu cầu sinh viên bổ sung hồ sơ
+## 1. Mục Tiêu Quy Trình
+Xử lý tình huống Ticket thiếu minh chứng hoặc thông tin chưa rõ ràng, cho phép nhân viên yêu cầu sinh viên cung cấp thêm giấy tờ/file đính kèm[cite: 1].
 
-**Mô tả**
-Trong quá trình xử lý, nếu thông tin hoặc tài liệu sinh viên cung cấp bị thiếu hoặc chưa đủ cơ sở giải quyết, nhân viên có thể gửi yêu cầu sinh viên bổ sung thêm thông tin hoặc giấy tờ.
+---
 
-**Actor**
-- Nhân viên phụ trách xử lý Ticket (Staff).
-- Sinh viên gửi Ticket (Student).
+## 2. Tác Nhân Tham Gia (Actors)
+* **Nhân viên:** Người phát yêu cầu bổ sung[cite: 1].
+* **Sinh viên:** Người nhận thông báo và tải lên minh chứng bổ sung[cite: 1].
+* **Hệ thống UniSupport:** Chuyển đổi trạng thái hai chiều giữa `IN_PROGRESS` và `NEED_MORE_INFO`[cite: 1].
 
-**Preconditions**
-- Ticket đang ở trạng thái `Đang xử lý` (In Progress).
-- Nhân viên thực hiện là người đang phụ trách Ticket đó.
+---
 
-**Luồng chính**
-1. Nhân viên mở chi tiết Ticket đang xử lý và chọn chức năng **Yêu cầu bổ sung thông tin**.
-2. Hệ thống hiển thị form nhập nội dung cần bổ sung.
-3. Nhân viên nhập mô tả chi tiết các giấy tờ/thông tin sinh viên cần cung cấp thêm và nhấn **Gửi yêu cầu**.
-4. Hệ thống chuyển trạng thái Ticket sang `Chờ bổ sung` (Pending Student) và gửi thông báo nội bộ tới sinh viên.
-5. Sinh viên nhận được thông báo, truy cập vào Ticket xem yêu cầu bổ sung.
-6. Sinh viên nhập nội dung phản hồi và/hoặc tải lên tệp đính kèm bổ sung (ảnh/PDF).
-7. Sinh viên nhấn **Xác nhận bổ sung**.
-8. Hệ thống kiểm tra dữ liệu, cập nhật thông tin bổ sung vào Ticket, tự động chuyển trạng thái Ticket trở lại `Đang xử lý` (In Progress) và thông báo cho nhân viên phụ trách.
+## 3. Các Bước Thực Hiện
 
-**Business Rules**
-- Khi Ticket chuyển sang `Chờ bổ sung`, đếm thời gian xử lý tạm dừng (hoặc đánh dấu chờ phản hồi sinh viên).
-- Chỉ có sinh viên chủ sở hữu Ticket mới có quyền tải tệp bổ sung hoặc gửi phản hồi.
-- Tệp đính kèm bổ sung phải tuân thủ đúng định dạng hợp lệ (.pdf, .jpg, .png).
-
-**Alternative / Error Flows**
-- **Sinh viên gửi phản hồi rỗng:** Hệ thống từ chối cập nhật và yêu cầu sinh viên phải nhập thông tin hoặc đính kèm tệp trước khi gửi.
-- **Sinh viên gửi tệp đính kèm không đúng định dạng:** Hệ thống chặn và báo lỗi tệp không hợp lệ.
-
-**Acceptance Criteria**
-- **AC-01:** Nhân viên gửi yêu cầu bổ sung -> Ticket chuyển trạng thái thành `Chờ bổ sung`, sinh viên nhận được thông báo.
-- **AC-02:** Sinh viên nhập nội dung phản hồi và đính kèm file hợp lệ -> Ticket chuyển lại trạng thái `Đang xử lý`, nhân viên nhận được thông báo.
-- **AC-03:** Sinh viên bấm gửi phản hồi nhưng không nhập nội dung và không đính kèm file -> Hệ thống báo lỗi validation.
-- **AC-04:** Sinh viên khác (không phải người tạo Ticket) tìm cách truy cập và nộp file bổ sung -> Hệ thống từ chối quyền truy cập (HTTP 403 Forbidden).
-
-**Ví dụ Edge Case**
-Sinh viên đính kèm file hình ảnh bị hỏng hoặc chọn nhầm file đuôi `.exe` khi phản hồi yêu cầu bổ sung của nhân viên.
-
-**Expected Result:** Hệ thống kiểm tra định dạng tệp, từ chối tải lên file `.exe`, hiển thị thông báo lỗi "Chỉ chấp nhận định dạng PDF, JPG, PNG" và giữ nguyên trạng thái Ticket là `Chờ bổ sung`.
+1. **Nhân viên:** Trong màn hình chi tiết Ticket đang xử lý (`IN_PROGRESS`), chọn nút **Yêu cầu bổ sung hồ sơ**[cite: 1].
+2. **Nhân viên:** Nhập chi tiết nội dung/giấy tờ cần sinh viên cung cấp thêm và bấm **Gửi**[cite: 1].
+3. **Hệ thống:** Đổi trạng thái Ticket thành `NEED_MORE_INFO` và phát thông báo nội bộ tới sinh viên[cite: 1].
+4. **Sinh viên:** Nhận thông báo, mở chi tiết Ticket và chọn **Bổ sung thông tin**[cite: 1].
+5. **Sinh viên:** Tải lên các file đính kèm bổ sung (ảnh/PDF) hoặc nhập ghi chú giải trình, sau đó bấm **Xác nhận gửi**[cite: 1].
+6. **Hệ thống:** Kiểm tra file hợp lệ (PNG/JPG/PDF <= 5MB), lưu thông tin bổ sung và tự động đổi trạng thái Ticket quay lại `IN_PROGRESS`[cite: 1].
+7. **Hệ thống:** Phát thông báo cho Nhân viên phụ trách biết sinh viên đã nộp bổ sung hồ sơ[cite: 1].

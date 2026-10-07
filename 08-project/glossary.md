@@ -1,20 +1,15 @@
-# [PRJ-05] Thuật ngữ & Giải thích Khái niệm (Glossary)
+# Thuật Ngữ & Giải Thích Khái Niệm Dự Án (Project Glossary)
 
-Tài liệu này định nghĩa các thuật ngữ kỹ thuật, nghiệp vụ và các từ viết tắt được sử dụng xuyên suốt trong toàn bộ hệ thống tài liệu dự án **UniSupport**.
+Bảng thuật ngữ chuẩn hóa các từ khóa kỹ thuật và quản lý dự án được sử dụng trong toàn bộ tài liệu hệ thống **UniSupport**[cite: 1]:
 
----
-
-## 📖 Bảng Thuật ngữ Dự án
-
-| Thuật ngữ / Từ viết tắt | Tên tiếng Anh đầy đủ | Giải thích nghĩa |
+| Thuật Ngữ | Tên Đầy Đủ / Khái Niệm | Giải Thích Chi Tiết |
 | :--- | :--- | :--- |
-| **Ticket (Phiếu hỗ trợ)** | Support Ticket | Đơn vị dữ liệu cốt lõi đại diện cho một yêu cầu hỗ trợ do sinh viên gửi lên hệ thống, chứa mã ID, mô tả, tệp đính kèm và lịch sử xử lý. |
-| **SLA** | Service Level Agreement | Cam kết mức độ dịch vụ; thời hạn quy định mà Nhân viên phải hoàn tất xử lý một Ticket (ví dụ: trong vòng 24h - 48h). |
-| **RBAC** | Role-Based Access Control | Mô hình phân quyền dựa trên vai trò. Người dùng được gán vai trò (Student, Staff, Management) và vai trò quyết định quyền thao tác trên hệ thống. |
-| **PRD** | Product Requirements Document | Tài liệu Yêu cầu Sản phẩm, chi tiết hóa các tính năng, luồng nghiệp vụ và tiêu chí chấp nhận của phần mềm. |
-| **UAT** | User Acceptance Testing | Kiểm thử chấp nhận sản phẩm do phía Khách hàng (Aurora University) thực hiện trước khi ký nghiệm thu bàn giao. |
-| **RTM** | Requirements Traceability Matrix | Ma trận truy xuất yêu cầu, giúp đối chiếu từ Yêu cầu nghiệp vụ đến kịch bản kiểm thử (Test Cases). |
-| **C4 Model** | Context, Containers, Components, Code | Mô hình chuẩn hóa dùng để vẽ và mô tả kiến trúc phần mềm theo các cấp độ từ tổng quan đến chi tiết. |
-| **Audit Log** | Audit Logging | Nhật ký ghi lại toàn bộ các thao tác quan trọng (đăng nhập, đổi trạng thái Ticket, phân quyền) phục vụ tra soát bảo mật. |
-| **Responsive UI** | Responsive User Interface | Giao diện phần mềm tự động điều chỉnh bố cục hiển thị phù hợp với kích thước màn hình Máy tính (Desktop) và Điện thoại (Mobile). |
-| **ADR** | Architectural Decision Record | Tài liệu ghi nhận các quyết định kiến trúc kỹ thuật quan trọng và lý do lựa chọn phương án đó trong quá trình phát triển. |
+| **UniSupport** | University Support Platform | Nền tảng Web Application quản lý và xử lý yêu cầu hỗ trợ sinh viên tại Aurora University[cite: 1]. |
+| **Ticket** | Support Ticket / Phiếu hỗ trợ | Đơn vị dữ liệu đại diện cho một yêu cầu hỗ trợ do sinh viên gửi trên hệ thống[cite: 1]. |
+| **RBAC** | Role-Based Access Control | Cơ chế phân quyền dựa trên 3 vai trò: Sinh viên, Nhân viên, Quản lý[cite: 1]. |
+| **UAT** | User Acceptance Testing | Kiểm thử chấp nhận người dùng được thực hiện bởi Aurora University trong 10 ngày làm việc[cite: 1]. |
+| **SLA** | Service Level Agreement | Cam kết thời gian tối đa để xử lý một yêu cầu hỗ trợ. |
+| **KPI** | Key Performance Indicator | Các chỉ số đo lường hiệu suất (Số Ticket mới, đang xử lý, quá hạn, điểm hài lòng)[cite: 1]. |
+| **Audit Log** | Nhật ký tra soát | Bản ghi tự động lưu vết các thao tác quan trọng để phục vụ tra soát khi có sự cố[cite: 1]. |
+| **Responsive UI** | Responsive User Interface | Thiết kế giao diện tự động tương thích trên máy tính và thiết bị di động[cite: 1]. |
+| **Out of Scope** | Ngoài phạm vi dự án | Các hạng mục không thuộc cam kết triển khai trong hợp đồng 300 triệu / 14 tuần[cite: 1]. |
