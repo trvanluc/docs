@@ -18,7 +18,7 @@ Tài liệu này định nghĩa toàn bộ các thuật ngữ, khái niệm và 
 | **Assign** | Phân công | Hành động gán trách nhiệm xử lý Ticket cho một nhân viên cụ thể trong cùng phòng ban. |
 | **Transfer** | Chuyển phòng ban | Hành động điều chuyển Ticket từ phòng ban hiện tại sang một phòng ban khác do gửi nhầm hoặc cần phối hợp. |
 | **Supplement Request** | Yêu cầu bổ sung | Yêu cầu từ nhân viên đề nghị sinh viên cung cấp thêm thông tin hoặc upload thêm giấy tờ minh chứng. |
-| **SLA (Service Level Agreement)** | Cam kết thời gian xử lý | Khung thời gian tiêu chuẩn quy định hạn chót nhân viên phải phản hồi hoặc xử lý xong Ticket. |
+| **SLA (Service Level Agreement)** | Cam kết thời gian xử lý | Mốc thời gian dùng để theo dõi hạn xử lý Ticket theo quy tắc    nghiệp vụ được xác định cho từng loại yêu cầu. Chi tiết cách tính được xác nhận trong Business Rules. |
 | **Priority** | Mức độ ưu tiên | Tầm quan trọng/mức độ khẩn cấp của Ticket (Bao gồm 4 mức: *Thấp, Trung bình, Cao, Khẩn cấp*). |
 | **Resolution** | Kết quả giải quyết | Nội dung trả lời, quyết định hoặc tài liệu đính kèm do nhân viên cung cấp để hoàn thành yêu cầu của sinh viên. |
 | **CSAT (Customer Satisfaction)** | Mức độ hài lòng | Chỉ số đánh giá chất lượng dịch vụ do sinh viên chấm điểm (từ 1 đến 5 sao) sau khi Ticket đóng. |

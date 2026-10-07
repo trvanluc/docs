@@ -1,4 +1,6 @@
-# Tài Liệu Đặc Tả Yêu Cầu Sản Phẩm - Phân Quyền & Bảo Mật (PRD - M05 RBAC & Security)
+# Tài Liệu Đặc Tả Yêu Cầu - Phân Quyền & Bảo Mật Dùng Chung (RBAC & Security)
+
+> Ghi chú: RBAC & Security là năng lực dùng chung trong phạm vi 3 phân hệ chính M01-M03 theo proposal và bảng chi phí nội bộ đã chốt; không tách thành module bàn giao/effort độc lập.
 
 ---
 

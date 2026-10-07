@@ -28,6 +28,18 @@ Phân hệ này cung cấp các công cụ vận hành giúp nhân viên tiếp 
 | **FR-STF-05** | Yêu cầu sinh viên bổ sung thông tin | Yêu cầu sinh viên cung cấp thêm thông tin/giấy tờ, tạm dừng đếm thời gian SLA xử lý. |
 | **FR-STF-06** | Cập nhật tiến độ & Đóng Ticket | Cập nhật ghi chú giải quyết, đính kèm file kết quả, chuyển trạng thái `RESOLVED` / `CLOSED`. |
 
+### Effort Theo Bảng Chi Phí Nội Bộ Đã Chốt
+
+| Gói việc | Effort |
+| :--- | :---: |
+| Tiếp nhận, tìm kiếm & lọc yêu cầu | **33h** |
+| Phân loại & phân công xử lý | **38h** |
+| Quản lý ưu tiên & thời hạn | **29h** |
+| Xử lý & cập nhật yêu cầu | **39h** |
+| Chuyển xử lý, Escalation & hoàn tất | **32h** |
+| Đóng & mở lại yêu cầu | **26h** |
+| **Tổng M2 - Staff** | **197h** |
+
 ---
 
 ## 4. Sơ Đồ Luồng Tương Tác Của Nhân Viên (Staff Workflow)

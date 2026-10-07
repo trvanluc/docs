@@ -17,15 +17,19 @@ Trở thành **đầu mối giao tiếp số duy nhất** giữa Sinh viên và 
 
 ---
 
-## 3. Các Phân Hệ Chính (Core Product Modules)
+## 3. Các Phân Hệ Chính Theo Proposal Đã Chốt
 
-| Mã Phân Hệ | Tên Phân Hệ | Chức Năng Cốt Lõi |
-| :--- | :--- | :--- |
-| **M01** | **Sinh viên (Student Portal)** | Đăng nhập, tạo yêu cầu hỗ trợ (kèm file PDF/ảnh), nhận Mã Ticket, theo dõi tiến độ xử lý, bổ sung hồ sơ, nhận kết quả và đánh giá mức độ hài lòng. |
-| **M02** | **Nhân viên (Staff Operations)** | Đăng nhập, tiếp nhận (Claim), phân loại (Triage), đánh giá độ ưu tiên, chuyển phòng ban, yêu cầu sinh viên bổ sung giấy tờ, cập nhật tiến độ và đóng ticket. |
-| **M03** | **Quản lý (Management Dashboard)** | Dashboard tổng quan KPI, báo cáo thời gian xử lý trung bình/xu hướng sự cố, tổng hợp chỉ số hài lòng, quản lý tài khoản & phân quyền vai trò. |
-| **M04** | **Dịch vụ Thông báo (Notification Service)** | Gửi thông báo nội bộ hệ thống (In-app notification) khi trạng thái ticket thay đổi, có phản hồi mới hoặc yêu cầu bổ sung thông tin. |
-| **M05** | **Phân quyền & Bảo mật (RBAC & Security)** | Đăng nhập bằng tài khoản cá nhân, phân quyền 3 vai trò (Sinh viên, Nhân viên, Quản lý), bảo mật file đính kèm, tra soát log thao tác cơ bản (Audit Log). |
+Theo proposal và bảng chi phí nội bộ đã chốt, phạm vi bàn giao chính của UniSupport gồm **3 phân hệ sản phẩm**. Các yêu cầu về thông báo, bảo mật, phân quyền và audit log là năng lực hỗ trợ/xuyên suốt được triển khai trong 3 phân hệ này, không tách thành module bàn giao độc lập trong bảng chi phí.
+
+| Mã Phân Hệ | Tên Phân Hệ | Chức Năng Cốt Lõi | Effort kế hoạch |
+| :--- | :--- | :--- | :---: |
+| **M01** | **Sinh viên (Student Portal)** | Đăng nhập, gửi yêu cầu hỗ trợ, đính kèm file ảnh/PDF, nhận mã Ticket, theo dõi tiến độ, bổ sung hồ sơ, nhận thông báo trạng thái, xem kết quả và đánh giá mức độ hài lòng. | **128h** |
+| **M02** | **Nhân viên (Staff Operations)** | Đăng nhập, xem danh sách yêu cầu mới/được giao, tìm kiếm/lọc Ticket, tiếp nhận, phân loại, phân công, quản lý ưu tiên/SLA, yêu cầu bổ sung hồ sơ, chuyển xử lý, cập nhật tiến độ, hoàn tất/đóng/mở lại yêu cầu. | **197h** |
+| **M03** | **Quản lý / Admin (Management Dashboard)** | Dashboard tổng quan, báo cáo xu hướng và CSAT, quản lý tài khoản, vai trò, RBAC, phòng ban/danh mục, audit trail, thời hạn lưu trữ và xuất dữ liệu. | **215h** |
+
+### Năng lực xuyên suốt
+- **Thông báo nội bộ hệ thống**: In-app notification khi Ticket được tạo, chuyển trạng thái, chuyển phòng ban, yêu cầu bổ sung, hoàn tất hoặc có cảnh báo SLA.
+- **Bảo mật & phân quyền**: Đăng nhập bằng tài khoản riêng, phân quyền theo vai trò, giới hạn dữ liệu theo phạm vi người dùng/phòng ban, bảo vệ file đính kèm và ghi nhận thao tác quan trọng để tra soát.
 
 ---
 

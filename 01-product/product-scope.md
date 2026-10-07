@@ -2,7 +2,7 @@
 
 ## 1. Phạm Vi Chức Năng Sản Phẩm (Functional Scope)
 
-Dự án UniSupport đóng gói trọn gói các chức năng trong **5 Module chính** như sau:
+Dự án UniSupport đóng gói trọn gói các chức năng trong **3 phân hệ chính** theo proposal và bảng chi phí nội bộ đã chốt. Thông báo nội bộ, bảo mật, phân quyền và audit log là các năng lực dùng chung được triển khai xuyên suốt trong 3 phân hệ này.
 
 ### 1.1 Module Sinh viên (Student Portal)
 - **Đăng nhập**: Đăng nhập bằng tài khoản cá nhân.
@@ -43,14 +43,14 @@ Dự án UniSupport đóng gói trọn gói các chức năng trong **5 Module c
   - Tạo mới, cập nhật, khóa tài khoản người dùng.
   - Gán Vai trò (Role) và Phòng ban (Department).
 
-### 1.4 Dịch vụ Thông báo (In-app Notification Service)
+### 1.4 Năng lực dùng chung: Dịch vụ Thông báo (In-app Notification Service)
 - Thông báo nội bộ trên giao diện web (In-app Bell Icon) khi:
   - Ticket tạo thành công.
   - Ticket thay đổi trạng thái (Đang xử lý -> Hoàn thành...).
   - Nhân viên yêu cầu bổ sung thông tin.
   - Có phản hồi mới từ sinh viên hoặc nhân viên.
 
-### 1.5 Bảo mật & Phân quyền (RBAC & Security)
+### 1.5 Năng lực dùng chung: Bảo mật & Phân quyền (RBAC & Security)
 - Phân quyền truy cập tài nguyên theo 3 vai trò (RBAC).
 - Bảo mật đường dẫn file đính kèm (chỉ sinh viên tạo ticket và nhân viên phụ trách phòng ban mới có quyền tải/xem file).
 - Ghi nhận Audit Log cho các hành động quan trọng (Đổi trạng thái, Phân công, Chuyển phòng ban, Xóa/Khóa tài khoản).

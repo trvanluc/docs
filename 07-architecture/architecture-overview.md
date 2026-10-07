@@ -67,7 +67,7 @@ UniSupport được xây dựng theo mô hình **Layered Monolithic Architecture
 
 ## ⚙️ 3. Kiến trúc Backend (Application Service Layer)
 
-Backend của UniSupport được chia thành **5 mô-đun nghiệp vụ chính** nhằm đảm bảo tính độc lập và dễ mở rộng:
+Backend của UniSupport được tổ chức theo **3 mô-đun nghiệp vụ chính** đúng với proposal đã chốt, kèm các service dùng chung cho thông báo, xác thực, phân quyền và audit:
 
 ### **3.1. Phân hệ M01 - Student Portal Module**
 * Xử lý tạo mới Ticket, tự động sinh Mã Ticket duy nhất (theo quy tắc ADR-001).
@@ -84,10 +84,10 @@ Backend của UniSupport được chia thành **5 mô-đun nghiệp vụ chính*
 * Aggregate dữ liệu thống kê theo nhóm vấn đề và xu hướng biến động.
 * Cung cấp các API quản trị tài khoản người dùng và sơ đồ tổ chức phòng ban.
 
-### **3.4. Phân hệ M04 - Notification Service**
+### **3.4. Service dùng chung - Notification Service**
 * Quản lý và phát thông báo nội bộ hệ thống (In-app Notifications) cho Sinh viên và Nhân viên khi Ticket có sự thay đổi trạng thái hoặc nhận phản hồi mới.
 
-### **3.5. Phân hệ M05 - RBAC & Security Module**
+### **3.5. Service dùng chung - RBAC & Security**
 * Quản lý xác thực JWT / Session Token.
 * Kiểm soát quyền truy cập theo vai trò (Role-Based Access Control).
 * Kiểm soát an toàn tệp đính kèm: Chỉ cho phép tài khoản liên quan (Sinh viên sở hữu Ticket, Nhân viên phòng ban xử lý, Quản lý) được tải hoặc xem file.
@@ -104,7 +104,7 @@ Backend của UniSupport được chia thành **5 mô-đun nghiệp vụ chính*
 ### **4.2. Lưu trữ Tệp đính kèm (Attachment Storage)**
 * Tệp đính kèm (PDF, PNG, JPG) được lưu trữ tại cấu trúc thư mục bảo mật trên Server.
 * Tên file được mã hóa/đổi tên ngẫu nhiên (UUID) để tránh dò quét trực tiếp.
-* Không công khai URL trực tiếp (Public Storage); mọi yêu cầu xem/tải file phải đi qua API kiểm tra quyền ở Phân hệ M05.
+* Không công khai URL trực tiếp (Public Storage); mọi yêu cầu xem/tải file phải đi qua API kiểm tra quyền của service RBAC & Security dùng chung.
 
 ---
 

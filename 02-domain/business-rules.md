@@ -42,7 +42,7 @@ Tài liệu này tổng hợp toàn bộ các Quy tắc nghiệp vụ (Business 
 - **Nội dung**: Bảo vệ KPI xử lý của nhân viên khi nguyên nhân chậm trễ do sinh viên chưa cung cấp đủ hồ sơ.
 - **Quy tắc**:
   - Khi nhân viên phát yêu cầu bổ sung, trạng thái chuyển sang `WAITING_STUDENT`.
-  - Bộ đếm thời gian SLA (SLA Timer) tạm thời **ĐỪNG/TẠM DỪNG**.
+  - Bộ đếm thời gian SLA (SLA Timer) tạm thời **tạm dừng**.
   - Ngay khi sinh viên gửi câu trả lời hoặc đăng tải file bổ sung, trạng thái tự động chuyển về `IN_PROGRESS` và bộ đếm SLA tiếp tục chạy tiếp.
 
 ---

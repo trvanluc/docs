@@ -1,4 +1,6 @@
-# Tài Liệu Đặc Tả Yêu Cầu Sản Phẩm - Dịch Vụ Thông Báo (PRD - M04 Notification Service)
+# Tài Liệu Đặc Tả Yêu Cầu - Thông Báo Nội Bộ Dùng Chung (Notification Service)
+
+> Ghi chú: Notification Service là năng lực dùng chung trong phạm vi 3 phân hệ chính M01-M03 theo proposal và bảng chi phí nội bộ đã chốt; không tách thành module bàn giao/effort độc lập.
 
 ---
 

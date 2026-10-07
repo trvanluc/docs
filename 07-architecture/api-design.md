@@ -21,7 +21,11 @@ Tài liệu này chuẩn hóa quy cách thiết kế RESTful API cho toàn bộ 
   "message": "Thao tác thành công",
   "data": { ... }
 }
-Response Phân trang (Pagination Response):JSON{
+```
+
+#### Response Phân trang (Pagination Response):
+```json
+{
   "success": true,
   "code": 200,
   "data": [ ... ],
@@ -32,7 +36,11 @@ Response Phân trang (Pagination Response):JSON{
     "total_pages": 5
   }
 }
-Response Lỗi (400 Bad Request, 401 Unauthorized, 403 Forbidden, 500 Internal Error):JSON{
+```
+
+#### Response Lỗi (`400 Bad Request`, `401 Unauthorized`, `403 Forbidden`, `500 Internal Error`):
+```json
+{
   "success": false,
   "code": 400,
   "error_code": "INVALID_INPUT",
@@ -69,7 +77,7 @@ Response Lỗi (400 Bad Request, 401 Unauthorized, 403 Forbidden, 500 Internal E
 
 | Method | Endpoint | Quyền truy cập | Mô tả |
 | --- | --- | --- | --- |
-| **GET** | `/staff/tickets` | Staff, Management | Lấy danh sách Ticket thuộc phòng ban phụ trách |
+| **GET** | `/staff/tickets` | Staff, Manager/Admin | Lấy danh sách Ticket thuộc phòng ban phụ trách |
 | **POST** | `/staff/tickets/{id}/claim` | Staff | Nhận phụ trách (Claim) Ticket |
 | **PATCH** | `/staff/tickets/{id}/triage` | Staff | Phân loại & cập nhật độ ưu tiên Ticket |
 | **POST** | `/staff/tickets/{id}/transfer` | Staff | Chuyển Ticket sang phòng ban khác |
@@ -80,8 +88,8 @@ Response Lỗi (400 Bad Request, 401 Unauthorized, 403 Forbidden, 500 Internal E
 
 | Method | Endpoint | Quyền truy cập | Mô tả |
 | --- | --- | --- | --- |
-| **GET** | `/management/dashboard/overview` | Management | Số liệu tổng quan (Ticket mới, đang xử lý, quá hạn) |
-| **GET** | `/management/dashboard/metrics` | Management | Báo cáo SLA, thời gian xử lý trung bình, điểm đánh giá |
-| **GET** | `/management/users` | Management | Danh sách tài khoản hệ thống |
-| **POST** | `/management/users` | Management | Tạo tài khoản mới & phân quyền vai trò |
-| **PATCH** | `/management/users/{id}` | Management | Cập nhật thông tin/trạng thái tài khoản |
+| **GET** | `/management/dashboard/overview` | Manager/Admin | Số liệu tổng quan (Ticket mới, đang xử lý, quá hạn) |
+| **GET** | `/management/dashboard/metrics` | Manager/Admin | Báo cáo SLA, thời gian xử lý trung bình, điểm đánh giá |
+| **GET** | `/management/users` | Admin | Danh sách tài khoản hệ thống |
+| **POST** | `/management/users` | Admin | Tạo tài khoản mới & phân quyền vai trò |
+| **PATCH** | `/management/users/{id}` | Admin | Cập nhật thông tin/trạng thái tài khoản |

@@ -15,18 +15,20 @@ Phân hệ **Sinh viên (Student Portal)** là điểm giao tiếp số duy nh�
 
 ---
 
-## 3. Danh Mục Yêu Cầu Chức Năng & Phân Rã Effort (Functional Requirements & Effort Decomposition)
+## 3. Danh Mục Yêu Cầu Chức Năng & Phân Rã Effort Theo Bảng Chi Phí Nội Bộ
 
-*Tổng Effort Baseline M01: **128 giờ***
+*Tổng Effort kế hoạch M01: **128 giờ***
 
-| Mã Yêu Cầu | Tên Chức Năng | Tóm Tắt Nghiệp Vụ | Effort Dự Kiến (Giờ) |
-| :--- | :--- | :--- | :---: |
-| **FR-STU-01** | Đăng nhập hệ thống | Sinh viên đăng nhập bằng tài khoản cá nhân do nhà trường cấp. | **16h** |
-| **FR-STU-02** | Gửi yêu cầu hỗ trợ | Chọn nhóm vấn đề, mô tả tình huống, tải file đính kèm (PDF/Ảnh), nhận Mã Ticket duy nhất. | **36h** |
-| **FR-STU-03** | Xem tiến độ & Lịch sử Ticket | Xem danh sách Ticket đã gửi, trạng thái thời gian thực (`NEW`, `IN_PROGRESS`, `WAITING_STUDENT`, `RESOLVED`, `CLOSED`), nhật ký trao đổi. | **32h** |
-| **FR-STU-04** | Bổ sung thông tin / Hồ sơ | Cập nhật câu trả lời hoặc đăng tải thêm giấy tờ minh chứng khi nhân viên yêu cầu bổ sung. | **20h** |
-| **FR-STU-05** | Xem kết quả & Đánh giá (CSAT) | Xem nội dung/file kết quả giải quyết, thực hiện chấm điểm hài lòng (1-5 sao) và để lại phản hồi. | **24h** |
-| **TỔNG CỘNG** | | | **128h** |
+| Gói việc | Tóm Tắt Nghiệp Vụ | Effort |
+| :--- | :--- | :---: |
+| **Tra cứu hướng dẫn & FAQ** | Sinh viên tra cứu hướng dẫn/FAQ cơ bản trước hoặc trong quá trình tạo yêu cầu hỗ trợ. | **14h** |
+| **Tạo & gửi yêu cầu hỗ trợ** | Chọn nhóm vấn đề, mô tả tình huống, tải file đính kèm (PDF/Ảnh), nhận Mã Ticket duy nhất. | **37h** |
+| **Xem & theo dõi yêu cầu** | Xem danh sách Ticket đã gửi, trạng thái hiện tại, phòng ban/người phụ trách và lịch sử cập nhật. | **33h** |
+| **Nhận thông báo trạng thái** | Nhận thông báo nội bộ khi Ticket được tiếp nhận, yêu cầu bổ sung, chuyển trạng thái hoặc hoàn tất. | **19h** |
+| **Bổ sung thông tin & phản hồi** | Cập nhật câu trả lời hoặc đăng tải thêm giấy tờ minh chứng khi nhân viên yêu cầu bổ sung. | **25h** |
+| **Tổng M1 - Student** | | **128h** |
+
+Ghi chú: Đăng nhập, xem kết quả và đánh giá CSAT vẫn thuộc phạm vi M01 theo proposal; trong bảng chi phí nội bộ, các phần này được gộp vào các gói việc Student tương ứng thay vì tách thành dòng effort riêng.
 
 ---
 

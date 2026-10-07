@@ -17,20 +17,20 @@ Tài liệu này chi tiết hóa kiến trúc bảo mật của hệ thống **U
 
 ## 👥 2. Ma trận Phân quyền Vai trò (RBAC Matrix)
 
-Hệ thống UniSupport định nghĩa **3 Vai trò chính (Roles)** với phạm vi quyền thao tác rõ ràng:
+Hệ thống UniSupport định nghĩa các vai trò chính với phạm vi quyền thao tác rõ ràng:
 
-| Phân hệ / Chức năng | Sinh viên (`STUDENT`) | Nhân viên (`STAFF`) | Quản lý (`MANAGEMENT`) |
-| :--- | :---: | :---: | :---: |
-| **Đăng nhập hệ thống** |  |  |  |
-| **Gửi Ticket & Up file** |  (Chỉ của mình) | ❌ | ❌ |
-| **Xem danh sách Ticket** |  (Chỉ của mình) |  (Thuộc Phòng ban) |  (Toàn trường) |
-| **Tiếp nhận / Phân loại** | ❌ |  |  |
-| **Chuyển phòng ban** | ❌ |  |  |
-| **Yêu cầu bổ sung hồ sơ** | ❌ |  | ❌ |
-| **Cập nhật kết quả / Đóng**| ❌ |  | ❌ |
-| **Đánh giá hài lòng** |  (Ticket của mình) | ❌ | ❌ |
-| **Xem Dashboard Báo cáo** | ❌ | ❌ |  |
-| **Quản trị Tài khoản/Quyền**| ❌ | ❌ |  |
+| Phân hệ / Chức năng | Sinh viên (`STUDENT`) | Nhân viên (`STAFF`) | Quản lý (`MANAGER`) | Quản trị viên (`ADMIN`) |
+| :--- | :---: | :---: | :---: | :---: |
+| **Đăng nhập hệ thống** | Có | Có | Có | Có |
+| **Gửi Ticket & Upload file** | Có (chỉ của mình) | Không | Không | Không |
+| **Xem danh sách Ticket** | Chỉ Ticket của mình | Thuộc phòng ban | Theo phạm vi quản lý | Toàn hệ thống |
+| **Tiếp nhận / Phân loại** | Không | Có | Có | Có |
+| **Chuyển phòng ban** | Không | Có | Có | Có |
+| **Yêu cầu bổ sung hồ sơ** | Không | Có | Có | Có |
+| **Cập nhật kết quả / Đóng**| Không | Có | Có | Có |
+| **Đánh giá hài lòng** | Có (Ticket của mình) | Không | Không | Không |
+| **Xem Dashboard Báo cáo** | Không | Không | Có | Có |
+| **Quản trị Tài khoản/Quyền**| Không | Không | Theo quyền được cấp | Có |
 
 ---
 

@@ -1,10 +1,10 @@
- # Phân Hệ Phân Quyền & Bảo Mật (M05 - RBAC & Security)
+# Đặc Tả Phân Quyền & Bảo Mật Dùng Chung (RBAC & Security)
 
-## 1. Tổng Quan Phân Hệ
+## 1. Tổng Quan
 
-Phân hệ **Phân Quyền & Bảo Mật (RBAC & Security)** là nền tảng hạ tầng bảo mật cốt lõi duy trì tính toàn vẹn, an toàn dữ liệu và kiểm soát truy cập cho toàn bộ hệ thống **UniSupport** tại **Aurora University**.
+**RBAC & Security** là năng lực dùng chung cho 3 phân hệ chính M01 Sinh viên, M02 Nhân viên và M03 Quản lý/Admin theo proposal đã chốt. Năng lực này duy trì tính toàn vẹn, an toàn dữ liệu và kiểm soát truy cập cho toàn bộ hệ thống **UniSupport** tại **Aurora University**.
 
-Phân hệ chịu trách nhiệm xác thực danh tính người dùng (Authentication), phân quyền thao tác theo vai trò (Role-Based Access Control - RBAC) đối với 3 vai trò chính (Sinh viên, Nhân viên, Quản lý/Admin), bảo vệ an toàn cho các tệp đính kèm (PDF, Ảnh) và lưu vết nhật ký hoạt động (Audit Log) cho các giao dịch nghiệp vụ quan trọng.
+Năng lực này chịu trách nhiệm xác thực danh tính người dùng (Authentication), phân quyền thao tác theo vai trò (Role-Based Access Control - RBAC) đối với các vai trò chính (Sinh viên, Nhân viên, Quản lý/Admin), bảo vệ an toàn cho các tệp đính kèm (PDF, Ảnh) và lưu vết nhật ký hoạt động (Audit Log) cho các giao dịch nghiệp vụ quan trọng.
 
 ---
 

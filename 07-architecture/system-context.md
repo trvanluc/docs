@@ -34,12 +34,12 @@ UniSupport là hệ thống **Web Application** đóng vai trò là đầu mối
   * Yêu cầu sinh viên bổ sung giấy tờ/thông tin.
   * Cập nhật tiến độ, ghi nhận kết quả giải quyết và đóng Ticket.
 
-### **2.3. Quản lý / Quản trị viên (Management & Admin)**
+### **2.3. Quản lý / Quản trị viên (Manager & Admin)**
 * **Mô tả:** Ban quản lý đơn vị/trường và Quản trị viên hệ thống.
 * **Tương tác:**
   * Xem Dashboard báo cáo tổng quan về khối lượng công việc, tỷ lệ Ticket đúng/quá hạn SLA.
   * Phân tích xu hướng các nhóm vấn đề sinh viên thường gặp.
-  * Quản trị tài khoản, phân quyền vai trò (Student, Staff, Management) và quản lý danh mục phòng ban.
+  * Quản trị tài khoản, phân quyền vai trò (`STUDENT`, `STAFF`, `MANAGER`, `ADMIN`) và quản lý danh mục phòng ban.
   * Tra soát nhật ký hoạt động (Audit log) cơ bản của hệ thống.
 
 ---
@@ -54,7 +54,7 @@ UniSupport là hệ thống **Web Application** đóng vai trò là đầu mối
      v                               v                               v
 +------------------+           +-------------------+           +-------------------+
 |  Sinh viên       |           |  Nhân viên        |           |  Quản lý / Admin  |
-|  (Student)       |           |  (Staff)          |           |  (Management)     |
+|  (Student)       |           |  (Staff)          |           |  (Manager/Admin)  |
 +------------------+           +-------------------+           +-------------------+
 |                               |                               |
 | HTTP / HTTPS                  | HTTP / HTTPS                  | HTTP / HTTPS
@@ -87,4 +87,4 @@ v
 
 * **Hạ tầng triển khai:** Hệ thống được vận hành hoàn toàn trên hạ tầng Server và tên miền nội bộ/Cloud do Aurora University cấp.
 * **Không kết nối SSO/Third-party:** Xác thực được thực hiện trực tiếp thông qua Cơ sở dữ liệu của UniSupport (không tích hợp LDAP/OAuth ngoài phạm vi).
-* **Truy cập tệp đính kèm:** Tệp đính kèm (Ảnh/PDF) được lưu trữ trên Server local/cloud và được kiểm soát quyền truy cập trực tiếp bởi phân hệ `M05-rbac-security`.
+* **Truy cập tệp đính kèm:** Tệp đính kèm (Ảnh/PDF) được lưu trữ trên Server local/cloud và được kiểm soát quyền truy cập trực tiếp bởi service RBAC & Security dùng chung.

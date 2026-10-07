@@ -26,29 +26,46 @@ Trước khi triển khai UniSupport, quy trình trao đổi mang tính thủ c�
 
 1. **Định danh duy nhất (Single Identifier)**: Mọi yêu cầu từ sinh viên được đóng gói thành một đơn vị nghiệp vụ gọi là **Ticket** với một mã định danh duy nhất (Ticket ID).
 2. **Phân định trách nhiệm (Ownership Assignment)**: Mỗi Ticket luôn thuộc về **01 Phòng ban phụ trách**. Sau khi trải qua bước Tiếp nhận (Claim) hoặc Phân công (Assign), Ticket mới được gắn với **01 Nhân viên thụ lý (Assignee)** chính. Ở giai đoạn khởi tạo (`NEW`) hoặc khi đang chuyển phòng ban, trường Nhân viên thụ lý có thể để trống (`NULL`).
-3. **Lưu vết minh bạch (Complete Auditability)**: Tất cả hành động (chuyển trạng thái, nhắn phản hồi, chuyển phòng ban, đăng tải file) đều được ghi nhật ký và không thể sửa/xóa.
-4. **Vòng đời trạng thái rõ ràng (Strict Lifecycle)**: Ticket chuyển đổi trạng thái dựa trên các quy tắc nghiệp vụ chặt chẽ, tránh trạng thái mập mờ hoặc treo không thời hạn.
-
+3. **Lưu vết minh bạch (Complete Auditability)**: Các thao tác quan trọng liên quan đến quá trình xử lý Ticket như thay đổi trạng thái, thay đổi đơn vị/người phụ trách, yêu cầu bổ sung và ghi nhận kết quả được lưu lại để phục vụ tra soát.
+4. **Vòng đời trạng thái rõ ràng (Strict Lifecycle)**: Ticket được quản lý theo các trạng thái và quy tắc chuyển trạng thái thống nhất trong toàn hệ thống.
 ---
 
 ## 3. Bản Đồ Tổng Quan Các Luồng Nghiệp Vụ (Business Process Map)
 ```
 [Sinh viên tạo Ticket]
-        │
-        ▼
-[Hệ thống cấp Mã Ticket & Gửi về Phòng ban]
-        │
-        ▼
-[Nhân viên tiếp nhận (Claim) / Phân công (Assign)]
-        │
-        ├───► [Cần bổ sung hồ sơ] ───► [Sinh viên cập nhật file/thông tin]
-        │                                        │
-        │                                        │
-        ├───► [Gửi nhầm phòng ban] ──► [Chuyển phòng ban chuyên trách]
-        │                                        │
-        ▼                                        ▼
-[Xử lý & Cập nhật kết quả giải quyết] ◄──────────┘
-        │
-        ▼
-[Đóng Ticket & Sinh viên đánh giá hài lòng (CSAT)]
+        |
+        v
+[Hệ thống tạo mã Ticket và ghi nhận yêu cầu]
+        |
+        v
+[Ticket được đưa vào hàng chờ xử lý]
+        |
+        v
+[Nhân viên tiếp nhận / được phân công]
+        |
+        v
+[Phân loại và xử lý Ticket]
+        |
+        +-----------------------------+
+        |                             |
+        | Cần bổ sung thông tin       | Cần chuyển đơn vị xử lý
+        v                             v
+[Nhân viên yêu cầu bổ sung]     [Chuyển phòng ban / người phụ trách]
+        |                             |
+        v                             v
+[Sinh viên bổ sung thông tin]   [Đơn vị/người phụ trách mới tiếp nhận]
+        |                             |
+        +-------------+---------------+
+                      |
+                      v
+             [Tiếp tục xử lý Ticket]
+                      |
+                      v
+             [Ghi nhận kết quả xử lý]
+                      |
+                      v
+                [Đóng Ticket]
+                      |
+                      v
+         [Sinh viên xem kết quả và đánh giá]
 ```

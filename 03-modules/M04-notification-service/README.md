@@ -1,8 +1,8 @@
-# Dịch Vụ Thông Báo (M04 - Notification Service)
+# Đặc Tả Thông Báo Nội Bộ (Notification Service dùng chung)
 
-## 1. Tổng Quan Phân Hệ
+## 1. Tổng Quan
 
-Phân hệ **Dịch vụ Thông báo (Notification Service)** đóng vai trò là kênh truyền tải thông tin trung gian theo thời gian thực trong hệ thống **UniSupport**. Phân hệ chịu trách nhiệm tự động phát sinh, quản lý và hiển thị các thông báo nội bộ hệ thống (In-app Notification) tới đúng đối tượng người dùng (Sinh viên, Nhân viên, Quản lý) mỗi khi có sự kiện quan trọng phát sinh trên Ticket hỗ trợ.
+**Notification Service** là năng lực dùng chung cho 3 phân hệ chính M01 Sinh viên, M02 Nhân viên và M03 Quản lý/Admin theo proposal đã chốt. Service chịu trách nhiệm tự động phát sinh, quản lý và hiển thị các thông báo nội bộ hệ thống (In-app Notification) tới đúng đối tượng người dùng mỗi khi có sự kiện quan trọng phát sinh trên Ticket hỗ trợ.
 
 ---
 

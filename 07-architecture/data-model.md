@@ -71,7 +71,7 @@ Tài liệu này mô tả chi tiết mô hình dữ liệu quan hệ (Relational
 | **email** | VARCHAR(100) | Unique, Not Null | Email cá nhân/trường |
 | **password_hash** | VARCHAR(255) | Not Null | Mật khẩu mã hóa (Bcrypt) |
 | **full_name** | VARCHAR(100) | Not Null | Họ và tên |
-| **role** | ENUM | Not Null | Vai trò: `'STUDENT'`, `'STAFF'`, `'MANAGEMENT'` |
+| **role** | ENUM | Not Null | Vai trò: `'STUDENT'`, `'STAFF'`, `'MANAGER'`, `'ADMIN'` |
 | **status** | VARCHAR(20) | Default `'ACTIVE'` | Trạng thái tài khoản (ACTIVE, INACTIVE) |
 | **created_at** | TIMESTAMP | Default NOW() | Thời gian khởi tạo |
 
@@ -87,9 +87,12 @@ Tài liệu này mô tả chi tiết mô hình dữ liệu quan hệ (Relational
 | **department_id** | UUID / BIGINT | Foreign Key (`departments.id`), Nullable | Phòng ban tiếp nhận xử lý |
 | **assigned_staff_id**| UUID / BIGINT | Foreign Key (`users.id`), Nullable | Nhân viên trực tiếp phụ trách |
 | **priority** | ENUM | Default `'MEDIUM'` | Mức độ ưu tiên: `'LOW'`, `'MEDIUM'`, `'HIGH'`, `'URGENT'` |
-| **status** | ENUM | Default `'NEW'` | Trạng thái: `'NEW'`, `'IN_PROGRESS'`, `'WAITING_STUDENT'`, `'RESOLVED'`, `'CLOSED'` |
+| **status** | ENUM | Default `'NEW'` | Trạng thái: `'NEW'`, `'IN_PROGRESS'`, `'WAITING_STUDENT'`, `'RESOLVED'`, `'CLOSED'`, `'CANCELLED'` |
 | **title** | VARCHAR(255) | Not Null | Tiêu đề yêu cầu |
 | **description** | TEXT | Not Null | Nội dung chi tiết |
+| **sla_due_at** | TIMESTAMP | Nullable | Thời hạn xử lý cam kết theo mức ưu tiên |
+| **resolved_at** | TIMESTAMP | Nullable | Thời điểm Ticket được xử lý xong |
+| **closed_at** | TIMESTAMP | Nullable | Thời điểm Ticket được đóng hoàn tất |
 | **created_at** | TIMESTAMP | Default NOW() | Thời điểm gửi Ticket |
 | **updated_at** | TIMESTAMP | Default NOW() | Thời điểm cập nhật cuối |
 

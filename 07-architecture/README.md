@@ -25,7 +25,7 @@ Thư mục này chứa toàn bộ các tài liệu thiết kế kiến trúc k�
    * Áp dụng mô hình **RBAC (Role-Based Access Control)** nghiêm ngặt cho 3 vai trò: Sinh viên, Nhân viên, Quản lý.
    * Kiểm soát quyền truy cập chi tiết đến từng đối tượng Ticket và tệp đính kèm (PDF, PNG/JPG).
 3. **Mô-đun hóa cao (Modular Monolith):**
-   * Cấu trúc Backend phân tách rõ ràng giữa các Module nghiệp vụ (Student, Staff, Management, Notification, RBAC) giúp dễ dàng bảo trì, mở rộng và bàn giao source code.
+   * Cấu trúc Backend phân tách rõ ràng giữa 3 module nghiệp vụ đã chốt trong proposal (Student, Staff, Management/Admin), kèm các service dùng chung cho Notification, RBAC và Audit Log.
 4. **Phù hợp hạ tầng Client:**
    * Tối ưu hóa việc đóng gói và triển khai (Docker Containerized / Node.js Runtime) nhằm đáp ứng linh hoạt trên hạ tầng máy chủ nội bộ hoặc Cloud do Aurora University cung cấp.
 

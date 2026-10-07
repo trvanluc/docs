@@ -10,10 +10,10 @@ Tài liệu chi tiết hóa lộ trình triển khai dự án **UniSupport** qua
 | :--- | :---: | :--- | :--- |
 | **Giai đoạn 1: Thu thập yêu cầu** | Tuần 1–2 | Thu thập & phân tích nghiệp vụ, làm rõ quy trình Ticket, xác định phạm vi E2E và tiêu chí nghiệm thu từng Vertical Slice. | Tài liệu PRD, Wireframe/SRS hoàn chỉnh |
 | **Giai đoạn 2: Thiết kế Kiến trúc & Nền tảng** | Tuần 3–4 | Thiết kế UI/UX System, Kiến trúc hệ thống, Database Schema cốt lõi, RBAC Security Base & Dựng Khung ứng dụng (FE/BE Boilerplate). | UI/UX Prototype, Architecture Docs, Base Source Code (FE + BE) |
-| **Giai đoạn 3: Phát triển theo Vertical Slice (Feature Slices)** | Tuần 5–9 | Phát triển trọn gói End-to-End (DB + BE API + FE UI + Auto/Manual Test) cho từng luồng nghiệp vụ: <br>• **Tuần 5–6 (Slice 1 - Luồng Sinh viên):** Đăng nhập RBAC, Tạo ticket, Theo dõi & Đánh giá trạng thái Ticket.<br>• **Tuần 7–8 (Slice 2 - Luồng Nhân viên):** Tiếp nhận ticket, Xử lý/Phân công, Phản hồi & Đóng ticket E2E.<br>• **Tuần 9 (Slice 3 - Luồng Quản lý):** Dashboard báo cáo, Thống kê SLA, Quản lý danh mục & Cấu hình hệ thống. | Source code các Feature Slices 1, 2, 3 hoàn chỉnh có thể chạy & demo E2E |
-| **Giai đoạn 4: Tích hợp Cross-Slice & Testing Chuyên sâu** | Tuần 10–12 | Tích hợp liên luồng (Cross-Slice Integration), Hoàn thiện Notification Service, Kiểm thử bảo mật RBAC, Kiểm thử hiệu năng (Load Test) và Kiểm thử hồi quy toàn hệ thống (Regression Testing). | Hệ thống UniSupport hoàn chỉnh & Báo cáo kiểm thử nội bộ (Internal QA/QC) |
-| **Giai đoạn 5: Hoàn thiện & Triển khai Staging** | Tuần 13 | Sửa lỗi nội bộ, tối ưu hóa truy vấn DB/API, đóng gói Docker/CI-CD và triển khai hệ thống lên môi trường Staging/Pre-production của Client. | Môi trường Staging hoàn thiện sẵn sàng cho UAT |
-| **Giai đoạn 6: Bàn giao & Triển khai Production** | Tuần 14 | Triển khai chính thức lên môi trường Production của Client, bàn giao toàn bộ tài liệu hướng dẫn và mã nguồn để bắt đầu giai đoạn UAT. | Hệ thống running Production, Biên bản bàn giao |
+| **Giai đoạn 3: Phát triển chính** | Tuần 5–9 | Phát triển 3 phân hệ đã chốt trong proposal: <br>• **Tuần 5–6 - Module Sinh viên:** Đăng nhập, gửi yêu cầu hỗ trợ, theo dõi trạng thái, nhận kết quả và đánh giá.<br>• **Tuần 7–8 - Module Nhân viên:** Tiếp nhận, phân loại, phân công, xử lý yêu cầu và cập nhật tiến độ.<br>• **Tuần 9 - Module Quản lý/Admin:** Thống kê, báo cáo, quản trị tài khoản và phân quyền. | Source code 3 phân hệ chính hoàn chỉnh có thể chạy & demo nội bộ |
+| **Giai đoạn 4: Tích hợp hệ thống** | Tuần 10–11 | Tích hợp giao diện và backend, xây dựng dashboard/báo cáo, hoàn thiện thông báo nội bộ và kiểm tra phân quyền truy cập. | Hệ thống UniSupport tích hợp đầy đủ trên môi trường kiểm thử |
+| **Giai đoạn 5: Kiểm thử & Nghiệm thu** | Tuần 12–13 | Kiểm thử chức năng, kiểm thử tích hợp, kiểm thử hồi quy, UAT với client và sửa lỗi thuộc phạm vi. | Báo cáo kiểm thử/UAT, danh sách lỗi và kết quả khắc phục |
+| **Giai đoạn 6: Hoàn thiện & Bàn giao** | Tuần 14 | Sửa lỗi cuối, triển khai hệ thống, hoàn thiện tài liệu, mã nguồn và bàn giao chính thức. | Hệ thống triển khai, tài liệu bàn giao, biên bản bàn giao |
 
 ---
 
@@ -22,17 +22,17 @@ Tài liệu chi tiết hóa lộ trình triển khai dự án **UniSupport** qua
 * **Mốc 0 (Tuần 1):** Ký hợp đồng hợp tác và đặt cọc triển khai dự án.
 * **Mốc 1 (Cuối Tuần 2):** Chốt tài liệu Phạm vi & Yêu cầu nghiệp vụ (PRD).
 * **Mốc 2 (Cuối Tuần 4):** Phê duyệt Thiết kế giao diện (UI/UX Prototype), Kiến trúc hệ thống và dựng xong Nền tảng dự án (Boilerplate).
-* **Mốc 3 (Cuối Tuần 9):** Hoàn thành phát triển 3 luồng nghiệp vụ cốt lõi (Vertical Slices) & Demo E2E nội bộ từng luồng.
-* **Mốc 4 (Cuối Tuần 12):** Hoàn thành tích hợp Cross-slice và kết thúc đợt kiểm thử nội bộ (Internal QA/QC).
-* **Mốc 5 (Cuối Tuần 14):** Bàn giao chính thức hệ thống Production, tài liệu và mã nguồn; bắt đầu thời gian 10 ngày kiểm thử UAT cùng Aurora University.
+* **Mốc 3 (Cuối Tuần 9):** Hoàn thành phát triển 3 phân hệ chính và demo nội bộ.
+* **Mốc 4 (Tuần 13):** Hoàn thành UAT và tổng hợp kết quả phản hồi từ client.
+* **Mốc 5 (Tuần 14):** Hoàn tất xử lý lỗi thuộc phạm vi, triển khai và bàn giao chính thức.
 
 ---
 
 ## 🏁 3. Quy trình Nghiệm thu & Bảo hành
 
-### **3.1. Quy trình Nghiệm thu (10 ngày làm việc - Sau 14 tuần phát triển)**
+### **3.1. Quy trình Nghiệm thu (10 ngày làm việc - Sau bàn giao chính thức)**
 1. **Bàn giao chính thức (Cuối Tuần 14):** Đơn vị phát triển bàn giao phần mềm đã triển khai trên hạ tầng Production của Client và đầy đủ bộ tài liệu.
-2. **Thực hiện kiểm thử UAT (10 ngày làm việc / Tuần 15–16):** Aurora University tiến hành kiểm thử chấp nhận người dùng dựa trên kịch bản UAT E2E và chốt danh sách phản hồi. Đội ngũ phát triển phối hợp hỗ trợ và khắc phục các lỗi phát sinh trong thời gian này.
+2. **Thực hiện nghiệm thu chính thức (10 ngày làm việc sau bàn giao):** Aurora University tiến hành kiểm thử chấp nhận người dùng theo kịch bản UAT đã thống nhất và chốt danh sách phản hồi. Thời gian này được tính sau thời điểm bàn giao, đúng theo proposal.
 3. **Tiêu chí đạt nghiệm thu:**
    * Các luồng nghiệp vụ E2E (Sinh viên, Nhân viên, Quản lý) hoạt động chính xác theo kịch bản.
    * Phân quyền RBAC hoạt động chính xác theo vai trò trên từng chức năng.
