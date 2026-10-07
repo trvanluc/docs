@@ -1,5 +1,20 @@
 # Tài Liệu Đặc Tả Yêu Cầu Sản Phẩm - Phân Hệ Sinh Viên (PRD - M01 Student Portal)
 
+## 1. Tổng Quan Phân Hệ & Cơ Cấu Effort Baseline
+
+Phân hệ **Sinh viên (Student Portal)** là điểm giao tiếp số duy nhất dành cho khoảng 3.000 sinh viên tại **Aurora University**. Phân hệ này cho phép sinh viên khởi tạo, theo dõi, tương tác và đánh giá toàn bộ các yêu cầu hỗ trợ (Ticket) từ hành chính, đào tạo, học phí cho đến kỹ thuật.
+
+### Bảng Phân Rã Chức Năng & Baseline Effort (Tổng: 128h)
+
+| Mã FR | Tên Chức Năng | Tóm Tắt Scope Nghiệp Vụ | Effort (Giờ) |
+| :--- | :--- | :--- | :---: |
+| **FR-STU-01** | Đăng nhập tài khoản Sinh viên | Đăng nhập xác thực tài khoản sinh viên do nhà trường cấp. | **16h** |
+| **FR-STU-02** | Gửi yêu cầu hỗ trợ | Chọn loại dịch vụ, nhập thông tin, đính kèm file, sinh Mã Ticket duy nhất. | **36h** |
+| **FR-STU-03** | Xem tiến độ & Lịch sử xử lý Ticket | Lọc/xem danh sách Ticket cá nhân, chi tiết timeline xử lý real-time. | **32h** |
+| **FR-STU-04** | Phản hồi & Bổ sung thông tin / Hồ sơ | Cập nhật câu trả lời/file minh chứng khi Ticket ở trạng thái `WAITING_STUDENT`. | **20h** |
+| **FR-STU-05** | Xem kết quả giải quyết & Đánh giá (CSAT) | Xem kết quả xử lý chính thức, tải file đáp ứng, chấm điểm CSAT (1-5 sao). | **24h** |
+| **TỔNG CỘNG** | | | **128h** |
+
 ---
 
 ### [FR-STU-01] Đăng nhập tài khoản Sinh viên
@@ -105,7 +120,7 @@ Sinh viên đã đăng nhập vào hệ thống.
 **Luồng chính**  
 1. Sinh viên truy cập vào mục **Danh sách Ticket của tôi**.
 2. Hệ thống hiển thị danh sách tất cả các Ticket sinh viên đã gửi, sắp xếp theo thời gian tạo mới nhất.
-3. Sinh viên xem được các thông tin tóm tắt: Mã Ticket, Tiêu đề, Ngày tạo, Phòng ban phụ trách, Trạng thái hiện tại.
+3. Sinh viên xem được các thông tin tóm tắt: Mã Ticket, Tiêu đề, Ngày tạo, Phòng ban phụ trách, Trạng thái hiện tại (`NEW`, `IN_PROGRESS`, `WAITING_STUDENT`, `RESOLVED`, `CLOSED`).
 4. Sinh viên nhấn vào một Ticket cụ thể để xem **Chi tiết Ticket**.
 5. Hệ thống hiển thị toàn bộ nội dung yêu cầu, file đính kèm, thông tin nhân viên thụ lý (nếu có) và dòng thời gian (Timeline) các bước xử lý.
 
@@ -142,16 +157,14 @@ Sinh viên đã đăng nhập vào hệ thống.
 - Ticket tương ứng đang ở trạng thái `WAITING_STUDENT`.
 
 **Luồng chính**  
-1. Sinh viên nhận thông báo Ticket yêu cầu bổ sung thông tin.
-2. Sinh viên mở màn hình Chi tiết Ticket.
-3. Sinh viên xem nội dung ghi chú/yêu cầu từ nhân viên.
-4. Sinh viên nhập câu trả lời bổ sung vào khung phản hồi.
-5. Sinh viên chọn file đính kèm mới (nếu nhân viên yêu cầu bổ sung giấy tờ).
-6. Sinh viên nhấn nút **Gửi phản hồi bổ sung**.
-7. Hệ thống lưu nội dung phản hồi, lưu file đính kèm bổ sung.
-8. Hệ thống tự động chuyển trạng thái Ticket từ `WAITING_STUDENT` về `IN_PROGRESS`.
-9. Bộ đếm thời gian SLA xử lý của nhân viên tiếp tục chạy lại.
-10. Hệ thống phát thông báo tới Nhân viên phụ trách.
+1. Sinh viên mở màn hình Chi tiết Ticket đang ở trạng thái `WAITING_STUDENT`.
+2. Sinh viên xem nội dung ghi chú/yêu cầu bổ sung từ nhân viên.
+3. Sinh viên nhập câu trả lời bổ sung vào khung phản hồi.
+4. Sinh viên chọn file đính kèm mới (nếu nhân viên yêu cầu bổ sung giấy tờ/ảnh chụp).
+5. Sinh viên nhấn nút **Gửi phản hồi bổ sung**.
+6. Hệ thống lưu nội dung phản hồi, lưu file đính kèm bổ sung.
+7. Hệ thống tự động chuyển trạng thái Ticket từ `WAITING_STUDENT` về `IN_PROGRESS`.
+8. Bộ đếm thời gian SLA xử lý của nhân viên tiếp tục chạy lại.
 
 **Business Rules**  
 - Tính năng gửi bổ sung chỉ kích hoạt khi Ticket ở trạng thái `WAITING_STUDENT`.
