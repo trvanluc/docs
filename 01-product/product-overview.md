@@ -1,47 +1,62 @@
-# Tổng Quan Sản Phẩm - UniSupport (Product Overview)
+# Tổng quan sản phẩm - UniSupport
 
-## 1. Tóm Tắt Dự Án (Executive Summary)
-**UniSupport** là hệ thống Web Application quản lý và hỗ trợ sinh viên tập trung được phát triển dành riêng cho **Aurora University**. Hệ thống ra đời nhằm chuẩn hóa toàn bộ quy trình tiếp nhận, phân loại, điều phối và xử lý các yêu cầu hỗ trợ từ sinh viên, thay thế cho các kênh truyền thống rời rạc (email cá nhân/phòng ban, form trực tuyến, tin nhắn rải rác).
+## 1. Tóm tắt
 
-Hệ thống phục vụ quy mô khoảng **3.000 sinh viên** cùng đội ngũ nhân viên vận hành và ban quản lý nhà trường, hướng tới mục tiêu tối ưu hóa thời gian xử lý yêu cầu, nâng cao tính minh bạch và nâng cao mức độ hài lòng của sinh viên.
+**UniSupport** là Web Application hỗ trợ Aurora University quản lý tập trung quy trình tiếp nhận, xử lý, theo dõi và đánh giá các yêu cầu hỗ trợ sinh viên. Hệ thống phục vụ quy mô khoảng **3.000 sinh viên**, cùng đội ngũ nhân viên phòng ban và nhóm quản lý nhà trường.
 
----
+Tài liệu PRD/specification này dùng proposal đã nộp làm baseline scope. Các chi tiết cần thiết để triển khai baseline được đánh dấu **Derived**. Các hạng mục chỉ xuất hiện trong bảng effort nội bộ hoặc cần xác nhận thêm được đánh dấu **Proposed** hoặc **TBD**.
 
-## 2. Bối Cảnh & Tầm Nhìn Dự Án (Context & Vision)
+## 2. Bối cảnh
 
-### 2.1 Bối cảnh
-Tại Aurora University, công tác hỗ trợ sinh viên (thủ tục hành chính, xác nhận học tập, miễn giảm học phí, tư vấn đào tạo, hỗ trợ kỹ thuật...) đang được thực hiện qua nhiều kênh thủ công. Điều này dẫn đến tình trạng trôi thông tin, xử lý trùng lặp, thiếu công cụ theo dõi tiến độ và gây khó khăn cho Ban giám hiệu trong việc đánh giá hiệu suất vận hành của các phòng ban.
+Trước UniSupport, sinh viên gửi yêu cầu qua nhiều kênh như email, điện thoại, biểu mẫu trực tuyến, tin nhắn mạng xã hội hoặc trao đổi trực tiếp. Cách vận hành này làm phát sinh các vấn đề:
 
-### 2.2 Tầm nhìn sản phẩm
-Trở thành **đầu mối giao tiếp số duy nhất** giữa Sinh viên và Các phòng ban chức năng tại Aurora University. Tất cả yêu cầu hỗ trợ đều được định danh bằng mã Ticket duy nhất, luồng xử lý được chuẩn hóa minh bạch, số liệu báo cáo được cập nhật theo thời gian thực.
+- Sinh viên khó biết cần liên hệ phòng ban nào.
+- Sinh viên khó theo dõi yêu cầu đã được tiếp nhận, ai đang xử lý và tiến độ hiện tại.
+- Nhân viên phải xử lý yêu cầu từ nhiều kênh, dễ bỏ sót hoặc xử lý trùng.
+- Quản lý thiếu dữ liệu đáng tin cậy để theo dõi workload, thời gian xử lý và chất lượng dịch vụ.
 
----
+## 3. Mục tiêu sản phẩm
 
-## 3. Các Phân Hệ Chính Theo Proposal Đã Chốt
+| ID | Mục tiêu | Trạng thái |
+| :--- | :--- | :--- |
+| **G-01** | Tập trung hóa các yêu cầu hỗ trợ trực tuyến của sinh viên vào một hệ thống chung. | Baseline |
+| **G-02** | Giúp sinh viên theo dõi trạng thái, lịch sử cập nhật và kết quả xử lý của yêu cầu. | Baseline |
+| **G-03** | Hỗ trợ nhân viên tiếp nhận, phân loại, điều phối và cập nhật tiến độ xử lý rõ ràng hơn. | Baseline |
+| **G-04** | Cung cấp dashboard/báo cáo để quản lý theo dõi khối lượng công việc, xu hướng vấn đề và phản hồi sinh viên. | Baseline |
+| **G-05** | Bảo vệ dữ liệu theo vai trò, giới hạn quyền xem file đính kèm và lưu vết các thao tác quan trọng để tra soát. | Baseline |
 
-Theo proposal và bảng chi phí nội bộ đã chốt, phạm vi bàn giao chính của UniSupport gồm **3 phân hệ sản phẩm**. Các yêu cầu về thông báo, bảo mật, phân quyền và audit log là năng lực hỗ trợ/xuyên suốt được triển khai trong 3 phân hệ này, không tách thành module bàn giao độc lập trong bảng chi phí.
+## 4. Phân hệ sản phẩm
 
-| Mã Phân Hệ | Tên Phân Hệ | Chức Năng Cốt Lõi | Effort kế hoạch |
-| :--- | :--- | :--- | :---: |
-| **M01** | **Sinh viên (Student Portal)** | Đăng nhập, gửi yêu cầu hỗ trợ, đính kèm file ảnh/PDF, nhận mã Ticket, theo dõi tiến độ, bổ sung hồ sơ, nhận thông báo trạng thái, xem kết quả và đánh giá mức độ hài lòng. | **128h** |
-| **M02** | **Nhân viên (Staff Operations)** | Đăng nhập, xem danh sách yêu cầu mới/được giao, tìm kiếm/lọc Ticket, tiếp nhận, phân loại, phân công, quản lý ưu tiên/SLA, yêu cầu bổ sung hồ sơ, chuyển xử lý, cập nhật tiến độ, hoàn tất/đóng/mở lại yêu cầu. | **197h** |
-| **M03** | **Quản lý / Admin (Management Dashboard)** | Dashboard tổng quan, báo cáo xu hướng và CSAT, quản lý tài khoản, vai trò, RBAC, phòng ban/danh mục, audit trail, thời hạn lưu trữ và xuất dữ liệu. | **215h** |
+Proposal đã chốt **3 business module chính**. Notification, RBAC, bảo mật file và audit log là năng lực dùng chung trong hệ thống, không phải business module độc lập.
 
-### Năng lực xuyên suốt
-- **Thông báo nội bộ hệ thống**: In-app notification khi Ticket được tạo, chuyển trạng thái, chuyển phòng ban, yêu cầu bổ sung, hoàn tất hoặc có cảnh báo SLA.
-- **Bảo mật & phân quyền**: Đăng nhập bằng tài khoản riêng, phân quyền theo vai trò, giới hạn dữ liệu theo phạm vi người dùng/phòng ban, bảo vệ file đính kèm và ghi nhận thao tác quan trọng để tra soát.
+| Mã | Phân hệ | Scope chính | Trạng thái |
+| :--- | :--- | :--- | :--- |
+| **M01** | Student Portal | Login, tạo Ticket, chọn nhóm vấn đề, mô tả yêu cầu, đính kèm ảnh/PDF, nhận mã Ticket, theo dõi tiến độ/lịch sử, bổ sung thông tin, xem kết quả/thông báo và đánh giá hài lòng. | Baseline |
+| **M02** | Staff Operations | Login, xem Ticket mới/được giao, phân loại, xem xét ưu tiên, chuyển phòng ban/người phụ trách, cập nhật trạng thái, yêu cầu bổ sung, ghi nhận kết quả và đóng Ticket. | Baseline |
+| **M03** | Management Dashboard | Login, dashboard tổng quan, theo dõi Ticket mới/đang xử lý/sắp quá hạn/quá hạn, workload theo phòng ban/nhân viên, báo cáo xu hướng, thời gian xử lý trung bình, feedback, tạo/chỉnh sửa account và gán quyền. | Baseline |
+| **Shared** | Notification | Thông báo trong hệ thống khi có thay đổi quan trọng liên quan đến Ticket. | Derived |
+| **Shared** | RBAC, Attachment Security, Audit | Kiểm soát truy cập theo vai trò/phạm vi dữ liệu, bảo vệ file đính kèm và lưu lịch sử thao tác quan trọng. | Baseline/Derived |
 
----
+## 5. Baseline dự án
 
-## 4. Hình Thức Triển Khai & Hạ Tầng
-- **Loại hình ứng dụng**: Web Application (Responsive trên Máy tính desktop và Thiết bị di động).
-- **Hạ tầng triển khai**: Triển khai trực tiếp trên hạ tầng máy chủ và tên miền do Aurora University cung cấp.
-- **Hỗ trợ ngôn ngữ**: Tiếng Việt và Tiếng Anh (mức cơ bản).
+- **Loại ứng dụng**: Web Application, responsive trên desktop/mobile browser.
+- **Quy mô phục vụ**: khoảng 3.000 sinh viên.
+- **Ngôn ngữ giao diện**: Tiếng Việt và Tiếng Anh ở mức cơ bản.
+- **Thời gian triển khai**: 14 tuần.
+- **Nghiệm thu chính thức**: 10 ngày làm việc sau bàn giao.
+- **Bảo hành kỹ thuật**: 30 ngày sau nghiệm thu.
+- **Ngân sách proposal**: 300.000.000 VNĐ.
 
----
+## 6. Ghi chú về effort nội bộ
 
-## 5. Tóm Tắt Thông Số Dự Án (Project Snapshot)
-- **Tổng kinh phí**: 300.000.000 VNĐ.
-- **Thời gian thực hiện**: 14 tuần (tương đương 70 ngày làm việc).
-- **Thời gian nghiệm thu**: 10 ngày làm việc sau bàn giao.
-- **Thời gian bảo hành kỹ thuật**: 30 ngày kể từ ngày nghiệm thu chính thức.
+Bảng chi phí/effort nội bộ dùng để kiểm tra năng lực và kế hoạch thực hiện của team:
+
+| Module effort | Effort kế hoạch |
+| :--- | :---: |
+| M1 - Student | 128h |
+| M2 - Staff | 197h |
+| M3 - Admin/Management | 215h |
+| Hoạt động cấp dự án | 100h |
+| **Tổng toàn dự án** | **640h** |
+
+Các dòng effort như FAQ, export, retention hoặc cấu hình nâng cao không tự động trở thành baseline client scope nếu proposal chưa chốt. Những nội dung này được phân loại Proposed/TBD ở các tài liệu chi tiết.

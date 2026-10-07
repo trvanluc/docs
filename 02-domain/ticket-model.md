@@ -1,72 +1,43 @@
-# Mô Hình Dữ Liệu Ticket (Ticket Data Model)
+# Mô hình nghiệp vụ Ticket
 
-## 1. Thực Thể Cốt Lõi: Ticket (Ticket Entity)
+Tài liệu này mô tả Ticket ở mức domain/business. Kiểu dữ liệu, khóa ngoại, index và bảng vật lý nằm trong `07-architecture/data-model.md`.
 
-Ticket là thực thể chính trong hệ thống UniSupport. Dưới đây là cấu trúc thuộc tính chi tiết của thực thể Ticket:
+## 1. Thuộc tính Ticket
 
-| Tên Thuộc Tính (Field) | Kiểu Dữ Liệu | Bắt Buộc | Mô Tả & Quy Tắc Dữ Liệu |
+| Thuộc tính nghiệp vụ | Mô tả | Bắt buộc | Trạng thái |
 | :--- | :--- | :---: | :--- |
-| `id` | BigInt / UUID | Có | Khóa chính tự tăng hoặc chuỗi UUID định danh đằng sau database. |
-| `ticket_code` | String(20) | Có | Mã Ticket hiển thị cho người dùng (Format: `TK-YYYYMMDD-XXXX`). Mã này là DUY NHẤT. |
-| `title` | String(255) | Có | Tiêu đề tóm tắt yêu cầu do sinh viên nhập (Tối đa 255 ký tự). |
-| `description` | Text | Có | Nội dung mô tả chi tiết vấn đề do sinh viên cung cấp. |
-| `category_id` | Integer | Có | Khóa ngoại trỏ tới Bảng Nhóm vấn đề (Category). |
-| `department_id` | Integer | Có | Khóa ngoại trỏ tới Bảng Phòng ban đang thụ lý. |
-| `created_by_student_id` | BigInt | Có | Khóa ngoại trỏ tới Bảng Sinh viên (người tạo). |
-| `assigned_staff_id` | BigInt | Không | Khóa ngoại trỏ tới Bảng Nhân viên đang thụ lý (`NULL` nếu chưa có người Claim/Assign). |
-| `status` | Enum | Có | Trạng thái hiện tại: `NEW`, `IN_PROGRESS`, `WAITING_STUDENT`, `RESOLVED`, `CLOSED`, `CANCELLED`. |
-| `priority` | Enum | Có | Mức độ ưu tiên: `LOW`, `MEDIUM`, `HIGH`, `URGENT` (Mặc định: `MEDIUM`). |
-| `resolution_note` | Text | Không | Nội dung ghi nhận kết quả giải quyết do Nhân viên nhập khi hoàn thành. |
-| `created_at` | Timestamp | Có | Thời điểm khởi tạo Ticket. |
-| `updated_at` | Timestamp | Có | Thời điểm cập nhật dữ liệu gần nhất. |
-| `first_responded_at` | Timestamp | Không | Thời điểm nhân viên phản hồi đầu tiên. |
-| `resolved_at` | Timestamp | Không | Thời điểm nhân viên đánh dấu Hoàn thành (`RESOLVED`). |
-| `closed_at` | Timestamp | Không | Thời điểm Ticket chuyển sang Đóng hoàn toàn (`CLOSED`). |
-| `sla_due_at` | Timestamp | Không | Thời hạn cam kết xử lý dựa trên độ ưu tiên và quy định phòng ban. |
+| Ticket ID | Mã định danh hiển thị cho người dùng. | Có | Baseline |
+| Student owner | Sinh viên tạo Ticket. | Có | Baseline |
+| Description | Nội dung mô tả yêu cầu của sinh viên. | Có | Baseline |
+| Category | Nhóm vấn đề sinh viên chọn hoặc Staff điều chỉnh khi phân loại. | Có | Baseline |
+| Department | Phòng ban/đơn vị đang chịu trách nhiệm xử lý. | Có sau khi Ticket được đưa vào queue | Derived/TBD |
+| Assignee | Staff đang phụ trách Ticket. Có thể trống khi Ticket mới hoặc vừa transfer. | Không | Derived |
+| Status | Trạng thái hiện tại của Ticket. | Có | Baseline |
+| Priority | Mức ưu tiên/hạn theo dõi xử lý nếu được áp dụng. | Không/TBD | Baseline/TBD |
+| Attachments | Ảnh/PDF do Student hoặc Staff đính kèm. | Không | Baseline |
+| Resolution | Kết quả xử lý do Staff ghi nhận. | Có trước khi đóng | Baseline |
+| History | Lịch sử cập nhật, bổ sung, chuyển xử lý và kết quả. | Có | Baseline |
+| CSAT rating | Đánh giá hài lòng sau khi Ticket hoàn tất. | Không | Baseline/Proposed |
+| Created/Updated time | Mốc tạo và cập nhật gần nhất. | Có | Derived |
+| Deadline/SLA data | Dữ liệu phục vụ theo dõi sắp quá hạn/quá hạn. | TBD | Baseline/TBD |
+| Title | Tiêu đề ngắn của Ticket. Proposal chưa nêu trực tiếp nhưng hữu ích cho danh sách Ticket. | Không/TBD | Derived/TBD |
 
----
+## 2. Trạng thái Ticket baseline
 
-## 2. Thực Thể Liên Quan 1: File Đính Kèm (Ticket Attachment Entity)
+| Status | Ý nghĩa |
+| :--- | :--- |
+| `NEW` | Ticket đã được tạo và đang chờ tiếp nhận/phân công. |
+| `IN_PROGRESS` | Ticket đang được Staff xử lý. |
+| `WAITING_STUDENT` | Staff đã yêu cầu bổ sung và đang chờ Student phản hồi. |
+| `RESOLVED` | Staff đã ghi nhận kết quả xử lý, chờ đóng/hoàn tất quy trình. |
+| `CLOSED` | Ticket đã đóng, Student có thể xem kết quả và đánh giá hài lòng theo rule đã xác nhận. |
 
-Lưu trữ thông tin các tệp tin đính kèm (Hình ảnh, tài liệu PDF) do Sinh viên hoặc Nhân viên tải lên.
+Các trạng thái `CANCELLED`, `REOPENED` hoặc auto-close không thuộc baseline proposal; nếu cần sẽ ghi Proposed/TBD.
 
-| Tên Thuộc Tính | Kiểu Dữ Liệu | Bắt Buộc | Mô Tả |
-| :--- | :--- | :---: | :--- |
-| `id` | BigInt | Có | Khóa chính tệp đính kèm. |
-| `ticket_id` | BigInt | Có | Khóa ngoại liên kết với Ticket. |
-| `file_name` | String(255) | Có | Tên gốc của file do người dùng tải lên (Ví dụ: `BangDiem_Ky1.pdf`). |
-| `file_path` | String(500) | Có | Đường dẫn lưu trữ file trên hệ thống/bộ nhớ bảo mật. |
-| `file_size` | Integer | Có | Dung lượng file (tính bằng Bytes, tối đa 10MB = 10,485,760 Bytes). |
-| `mime_type` | String(100) | Có | Định dạng file (`application/pdf`, `image/jpeg`, `image/png`). |
-| `uploaded_by_user_id` | BigInt | Có | ID người dùng thực hiện upload file. |
-| `created_at` | Timestamp | Có | Thời điểm upload. |
+## 3. Attachment policy
 
----
+Proposal chỉ xác nhận sinh viên có thể đính kèm **ảnh/PDF**. Các giới hạn như dung lượng tối đa, số lượng file, MIME type chi tiết và cơ chế quét file là **TBD/Proposed Engineering Target**.
 
-## 3. Thực Thể Liên Quan 2: Nhật Ký Trao Đổi / Tra Soát (Ticket Comment & Activity Log)
+## 4. Rating policy
 
-Lưu vết toàn bộ tiến trình trao đổi giữa Sinh viên và Nhân viên, cũng như các sự kiện hệ thống.
-
-| Tên Thuộc Tính | Kiểu Dữ Liệu | Bắt Buộc | Mô Tả |
-| :--- | :--- | :---: | :--- |
-| `id` | BigInt | Có | Khóa chính dòng log. |
-| `ticket_id` | BigInt | Có | Khóa ngoại trỏ tới Ticket. |
-| `sender_type` | Enum | Có | Loại người gửi: `STUDENT`, `STAFF`, `SYSTEM`. |
-| `sender_id` | BigInt | Có | ID tài khoản thực hiện thao tác. |
-| `content` | Text | Có | Nội dung tin nhắn, yêu cầu bổ sung hoặc mô tả thay đổi trạng thái tự động. |
-| `is_internal_note` | Boolean | Có | `TRUE`: Ghi chú nội bộ (chỉ nhân viên thấy); `FALSE`: Phản hồi công khai (sinh viên nhìn thấy). |
-| `created_at` | Timestamp | Có | Thời điểm ghi nhận log. |
-
----
-
-## 4. Thực Thể Liên Quan 3: Đánh Giá Hài Lòng (Ticket Rating Entity)
-
-Lưu trữ đánh giá của sinh viên sau khi Ticket được xử lý xong.
-
-| Tên Thuộc Tính | Kiểu Dữ Liệu | Bắt Buộc | Mô Tả |
-| :--- | :--- | :---: | :--- |
-| `id` | BigInt | Có | Khóa chính bản ghi đánh giá. |
-| `ticket_id` | BigInt | Có | Khóa ngoại trỏ tới Ticket (Mỗi Ticket chỉ có tối đa 01 Rating). |
-| `score` | Integer | Có | Điểm số đánh giá từ `1` đến `5` sao. |
-| `comment` | Text | Không | Phản hồi/góp ý chi tiết của sinh viên. |
-| `created_at` | Timestamp | Có | Thời điểm sinh viên thực hiện đánh giá. |
+Proposal xác nhận Student có thể đánh giá mức độ hài lòng sau khi yêu cầu hoàn tất. Thang điểm 1-5 sao là đề xuất phổ biến và được ghi **Proposed** cho đến khi được xác nhận.

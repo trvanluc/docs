@@ -1,71 +1,53 @@
-# Tổng Quan Nghiệp Vụ Hỗ Trợ Sinh Viên (Domain Overview)
+# Tổng quan nghiệp vụ hỗ trợ sinh viên
 
-## 1. Bối Cảnh Nghiệp Vụ Tại Aurora University
-Tại **Aurora University**, dịch vụ hỗ trợ sinh viên đóng vai trò cầu nối quan trọng giữa Sinh viên và các Đơn vị/Phòng ban chuyên trách trong toàn trường. Các nhóm nghiệp vụ hỗ trợ phổ biến bao gồm:
+## 1. Phạm vi domain
 
-- **Phòng Đào tạo**: Giải quyết các vấn đề đăng ký tín chỉ, miễn giảm học phần, cấp bảng điểm, xác nhận điểm, đăng ký tốt nghiệp, hoãn thi.
-- **Phòng Công tác Học sinh Sinh viên (CTHSSV)**: Xác nhận sinh viên, giải quyết chế độ chính sách, học bổng, khen thưởng, kỷ luật, thẻ sinh viên, ký túc xá.
-- **Phòng Tài chính - Kế toán**: Giải đáp thắc mắc về học phí, hóa đơn, hoàn phí, gia hạn nộp học phí.
-- **Trung tâm Công nghệ Thông tin**: Cấp lại mật khẩu tài khoản portal, lỗi kết nối Wi-Fi, hỗ trợ phần mềm học tập, email sinh viên.
-- **Thư viện & Bộ phận Khác**: Mượn trả giáo trình, cấp tài khoản thư viện số, xác nhận nghĩa vụ thư viện.
+Domain UniSupport xoay quanh một thực thể nghiệp vụ chính là **Ticket**. Ticket đại diện cho một yêu cầu hỗ trợ do sinh viên gửi tới Aurora University và được xử lý bởi nhân viên/phòng ban phù hợp.
 
----
+Tài liệu domain chỉ mô tả sự thật nghiệp vụ và quy tắc vận hành. Chi tiết database, API, token, storage hoặc framework nằm trong `07-architecture`.
 
-## 2. Mục Tiêu Chuẩn Hóa Miền Nghiệp Vụ (Domain Objectives)
+## 2. Nguyên tắc nghiệp vụ
 
-Trước khi triển khai UniSupport, quy trình trao đổi mang tính thủ công, thiếu tính nhất quán và không lưu vết. Việc chuẩn hóa miền nghiệp vụ hướng tới 4 nguyên tắc cốt lõi:
+| Nguyên tắc | Mô tả | Trạng thái |
+| :--- | :--- | :--- |
+| Định danh duy nhất | Mỗi yêu cầu hợp lệ được cấp một Ticket ID để theo dõi. | Baseline |
+| Theo dõi trạng thái | Ticket có trạng thái rõ ràng từ lúc tạo đến lúc đóng. | Baseline |
+| Phân định trách nhiệm | Ticket thuộc một phòng ban/phạm vi xử lý và có thể có một assignee khi được tiếp nhận/phân công. | Derived |
+| Lưu lịch sử | Các thay đổi quan trọng được ghi lại để tra soát. | Baseline |
+| Truy cập theo phạm vi | Người dùng chỉ xem/thao tác dữ liệu phù hợp với role và phạm vi liên quan. | Baseline |
+
+## 3. Business process baseline
+
+```mermaid
+flowchart TD
+    A[Student creates Ticket] --> B[System generates Ticket ID]
+    B --> C[Ticket enters processing queue]
+    C --> D[Staff claims or is assigned]
+    D --> E[Staff classifies and processes Ticket]
+    E --> F{Need more information?}
+    F -- Yes --> G[Staff requests supplement]
+    G --> H[Student supplements information]
+    H --> E
+    F -- No --> I{Need different processing unit?}
+    I -- Yes --> J[Transfer to another department/person]
+    J --> C
+    I -- No --> K[Staff records resolution]
+    K --> L[Ticket is closed]
+    L --> M[Student views result and rates satisfaction]
 ```
-┌────────────────────────────────────────────────────────────────────────┐
-│                        4 NGUYÊN TẮC CỐT LÕI                            │
-├───────────────────┬───────────────────┬────────────────┬───────────────┤
-│ 1. ĐỊNH DANH      │ 2. PHÂN ĐỊNH      │ 3. LƯU VẾT     │ 4. RÕ RÀNG    │
-│    DUY NHẤT       │    TRÁCH NHIỆM    │    MINH BẠCH   │    TRẠNG THÁI │
-│ (Ticket ID)       │ (Department/Agent)│ (Audit Trail)  │ (Lifecycle)   │
-└───────────────────┴───────────────────┴────────────────┴───────────────┘
-```
 
-1. **Định danh duy nhất (Single Identifier)**: Mọi yêu cầu từ sinh viên được đóng gói thành một đơn vị nghiệp vụ gọi là **Ticket** với một mã định danh duy nhất (Ticket ID).
-2. **Phân định trách nhiệm (Ownership Assignment)**: Mỗi Ticket luôn thuộc về **01 Phòng ban phụ trách**. Sau khi trải qua bước Tiếp nhận (Claim) hoặc Phân công (Assign), Ticket mới được gắn với **01 Nhân viên thụ lý (Assignee)** chính. Ở giai đoạn khởi tạo (`NEW`) hoặc khi đang chuyển phòng ban, trường Nhân viên thụ lý có thể để trống (`NULL`).
-3. **Lưu vết minh bạch (Complete Auditability)**: Các thao tác quan trọng liên quan đến quá trình xử lý Ticket như thay đổi trạng thái, thay đổi đơn vị/người phụ trách, yêu cầu bổ sung và ghi nhận kết quả được lưu lại để phục vụ tra soát.
-4. **Vòng đời trạng thái rõ ràng (Strict Lifecycle)**: Ticket được quản lý theo các trạng thái và quy tắc chuyển trạng thái thống nhất trong toàn hệ thống.
----
+## 4. Business actors
 
-## 3. Bản Đồ Tổng Quan Các Luồng Nghiệp Vụ (Business Process Map)
-```
-[Sinh viên tạo Ticket]
-        |
-        v
-[Hệ thống tạo mã Ticket và ghi nhận yêu cầu]
-        |
-        v
-[Ticket được đưa vào hàng chờ xử lý]
-        |
-        v
-[Nhân viên tiếp nhận / được phân công]
-        |
-        v
-[Phân loại và xử lý Ticket]
-        |
-        +-----------------------------+
-        |                             |
-        | Cần bổ sung thông tin       | Cần chuyển đơn vị xử lý
-        v                             v
-[Nhân viên yêu cầu bổ sung]     [Chuyển phòng ban / người phụ trách]
-        |                             |
-        v                             v
-[Sinh viên bổ sung thông tin]   [Đơn vị/người phụ trách mới tiếp nhận]
-        |                             |
-        +-------------+---------------+
-                      |
-                      v
-             [Tiếp tục xử lý Ticket]
-                      |
-                      v
-             [Ghi nhận kết quả xử lý]
-                      |
-                      v
-                [Đóng Ticket]
-                      |
-                      v
-         [Sinh viên xem kết quả và đánh giá]
-```
+| Actor | Vai trò trong process | Trạng thái |
+| :--- | :--- | :--- |
+| Student | Tạo Ticket, theo dõi, bổ sung thông tin, xem kết quả, đánh giá hài lòng. | Baseline |
+| Staff | Tiếp nhận/phân công, phân loại, xử lý, yêu cầu bổ sung, chuyển xử lý, ghi nhận kết quả và đóng Ticket. | Baseline |
+| Management | Theo dõi dashboard/báo cáo, workload, feedback; quản trị account và quyền theo phạm vi được cấp. | Baseline |
+| System | Sinh Ticket ID, cập nhật/lưu lịch sử, phát thông báo nội bộ, kiểm tra quyền. | Derived |
+
+## 5. Domain boundaries
+
+- UniSupport quản lý yêu cầu hỗ trợ sinh viên dưới dạng Ticket.
+- UniSupport không thay thế hệ thống đào tạo, kế toán, LMS hoặc CRM.
+- UniSupport không tự động xử lý nghiệp vụ chuyên môn thay cho phòng ban; hệ thống hỗ trợ tiếp nhận, điều phối, theo dõi và ghi nhận kết quả.
+- Việc tự động route Ticket tới phòng ban theo category chưa được proposal chốt; nếu triển khai, coi là **Derived/TBD** và cần cấu hình rõ.

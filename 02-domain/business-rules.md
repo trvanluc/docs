@@ -1,68 +1,51 @@
-# Quy Tắc Nghiệp Vụ Cốt Lõi (Business Rules)
+# Quy tắc nghiệp vụ cốt lõi
 
-Tài liệu này tổng hợp toàn bộ các Quy tắc nghiệp vụ (Business Rules - BR) áp dụng bắt buộc trên toàn hệ thống UniSupport.
+Tài liệu này chỉ mô tả business rules. Chi tiết kỹ thuật như JWT/session, secured endpoint, database constraint, timestamp format, append-only implementation hoặc encryption nằm trong `07-architecture`.
 
----
+## 1. Attachment access
 
-## 1. Nhóm Quy Tắc Quản Lý File Đính Kèm & Bảo Mật (`BR-FILE`)
+| ID | Rule | Trạng thái |
+| :--- | :--- | :--- |
+| **BR-FILE-01** | File đính kèm của Ticket chỉ được xem/tải bởi Student tạo Ticket, Staff trong phạm vi xử lý liên quan, hoặc Management có quyền tra soát. | Baseline |
+| **BR-FILE-02** | Attachment được dùng cho ảnh/PDF theo proposal. Giới hạn dung lượng, số file và định dạng chi tiết cần xác nhận. | Baseline/TBD |
 
-### `BR-FILE-01`: Phân quyền truy cập tệp đính kèm (Attachment Access Control)
-- **Nội dung**: File đính kèm của Ticket không được lưu trữ ở đường dẫn public công khai.
-- **Quy tắc**:
-  - Chỉ **Sinh viên tạo ra Ticket đó** và **Nhân viên thuộc Phòng ban thụ lý Ticket** mới có quyền tải/xem file.
-  - Quản trị viên hệ thống có quyền xem phục vụ mục đích kiểm tra Audit Log.
-  - Mọi yêu cầu tải file phải thông qua một Secured API Endpoint có xác thực Token và kiểm tra vai trò người dùng.
+## 2. Ticket ownership và access
 
-### `BR-FILE-02`: Định dạng và dung lượng file hợp lệ
-- **Nội dung**: Kiểm soát loại file tải lên để bảo đảm an toàn hệ thống và tối ưu bộ nhớ.
-- **Quy tắc**:
-  - Chỉ chấp nhận các định dạng tệp: `.pdf`, `.png`, `.jpg`, `.jpeg`.
-  - Dung lượng tối đa cho mỗi tệp: **10 MB (10,485,760 Bytes)**.
-  - Tối đa **03 tệp đính kèm** cho một lần khởi tạo hoặc bổ sung Ticket.
+| ID | Rule | Trạng thái |
+| :--- | :--- | :--- |
+| **BR-ACC-01** | Student chỉ xem và thao tác với Ticket do chính mình tạo. | Baseline |
+| **BR-ACC-02** | Staff chỉ xem/xử lý Ticket thuộc phòng ban/phạm vi được giao. | Baseline |
+| **BR-ACC-03** | Management chỉ xem/quản trị dữ liệu theo quyền được cấp. | Baseline |
 
----
+## 3. Transfer
 
-## 2. Nhóm Quy Tắc Chuyển Phòng Ban & Phân Công (`BR-XFR`)
+| ID | Rule | Trạng thái |
+| :--- | :--- | :--- |
+| **BR-XFR-01** | Khi cần chuyển đơn vị xử lý, Ticket được cập nhật department/phạm vi xử lý mới, clear assignee hiện tại và quay về `NEW` để đơn vị mới tiếp nhận/phân công. | Baseline |
+| **BR-XFR-02** | Lịch sử transfer phải lưu người thực hiện, đơn vị cũ, đơn vị mới và thời điểm. | Baseline |
+| **BR-XFR-03** | Lý do chuyển là bắt buộc hay không, và độ dài tối thiểu nếu có, là TBD. | TBD |
 
-### `BR-XFR-01`: Điều kiện và Luồng chuyển phòng ban (Department Transfer)
-- **Nội dung**: Cho phép chuyển Ticket sang phòng ban khác nếu sinh viên chọn nhầm đơn vị xử lý.
-- **Quy tắc**:
-  - Bắt buộc nhân viên phải nhập **Lý do chuyển phòng ban** (Tối thiểu 10 ký tự).
-  - Ngay khi chuyển phòng ban thành công:
-    1. Trường `department_id` cập nhật sang Phòng ban mới.
-    2. Trường `assigned_staff_id` tự động đặt về `NULL` (chờ nhân viên phòng ban mới Claim/Assign).
-    3. Hệ thống gửi thông báo In-app tới Hòm thư công việc của Phòng ban mới.
-    4. Trạng thái Ticket vẫn giữ nguyên là `IN_PROGRESS`.
+## 4. Supplement request
 
----
+| ID | Rule | Trạng thái |
+| :--- | :--- | :--- |
+| **BR-SUP-01** | Khi Staff yêu cầu bổ sung, Ticket chuyển từ `IN_PROGRESS` sang `WAITING_STUDENT`. | Baseline |
+| **BR-SUP-02** | Khi Student bổ sung hợp lệ, Ticket chuyển từ `WAITING_STUDENT` về `IN_PROGRESS`. | Baseline |
+| **BR-SUP-03** | Cách tính SLA trong thời gian `WAITING_STUDENT` là TBD. | TBD |
 
-## 3. Nhóm Quy Tắc Yêu Cầu Bổ Sung Hồ Sơ (`BR-SUP`)
+## 5. Resolution, close và rating
 
-### `BR-SUP-01`: Tạm dừng đếm giờ SLA khi chờ sinh viên bổ sung
-- **Nội dung**: Bảo vệ KPI xử lý của nhân viên khi nguyên nhân chậm trễ do sinh viên chưa cung cấp đủ hồ sơ.
-- **Quy tắc**:
-  - Khi nhân viên phát yêu cầu bổ sung, trạng thái chuyển sang `WAITING_STUDENT`.
-  - Bộ đếm thời gian SLA (SLA Timer) tạm thời **tạm dừng**.
-  - Ngay khi sinh viên gửi câu trả lời hoặc đăng tải file bổ sung, trạng thái tự động chuyển về `IN_PROGRESS` và bộ đếm SLA tiếp tục chạy tiếp.
+| ID | Rule | Trạng thái |
+| :--- | :--- | :--- |
+| **BR-RES-01** | Staff phải ghi nhận kết quả xử lý trước khi Ticket chuyển sang `RESOLVED`. | Baseline |
+| **BR-CLS-01** | Ticket chỉ được đóng sau khi đã có kết quả xử lý. | Baseline |
+| **BR-RAT-01** | Student chỉ đánh giá mức độ hài lòng sau khi Ticket hoàn tất/đóng. | Baseline |
+| **BR-RAT-02** | Thang điểm 1-5 sao và rule mỗi Ticket chỉ được đánh giá một lần là Proposed cho đến khi được xác nhận. | Proposed |
+| **BR-RAT-03** | Thời hạn đánh giá sau khi hoàn tất là TBD. | TBD |
 
----
+## 6. History / audit
 
-## 4. Nhóm Quy Tắc Đánh Giá Hài Lòng (`BR-RAT`)
-
-### `BR-RAT-01`: Điều kiện và thời hạn đánh giá hài lòng
-- **Nội dung**: Đảm bảo sinh viên chỉ đánh giá đúng trải nghiệm thực tế sau khi yêu cầu đã giải quyết.
-- **Quy tắc**:
-  - Tính năng đánh giá (1-5 sao) chỉ hiển thị khi Ticket ở trạng thái `RESOLVED` hoặc `CLOSED`.
-  - Mỗi Ticket chỉ được phép gửi đánh giá **Duy nhất 01 lần**.
-  - Thời hạn sinh viên được thực hiện đánh giá là trong vòng **07 ngày** kể từ mốc thời gian `resolved_at`. Quá thời hạn này, tính năng đánh giá sẽ tự động khóa.
-
----
-
-## 5. Nhóm Quy Tắc Tra Soát Hệ Thống (`BR-AUD`)
-
-### `BR-AUD-01`: Bất biến dữ liệu nhật ký tra soát (Audit Trail Integrity)
-- **Nội dung**: Đảm bảo tính toàn vẹn của lịch sử thao tác phục vụ tra soát khi có khiếu nại.
-- **Quy tắc**:
-  - Toàn bộ các bản ghi trong Bảng Nhật ký (`Activity Log / Audit Log`) là **chỉ ghi (Append-only)**.
-  - Nghiêm cấm mọi hành vi sửa (UPDATE) hoặc xóa (DELETE) dữ liệu nhật ký, kể cả tài khoản Quản trị viên (Admin).
-  - Tất cả các mốc thời gian ghi nhận trong log bắt buộc lưu trữ dưới chuẩn **UTC / ISO-8601** và quy đổi hiển thị theo múi giờ local (`GMT+7`).
+| ID | Rule | Trạng thái |
+| :--- | :--- | :--- |
+| **BR-HIS-01** | Các thao tác quan trọng như tạo Ticket, claim/assign, transfer, yêu cầu bổ sung, bổ sung, ghi nhận kết quả, đóng Ticket và thay đổi account/permission phải được lưu lịch sử. | Baseline |
+| **BR-HIS-02** | Mức độ bất biến log, retention, IP/device metadata và cơ chế lưu cụ thể thuộc Architecture/NFR và cần xác nhận nếu muốn dùng làm cam kết nghiệm thu. | Derived/TBD |

@@ -1,26 +1,19 @@
-# Thuật Ngữ Nghiệp Vụ (Domain Terminology)
+# Thuật ngữ nghiệp vụ
 
-Tài liệu này định nghĩa toàn bộ các thuật ngữ, khái niệm và từ viết tắt được sử dụng nhất quán trong tài liệu thiết kế, mã nguồn và quy trình vận hành của hệ thống **UniSupport**.
-
-## 1. Danh Mục Thuật Ngữ Cốt Lõi
-
-| Thuật Ngữ (English) | Thuật Ngữ (Tiếng Việt) | Định Nghĩa & Giải Thích Chi Tiết |
-| :--- | :--- | :--- |
-| **Ticket** | Phiếu hỗ trợ / Yêu cầu | Đơn vị dữ liệu trung tâm đại diện cho 01 yêu cầu, thắc mắc hoặc đề nghị giải quyết thủ tục của sinh viên gửi tới nhà trường. |
-| **Ticket ID** | Mã phiếu hỗ trợ | Chuỗi ký tự định danh duy nhất được hệ thống tự động sinh ra khi sinh viên gửi yêu cầu thành công (Ví dụ: `TK-20261004-001`). |
-| **Category / Sub-category** | Nhóm vấn đề / Phân loại chi tiết | Cấu trúc phân loại yêu cầu theo lĩnh vực (Ví dụ: Nhóm *Đào tạo* $\rightarrow$ Loại *Cấp bảng điểm*). |
-| **Department** | Phòng ban chuyên trách | Đơn vị hành chính trong Aurora University có thẩm quyền xử lý Ticket (Ví dụ: Phòng Đào tạo, Phòng CTHSSV...). |
-| **Student** | Sinh viên | Người dùng khởi tạo Ticket và là người thụ hưởng kết quả xử lý. |
-| **Agent / Staff** | Nhân viên xử lý | Chuyên viên thuộc Phòng ban chức năng có nhiệm vụ tiếp nhận, xử lý và phản hồi Ticket. |
-| **Manager / Admin** | Quản lý / Quản trị viên | Trưởng phòng ban hoặc Ban Giám hiệu theo dõi chỉ số KPI, hiệu suất và quản trị phân quyền hệ thống. |
-| **Triage** | Phân loại & Điều phối | Quá trình kiểm tra nội dung Ticket mới để xác định đúng nhóm vấn đề, độ ưu tiên và gán cho nhân viên/phòng ban phù hợp. |
-| **Claim** | Tiếp nhận | Hành động nhân viên tự nhận một Ticket chưa có người phụ trách về cho chính mình xử lý. |
-| **Assign** | Phân công | Hành động gán trách nhiệm xử lý Ticket cho một nhân viên cụ thể trong cùng phòng ban. |
-| **Transfer** | Chuyển phòng ban | Hành động điều chuyển Ticket từ phòng ban hiện tại sang một phòng ban khác do gửi nhầm hoặc cần phối hợp. |
-| **Supplement Request** | Yêu cầu bổ sung | Yêu cầu từ nhân viên đề nghị sinh viên cung cấp thêm thông tin hoặc upload thêm giấy tờ minh chứng. |
-| **SLA (Service Level Agreement)** | Cam kết thời gian xử lý | Mốc thời gian dùng để theo dõi hạn xử lý Ticket theo quy tắc    nghiệp vụ được xác định cho từng loại yêu cầu. Chi tiết cách tính được xác nhận trong Business Rules. |
-| **Priority** | Mức độ ưu tiên | Tầm quan trọng/mức độ khẩn cấp của Ticket (Bao gồm 4 mức: *Thấp, Trung bình, Cao, Khẩn cấp*). |
-| **Resolution** | Kết quả giải quyết | Nội dung trả lời, quyết định hoặc tài liệu đính kèm do nhân viên cung cấp để hoàn thành yêu cầu của sinh viên. |
-| **CSAT (Customer Satisfaction)** | Mức độ hài lòng | Chỉ số đánh giá chất lượng dịch vụ do sinh viên chấm điểm (từ 1 đến 5 sao) sau khi Ticket đóng. |
-| **Audit Log / Activity Log** | Nhật ký tra soát | Bản ghi lịch sử ghi nhận lại từng hành động làm thay đổi dữ liệu hoặc trạng thái của Ticket. |
-| **UAT (User Acceptance Testing)** | Kiểm thử chấp nhận người dùng | Giai đoạn người dùng thực tế (sinh viên, nhân viên Aurora University) kiểm thử hệ thống trước khi vận hành chính thức. |
+| Thuật ngữ | Tiếng Việt | Định nghĩa | Trạng thái |
+| :--- | :--- | :--- | :--- |
+| Ticket | Phiếu hỗ trợ / yêu cầu | Đơn vị nghiệp vụ đại diện cho một yêu cầu hỗ trợ do sinh viên gửi. | Baseline |
+| Ticket ID | Mã Ticket | Mã định danh duy nhất được hệ thống cấp khi Ticket được tạo thành công. | Baseline |
+| Category | Nhóm vấn đề | Nhóm phân loại nội dung yêu cầu để Staff xử lý hoặc điều phối phù hợp. | Baseline |
+| Department | Phòng ban/đơn vị xử lý | Đơn vị có trách nhiệm xử lý Ticket trong phạm vi nghiệp vụ. | Baseline |
+| Assignee | Người phụ trách | Staff được giao hoặc tự nhận xử lý Ticket. | Derived |
+| Claim | Tiếp nhận | Staff tự nhận Ticket trong hàng chờ để xử lý. | Derived |
+| Assign | Phân công | Người có quyền gán Ticket cho một Staff phù hợp. | Derived |
+| Transfer | Chuyển xử lý | Chuyển Ticket sang phòng ban hoặc người phụ trách khác khi cần đơn vị xử lý khác. | Baseline |
+| Supplement Request | Yêu cầu bổ sung | Staff yêu cầu Student cung cấp thêm thông tin/giấy tờ để tiếp tục xử lý. | Baseline |
+| Resolution | Kết quả xử lý | Nội dung kết quả/đáp án/tài liệu phản hồi do Staff ghi nhận trước khi đóng Ticket. | Baseline |
+| SLA / Deadline | Hạn theo dõi xử lý | Mốc thời gian dùng để theo dõi yêu cầu sắp hoặc đã quá hạn. Cách tính cụ thể là TBD. | Baseline/TBD |
+| Priority | Mức ưu tiên | Mức độ cần ưu tiên xử lý của Ticket. Danh sách mức cụ thể là TBD. | Baseline/TBD |
+| CSAT | Đánh giá hài lòng | Đánh giá mức độ hài lòng của Student sau khi Ticket hoàn tất. Thang điểm cụ thể là Proposed/TBD. | Baseline/Proposed |
+| Audit / History | Lịch sử tra soát | Lịch sử thao tác quan trọng để xem lại quá trình xử lý. | Baseline |
+| UAT | Kiểm thử chấp nhận người dùng | Giai đoạn client kiểm thử hệ thống trước nghiệm thu chính thức. | Baseline |
