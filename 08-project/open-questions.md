@@ -4,7 +4,7 @@ Tài liệu này theo dõi các câu hỏi, giả định cần làm rõ hoặc 
 
 ---
 
-## ❓ Danh sách các vấn đề chưa thống nhất (Open Questions Log)
+## 1. Danh sách các vấn đề chưa thống nhất (Open Questions Log)
 
 | ID | Nhóm vấn đề | Nội dung câu hỏi / Cần làm rõ | Tác động | Trạng thái | Người duyệt / Trả lời |
 | :---: | :--- | :--- | :--- | :---: | :--- |
@@ -14,7 +14,8 @@ Tài liệu này theo dõi các câu hỏi, giả định cần làm rõ hoặc 
 
 ---
 
-## 📝 Quy trình xử lý Open Questions
+## 2. Quy trình xử lý Open Questions
+
 1. Các vấn đề mới phát sinh sẽ được ghi nhận vào bảng trên bởi PM hai bên.
 2. Hai bên thống nhất câu trả lời và ghi nhận phương án giải quyết vào biên bản cuộc họp tuần.
 3. Khi câu hỏi được chốt, trạng thái chuyển sang **Resolved** và thông tin được cập nhật chính thức vào tài liệu PRD/Architecture tương ứng.

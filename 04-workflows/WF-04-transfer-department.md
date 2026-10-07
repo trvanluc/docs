@@ -1,6 +1,6 @@
 # [WF-04] Chuyển tiếp yêu cầu sang phòng ban khác (Transfer Department)
 
-### [FR-STF-02] Chuyển tiếp Ticket giữa các phòng ban
+### [FR-STF-05] Chuyển tiếp Ticket giữa các phòng ban (Transfer & Escalation)
 
 **Mô tả**
 Hệ thống cho phép nhân viên chuyển tiếp Ticket sang đúng phòng ban hoặc người phụ trách khác nếu nội dung yêu cầu thuộc phạm vi giải quyết của đơn vị đó.

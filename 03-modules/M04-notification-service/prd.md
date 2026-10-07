@@ -1,5 +1,8 @@
 # Tài Liệu Đặc Tả Yêu Cầu Sản Phẩm - Dịch Vụ Thông Báo (PRD - M04 Notification Service)
 
+> Nguồn phân bổ công sức chuẩn hóa: `Phan_bo_Resources_Antigravity.md`  
+> Phân hệ kỹ thuật này hiện thực hóa trực tiếp chức năng **FR-STU-04: Nhận thông báo trạng thái (19h kế hoạch: BA 3h, UI/UX 1h, FE1 4h, BE1 4h, BE2 4h, QA 3h)** và hạ tầng thông báo phục vụ cảnh báo SLA trong **FR-STF-03 (M2)**.
+
 ---
 
 ### [FR-NTF-01] Khởi tạo & Phát thông báo nội bộ hệ thống tự động
@@ -112,10 +115,6 @@ Tất cả người dùng đã đăng nhập.
 - **AC-01**: Bấm nút "Đánh dấu tất cả là đã đọc" -> Badge hiển thị về 0, tất cả thông báo chuyển sang trạng thái đã đọc.
 - **AC-02**: Nhấn vào 01 thông báo chưa đọc -> Chỉ riêng thông báo đó chuyển sang đã đọc và Badge giảm đi 1 đơn vị.
 
-**Ví dụ Edge Case**  
-Người dùng đang mở bảng thông báo có 3 mục chưa đọc và nhấn nút "Đánh dấu tất cả là đã đọc".  
--> **Expected Result**: Badge đỏ biến mất lập tức, cả 3 dòng thông báo chuyển sang màu nền bình thường.
-
 ---
 
 ### [FR-NTF-04] Thông báo cảnh báo trễ hạn / Cảnh báo thời gian SLA (SLA Warning Alert)
@@ -152,7 +151,3 @@ Hệ thống tự động (SLA Monitor Daemon).
 - **AC-01**: Ticket còn 1.5 giờ là hết hạn SLA -> Nhân viên phụ trách nhận được thông báo cảnh báo sắp quá hạn.
 - **AC-02**: Ticket vượt quá hạn SLA 1 phút -> Cả Nhân viên thụ lý và Trưởng phòng ban nhận được thông báo cảnh báo quá hạn.
 - **AC-03**: Ticket đang ở trạng thái `WAITING_STUDENT` -> Không phát thông báo cảnh báo SLA.
-
-**Ví dụ Edge Case**  
-Ticket `TK-20261004-001` hết hạn SLA lúc 15:00. Lúc 15:01 Ticket vẫn ở trạng thái `IN_PROGRESS`.  
--> **Expected Result**: Trưởng phòng ban và Nhân viên thụ lý nhận được thông báo "SỰ CỐ SLA: Ticket TK-20261004-001 ĐÃ QUÁ HẠN XỬ LÝ".

@@ -4,7 +4,7 @@ Tài liệu này mô tả chi tiết mô hình dữ liệu quan hệ (Relational
 
 ---
 
-## 🗂️ 1. Sơ đồ Quan hệ Thực thể (Entity Relationship Diagram - ERD)
+## 1. Sơ đồ Quan hệ Thực thể (Entity Relationship Diagram - ERD)
 
 ```text
 +-------------------+       1:N       +-------------------+       1:N       +-------------------+
@@ -48,9 +48,12 @@ Tài liệu này mô tả chi tiết mô hình dữ liệu quan hệ (Relational
 +-------------------+                                                     | created_at        |
                                                                           +-------------------+
 ```
-# 2. Chi tiết Cấu trúc các Bảng (Table Schemas)
 
-## 2.1. Bảng `departments` (Phòng ban)
+---
+
+## 2. Chi tiết Cấu trúc các Bảng (Table Schemas)
+
+### 2.1 Bảng `departments` (Phòng ban)
 
 | Tên trường | Kiểu dữ liệu | Ràng buộc | Mô tả |
 | :--- | :--- | :--- | :--- |
@@ -62,7 +65,7 @@ Tài liệu này mô tả chi tiết mô hình dữ liệu quan hệ (Relational
 
 ---
 
-## 2.2. Bảng `users` (Người dùng)
+### 2.2 Bảng `users` (Người dùng)
 
 | Tên trường | Kiểu dữ liệu | Ràng buộc | Mô tả |
 | :--- | :--- | :--- | :--- |
@@ -77,7 +80,7 @@ Tài liệu này mô tả chi tiết mô hình dữ liệu quan hệ (Relational
 
 ---
 
-## 2.3. Bảng `tickets` (Phiếu hỗ trợ)
+### 2.3 Bảng `tickets` (Phiếu hỗ trợ)
 
 | Tên trường | Kiểu dữ liệu | Ràng buộc | Mô tả |
 | :--- | :--- | :--- | :--- |
@@ -95,7 +98,7 @@ Tài liệu này mô tả chi tiết mô hình dữ liệu quan hệ (Relational
 
 ---
 
-## 2.4. Bảng `ticket_attachments` (Tệp đính kèm)
+### 2.4 Bảng `ticket_attachments` (Tệp đính kèm)
 
 | Tên trường | Kiểu dữ liệu | Ràng buộc | Mô tả |
 | :--- | :--- | :--- | :--- |
@@ -109,7 +112,7 @@ Tài liệu này mô tả chi tiết mô hình dữ liệu quan hệ (Relational
 
 ---
 
-## 2.5. Bảng `ticket_histories` (Lịch sử xử lý Ticket)
+### 2.5 Bảng `ticket_histories` (Lịch sử xử lý Ticket)
 
 | Tên trường | Kiểu dữ liệu | Ràng buộc | Mô tả |
 | :--- | :--- | :--- | :--- |
@@ -124,20 +127,20 @@ Tài liệu này mô tả chi tiết mô hình dữ liệu quan hệ (Relational
 
 ---
 
-## 2.6. Bảng `ticket_ratings` (Đánh giá mức độ hài lòng)
+### 2.6 Bảng `ticket_ratings` (Đánh giá mức độ hài lòng)
 
 | Tên trường | Kiểu dữ liệu | Ràng buộc | Mô tả |
 | :--- | :--- | :--- | :--- |
 | **id** | UUID / BIGINT | Primary Key | ID đánh giá |
 | **ticket_id** | UUID / BIGINT | Foreign Key (`tickets.id`), Unique, Not Null | Ticket được đánh giá (1:1) |
 | **student_id** | UUID / BIGINT | Foreign Key (`users.id`), Not Null | Sinh viên đánh giá |
-| **rating_score** | SMALLINT | Not Null, Check ($1 \le \text{rating\_score} \le 5$) | Điểm số đánh giá (1 đến 5 sao) |
+| **rating_score** | SMALLINT | Not Null, Check (1 <= rating_score <= 5) | Điểm số đánh giá (1 đến 5 sao) |
 | **comment** | TEXT | Nullable | Ý kiến đóng góp |
 | **created_at** | TIMESTAMP | Default NOW() | Thời điểm gửi đánh giá |
 
 ---
 
-# ⚡ 3. Chỉ mục (Indexes) & Tối ưu hóa truy vấn
+## 3. Chỉ mục (Indexes) & Tối ưu hóa truy vấn
 
 Nhằm đảm bảo tốc độ truy xuất mượt mà trên quy mô 3.000 sinh viên, hệ thống thiết lập các Index cơ bản:
 

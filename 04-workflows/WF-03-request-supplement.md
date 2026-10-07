@@ -1,6 +1,6 @@
 # [WF-03] Yêu cầu bổ sung thông tin/giấy tờ (Request Supplement)
 
-### [FR-STF-03] Nhân viên yêu cầu sinh viên bổ sung hồ sơ
+### [FR-STF-04 / FR-STU-05] Nhân viên yêu cầu bổ sung hồ sơ & Sinh viên phản hồi
 
 **Mô tả**
 Trong quá trình xử lý, nếu thông tin hoặc tài liệu sinh viên cung cấp bị thiếu hoặc chưa đủ cơ sở giải quyết, nhân viên có thể gửi yêu cầu sinh viên bổ sung thêm thông tin hoặc giấy tờ.

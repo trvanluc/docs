@@ -4,7 +4,7 @@ Thư mục này chứa toàn bộ các tài liệu thiết kế kiến trúc k�
 
 ---
 
-## 📋 Danh mục tài liệu
+## 1. Danh mục tài liệu
 
 | STT | Tên File | Mô tả nội dung |
 | :---: | :--- | :--- |
@@ -17,7 +17,7 @@ Thư mục này chứa toàn bộ các tài liệu thiết kế kiến trúc k�
 
 ---
 
-## 🎯 Nguyên tắc thiết kế cốt lõi (Architecture Principles)
+## 2. Nguyên tắc thiết kế cốt lõi (Architecture Principles)
 
 1. **Đơn giản & Tập trung (KISS Principle):**
    * Hệ thống được thiết kế tối ưu cho quy mô **3.000 sinh viên**, tập trung vào tính đúng đắn và ổn định của quy trình xử lý Ticket thay vì áp dụng các kiến trúc phân tán phức tạp không cần thiết (như Microservices/Event-driven).
@@ -31,7 +31,8 @@ Thư mục này chứa toàn bộ các tài liệu thiết kế kiến trúc k�
 
 ---
 
-## 👥 Vai trò sử dụng tài liệu
+## 3. Vai trò sử dụng tài liệu
+
 * **Software Architect / Lead Dev:** Tham chiếu để định hướng phát triển và kiểm soát tuân thủ kiến trúc.
 * **Backend / Frontend Developers:** Căn cứ triển khai chi tiết các chức năng, API và cấu trúc dữ liệu.
 * **QA / QC Team:** Tham chiếu để xây dựng kịch bản kiểm thử hiệu năng, bảo mật và luồng dữ liệu.

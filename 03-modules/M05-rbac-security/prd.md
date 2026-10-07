@@ -1,5 +1,11 @@
 # Tài Liệu Đặc Tả Yêu Cầu Sản Phẩm - Phân Quyền & Bảo Mật (PRD - M05 RBAC & Security)
 
+> Nguồn phân bổ công sức chuẩn hóa: `Phan_bo_Resources_Antigravity.md`  
+> Phân hệ kỹ thuật này hiện thực hóa các chức năng bảo mật cốt lõi thuộc M3 – Admin:
+> - **FR-ADM-01: Quản lý tài khoản, vai trò & RBAC (64h kế hoạch: BA 5h, UI/UX 3h, TL 6h, FE1 3h, FE2 8h, BE1 13h, BE2 9h, QA 13h)**
+> - **FR-ADM-03: Kiểm soát quyền truy cập & Audit Trail (40h kế hoạch: BA 4h, TL 4h, FE1 1h, FE2 4h, BE1 9h, BE2 5h, QA 9h)**
+> - **FR-ADM-04: Quản lý thời hạn lưu trữ (15h kế hoạch: BA 3h, TL 1h, BE1 4h, BE2 4h, QA 3h)**
+
 ---
 
 ### [FR-SEC-01] Xác thực tài khoản & Quản lý phiên làm việc (Authentication & Session Management)

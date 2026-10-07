@@ -1,6 +1,9 @@
 # Dịch Vụ Thông Báo (M04 - Notification Service)
 
-## 1. Tổng Quan Phân Hệ
+> Nguồn phân bổ công sức chuẩn hóa: `Phan_bo_Resources_Antigravity.md`  
+> Phân hệ kỹ thuật này hiện thực hóa trực tiếp chức năng **FR-STU-04: Nhận thông báo trạng thái (19h kế hoạch)** thuộc M1 – Student và tầng hạ tầng thông báo phục vụ các luồng nghiệp vụ liên phân hệ.
+
+## 1. Tổng Quan Phân Hệ Kỹ Thuật
 
 Phân hệ **Dịch vụ Thông báo (Notification Service)** đóng vai trò là kênh truyền tải thông tin trung gian theo thời gian thực trong hệ thống **UniSupport**. Phân hệ chịu trách nhiệm tự động phát sinh, quản lý và hiển thị các thông báo nội bộ hệ thống (In-app Notification) tới đúng đối tượng người dùng (Sinh viên, Nhân viên, Quản lý) mỗi khi có sự kiện quan trọng phát sinh trên Ticket hỗ trợ.
 
@@ -15,43 +18,37 @@ Phân hệ **Dịch vụ Thông báo (Notification Service)** đóng vai trò l�
 
 ---
 
-## 3. Danh Mục Yêu Cầu Chức Năng (Functional Requirements)
+## 3. Danh Mục Yêu Cầu Chức Năng Kỹ Thuật (Technical Feature Specifications)
 
-| Mã Yêu Cầu | Tên Chức Năng | Tóm Tắt Nghiệp Vụ |
-| :--- | :--- | :--- |
-| **FR-NTF-01** | Khởi tạo & Phát thông báo tự động | Tự động sinh thông báo In-app khi có các sự kiện trên Ticket (Tạo mới, Đổi trạng thái, Yêu cầu bổ sung, Cập nhật kết quả...). |
-| **FR-NTF-02** | Trung tâm thông báo (Notification Center) | Biểu tượng quả chuông (Bell Icon) hiển thị số thông báo chưa đọc, danh sách thông báo và chi tiết nội dung. |
-| **FR-NTF-03** | Đánh dấu Đã đọc / Chưa đọc | Cho phép người dùng đánh dấu từng thông báo hoặc "Đánh dấu tất cả là đã đọc". |
-| **FR-NTF-04** | Cảnh báo quá hạn SLA (SLA Overdue Alert) | Tự động phát thông báo cảnh báo tới Nhân viên phụ trách và Trưởng phòng khi Ticket sắp hoặc đã vượt thời hạn SLA. |
+| Mã Yêu Cầu | Tên Chức Năng | Tóm Tắt Nghiệp Vụ | Mapping Resource Baseline |
+| :--- | :--- | :--- | :--- |
+| **FR-NTF-01** | Khởi tạo & Phát thông báo tự động | Tự động sinh thông báo In-app khi có các sự kiện trên Ticket (Tạo mới, Đổi trạng thái, Yêu cầu bổ sung, Cập nhật kết quả...). | Nằm trong phạm vi FR-STU-04 (M1) & Backend Services |
+| **FR-NTF-02** | Trung tâm thông báo (Notification Center) | Biểu tượng quả chuông (Bell Icon) hiển thị số thông báo chưa đọc, danh sách thông báo và chi tiết nội dung. | Nằm trong phạm vi FR-STU-04 (M1) (FE1: 4h, BA: 3h) |
+| **FR-NTF-03** | Đánh dấu Đã đọc / Chưa đọc | Cho phép người dùng đánh dấu từng thông báo hoặc "Đánh dấu tất cả là đã đọc". | Nằm trong phạm vi FR-STU-04 (M1) |
+| **FR-NTF-04** | Cảnh báo quá hạn SLA (SLA Overdue Alert) | Tự động phát thông báo cảnh báo tới Nhân viên phụ trách và Trưởng phòng khi Ticket sắp hoặc đã vượt thời hạn SLA. | Nằm trong phạm vi FR-STF-03 (M2: 29h) |
 
 ---
 
 ## 4. Sơ Đồ Luồng Tự Động Phát Thông Báo (Notification Flow)
-
+```
 [Sự kiện nghiệp vụ phát sinh]
 (Tạo Ticket / Chuyển trạng thái / Yêu cầu bổ sung / Phân công / Quá hạn SLA)
         │
         ▼
     [Khởi tạo Thông báo - FR-NTF-01]
-
-Bắt sự kiện (Event Listener)
-
-Xác định danh sách Người nhận (Recipients) theo Vai trò
-
-Biên dịch Nội dung theo mẫu (Notification Template)
+    - Bắt sự kiện (Event Listener)
+    - Xác định danh sách Người nhận (Recipients) theo Vai trò
+    - Biên dịch Nội dung theo mẫu (Notification Template)
         │
         ▼
-    [Lưu vào Database & Đẩy về Client]
+    [Lưu vào Database & Đẩy về Client qua Socket/API]
         │
         ▼
     [Trung tâm thông báo Client - FR-NTF-02 / FR-NTF-03]
-
-Cập nhật Badge số lượng chưa đọc trên quả chuông
-
-Hiển thị Toast thông báo nổi trên màn hình
-
-Đánh dấu Đã đọc khi người dùng nhấn xem
-
+    - Cập nhật Badge số lượng chưa đọc trên quả chuông
+    - Hiển thị Toast thông báo nổi trên màn hình
+    - Đánh dấu Đã đọc khi người dùng nhấn xem
+```
 
 ---
 

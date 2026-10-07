@@ -1,6 +1,6 @@
 # [WF-06] Sinh viên nhận kết quả & Đánh giá mức độ hài lòng (Close and Rate)
 
-### [FR-STU-03] Sinh viên xem kết quả và đánh giá chất lượng dịch vụ
+### [FR-STU-05 / FR-STF-06] Sinh viên xem kết quả, đánh giá chất lượng dịch vụ (CSAT) & Đóng Ticket
 
 **Mô tả**
 Hệ thống cho phép sinh viên xem chi tiết kết quả xử lý của Ticket và gửi đánh giá mức độ hài lòng (số sao và góp ý) sau khi yêu cầu đã hoàn thành.

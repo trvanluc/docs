@@ -3,6 +3,7 @@
 ## 1. Danh Sách Các Vai Trò Trong Hệ Thống (Actors)
 
 Hệ thống UniSupport xác định **3 vai trò chính (Actors)** tham gia vào quy trình nghiệp vụ:
+
 ```
 ┌──────────────────────────────────────────────┐
 │                  UNISUPPORT                  │
@@ -15,7 +16,6 @@ Hệ thống UniSupport xác định **3 vai trò chính (Actors)** tham gia và
 │   (Student)  ││ (Staff Agent)││(Manager/Admin)│
 └──────────────┘└──────────────┘└───────────────┘
 ```
-
 
 ---
 
@@ -33,7 +33,7 @@ Hệ thống UniSupport xác định **3 vai trò chính (Actors)** tham gia và
 - **Ràng buộc dữ liệu**: Sinh viên **chỉ nhìn thấy và thao tác** trên dữ liệu Ticket do chính tài khoản đó tạo ra.
 
 ### 2.2 Nhân viên (Staff / Support Agent)
-- **Mô tả**: Là nhân viên/chuyên viên thuộc các phòng ban chức năng (Đào tạo, Công tác học sinh sinh viên, Tài chính - Kế toán, Trung tâm CNTT, Thư viện...).
+- **Mô tả**: Là nhân viên/chuyên viên thuộc các phòng ban chức năng (Đào tạo, Công tác sinh viên, Tài chính - Kế toán, Trung tâm CNTT, Thư viện...).
 - **Quyền hạn chính**:
   - Đăng nhập hệ thống bằng tài khoản nhân viên.
   - Xem danh sách Ticket thuộc phòng ban của mình hoặc các Ticket được giao cá nhân.
@@ -60,19 +60,19 @@ Hệ thống UniSupport xác định **3 vai trò chính (Actors)** tham gia và
 
 | Mức Độ Thao Tác | Chức Năng / Hành Động | Sinh Viên | Nhân Viên | Quản Lý |
 | :--- | :--- | :---: | :---: | :---: |
-| **Xác thực** | Đăng nhập / Đăng xuất hệ thống |  |  |  |
-| **Ticket (Khởi tạo)** | Tạo mới Ticket & Upload đính kèm |  | ❌ | ❌ |
-| **Ticket (Xem)** | Xem Ticket do mình tạo |  |  |  |
-| | Xem Ticket thuộc phòng ban mình | ❌ |  |  |
-| | Xem toàn bộ Ticket toàn hệ thống | ❌ | ❌ |  |
-| **Ticket (Xử lý)** | Tiếp nhận (Claim) / Phân công (Assign) | ❌ |  |  |
-| | Chuyển phòng ban (Transfer) | ❌ |  |  |
-| | Yêu cầu bổ sung hồ sơ | ❌ |  |  |
-| | Phản hồi & Bổ sung hồ sơ theo yêu cầu |  | ❌ | ❌ |
-| | Cập nhật kết quả & Đóng Ticket | ❌ |  |  |
-| **Đánh giá** | Gửi đánh giá hài lòng (Rating/CSAT) |  | ❌ | ❌ |
-| **Báo cáo** | Xem Dashboard KPI & Báo cáo thống kê | ❌ | ❌ |  |
-| **Quản trị** | Quản lý tài khoản & Phân quyền RBAC | ❌ | ❌ |  |
-| | Xem Audit Log cơ bản | ❌ | ❌ |  |
+| **Xác thực** | Đăng nhập / Đăng xuất hệ thống | ✅ | ✅ | ✅ |
+| **Ticket (Khởi tạo)** | Tạo mới Ticket & Upload đính kèm | ✅ | ❌ | ❌ |
+| **Ticket (Xem)** | Xem Ticket do mình tạo | ✅ | ✅ | ✅ |
+| | Xem Ticket thuộc phòng ban mình | ❌ | ✅ | ✅ |
+| | Xem toàn bộ Ticket toàn hệ thống | ❌ | ❌ | ✅ |
+| **Ticket (Xử lý)** | Tiếp nhận (Claim) / Phân công (Assign) | ❌ | ✅ | ✅ |
+| | Chuyển phòng ban (Transfer) | ❌ | ✅ | ✅ |
+| | Yêu cầu bổ sung hồ sơ | ❌ | ✅ | ✅ |
+| | Phản hồi & Bổ sung hồ sơ theo yêu cầu | ✅ | ❌ | ❌ |
+| | Cập nhật kết quả & Đóng Ticket | ❌ | ✅ | ✅ |
+| **Đánh giá** | Gửi đánh giá hài lòng (Rating/CSAT) | ✅ | ❌ | ❌ |
+| **Báo cáo** | Xem Dashboard KPI & Báo cáo thống kê | ❌ | ❌ | ✅ |
+| **Quản trị** | Quản lý tài khoản & Phân quyền RBAC | ❌ | ❌ | ✅ |
+| | Xem Audit Log cơ bản | ❌ | ❌ | ✅ |
 
-*Ghi chú:  = Có quyền thao tác | ❌ = Không có quyền thao tác*
+*Ghi chú: ✅ = Có quyền thao tác | ❌ = Không có quyền thao tác*

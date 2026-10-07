@@ -1,239 +1,234 @@
-# Tài Liệu Đặc Tả Yêu Cầu Sản Phẩm - Phân Hệ Quản Lý (PRD - M03 Management Dashboard)
+# Đặc Tả Yêu Cầu Sản Phẩm - Phân Hệ Quản Trị & Báo Cáo (PRD - M03 Admin & Management Dashboard)
+
+## 1. Tổng Quan Phân Hệ
+
+Phân hệ **Quản trị & Báo cáo (Admin & Management Dashboard)** là trung tâm điều hành và kiểm soát toàn diện dành cho Ban Giám hiệu, Trưởng/Phó các Phòng ban chức năng và Quản trị viên hệ thống (Admin) tại **Aurora University**. Phân hệ đảm nhiệm công tác quản trị tài khoản, phân quyền RBAC, quản lý danh mục phòng ban, kiểm soát an toàn dữ liệu, giám sát KPI thời gian thực và trích xuất báo cáo phân tích.
+
+### Danh mục Chức năng & Phân bổ Công sức (Tổng: 215h)
+
+| Mã Chức Năng | Tên Chức Năng | Phạm Vi Nghiệp Vụ | Effort Cơ Sở | Buffer | Effort Kế Hoạch |
+| :--- | :--- | :--- | :---: | :---: | :---: |
+| **FR-ADM-01** | Quản lý tài khoản, vai trò & RBAC | Vòng đời tài khoản, xác thực mã hóa, phân quyền 4 vai trò (`STUDENT`, `STAFF`, `MANAGER`, `ADMIN`). | 60h | 4h | **64h** |
+| **FR-ADM-02** | Quản lý phòng ban & danh mục | Cấu hình cơ cấu phòng ban, danh mục nhóm vấn đề và luồng tiếp nhận ban đầu. | 26h | 0h | **26h** |
+| **FR-ADM-03** | Kiểm soát quyền truy cập & Audit Trail | Kiểm soát quyền truy cập tài nguyên/file qua API Proxy, lưu vết nhật ký bất biến. | 36h | 4h | **40h** |
+| **FR-ADM-04** | Quản lý thời hạn lưu trữ | Thiết lập chính sách lưu trữ (Retention), dọn dẹp file tạm, archiving dữ liệu cũ. | 15h | 0h | **15h** |
+| **FR-ADM-05** | Dashboard & thống kê quản trị | Thẻ chỉ số KPI thời gian thực, biểu đồ khối lượng công việc và cảnh báo quá hạn. | 33h | 0h | **33h** |
+| **FR-ADM-06** | Báo cáo, mức độ hài lòng & xuất dữ liệu | Báo cáo thời gian xử lý SLA trung bình, xu hướng sự cố, tổng hợp CSAT, xuất Excel/CSV. | 37h | 0h | **37h** |
+| **TỔNG CỘNG** | | | **207h** | **8h** | **215h** |
 
 ---
 
-### [FR-MGT-01] Đăng nhập tài khoản Quản lý / Quản trị viên
+## 2. Đặc Tả Chi Tiết Chức Năng
+
+### [FR-ADM-01] Quản lý tài khoản, vai trò & RBAC
 
 **Mô tả**  
-Hệ thống cho phép người dùng có vai trò Quản lý (`MANAGER`) hoặc Quản trị viên (`ADMIN`) đăng nhập để truy cập vào Báo cáo thống kê và các chức năng quản trị hệ thống.
-
-**Actor**  
-Quản lý phòng ban / Ban Giám hiệu / Quản trị viên kỹ thuật (Manager / Admin).
-
-**Preconditions**  
-- Tài khoản đã được cấp vai trò `MANAGER` hoặc `ADMIN`.
-- Tài khoản ở trạng thái hoạt động (`Active`).
-
-**Luồng chính**  
-1. Quản lý truy cập vào đường dẫn đăng nhập quản trị hệ thống UniSupport.
-2. Hệ thống hiển thị giao diện Đăng nhập.
-3. Quản lý nhập **Email công vụ / Tên đăng nhập** và **Mật khẩu**.
-4. Quản lý nhấn **Đăng nhập**.
-5. Hệ thống xác thực thông tin và kiểm tra vai trò.
-6. Hệ thống điều hướng vào Màn hình Dashboard Tổng quan.
-
-**Business Rules**  
-- Mật khẩu mã hóa theo chuẩn an toàn.
-- Hệ thống tự động phân quyền dữ liệu hiển thị trên Dashboard dựa theo vai trò (`MANAGER` cấp phòng ban chỉ thấy phòng ban mình, `ADMIN`/Ban Giám hiệu thấy toàn trường).
-
-**Alternative / Error Flows**  
-- **Tài khoản Sinh viên hoặc Nhân viên thông thường truy cập**: Hệ thống chặn và hiển thị lỗi "Tài khoản của bạn không có quyền truy cập trang Quản lý".
-
-**Acceptance Criteria**  
-- **AC-01**: Quản lý đăng nhập đúng thông tin -> Vào trang Dashboard Quản lý thành công.
-- **AC-02**: Tài khoản Sinh viên đăng nhập vào cổng Quản lý -> Hệ thống từ chối truy cập.
-
-**Ví dụ Edge Case**  
-Trưởng phòng Đào tạo đăng nhập thành công.  
--> **Expected Result**: Dashboard tự động giới hạn chỉ hiển thị số liệu và báo cáo liên quan đến Phòng Đào tạo.
-
----
-
-### [FR-MGT-02] Dashboard tổng quan & Chỉ số KPI vận hành
-
-**Mô tả**  
-Cung cấp màn hình Tổng quan hiển thị các thẻ chỉ số KPI cốt lõi và biểu đồ trực quan về tình hình xử lý phiếu hỗ trợ theo thời gian thực.
-
-**Actor**  
-Quản lý / Quản trị viên.
-
-**Preconditions**  
-- Người dùng đã đăng nhập tài khoản Quản lý thành công.
-
-**Luồng chính**  
-1. Quản lý chọn mục **Dashboard Tổng quan**.
-2. Hệ thống tải và hiển thị các thẻ chỉ số KPI (KPI Cards):
-   - **Tổng số Ticket**: Tổng yêu cầu tiếp nhận trong khoảng thời gian đã chọn.
-   - **Đang xử lý**: Số Ticket ở trạng thái `NEW`, `IN_PROGRESS`, `WAITING_STUDENT`.
-   - **Quá hạn SLA**: Số Ticket chưa hoàn thành đã vượt quá mốc thời gian cam kết.
-   - **Chỉ số CSAT trung bình**: Điểm đánh giá hài lòng trung bình từ sinh viên (Thang điểm 1-5 sao).
-3. Hệ thống hiển thị các biểu đồ:
-   - **Biểu đồ tỷ lệ trạng thái**: Tỷ lệ % Ticket theo các trạng thái.
-   - **Biểu đồ khối lượng công việc theo phòng ban**: So sánh số Ticket giữa các Phòng ban.
-4. Quản lý thay đổi Bộ lọc thời gian (Ví dụ: "Tuần này", "Tháng này").
-5. Hệ thống tính toán và cập nhật lại toàn bộ chỉ số và biểu đồ theo khoảng thời gian mới.
-
-**Business Rules**  
-- Dữ liệu KPI được tổng hợp và làm mới tự động hoặc khi người dùng chọn Tải lại.
-- Chỉ số quá hạn SLA chỉ tính trên các Ticket chưa ở trạng thái `RESOLVED` hoặc `CLOSED` mà mốc `sla_due_at` nhỏ hơn thời điểm hiện tại.
-
-**Alternative / Error Flows**  
-- **Không có dữ liệu trong khoảng thời gian chọn**: Hệ thống hiển thị chỉ số = 0 và biểu đồ dạng trống (Empty chart state) kèm thông báo "Không có dữ liệu trong khoảng thời gian này".
-
-**Acceptance Criteria**  
-- **AC-01**: Thẻ chỉ số hiển thị chính xác số lượng Ticket theo thời gian thực.
-- **AC-02**: Thay đổi bộ lọc thời gian -> Các số liệu và biểu đồ tự động cập nhật tương ứng.
-- **AC-03**: Nhấn vào thẻ "Quá hạn SLA" -> Hệ thống chuyển sang danh sách chi tiết các Ticket quá hạn.
-
-**Ví dụ Edge Case**  
-Một Ticket hết hạn SLA lúc 10:00 AM. Quản lý xem Dashboard lúc 10:01 AM.  
--> **Expected Result**: Thẻ chỉ số "Quá hạn SLA" tự động tăng thêm 1 đơn vị.
-
----
-
-### [FR-MGT-03] Báo cáo thời gian xử lý & Xu hướng nhóm vấn đề
-
-**Mô tả**  
-Cung cấp các báo cáo chi tiết về Thời gian xử lý trung bình (Average Resolution Time), xu hướng nhóm vấn đề phát sinh nhiều nhất và tổng hợp ý kiến phản hồi của sinh viên.
-
-**Actor**  
-Quản lý / Quản trị viên.
-
-**Preconditions**  
-- Người dùng đã đăng nhập tài khoản Quản lý.
-
-**Luồng chính**  
-1. Quản lý truy cập mục **Báo cáo & Phân tích**.
-2. Quản lý chọn loại báo cáo:
-   - **Báo cáo Thời gian xử lý**: Hiển thị thời gian giải quyết trung bình (tính bằng giờ/ngày) theo từng Phòng ban hoặc từng Nhân viên.
-   - **Báo cáo Xu hướng vấn đề**: Thống kê top 5 nhóm vấn đề (Category) sinh viên gặp phải nhiều nhất.
-   - **Báo cáo Phản hồi CSAT**: Thống kê chi tiết danh sách đánh giá sao và nhận xét văn bản của sinh viên.
-3. Quản lý chọn các tiêu chí lọc (Phòng ban, Ngày bắt đầu, Ngày kết thúc).
-4. Hệ thống xuất ra giao diện báo cáo dạng bảng và biểu đồ tương ứng.
-
-**Business Rules**  
-- Thời gian xử lý của 1 Ticket = `resolved_at` - `created_at` (đã trừ đi khoảng thời gian tạm dừng ở trạng thái `WAITING_STUDENT`).
-- Báo cáo CSAT chỉ tính toán dựa trên các Ticket đã có đánh giá sao từ sinh viên.
-
-**Alternative / Error Flows**  
-- **Khoảng thời gian chọn không hợp lệ (Ngày kết thúc trước Ngày bắt đầu)**: Hệ thống báo lỗi "Ngày kết thúc phải lớn hơn hoặc bằng Ngày bắt đầu".
-
-**Acceptance Criteria**  
-- **AC-01**: Báo cáo thời gian xử lý trung bình hiển thị chính số giờ/ngày xử lý thực tế của phòng ban.
-- **AC-02**: Danh sách Top nhóm vấn đề xếp theo thứ tự giảm dần số lượng Ticket phát sinh.
-- **AC-03**: Hiển thị đầy đủ nhận xét và số sao đánh giá trong Báo cáo CSAT.
-
-**Ví dụ Edge Case**  
-Trong tháng 10, Phòng Đào tạo nhận 100 Ticket, trong đó nhóm "Đăng ký tín chỉ" chiếm 60 Ticket.  
--> **Expected Result**: Báo cáo Xu hướng vấn đề hiển thị "Đăng ký tín chỉ" đứng vị trí Top 1 với tỷ lệ 60%.
-
----
-
-### [FR-MGT-04] Quản lý tài khoản người dùng (User Management)
-
-**Mô tả**  
-Cho phép Quản trị viên (Admin) khởi tạo tài khoản mới, cập nhật thông tin cá nhân và thực hiện Khóa/Mở khóa tài khoản người dùng trong hệ thống UniSupport.
+Quản lý toàn bộ vòng đời tài khoản người dùng trong hệ thống (tạo mới, cập nhật, khóa/mở khóa), xử lý xác thực đăng nhập an toàn và gán phân quyền theo vai trò (Role-Based Access Control).
 
 **Actor**  
 Quản trị viên hệ thống (Admin).
 
 **Preconditions**  
-- Người dùng đăng nhập bằng tài khoản có vai trò `ADMIN`.
+Người dùng đăng nhập bằng tài khoản có vai trò `ADMIN`.
 
 **Luồng chính**  
-1. Admin truy cập mục **Quản lý Tài khoản**.
-2. Hệ thống hiển thị danh sách toàn bộ tài khoản người dùng (Sinh viên, Nhân viên, Quản lý).
-3. **Thao tác 1 (Tạo tài khoản mới)**:
-   - Admin nhấn **Tạo tài khoản**.
-   - Admin nhập Email, Họ tên, Mã định danh (Mã SV / Mã NV), Mật khẩu khởi tạo và chọn Vai trò.
-   - Admin nhấn **Lưu**.
-4. **Thao tác 2 (Khóa / Mở khóa tài khoản)**:
-   - Admin chọn tài khoản cần thao tác và chọn **Khóa tài khoản** (Disable) hoặc **Mở khóa** (Enable).
-   - Admin nhập lý do thao tác.
-   - Admin nhấn **Xác nhận**.
-5. Hệ thống kiểm tra và cập nhật trạng thái tài khoản (`Active` hoặc `Inactive`).
-6. Ghi nhận sự kiện vào Audit Log.
+1. Admin truy cập mục **Quản lý tài khoản**.
+2. Hệ thống hiển thị danh sách người dùng kèm vai trò và trạng thái hoạt động.
+3. **Tạo tài khoản mới:** Admin nhập Họ tên, Email, Mã định danh (Mã SV / Mã NV), Mật khẩu khởi tạo, chọn Vai trò (`STUDENT`, `STAFF`, `MANAGER`, `ADMIN`) và chọn Phòng ban trực thuộc (đối với Staff).
+4. **Khóa / Mở khóa tài khoản:** Admin chọn tài khoản cần thay đổi trạng thái, nhập lý do và bấm xác nhận.
+5. Hệ thống mã hóa mật khẩu một chiều (Argon2/Bcrypt), lưu bản ghi và gửi thông tin xác thực cho người dùng.
+6. Ghi nhận lịch sử thao tác vào Audit Log.
 
 **Business Rules**  
-- Email và Mã sinh viên/Mã nhân viên là DUY NHẤT trong hệ thống.
-- Tài khoản bị khóa (`Inactive`) sẽ lập tức bị hủy phiên đăng nhập hiện tại và không thể đăng nhập lại cho đến khi được mở khóa.
-- Admin không thể tự khóa tài khoản của chính mình.
+- Email và Mã định danh là duy nhất trong toàn hệ thống.
+- Khi tài khoản bị khóa (`INACTIVE`), hệ thống lập tức thu hồi phiên làm việc (Revoke Token) và ngăn chặn đăng nhập tiếp theo.
+- Tài khoản có vai trò `STAFF` bắt buộc phải thuộc về ít nhất 01 Phòng ban chuyên trách.
 
 **Alternative / Error Flows**  
-- **Trùng Email hoặc Mã định danh**: Hệ thống báo lỗi "Email hoặc Mã định danh đã tồn tại trong hệ thống".
+- **Trùng Email hoặc Mã định danh**: Báo lỗi "Email hoặc Mã định danh đã tồn tại trên hệ thống".
+- **Admin tự khóa chính mình**: Hệ thống chặn hành động và hiển thị cảnh báo không được phép.
 
 **Acceptance Criteria**  
-- **AC-01**: Admin tạo thành công tài khoản mới với đầy đủ thông tin hợp lệ.
-- **AC-02**: Admin chọn khóa tài khoản người dùng A -> Tài khoản A chuyển sang `Inactive`, người dùng A bị kích ra khỏi hệ thống nếu đang làm việc.
-- **AC-03**: Nhập trùng Email đã có -> Hệ thống hiển thị lỗi validation.
+- **AC-01**: Tạo tài khoản mới thành công, đăng nhập kiểm tra đúng vai trò và phạm vi dữ liệu.
+- **AC-02**: Khóa tài khoản -> Người dùng bị đăng xuất ngay lập tức ở thao tác tiếp theo.
 
 **Ví dụ Edge Case**  
-Admin thực hiện khóa tài khoản của Nhân viên B khi Nhân viên B đang đăng nhập xử lý Ticket.  
--> **Expected Result**: Ngay thao tác gửi request tiếp theo của Nhân viên B, hệ thống từ chối và đẩy về màn hình Đăng nhập với thông báo "Tài khoản của bạn đã bị khóa".
+Admin đổi vai trò của một Nhân viên từ `STAFF` sang `MANAGER`.  
+-> **Expected Result**: Nhân viên truy cập được thêm các báo cáo quản trị của phòng ban mà không cần tạo tài khoản mới.
 
 ---
 
-### [FR-MGT-05] Quản lý phân quyền vai trò & Phòng ban (RBAC & Department Assignment)
+### [FR-ADM-02] Quản lý phòng ban & danh mục
 
 **Mô tả**  
-Cho phép Quản trị viên gán Vai trò hệ thống (`STUDENT`, `STAFF`, `MANAGER`, `ADMIN`) và gán Phòng ban chuyên trách cho tài khoản Nhân viên/Quản lý.
+Cho phép cấu hình danh sách các Phòng ban chuyên trách tại Aurora University và danh mục nhóm vấn đề / dịch vụ hỗ trợ trực thuộc.
 
 **Actor**  
 Quản trị viên hệ thống (Admin).
 
 **Preconditions**  
-- Người dùng có quyền `ADMIN`.
+Admin đã đăng nhập hệ thống.
 
 **Luồng chính**  
-1. Admin truy cập mục **Phân quyền & Phòng ban**.
-2. Admin tìm kiếm và chọn tài khoản nhân viên cần cấu hình.
-3. Admin chọn **Vai trò (Role)** tương ứng từ danh sách: `STAFF`, `MANAGER`, `ADMIN`.
-4. Admin chọn **Phòng ban (Department)** phụ trách (Ví dụ: Phòng Đào tạo, Phòng CTHSSV...).
-5. Admin nhấn **Lưu phân quyền**.
-6. Hệ thống kiểm tra dữ liệu và cập nhật quyền hạn cho tài khoản.
-7. Ghi vết thao tác vào Audit Log.
+1. Admin vào mục **Phòng ban & Danh mục**.
+2. Hệ thống hiển thị cây phân cấp: Phòng ban -> Nhóm vấn đề (Category) -> Loại yêu cầu cụ thể (Subcategory).
+3. Admin có thể thêm mới, sửa tên, đổi trưởng bộ phận hoặc ẩn/hiện một nhóm vấn đề.
+4. Admin thiết lập thời hạn cam kết SLA mặc định cho từng loại yêu cầu (ví dụ: Cấp bảng điểm: 48h; Xác nhận sinh viên: 24h).
+5. Nhấn **Lưu cấu hình**. Hệ thống áp dụng ngay cho các Ticket tạo mới từ thời điểm đó.
 
 **Business Rules**  
-- Một tài khoản Nhân viên (`STAFF`) bắt buộc phải thuộc về **ít nhất 01 Phòng ban**.
-- Quyền hạn mới có hiệu lực ngay lập tức sau khi lưu.
+- Không cho phép xóa cứng (Hard delete) phòng ban đã có Ticket phát sinh trong lịch sử; chỉ cho phép chuyển sang trạng thái ẩn (Inactive).
 
 **Alternative / Error Flows**  
-- **Gán vai trò STAFF nhưng không chọn Phòng ban**: Hệ thống dừng thao tác và báo lỗi "Tài khoản Nhân viên bắt buộc phải thuộc về ít nhất một Phòng ban".
+- **Tạo trùng tên phòng ban**: Báo lỗi tên phòng ban đã tồn tại.
 
 **Acceptance Criteria**  
-- **AC-01**: Gán vai trò `STAFF` và gán Phòng Đào tạo cho nhân viên A -> Nhân viên A đăng nhập thấy đúng Hòm thư Phòng Đào tạo.
-- **AC-02**: Đổi vai trò nhân viên A từ `STAFF` lên `MANAGER` -> Nhân viên A truy cập được thêm các Báo cáo của phòng ban đó.
+- **AC-01**: Thêm nhóm vấn đề mới -> Hiển thị ngay trên form gửi yêu cầu của sinh viên.
+- **AC-02**: Ẩn phòng ban -> Sinh viên không còn chọn được phòng ban đó khi tạo Ticket mới.
 
 **Ví dụ Edge Case**  
-Admin chuyển Nhân viên C từ Phòng Đào tạo sang Phòng CTHSSV.  
--> **Expected Result**: Nhân viên C lập tức không còn thấy danh sách Ticket của Phòng Đào tạo mà chuyển sang thấy Ticket của Phòng CTHSSV.
+Admin cập nhật thời hạn SLA của dịch vụ "Xác nhận thực tập" từ 48h xuống 24h.  
+-> **Expected Result**: Các Ticket mới tạo sẽ áp dụng mốc 24h; các Ticket đã tạo trước đó giữ nguyên hạn cũ.
 
 ---
 
-### [FR-MGT-06] Tra soát nhật ký hệ thống (Audit Log / Activity Log)
+### [FR-ADM-03] Kiểm soát quyền truy cập & Audit Trail
 
 **Mô tả**  
-Cho phép Quản trị viên xem nhật ký lưu vết toàn bộ các hành động quan trọng diễn ra trên hệ thống để phục vụ tra soát khi có khiếu nại hoặc sự cố.
+Kiểm soát an toàn dữ liệu và bảo mật tệp đính kèm thông qua Secured API Proxy, đồng thời ghi nhận nhật ký tra soát bất biến (Append-only Audit Log) cho toàn bộ các hành động trọng yếu.
+
+**Actor**  
+Quản trị viên / Toàn bộ người dùng / Hệ thống.
+
+**Preconditions**  
+Mọi yêu cầu truy xuất dữ liệu/file đều có Token xác thực.
+
+**Luồng chính**  
+1. **Kiểm soát truy cập API & File:**
+   - Khi có request tải file: `GET /api/v1/attachments/{id}/download`.
+   - Backend xác minh Token và kiểm tra quyền sở hữu (Chỉ sinh viên tạo Ticket, nhân viên phòng ban thụ lý hoặc Admin mới được tải).
+   - Nếu vi phạm -> Trả lỗi HTTP `403 Forbidden`.
+2. **Ghi nhận Audit Log:**
+   - Mỗi khi diễn ra hành động: Đổi trạng thái Ticket, Chuyển phòng ban, Phân công nhân viên, Khóa tài khoản.
+   - Hệ thống tự động ghi bản ghi vào bảng `audit_logs`: `user_id`, `action`, `resource_id`, `old_value`, `new_value`, `ip_address`, `timestamp` (UTC).
+3. **Tra soát nhật ký:** Admin mở màn hình Audit Log để xem và lọc lịch sử khi cần kiểm tra.
+
+**Business Rules**  
+- Bảng nhật ký `audit_logs` tuân thủ quy tắc `BR-AUD-01`: Chỉ ghi thêm (Append-only), không có chức năng sửa hoặc xóa trên giao diện hay API.
+- Nghiêm cấm đặt thư mục upload file ở chế độ công khai tĩnh (Public static URL).
+
+**Alternative / Error Flows**  
+- **Truy cập file trái phép**: Chặn truy cập và ghi nhận cảnh báo an ninh.
+
+**Acceptance Criteria**  
+- **AC-01**: Người không liên quan mở link file đính kèm -> Trả về mã lỗi `403 Forbidden`.
+- **AC-02**: Mọi thay đổi trạng thái Ticket đều sinh dòng Audit Log chính xác trong vòng 100ms.
+
+**Ví dụ Edge Case**  
+Admin thử tìm nút xóa nhật ký trên giao diện Audit Log.  
+-> **Expected Result**: Không tồn tại chức năng chỉnh sửa hay xóa; toàn bộ dữ liệu chỉ ở dạng xem (Read-only).
+
+---
+
+### [FR-ADM-04] Quản lý thời hạn lưu trữ
+
+**Mô tả**  
+Thiết lập chính sách lưu trữ dữ liệu (Data Retention Policy), dọn dẹp các tệp tạm/tệp mồ côi (Orphan files) và lưu trữ định kỳ các Ticket đã đóng hoàn tất lâu ngày nhằm tối ưu dung lượng máy chủ.
 
 **Actor**  
 Quản trị viên hệ thống (Admin).
 
 **Preconditions**  
-- Người dùng đăng nhập bằng tài khoản `ADMIN`.
+Admin truy cập cấu hình hệ thống.
 
 **Luồng chính**  
-1. Admin truy cập mục **Nhật ký tra soát (Audit Log)**.
-2. Hệ thống hiển thị bảng danh sách các bản ghi nhật ký sắp xếp theo thời gian mới nhất.
-3. Mỗi bản ghi hiển thị:
-   - **Thời gian**: Mốc thời gian thực hiện (UTC/Local time).
-   - **Tác nhân**: Tên & Email người thực hiện thao tác.
-   - **Hành động**: Loại hành động (Ví dụ: `TICKET_STATUS_CHANGE`, `DEPARTMENT_TRANSFER`, `USER_LOCKED`...).
-   - **Chi tiết**: Mô tả sự thay đổi dữ liệu (Giá trị cũ -> Giá trị mới).
-   - **Địa chỉ IP**: Địa chỉ IP client thực hiện.
-4. Admin có thể lọc log theo Khoảng thời gian, Tác nhân hoặc Mã Ticket.
+1. Admin vào mục **Chính sách lưu trữ dữ liệu**.
+2. Cấu hình các tham số:
+   - Thời gian lưu trữ Ticket hoạt động (ví dụ: 12 tháng).
+   - Thời gian dọn dẹp file tạm upload dở dang (ví dụ: sau 24 giờ không gắn vào Ticket).
+3. Admin có thể kích hoạt tác vụ quét và tối ưu dung lượng theo yêu cầu.
+4. Hệ thống thực hiện dọn dẹp an toàn các tệp rác và nén lưu trữ dữ liệu cũ.
 
 **Business Rules**  
-- Nhật ký hệ thống tuân thủ quy tắc `BR-AUD-01` (Chỉ ghi - Append-only, tuyệt đối không được sửa hoặc xóa).
-- Mọi thao tác thay đổi trạng thái Ticket, Chuyển phòng ban, Khóa tài khoản đều phải bắt buộc ghi log.
-
-**Alternative / Error Flows**  
-- **Không tìm thấy bản ghi theo điều kiện lọc**: Hiển thị bảng trống kèm thông báo "Không tìm thấy nhật ký phù hợp".
+- Chỉ dọn dẹp các file tạm mồ côi không gắn với bất kỳ Ticket hợp lệ nào.
+- Tuyệt đối không xóa dữ liệu Ticket và Audit Log khi chưa có sự xác nhận chính thức từ nhà trường.
 
 **Acceptance Criteria**  
-- **AC-01**: Mọi hành động quan trọng do bất kỳ người dùng nào thực hiện đều sinh ra 01 bản ghi Audit Log tương ứng ngay lập tức.
-- **AC-02**: Dữ liệu Audit Log chỉ ở dạng xem (Read-only), không có nút Sửa hoặc Xóa trên giao diện.
-- **AC-03**: Lọc theo Mã Ticket `TK-20261004-001` -> Hiển thị toàn bộ lịch sử biến đổi của Ticket đó từ lúc tạo đến lúc đóng.
+- **AC-01**: Tác vụ dọn dẹp file tạm quét và xóa đúng các file mồ côi, thu hồi dung lượng đĩa.
+- **AC-02**: Cấu hình thời hạn lưu trữ được ghi nhận và hoạt động đúng chu kỳ.
 
 **Ví dụ Edge Case**  
-Nhân viên A chuyển Ticket sang Phòng ban khác lúc 14:30. Admin mở trang Audit Log lúc 14:31.  
--> **Expected Result**: Dòng log ghi nhận hành động `DEPARTMENT_TRANSFER` của Nhân viên A hiển thị ngay ở đầu danh sách.
+Sinh viên upload ảnh nhưng sau đó hủy không gửi Ticket.  
+-> **Expected Result**: File tạm mồ côi đó được hệ thống tự động dọn dẹp sau 24h để tránh rác dung lượng.
+
+---
+
+### [FR-ADM-05] Dashboard & thống kê quản trị
+
+**Mô tả**  
+Cung cấp màn hình Dashboard tổng quan hiển thị các thẻ chỉ số KPI vận hành và biểu đồ trực quan theo thời gian thực cho Ban Giám hiệu và Trưởng phòng ban.
+
+**Actor**  
+Quản lý phòng ban / Ban Giám hiệu / Admin.
+
+**Preconditions**  
+Người dùng đăng nhập tài khoản có vai trò `MANAGER` hoặc `ADMIN`.
+
+**Luồng chính**  
+1. Người dùng truy cập **Dashboard Tổng quan**.
+2. Hệ thống tải và hiển thị các thẻ KPI cốt lõi:
+   - **Tổng số yêu cầu tiếp nhận**: Phân bổ theo khoảng thời gian.
+   - **Đang xử lý**: Số Ticket đang trong luồng vận hành.
+   - **Quá hạn SLA**: Số Ticket chưa hoàn thành đã vượt mốc cam kết.
+   - **Điểm CSAT trung bình**: Chỉ số hài lòng chung của toàn trường/phòng ban.
+3. Hiển thị biểu đồ phân bổ trạng thái (Pie Chart) và biểu đồ khối lượng công việc theo phòng ban (Bar Chart).
+4. Người dùng thay đổi bộ lọc thời gian ("Hôm nay", "Tuần này", "Tháng này", "Tùy chọn").
+5. Toàn bộ số liệu và biểu đồ tự động cập nhật lại tương ứng.
+
+**Business Rules**  
+- Phân vùng dữ liệu: Trưởng phòng chỉ xem số liệu thuộc Phòng ban của mình; Ban Giám hiệu và Admin xem toàn trường.
+
+**Acceptance Criteria**  
+- **AC-01**: Thẻ chỉ số hiển thị chính xác số lượng Ticket thực tế theo thời gian thực.
+- **AC-02**: Bấm vào thẻ "Quá hạn SLA" -> Điều hướng sang danh sách chi tiết các Ticket quá hạn.
+
+**Ví dụ Edge Case**  
+Một Ticket hết hạn lúc 14:00. Lúc 14:01 Quản lý xem Dashboard.  
+-> **Expected Result**: Thẻ chỉ số Quá hạn SLA tự động tăng thêm 1 đơn vị.
+
+---
+
+### [FR-ADM-06] Báo cáo, mức độ hài lòng & xuất dữ liệu
+
+**Mô tả**  
+Cung cấp các báo cáo chuyên sâu về Thời gian giải quyết trung bình (SLA Performance), Xu hướng nhóm vấn đề phát sinh, Tổng hợp đánh giá và nhận xét CSAT, cùng tính năng Xuất báo cáo dạng file (Excel/CSV).
+
+**Actor**  
+Quản lý / Ban Giám hiệu / Admin.
+
+**Preconditions**  
+Người dùng có quyền xem báo cáo.
+
+**Luồng chính**  
+1. Người dùng truy cập mục **Báo cáo & Thống kê**.
+2. Chọn loại báo cáo:
+   - **Báo cáo Thời gian xử lý**: Thống kê thời gian giải quyết trung bình theo từng phòng ban/chuyên viên.
+   - **Báo cáo Xu hướng sự cố**: Top 5 nhóm vấn đề sinh viên gặp phải nhiều nhất.
+   - **Báo cáo Mức độ hài lòng CSAT**: Phổ điểm đánh giá sao (1-5 sao) và danh sách nhận xét chi tiết.
+3. Chọn các tiêu chí lọc (Phòng ban, Khoảng ngày bắt đầu - kết thúc).
+4. Nhấn nút **Xuất báo cáo** để tải file Excel/CSV về máy tính.
+
+**Business Rules**  
+- Thời gian xử lý thực tế của một Ticket được tính bằng thời gian từ lúc tạo đến lúc `RESOLVED`, đã loại trừ khoảng thời gian tạm dừng ở `WAITING_STUDENT`.
+- Báo cáo CSAT chỉ tính toán trên các Ticket đã có đánh giá từ sinh viên.
+
+**Alternative / Error Flows**  
+- **Chọn khoảng ngày không hợp lệ (Ngày kết thúc trước Ngày bắt đầu)**: Hệ thống báo lỗi và yêu cầu chọn lại.
+
+**Acceptance Criteria**  
+- **AC-01**: Báo cáo tính đúng thời gian xử lý trung bình và tỷ lệ hài lòng CSAT.
+- **AC-02**: Xuất file Excel/CSV chuẩn định dạng tiếng Việt UTF-8, đầy đủ cột dữ liệu.
+
+**Ví dụ Edge Case**  
+Trong tháng có 200 Ticket, trong đó 150 Ticket đánh giá 5 sao và 50 Ticket đánh giá 4 sao.  
+-> **Expected Result**: Điểm CSAT trung bình hiển thị chính xác là `4.75 / 5.0 sao`.

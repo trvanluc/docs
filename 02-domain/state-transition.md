@@ -11,7 +11,7 @@ Bảng dưới đây quy định các trạng thái hợp lệ có thể chuyể
 | `NEW` | `CANCELLED` | Sinh viên / System | Sinh viên chủ động hủy yêu cầu khi chưa ai tiếp nhận, hoặc hệ thống hủy do phát hiện vi phạm. |
 | `IN_PROGRESS` | `WAITING_STUDENT` | Nhân viên | Nhân viên gửi nội dung **Yêu cầu bổ sung thông tin/giấy tờ**. |
 | `WAITING_STUDENT` | `IN_PROGRESS` | Sinh viên | Sinh viên đăng tải file hoặc phản hồi câu trả lời bổ sung. |
-| IN_PROGRESS | NEW | Nhân viên | Nhân viên thực hiện Chuyển phòng ban (Transfer) -> Trạng thái chuyển về NEW (hoặc FORWARDED), cập nhật department_id mới và xóa assigned_staff_id. |
+| `IN_PROGRESS` | `NEW` | Nhân viên | Nhân viên thực hiện Chuyển phòng ban (Transfer) -> Trạng thái chuyển về `NEW` (hoặc `FORWARDED`), cập nhật `department_id` mới và xóa `assigned_staff_id`. |
 | `IN_PROGRESS` | `RESOLVED` | Nhân viên | Nhân viên cập nhật nội dung giải quyết thành công và chọn **Hoàn tất**. |
 | `RESOLVED` | `IN_PROGRESS` | Sinh viên | Sinh viên phản hồi chưa hài lòng/khiếu nại kết quả trong thời hạn cho phép. |
 | `RESOLVED` | `CLOSED` | Sinh viên | Sinh viên xác nhận kết quả và thực hiện **Đánh giá hài lòng (CSAT)**. |

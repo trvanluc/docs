@@ -1,6 +1,6 @@
 # [WF-05] Cập nhật kết quả & Đóng yêu cầu (Complete and Resolve)
 
-### [FR-STF-04] Nhân viên cập nhật kết quả giải quyết và hoàn thành Ticket
+### [FR-STF-05 / FR-STF-06] Nhân viên cập nhật kết quả giải quyết và hoàn thành Ticket
 
 **Mô tả**
 Hệ thống cho phép nhân viên phụ trách ghi nhận kết quả xử lý, tải lên các tài liệu/kết quả giải quyết (nếu có) và đóng Ticket sau khi đã hoàn thành xử lý cho sinh viên.

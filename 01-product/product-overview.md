@@ -1,5 +1,7 @@
 # Tổng Quan Sản Phẩm - UniSupport (Product Overview)
 
+> Nguồn phân bổ công sức chuẩn hóa: `Phan_bo_Resources_Antigravity.md`
+
 ## 1. Tóm Tắt Dự Án (Executive Summary)
 **UniSupport** là hệ thống Web Application quản lý và hỗ trợ sinh viên tập trung được phát triển dành riêng cho **Aurora University**. Hệ thống ra đời nhằm chuẩn hóa toàn bộ quy trình tiếp nhận, phân loại, điều phối và xử lý các yêu cầu hỗ trợ từ sinh viên, thay thế cho các kênh truyền thống rời rạc (email cá nhân/phòng ban, form trực tuyến, tin nhắn rải rác).
 
@@ -17,15 +19,19 @@ Trở thành **đầu mối giao tiếp số duy nhất** giữa Sinh viên và 
 
 ---
 
-## 3. Các Phân Hệ Chính (Core Product Modules)
+## 3. Các Phân Hệ & Phân Bổ Công Sức (Modules & Effort Allocation)
 
-| Mã Phân Hệ | Tên Phân Hệ | Chức Năng Cốt Lõi |
-| :--- | :--- | :--- |
-| **M01** | **Sinh viên (Student Portal)** | Đăng nhập, tạo yêu cầu hỗ trợ (kèm file PDF/ảnh), nhận Mã Ticket, theo dõi tiến độ xử lý, bổ sung hồ sơ, nhận kết quả và đánh giá mức độ hài lòng. |
-| **M02** | **Nhân viên (Staff Operations)** | Đăng nhập, tiếp nhận (Claim), phân loại (Triage), đánh giá độ ưu tiên, chuyển phòng ban, yêu cầu sinh viên bổ sung giấy tờ, cập nhật tiến độ và đóng ticket. |
-| **M03** | **Quản lý (Management Dashboard)** | Dashboard tổng quan KPI, báo cáo thời gian xử lý trung bình/xu hướng sự cố, tổng hợp chỉ số hài lòng, quản lý tài khoản & phân quyền vai trò. |
-| **M04** | **Dịch vụ Thông báo (Notification Service)** | Gửi thông báo nội bộ hệ thống (In-app notification) khi trạng thái ticket thay đổi, có phản hồi mới hoặc yêu cầu bổ sung thông tin. |
-| **M05** | **Phân quyền & Bảo mật (RBAC & Security)** | Đăng nhập bằng tài khoản cá nhân, phân quyền 3 vai trò (Sinh viên, Nhân viên, Quản lý), bảo mật file đính kèm, tra soát log thao tác cơ bản (Audit Log). |
+Hệ thống gồm **3 Phân hệ nghiệp vụ chính (17 Business Functions)** và **Hoạt động cấp dự án**, cùng 2 phân hệ dịch vụ kỹ thuật phụ trợ:
+
+| Mã Phân Hệ | Tên Phân Hệ | Chức Năng Cốt Lõi | Effort Cơ Sở (h) | Buffer (h) | Effort Kế Hoạch (h) |
+| :--- | :--- | :--- | :---: | :---: | :---: |
+| **M1 / M01** | **Sinh viên (Student Portal)** | Tra cứu FAQ, tạo yêu cầu hỗ trợ (kèm file), theo dõi tiến độ, nhận thông báo trạng thái, bổ sung hồ sơ & đánh giá CSAT (5 functions). | 124 | 4 | **128h** |
+| **M2 / M02** | **Nhân viên (Staff Operations)** | Hòm thư phòng ban, Claim/Assign, quản lý ưu tiên & thời hạn SLA, xử lý cập nhật, chuyển phòng ban (Escalation) & Đóng/Mở lại ticket (6 functions). | 187 | 10 | **197h** |
+| **M3 / M03** | **Quản trị & Báo cáo (Admin / Management)** | Quản lý tài khoản & RBAC, quản lý phòng ban/danh mục, kiểm soát quyền & Audit Trail, thời hạn lưu trữ, Dashboard KPI & Báo cáo CSAT (6 functions). | 207 | 8 | **215h** |
+| **Project** | **Hoạt động cấp dự án** | Quản lý dự án & điều phối (PM: 70h), Môi trường, CI/CD, triển khai & bàn giao (DevOps: 30h). | 100 | 0 | **100h** |
+| **TỔNG CỘNG** | **TOÀN BỘ DỰ ÁN** | | **618h** | **22h** | **640h** |
+
+*Ghi chú kỹ thuật: Phân hệ **M04 (Notification Service)** và **M05 (RBAC & Security)** đóng vai trò là các module kiến trúc dịch vụ kỹ thuật dùng chung, hiện thực hóa các chức năng thông báo trong M1 và phân quyền/bảo mật/audit trong M3.*
 
 ---
 
@@ -37,7 +43,11 @@ Trở thành **đầu mối giao tiếp số duy nhất** giữa Sinh viên và 
 ---
 
 ## 5. Tóm Tắt Thông Số Dự Án (Project Snapshot)
-- **Tổng kinh phí**: 300.000.000 VNĐ.
-- **Thời gian thực hiện**: 14 tuần (tương đương 70 ngày làm việc).
-- **Thời gian nghiệm thu**: 10 ngày làm việc sau bàn giao.
+- **Tổng kinh phí hợp đồng**: 300.000.000 VNĐ.
+- **Chi phí nhân sự nội bộ cơ sở (618h)**: 186.557.727 VNĐ (Lương gross: 153.545.455 đ + BH 21.5%: 33.012.273 đ).
+- **Chi phí dự phòng rủi ro ước tính (22h)**: 6.641.214 VNĐ.
+- **Tổng chi phí nhân sự kế hoạch (640h)**: 193.198.941 VNĐ.
+- **Quy mô đội ngũ**: 10 vị trí chuyên môn (PM, BA, UI/UX, TL, FE1, FE2, BE1, BE2, QA, DevOps).
+- **Thời gian thực hiện**: 14 tuần phát triển (tương đương 70 ngày làm việc).
+- **Thời gian nghiệm thu**: 10 ngày làm việc UAT sau bàn giao.
 - **Thời gian bảo hành kỹ thuật**: 30 ngày kể từ ngày nghiệm thu chính thức.

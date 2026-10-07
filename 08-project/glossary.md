@@ -4,7 +4,7 @@ Tài liệu này định nghĩa các thuật ngữ kỹ thuật, nghiệp vụ v
 
 ---
 
-## 📖 Bảng Thuật ngữ Dự án
+## 1. Bảng Thuật ngữ Dự án
 
 | Thuật ngữ / Từ viết tắt | Tên tiếng Anh đầy đủ | Giải thích nghĩa |
 | :--- | :--- | :--- |
