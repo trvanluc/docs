@@ -1,7 +1,8 @@
 # Phân Hệ Sinh Viên (M01 - Student Portal)
 
 ## I. TỔNG QUAN PHÂN HỆ
-Phân hệ Sinh viên cung cấp giao diện trực quan, thân thiện trên cả máy tính và thiết bị di động[cite: 1]. Phân hệ cho phép sinh viên Aurora University chủ động tạo yêu cầu hỗ trợ, đính kèm file minh chứng (ảnh hoặc PDF), theo dõi tiến độ xử lý theo thời gian thực qua mã Ticket duy nhất, bổ sung giấy tờ khi có yêu cầu, nhận kết quả và đánh giá mức độ hài lòng[cite: 1].
+
+Phân hệ Sinh viên cung cấp giao diện Web Responsive (tương thích Desktop và Mobile) cho sinh viên Aurora University. Phân hệ bao gồm các nhóm chức năng chính: Xác thực tài khoản, Khởi tạo yêu cầu hỗ trợ, Quản lý & Theo dõi tiến độ Ticket, Bổ sung hồ sơ theo yêu cầu, Xem kết quả và Đánh giá chất lượng phục vụ.
 
 ---
 
@@ -9,160 +10,197 @@ Phân hệ Sinh viên cung cấp giao diện trực quan, thân thiện trên c�
 
 ### [FR-STU-01] Sinh viên đăng nhập hệ thống
 
-**Mô tả**  
-Hệ thống cho phép sinh viên đăng nhập vào cổng UniSupport bằng tài khoản cá nhân do nhà trường cấp để thực hiện các giao dịch hỗ trợ[cite: 1].
+#### 1. Mô tả & Phạm vi
+Cho phép sinh viên đăng nhập vào hệ thống UniSupport bằng tài khoản cá nhân do nhà trường cấp. Hệ thống áp dụng cơ chế xác thực tập trung và trả về token quản lý phiên làm việc.
 
-**Actor**  
-Sinh viên Aurora University[cite: 1].
+#### 2. Actors & Điều kiện tiên quyết
+- **Actor:** Sinh viên.
+- **Preconditions:** Tài khoản sinh viên đã tồn tại trên cơ sở dữ liệu hệ thống, ở trạng thái hoạt động (ACTIVE).
 
-**Preconditions**  
-- Sinh viên có tài khoản được cấp hợp lệ trên hệ thống UniSupport[cite: 1].
+#### 3. Quy tắc Dữ liệu & Validation (Data Contracts)
+- **Trường dữ liệu đầu vào:**
+  - **Username / Student ID:** Bắt buộc, chuỗi không khoảng trắng, độ dài từ 6 - 20 ký tự, tự động `trim()` khoảng trắng hai đầu.
+  - **Password:** Bắt buộc, độ dài từ 6 - 50 ký tự, phân biệt chữ hoa/chữ thường.
+- **Xử lý khoảng trắng:** Tự động loại bỏ khoảng trắng thừa đầu/cuối của Username trước khi gửi request.
 
-**Luồng chính**  
-1. Sinh viên truy cập vào địa chỉ web hệ thống UniSupport[cite: 1].
-2. Hệ thống hiển thị màn hình đăng nhập.
-3. Sinh viên nhập **Tên đăng nhập / Mã sinh viên** và **Mật khẩu**[cite: 1].
-4. Sinh viên nhấn nút **Đăng nhập**.
-5. Hệ thống xác thực thông tin đăng nhập.
-6. Hệ thống chuyển hướng sinh viên đến giao diện trang chủ Phân hệ Sinh viên.
+#### 4. Giao diện & Hành vi UI/UX (UI States)
+- **Trạng thái Nút Đăng nhập:**
+  - Vô hiệu hóa (Disabled) khi Username hoặc Password đang trống.
+  - Khi nhấn Đăng nhập, nút chuyển sang trạng thái Loading (hiển thị spinner, disable tương tác), đồng thời vô hiệu hóa toàn bộ các input field trên form.
+- **Cơ chế chống gửi lặp (Debounce/Throttle):** Áp dụng Debounce/Disable form ngay khi gửi request để chặn hoàn toàn thao tác click liên tiếp (double click, spam click).
 
-**Business Rules**  
-- Tài khoản đăng nhập phải trùng khớp với dữ liệu sinh viên trong hệ thống[cite: 1].
-- Mỗi vai trò sau khi đăng nhập thành công chỉ truy cập được giao diện và chức năng tương ứng với vai trò của mình[cite: 1].
+#### 5. Luồng xử lý chi tiết (Flow of Events)
+1. Sinh viên truy cập trang `/login`.
+2. Hệ thống kiểm tra phiên làm việc hiện tại:
+   - Nếu đã có Token hợp lệ và còn hạn -> Tự động chuyển hướng sang `/dashboard`.
+   - Nếu chưa -> Hiển thị form đăng nhập.
+3. Sinh viên nhập Username, Password và nhấn Đăng nhập (hoặc bấm phím Enter).
+4. Client thực hiện validate dữ liệu đầu vào. Nếu hợp lệ, gửi request đăng nhập.
+5. Server xác thực thông tin:
+   - Trả về Token xác thực (JWT Access Token & Refresh Token) và thông tin Profile cơ bản (`student_id`, `full_name`, `email`, `role`).
+6. Client lưu trữ Token an toàn (HTTP-Only Cookie hoặc Storage có bảo mật) và chuyển hướng người dùng đến trang `/dashboard`.
 
-**Alternative / Error Flows**  
-- Nếu nhập sai thông tin đăng nhập, hệ thống hiển thị thông báo lỗi: "Tài khoản hoặc mật khẩu không chính xác" và yêu cầu nhập lại.
-- Nếu tài khoản bị khóa, hệ thống hiển thị thông báo: "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên."
+#### 6. Luồng ngoại lệ & Mã lỗi (Alternative & Error Flows)
+- **Lỗi Validation Client:** Hiển thị message bên dưới field tương ứng: *"Vui lòng nhập tên đăng nhập / mật khẩu"*.
+- **Thông tin đăng nhập sai (Mã lỗi 401 Unauthorized):** Hiển thị Alert/Toast error: *"Tài khoản hoặc mật khẩu không chính xác."*
+- **Tài khoản bị khóa (403 Forbidden / INACTIVE / BLOCKED):** Hiển thị Alert error: *"Tài khoản của bạn đã bị khóa. Vui lòng liên hệ Quản trị viên."*
+- **Lỗi kết nối / Server lỗi (500 / 503):** Hiển thị Toast error: *"Hệ thống đang gặp sự cố. Vui lòng thử lại sau ít phút."*
 
-**Acceptance Criteria**  
-- **AC-01:** Sinh viên nhập đúng thông tin tài khoản -> Hệ thống đăng nhập thành công và chuyển vào trang chính.
-- **AC-02:** Sinh viên nhập sai tài khoản/mật khẩu -> Hệ thống không cho đăng nhập và hiển thị thông báo lỗi validation.
-
-**Ví dụ Edge Case**  
-Sinh viên nhấn nút **Đăng nhập** liên tiếp 5 lần khi mạng bị lag.
-
-**Expected Result:** Hệ thống vô hiệu hóa nút bấm tạm thời và gửi 01 request xác thực duy nhất, không gây treo giao diện.
+#### 7. Tiêu chí nghiệm thu (Acceptance Criteria)
+- **AC-01:** Đăng nhập thành công với credential đúng -> Lưu phiên làm việc và chuyển đến `/dashboard` trong dưới 1.5 giây.
+- **AC-02:** Sai credential -> Hiển thị thông báo lỗi chi tiết, không lưu session, mật khẩu bị xóa khỏi input field.
+- **AC-03:** Click nút Đăng nhập nhiều lần liên tiếp -> Chỉ gửi đúng 01 request duy nhất lên Server.
+- **AC-04:** Chuyển đổi thiết bị / Resize màn hình -> Giao diện form hiển thị chuẩn responsive trên Mobile (khoảng cách lề, font size, button size chuẩn touch point).
 
 ---
 
-### [FR-STU-02] Sinh viên gửi yêu cầu hỗ trợ
+### [FR-STU-02] Sinh viên gửi yêu cầu hỗ trợ (Tạo Ticket)
 
-**Mô tả**  
-Hệ thống cho phép sinh viên tạo một Ticket hỗ trợ bằng cách chọn nhóm vấn đề, nhập thông tin mô tả và đính kèm file minh chứng (ảnh hoặc PDF)[cite: 1].
+#### 1. Mô tả & Phạm vi
+Cung cấp biểu mẫu cho phép sinh viên tạo yêu cầu hỗ trợ mới gửi đến các phòng ban, kèm theo tài liệu/hình ảnh minh chứng.
 
-**Actor**  
-Sinh viên đã đăng nhập vào hệ thống[cite: 1].
+#### 2. Actors & Điều kiện tiên quyết
+- **Actor:** Sinh viên đã đăng nhập.
+- **Preconditions:** Phiên làm việc hợp lệ.
 
-**Preconditions**  
-- Sinh viên đã đăng nhập thành công[cite: 1].
-- Sinh viên có quyền tạo Ticket[cite: 1].
+#### 3. Quy tắc Dữ liệu & Validation (Data Contracts)
+- **Danh mục nhóm vấn đề (Category):** Dropdown bắt buộc chọn. Dữ liệu category lấy từ API danh mục của hệ thống.
+- **Tiêu đề yêu cầu (Title):** Bắt buộc, chuỗi từ 10 đến 150 ký tự. Không chấp nhận chuỗi chỉ chứa khoảng trắng.
+- **Nội dung chi tiết (Description):** Bắt buộc, chuỗi từ 20 đến 2000 ký tự. Tự động `trim()` khoảng trắng hai đầu. Không chấp nhận chuỗi chỉ chứa ký tự trắng.
+- **File đính kèm (Attachments):**
+  - **Số lượng:** Tối đa 5 file / 1 Ticket.
+  - **Dung lượng:** Tối đa 5MB / 1 file.
+  - **Định dạng cho phép:** `.pdf`, `.png`, `.jpg`, `.jpeg` (Kiểm tra cả file extension và MIME type thực tế của file).
 
-**Luồng chính**  
-1. Sinh viên mở chức năng **Tạo Ticket**[cite: 1].
-2. Hệ thống hiển thị form tạo Ticket.
-3. Sinh viên nhập các thông tin bắt buộc của Ticket, bao gồm mô tả vấn đề[cite: 1].
-4. Sinh viên chọn **Gửi yêu cầu**[cite: 1].
-5. Hệ thống kiểm tra tính hợp lệ của dữ liệu[cite: 1].
-6. Nếu dữ liệu hợp lệ, hệ thống tạo Ticket mới[cite: 1].
-7. Hệ thống hiển thị thông báo tạo Ticket thành công và cung cấp mã Ticket cho sinh viên[cite: 1].
+#### 4. Giao diện & Hành vi UI/UX (UI States)
+- **Form Validation Real-time:** Báo lỗi ngay dưới input field khi người dùng blur khỏi field hoặc khi bấm Gửi yêu cầu.
+- **Upload File UI:** Hiển thị danh sách file đã chọn kèm tên file, dung lượng, nút Xóa file. Hiển thị thanh progress bar trong quá trình tải file lên.
+- **Nút Gửi yêu cầu:** Đổi sang trạng thái Loading ngay khi bấm. Disable form để tránh thao tác chỉnh sửa trong lúc request đang xử lý.
 
-**Business Rules**  
-- Mô tả vấn đề là thông tin bắt buộc[cite: 1].
-- Nội dung chỉ chứa khoảng trắng được xem là không hợp lệ[cite: 1].
-- Một thao tác gửi của sinh viên chỉ được tạo tối đa **một Ticket**, kể cả khi yêu cầu bị gửi nhiều lần do double-click, retry hoặc vấn đề mạng[cite: 1].
-- Ticket sau khi được tạo phải được liên kết với tài khoản sinh viên đã gửi yêu cầu[cite: 1].
-- File đính kèm chỉ chấp nhận định dạng **PDF, PNG, JPG, JPEG**, dung lượng tối đa **5MB/file**[cite: 1].
+#### 5. Cơ chế chống trùng lặp dữ liệu (Idempotency)
+- **Idempotency Key:** Client tự động sinh một mã `Client-Request-ID` (UUID v4) ngay khi render form tạo ticket. Mã này được gắn vào Header của request gửi Ticket.
+- **Xử lý phía Server:** Server kiểm tra `Client-Request-ID`. Nếu trùng trong thời gian timeout (ví dụ: 30 giây), Server từ chối ghi nhận record mới và trả về kết quả của Ticket đã tạo trước đó.
+- **Handling Retry/Lag Network:** Trường hợp mất mạng hoặc timeout từ Client, nếu Client bấm gửi lại với cùng `Client-Request-ID`, hệ thống không bao giờ sinh ra Ticket thứ 2.
 
-**Alternative / Error Flows**  
-- Nếu thiếu thông tin bắt buộc, hệ thống không tạo Ticket và hiển thị thông báo yêu cầu sinh viên bổ sung thông tin[cite: 1].
-- Nếu quá trình tạo Ticket thất bại, hệ thống thông báo lỗi và không được tạo Ticket ở trạng thái dữ liệu không hoàn chỉnh[cite: 1].
-- Nếu cùng một yêu cầu được gửi lại nhiều lần, hệ thống không tạo thêm Ticket trùng lập[cite: 1].
+#### 6. Luồng xử lý chi tiết (Flow of Events)
+1. Sinh viên bấm nút Tạo yêu cầu mới.
+2. Hệ thống tải danh mục Category và render Form. Sinh ngữ cảnh `Client-Request-ID`.
+3. Sinh viên điền các trường thông tin và tải file đính kèm (nếu có).
+4. Client kiểm tra validation toàn bộ form.
+5. Sinh viên nhấn Gửi yêu cầu.
+6. Client gọi API upload file (hoặc gửi multipart) kèm theo `Client-Request-ID`.
+7. Server khởi tạo Ticket với trạng thái mặc định là `NEW`, ghi nhận log khởi tạo, trả về mã Ticket dạng chuẩn (VD: `TK-20261009-0001`).
+8. Client nhận phản hồi thành công, hiển thị Modal/Toast thông báo thành công kèm mã Ticket, tự động chuyển về trang `/tickets/{ticket_id}`.
 
-**Acceptance Criteria**  
-- **AC-01:** Sinh viên nhập đầy đủ thông tin hợp lệ và chọn **Gửi yêu cầu** -> hệ thống tạo đúng một Ticket và hiển thị thông báo thành công[cite: 1].
-- **AC-02:** Sinh viên để trống trường mô tả -> hệ thống không tạo Ticket và hiển thị lỗi validation[cite: 1].
-- **AC-03:** Sinh viên nhập nội dung chỉ gồm khoảng trắng -> hệ thống không tạo Ticket[cite: 1].
-- **AC-04:** Sinh viên nhấn nút **Gửi yêu cầu** nhiều lần liên tiếp -> hệ thống chỉ tạo một Ticket[cite: 1].
-- **AC-05:** Cùng một request được gửi lại do retry/network retry -> hệ thống không tạo Ticket trùng lập[cite: 1].
-- **AC-06:** Ticket được tạo phải lưu đúng thông tin sinh viên gửi yêu cầu[cite: 1].
+#### 7. Luồng ngoại lệ & Mã lỗi (Alternative & Error Flows)
+- **File sai định dạng/Quá dung lượng:** Block file ngay tại Client, hiển thị message error dưới khu vực upload: *"File [Tên_File] vượt quá 5MB hoặc không đúng định dạng (.pdf, .png, .jpg)"*.
+- **Upload thất bại:** Nếu API upload file lỗi, ngắt toàn bộ tiến trình tạo Ticket, hiển thị lỗi: *"Không thể tải file lên. Vui lòng thử lại"*.
+- **Request bị trùng lặp (409 Conflict):** Trả về thông tin Ticket đã tạo, chuyển người dùng đến chi tiết Ticket đó.
 
-**Ví dụ Edge Case**  
-Sinh viên nhấn nút **Gửi yêu cầu** 5 lần liên tiếp trong thời gian ngắn[cite: 1].
-
-**Expected Result:** Hệ thống chỉ ghi nhận **một Ticket duy nhất** cho thao tác gửi đó[cite: 1].
+#### 8. Tiêu chí nghiệm thu (Acceptance Criteria)
+- **AC-01:** Điền đầy đủ thông tin + File hợp lệ -> Tạo 01 Ticket duy nhất trạng thái `NEW`, sinh đúng định dạng Mã Ticket.
+- **AC-02:** Nhập khoảng trắng vào tiêu đề/mô tả -> Nút gửi bị khóa hoặc hiển thị lỗi validation *"Nội dung không được để trống"*.
+- **AC-03:** Kéo thả 6 file hoặc file `.exe` / `.docx` -> Hệ thống từ chối nhận file và hiển thị lý do rõ ràng.
+- **AC-04:** Bấm nút Gửi liên tục 5 lần / F5 gửi lại request -> Chỉ duy nhất 01 Ticket được tạo trên Database.
 
 ---
 
 ### [FR-STU-03] Sinh viên theo dõi tiến độ & bổ sung hồ sơ
 
-**Mô tả**  
-Cho phép sinh viên xem chi tiết trạng thái xử lý, lịch sử cập nhật, người/phòng ban phụ trách và gửi bổ sung file/giấy tờ theo yêu cầu của nhân viên[cite: 1].
+#### 1. Mô tả & Phạm vi
+Cung cấp giao diện xem danh sách các Ticket cá nhân, tra cứu chi tiết luồng xử lý, xem lịch sử phản hồi từ nhân viên và thực hiện bổ sung file/giấy tờ khi có yêu cầu.
 
-**Actor**  
-Sinh viên đã đăng nhập hệ thống[cite: 1].
+#### 2. Actors & Điều kiện tiên quyết
+- **Actor:** Sinh viên đã đăng nhập.
+- **Preconditions:** Đã có dữ liệu Ticket trong hệ thống.
 
-**Preconditions**  
-- Sinh viên đã tạo Ticket thành công trước đó[cite: 1].
+#### 3. Phân trang, Bộ lọc & Sắp xếp (List View Rules)
+- **Phân trang:** Mặc định 10 Ticket / trang. Có bộ chọn chuyển trang (Pagination).
+- **Bộ lọc Trạng thái:** Filter theo danh sách: Tất cả, `NEW` (Mới tạo), `IN_PROGRESS` (Đang xử lý), `NEED_MORE_INFO` (Cần bổ sung), `RESOLVED` (Đã xử lý), `CLOSED` (Đã đóng).
+- **Sắp xếp:** Mặc định xếp theo thời gian cập nhật mới nhất (`updated_at DESC`).
+- **Phân quyền truy cập dữ liệu:** Query dữ liệu cứng theo `student_id` của tài khoản đang đăng nhập. Không cho phép đổi ID trên URL để xem Ticket của sinh viên khác.
 
-**Luồng chính**  
-1. Sinh viên chọn chức năng **Danh sách Ticket của tôi**.
-2. Hệ thống hiển thị danh sách các Ticket kèm mã Ticket và trạng thái hiện tại (`NEW`, `IN_PROGRESS`, `NEED_MORE_INFO`, `CLOSED`)[cite: 1].
-3. Sinh viên chọn một Ticket để xem chi tiết tiến độ và lịch sử cập nhật[cite: 1].
-4. Hệ thống hiển thị người/phòng ban đang phụ trách và tin nhắn nhắn yêu cầu sinh viên bổ sung thông tin[cite: 1].
-5. Nếu Ticket ở trạng thái `NEED_MORE_INFO`, sinh viên chọn nút **Bổ sung thông tin**[cite: 1].
-6. Sinh viên đính kèm thêm giấy tờ/file đính kèm còn thiếu và nhấn **Xác nhận gửi**[cite: 1].
-7. Hệ thống lưu tài liệu bổ sung, tự động chuyển trạng thái Ticket về `IN_PROGRESS` và thông báo cho nhân viên[cite: 1].
+#### 4. Quy tắc Bổ sung Hồ sơ (Ticket State Machine)
+- **Điều kiện hiển thị Form Bổ sung:** Nút Bổ sung thông tin VÀ khu vực upload file CHỈ hiển thị khi Ticket có trạng thái chính xác là `NEED_MORE_INFO`.
+- **Ràng buộc chỉnh sửa:** Không cho phép sửa Title, Category, hay các phản hồi trước đó. Chỉ được nhập thêm Lời nhắn bổ sung (Optional, max 1000 ký tự) và File đính kèm bổ sung (Max 5 file, tuân thủ rule dung lượng/định dạng như FR-STU-02).
+- **Chuyển đổi trạng thái (State Transition):** Sau khi sinh viên gửi bổ sung thành công, hệ thống tự động chuyển trạng thái Ticket từ `NEED_MORE_INFO` sang `IN_PROGRESS`.
 
-**Business Rules**  
-- Sinh viên chỉ được xem Ticket do chính tài khoản của mình gửi yêu cầu[cite: 1].
-- Chỉ cho phép upload bổ sung file khi Ticket đang ở trạng thái `NEED_MORE_INFO`[cite: 1].
-- Không cho phép chỉnh sửa tiêu đề hay nhóm vấn đề ban đầu của Ticket trong quá trình bổ sung[cite: 1].
+#### 5. Luồng xử lý chi tiết (Flow of Events)
+1. Sinh viên truy cập trang `/tickets`. Hệ thống hiển thị danh sách Ticket cá nhân.
+2. Sinh viên click chọn 1 Ticket. Client chuyển hướng sang `/tickets/{ticket_id}`.
+3. Hệ thống hiển thị chi tiết Ticket: Mã ticket, Ngày tạo, Trạng thái, Phòng ban phụ trách, Timeline các bước xử lý và Lịch sử trao đổi (Conversation log).
+4. Nếu trạng thái là `NEED_MORE_INFO`:
+   - Hiển thị hộp thông điệp yêu cầu từ nhân viên và khung upload bổ sung.
+   - Sinh viên chọn file đính kèm, nhập lời nhắn (nếu có) và nhấn Gửi bổ sung.
+   - Client gửi request cập nhật.
+   - Server lưu file, ghi nhận tin nhắn mới vào Conversation log, cập nhật `status = IN_PROGRESS`, gửi notify cho Nhân viên phụ trách.
+5. Giao diện Client cập nhật lại trạng thái Ticket thành `IN_PROGRESS`, ẩn Form bổ sung thông tin.
 
-**Alternative / Error Flows**  
-- Nếu đính kèm file vượt quá 5MB hoặc sai định dạng, hệ thống từ chối tải lên và thông báo lỗi cấu trúc file[cite: 1].
+#### 6. Luồng ngoại lệ & Mã lỗi (Alternative & Error Flows)
+- **Truy cập Ticket của người khác (403 Forbidden / 404 Not Found):** Hiển thị màn hình lỗi: *"Không tìm thấy yêu cầu hoặc bạn không có quyền truy cập."* kèm nút Quay lại danh sách.
+- **Gửi bổ sung khi Ticket đã chuyển trạng thái khác (400 Bad Request):** Nếu nhân viên đã hủy hoặc đổi trạng thái Ticket ở tab khác, khi sinh viên bấm gửi sẽ báo lỗi: *"Trạng thái Ticket đã thay đổi, không thể bổ sung hồ sơ vào lúc này."* và tự động reload lại dữ liệu Ticket.
 
-**Acceptance Criteria**  
-- **AC-01:** Sinh viên truy cập xem đúng danh sách Ticket của mình[cite: 1].
-- **AC-02:** Sinh viên upload đủ file khi Ticket ở trạng thái `NEED_MORE_INFO` -> hệ thống chuyển trạng thái Ticket sang `IN_PROGRESS` thành công[cite: 1].
-
-**Ví dụ Edge Case**  
-Sinh viên cố gắng upload file đuôi `.exe` khi bổ sung hồ sơ.
-
-**Expected Result:** Hệ thống chặn file, hiển thị lỗi "Chỉ chấp nhận file định dạng PDF hoặc hình ảnh (PNG, JPG)".
+#### 7. Tiêu chí nghiệm thu (Acceptance Criteria)
+- **AC-01:** Trang danh sách phân trang chuẩn 10 item/trang, filter đúng theo từng trạng thái chọn.
+- **AC-02:** Thay đổi Ticket ID trên URL sang ID thuộc về sinh viên khác -> Trả về lỗi 403/404, không lộ dữ liệu.
+- **AC-03:** Bổ sung file thành công khi Ticket ở `NEED_MORE_INFO` -> Trạng thái Ticket lập tức đổi sang `IN_PROGRESS` trên cả giao diện và Database.
+- **AC-04:** Ticket ở trạng thái `IN_PROGRESS`, `RESOLVED`, `CLOSED` -> Ẩn hoàn toàn tính năng upload/gửi file bổ sung.
 
 ---
 
 ### [FR-STU-04] Xem kết quả giải quyết & Đánh giá mức độ hài lòng
 
-**Mô tả**  
-Sinh viên xem kết quả giải quyết và các thông báo liên quan đến yêu cầu của mình, đồng thời đánh giá mức độ hài lòng sau khi yêu cầu được hoàn tất[cite: 1].
+#### 1. Mô tả & Phạm vi
+Cho phép sinh viên xem nội dung phản hồi kết quả xử lý cuối cùng từ nhà trường và thực hiện đánh giá chất lượng dịch vụ cho Ticket đã hoàn tất.
 
-**Actor**  
-Sinh viên đã đăng nhập hệ thống[cite: 1].
+#### 2. Actors & Điều kiện tiên quyết
+- **Actor:** Sinh viên đã đăng nhập.
+- **Preconditions:** Ticket của sinh viên đã được Nhân viên/Quản lý xử lý xong và chuyển sang trạng thái `RESOLVED` hoặc `CLOSED`.
 
-**Preconditions**  
-- Ticket của sinh viên đã được nhân viên hoàn tất và chuyển sang trạng thái `CLOSED`[cite: 1].
+#### 3. Quy tắc Dữ liệu & Đánh giá (Business & Validation Rules)
+- **Trường thông tin Đánh giá:**
+  - **Rating:** Bắt buộc, số nguyên từ 1 đến 5 (tương ứng từ 1 sao đến 5 sao).
+  - **Feedback / Comment:** Không bắt buộc, tối đa 500 ký tự. Tự động `trim()`.
+- **Ràng buộc số lần đánh giá:** Mỗi Ticket chỉ được đánh giá duy nhất 01 lần.
+- **Khóa biểu mẫu:** Khi Ticket đã có dữ liệu đánh giá, hệ thống chuyển Form đánh giá sang trạng thái Read-Only (Hiển thị số sao và nhận xét đã gửi, không cho thao tác bấm gửi lại).
 
-**Luồng chính**  
-1. Sinh viên mở thông báo hoặc truy cập vào Ticket có trạng thái `CLOSED`[cite: 1].
-2. Hệ thống hiển thị nội dung xem kết quả giải quyết và các thông báo liên quan[cite: 1].
-3. Hệ thống hiển thị biểu mẫu đánh giá mức độ hài lòng sau khi yêu cầu được hoàn tất[cite: 1].
-4. Sinh viên chọn số sao đánh giá (từ 1 đến 5 sao) và nhập nhận xét[cite: 1].
-5. Sinh viên nhấn nút **Gửi đánh giá**.
-6. Hệ thống lưu kết quả đánh giá và cập nhật trạng thái đã hoàn tất đánh giá cho Ticket[cite: 1].
+#### 4. Luồng xử lý chi tiết (Flow of Events)
+1. Sinh viên mở chi tiết Ticket đã xử lý xong tại `/tickets/{ticket_id}`.
+2. Hệ thống hiển thị rõ ràng phần Kết quả giải quyết (Gồm câu trả lời, file đính kèm kết quả từ nhân viên nếu có, thời gian hoàn thành).
+3. Kiểm tra trạng thái đánh giá của Ticket:
+   - Chưa đánh giá: Hiển thị Component Đánh giá (5 ngôi sao tương tác + Textarea nhập nhận xét + Nút Gửi đánh giá).
+   - Đã đánh giá: Hiển thị kết quả đánh giá cũ dạng Read-only.
+4. Sinh viên chọn số sao, nhập nhận xét và bấm Gửi đánh giá.
+5. Client gửi request lưu đánh giá.
+6. Server ghi nhận thông tin đánh giá, chuyển trạng thái Ticket từ `RESOLVED` sang `CLOSED` (nếu đang ở `RESOLVED`), lưu timestamp `rated_at`.
+7. Client hiển thị Toast thông báo: *"Cảm ơn bạn đã đánh giá dịch vụ!"*, đồng thời chuyển Component đánh giá sang dạng Read-only.
 
-**Business Rules**  
-- Mỗi Ticket ở trạng thái `CLOSED` chỉ được đánh giá duy nhất **01 lần**[cite: 1].
-- Thang điểm đánh giá là số nguyên từ 1 đến 5[cite: 1].
+#### 5. Luồng ngoại lệ & Race Condition Handling
+- **Đánh giá đồng thời nhiều tab (Race Condition):** Nếu sinh viên mở 2 tab cùng 1 Ticket và bấm gửi ở tab A trước:
+  - **Tab A:** Gửi thành công.
+  - **Tab B:** Khi bấm gửi, Server trả về mã lỗi 409 Conflict hoặc 400 Bad Request với message: *"Ticket này đã được đánh giá trước đó."*
+  - **Client tại Tab B nhận lỗi:** Tự động ẩn form nhập và fetch lại dữ liệu đánh giá đã lưu để hiển thị dạng Read-only.
 
-**Alternative / Error Flows**  
-- Nếu Ticket chưa ở trạng thái `CLOSED`, biểu mẫu đánh giá sẽ bị ẩn/khóa.
+#### 6. Tiêu chí nghiệm thu (Acceptance Criteria)
+- **AC-01:** Đánh giá 5 sao + nhận xét hợp lệ -> Lưu chính xác dữ liệu vào hệ thống, hiển thị đúng trạng thái đã đánh giá.
+- **AC-02:** Không chọn số sao mà bấm Gửi -> Báo lỗi validation: *"Vui lòng chọn mức độ hài lòng (từ 1 đến 5 sao)"*.
+- **AC-03:** Sau khi gửi đánh giá thành công, F5 lại trang hoặc mở lại Ticket -> Form đánh giá ở trạng thái Read-only, không thể chỉnh sửa hay gửi lại.
+- **AC-04:** Lỗi mạng khi gửi đánh giá -> Thông báo lỗi, giữ nguyên số sao và nhận xét sinh viên đã nhập trên giao diện để sinh viên bấm thử lại.
 
-**Acceptance Criteria**  
-- **AC-01:** Xem đầy đủ thông tin kết quả giải quyết từ nhân viên[cite: 1].
-- **AC-02:** Chọn 5 sao và gửi đánh giá -> Hệ thống ghi nhận thành công và ẩn biểu mẫu đánh giá[cite: 1].
+---
 
-**Ví dụ Edge Case**  
-Sinh viên mở 2 tab trình duyệt cùng lúc để gửi đánh giá cho 1 Ticket.
+## III. BẢNG MÃ LỖI CHUẨN DÙNG CHUNG CHO DEV (SYSTEM ERROR CODES)
 
-**Expected Result:** Hệ thống chỉ ghi nhận lượt đánh giá ở tab gửi trước, tab còn lại báo lỗi "Ticket đã được đánh giá".
+Để Frontend và Backend đồng bộ xử lý không cần trao đổi thêm, phân hệ áp dụng chuẩn response lỗi như sau:
+
+| HTTP Status | Error Code | Message hiển thị người dùng | Kịch bản áp dụng |
+| :--- | :--- | :--- | :--- |
+| **400** | `INVALID_INPUT` | *"Dữ liệu nhập vào không hợp lệ. Vui lòng kiểm tra lại."* | Lỗi validation trường dữ liệu đầu vào. |
+| **400** | `FILE_EXCEEDS_LIMIT` | *"File đính kèm vượt quá dung lượng 5MB."* | Upload file > 5MB. |
+| **400** | `FILE_TYPE_NOT_ALLOWED` | *"Chỉ chấp nhận file .pdf, .png, .jpg, .jpeg."* | Upload sai định dạng file. |
+| **401** | `UNAUTHORIZED` | *"Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại."* | Token hết hạn hoặc không hợp lệ. |
+| **403** | `FORBIDDEN_ACCESS` | *"Bạn không có quyền truy cập vào tài nguyên này."* | Sinh viên xem Ticket của người khác. |
+| **404** | `TICKET_NOT_FOUND` | *"Không tìm thấy dữ liệu Ticket yêu cầu."* | Ticket ID không tồn tại. |
+| **409** | `ALREADY_RATED` | *"Ticket này đã được đánh giá trước đó."* | Gửi đánh giá 2 lần cho 1 Ticket. |
+| **409** | `DUPLICATE_REQUEST` | *"Yêu cầu đang được xử lý, vui lòng không thao tác lặp lại."* | Trùng Client-Request-ID. |
+| **500** | `INTERNAL_SERVER_ERROR` | *"Hệ thống gặp sự cố kỹ thuật. Vui lòng thử lại sau."* | Lỗi Server/Database unhandled. |

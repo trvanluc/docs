@@ -33,11 +33,11 @@ Mô tả trình tự thao tác giúp sinh viên khởi tạo một yêu cầu h�
 * **Sinh viên**: Chọn Nhóm vấn đề, nhập Tiêu đề, nội dung Mô tả chi tiết và đính kèm file (ảnh PNG/JPG hoặc PDF, tối đa 5MB/file) nếu có.
 * **Sinh viên**: Bấm nút Gửi yêu cầu.
 * **Hệ thống**: Kiểm tra tính hợp lệ của dữ liệu (kiểm tra trường bắt buộc, khoảng trắng, dung lượng/định dạng file, chống click đúp/retry trùng lặp).
-* **Hệ thống**: Sinh mã Ticket duy nhất (ví dụ: TK-20261007-001), gán trạng thái NEW và lưu dữ liệu gắn liền với sinh viên gửi[cite: 1].
-* **Hệ thống**: Hiển thị thông báo gửi thành công kèm Mã Ticket, đồng thời phát thông báo nội bộ xác nhận cho sinh viên[cite: 1].
+* **Hệ thống**: Sinh mã Ticket duy nhất (ví dụ: TK-20261007-001), gán trạng thái NEW và lưu dữ liệu gắn liền với sinh viên gửi.
+* **Hệ thống**: Hiển thị thông báo gửi thành công kèm Mã Ticket, đồng thời phát thông báo nội bộ xác nhận cho sinh viên.
 
 ---
 
 ## 5. Ràng Buộc & Quy Tắc Nghiệp Vụ Liên Quan
-* Bắt buộc phải có thông tin Mô tả vấn đề và Nhóm vấn đề[cite: 1].
-* Một thao tác gửi chỉ tạo đúng 01 Ticket, chống tạo trùng do mạng lag hay nhấp nút nhiều lần liên tiếp[cite: 1].
+* Bắt buộc phải có thông tin Mô tả vấn đề và Nhóm vấn đề.
+* Một thao tác gửi chỉ tạo đúng 01 Ticket, chống tạo trùng do mạng lag hay nhấp nút nhiều lần liên tiếp.

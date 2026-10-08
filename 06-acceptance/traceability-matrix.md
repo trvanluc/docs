@@ -1,6 +1,6 @@
 # Ma Trận Truy Xuất Yêu Cầu (Requirements Traceability Matrix - RTM)
 
-Ma trận dưới đây liên kết trực tiếp từ Yêu cầu trong Project Proposal đến Mã chức năng (PRD) và Mã kịch bản kiểm thử UAT tương ứng[cite: 1]:
+Ma trận dưới đây liên kết trực tiếp từ Yêu cầu trong Project Proposal đến Mã chức năng (PRD) và Mã kịch bản kiểm thử UAT tương ứng:
 
 | Yêu Cầu Proposal | Mã Chức Năng PRD | Tên Chức Năng | Kịch Bản Kiểm Thử UAT | Trạng Thái |
 | :--- | :--- | :--- | :--- | :---: |

@@ -1,16 +1,16 @@
 # ADR-001: Quy Tắc Sinh Mã Ticket Duy Nhất (Ticket ID Generation Strategy)
 
-* **Trạng thái (Status):** Accepted (Đã chấp thuận)[cite: 1]
-* **Ngày quyết định:** Tuần 3 - Giai đoạn Thiết kế Kiến trúc[cite: 1]
+* **Trạng thái (Status):** Accepted (Đã chấp thuận)
+* **Ngày quyết định:** Tuần 3 - Giai đoạn Thiết kế Kiến trúc
 
 ---
 
 ## 1. Bối Cảnh (Context)
-Trong hệ thống UniSupport, mỗi yêu cầu hỗ trợ do sinh viên tạo ra cần một mã định danh duy nhất (Ticket ID) để sinh viên dễ dàng tra cứu, theo dõi tiến độ và để nhân viên/quản lý trao đổi, kiểm vết[cite: 1]. 
+Trong hệ thống UniSupport, mỗi yêu cầu hỗ trợ do sinh viên tạo ra cần một mã định danh duy nhất (Ticket ID) để sinh viên dễ dàng tra cứu, theo dõi tiến độ và để nhân viên/quản lý trao đổi, kiểm vết. 
 Yêu cầu đặt ra:
-* Mã Ticket phải ngắn gọn, dễ đọc, dễ truyền đạt qua lời nói/văn bản[cite: 1].
-* Đảm bảo tính duy nhất tuyệt đối trong toàn bộ hệ thống[cite: 1].
-* Chống trùng lặp ngay cả khi có nhiều yêu cầu gửi đồng thời (Concurrent Request/Retry)[cite: 1].
+* Mã Ticket phải ngắn gọn, dễ đọc, dễ truyền đạt qua lời nói/văn bản.
+* Đảm bảo tính duy nhất tuyệt đối trong toàn bộ hệ thống.
+* Chống trùng lặp ngay cả khi có nhiều yêu cầu gửi đồng thời (Concurrent Request/Retry).
 
 ---
 
@@ -21,19 +21,19 @@ Yêu cầu đặt ra:
 2. **Phương án B (Auto-increment ID):** Sử dụng số nguyên tăng dần của CSDL (ví dụ: `1`, `2`, `3`).
    * *Ưu điểm:* Ngắn gọn.
    * *Nhược điểm:* Dễ lộ quy mô giao dịch, không chứa thông tin ngữ cảnh thời gian.
-3. **Phương án C (Formatted Business Key - Lựa chọn):** Cấu trúc chuỗi gồm Tiền tố + Ngày tháng + Số thứ tự tự tăng trong ngày (ví dụ: `TK-20261007-0001`)[cite: 1].
+3. **Phương án C (Formatted Business Key - Lựa chọn):** Cấu trúc chuỗi gồm Tiền tố + Ngày tháng + Số thứ tự tự tăng trong ngày (ví dụ: `TK-20261007-0001`).
 
 ---
 
 ## 3. Quyết Định (Decision)
-Hệ thống chốt lựa chọn **Phương án C**: Sinh mã Ticket định dạng `TK-YYYYMMDD-XXXX`[cite: 1].
+Hệ thống chốt lựa chọn **Phương án C**: Sinh mã Ticket định dạng `TK-YYYYMMDD-XXXX`.
 
-* `TK`: Tiền tố cố định đại diện cho Ticket UniSupport[cite: 1].
-* `YYYYMMDD`: Năm, tháng, ngày khởi tạo yêu cầu (ví dụ: `20261007`)[cite: 1].
-* `XXXX`: Số thứ tự tự tăng trong ngày (4 chữ số, từ `0001` đến `9999`), sử dụng Redis Sequence hoặc CSDL Atomic Increment để đảm bảo tính duy nhất khi xử lý đồng thời[cite: 1].
+* `TK`: Tiền tố cố định đại diện cho Ticket UniSupport.
+* `YYYYMMDD`: Năm, tháng, ngày khởi tạo yêu cầu (ví dụ: `20261007`).
+* `XXXX`: Số thứ tự tự tăng trong ngày (4 chữ số, từ `0001` đến `9999`), sử dụng Redis Sequence hoặc CSDL Atomic Increment để đảm bảo tính duy nhất khi xử lý đồng thời.
 
 ---
 
 ## 4. Hệ Quả & Đánh Giá (Consequences)
-* **Tích cực:** Mã Ticket trực quan, chuyên nghiệp, thể hiện rõ ngày tạo và dễ nhớ đối với sinh viên lẫn nhân viên[cite: 1].
-* **Hạn chế:** Giới hạn tối đa 9.999 Ticket/ngày (phù hợp hoàn toàn với quy mô 3.000 sinh viên của dự án)[cite: 1].
+* **Tích cực:** Mã Ticket trực quan, chuyên nghiệp, thể hiện rõ ngày tạo và dễ nhớ đối với sinh viên lẫn nhân viên.
+* **Hạn chế:** Giới hạn tối đa 9.999 Ticket/ngày (phù hợp hoàn toàn với quy mô 3.000 sinh viên của dự án).
