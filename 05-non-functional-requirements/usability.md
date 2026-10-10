@@ -1,17 +1,21 @@
-# Yêu Cầu Về Tính Dễ Sử Dụng (Usability Requirements)
+# NFR-USA - Tính Dễ Sử Dụng
 
-## 1. Thiết Kế Giao Diện (UI/UX)
-* **Giao diện Responsive:** Giao diện hệ thống phải tự động tương thích và hiển thị tối ưu trên cả màn hình máy tính (Desktop) và các thiết bị di động (Mobile Browser).
-* **Tính đơn giản & Trực quan:** Thiết kế chuẩn hóa theo nhận diện của Aurora University, tối giản các bước thao tác. Sinh viên có thể tạo thành công 1 Ticket hỗ trợ trong tối đa 3 bước cơ bản.
+## 1. Phạm Vi
 
----
+Giao diện UniSupport là Web Application và phải sử dụng được trên trình duyệt máy tính và thiết bị di động.
 
-## 2. Đa Ngôn Ngữ (Multilingual)
-* **Hỗ trợ ngôn ngữ:** Hệ thống hỗ trợ giao diện cơ bản bằng 2 ngôn ngữ: **Tiếng Việt** và **Tiếng Anh**.
-* **Phạm vi chuyển đổi:** Cho phép người dùng chuyển đổi ngôn ngữ hiển thị trên thanh điều hướng chính (Menu) cho các nhãn, nút bấm và thông báo hệ thống.
+## 2. Yêu Cầu
 
----
+- Giao diện responsive cho màn hình máy tính và thiết bị di động.
+- Hỗ trợ **Tiếng Việt và Tiếng Anh ở mức cơ bản**.
+- Trạng thái Ticket và hành động chính phải được trình bày rõ ràng, không yêu cầu người dùng hiểu mã kỹ thuật để thao tác.
+- Biểu mẫu phải chỉ rõ trường bắt buộc và lý do khi dữ liệu không hợp lệ.
+- Sinh viên phải dễ nhận biết mã Ticket, trạng thái hiện tại, phòng ban/người phụ trách khi được phép hiển thị và kết quả xử lý.
+- Nhân viên phải dễ nhận biết hàng chờ, người phụ trách, mức độ ưu tiên và thời hạn.
+- Quản lý phải xem được các chỉ số/báo cáo đúng phạm vi quyền.
 
-## 3. Phản Hồi Trạng Thái Cho Người Dùng
-* **Thông báo rõ ràng:** Mọi thao tác thành công hoặc thất bại của người dùng phải đi kèm thông báo phản hồi rõ ràng (Toast Message / Alert Banner).
-* **Trạng thái xử lý:** Các tác vụ chờ xử lý (như upload file, gửi yêu cầu) bắt buộc phải có hiệu ứng Loading / Progress Bar để tránh việc người dùng thao tác lặp lại nhiều lần.
+## 3. Nghiệm Thu
+
+- Các luồng chính không bị mất nội dung hoặc không thể thao tác khi sử dụng trên trình duyệt máy tính và thiết bị di động.
+- Các nhãn/chức năng chính có phiên bản Việt/Anh ở mức phù hợp phạm vi dự án.
+- Thông báo lỗi validation chỉ rõ thông tin cần sửa.

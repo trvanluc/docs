@@ -1,17 +1,21 @@
-# Yêu Cầu Phi Chức Năng (Non-Functional Requirements)
+# 05 - Yêu Cầu Phi Chức Năng
 
-## 1. Tổng Quan
-Thư mục này xác định các tiêu chuẩn và yêu cầu phi chức năng (NFR) bắt buộc cho hệ thống **UniSupport** tại **Aurora University**. Các tiêu chuẩn này đảm bảo hệ thống vận hành ổn định, an toàn, dễ sử dụng và phù hợp với quy mô cùng hạ tầng đã thỏa thuận.
+Thư mục này xác định các thuộc tính chất lượng áp dụng chung cho UniSupport trong phạm vi ba phân hệ nghiệp vụ và quy mô khoảng 3.000 sinh viên.
 
----
+## 1. Danh Sách Tài Liệu
 
-## 2. Danh Sách Các Hạng Mục Yêu Cầu Phi Chức Năng
+| Tài liệu | Phạm vi |
+| :--- | :--- |
+| [performance.md](./performance.md) | Hiệu năng phù hợp quy mô sử dụng dự kiến. |
+| [reliability.md](./reliability.md) | Tính ổn định và toàn vẹn dữ liệu nghiệp vụ. |
+| [security.md](./security.md) | Xác thực, phân quyền, bảo vệ file và tra soát. |
+| [usability.md](./usability.md) | Giao diện Web responsive và hỗ trợ Việt/Anh ở mức cơ bản. |
+| [deployment.md](./deployment.md) | Điều kiện triển khai và bàn giao trên hạ tầng Aurora University. |
+| [observability.md](./observability.md) | Nhật ký kỹ thuật và nhật ký tra soát nghiệp vụ. |
 
-| Mã Tài Liệu | Hạng Mục NFR | Nội Dung Trọng Tâm |
-| :--- | :--- | :--- |
-| **`performance.md`** | Hiệu năng (Performance) | Đáp ứng tối đa 3.000 sinh viên, thời gian phản hồi API < 2 giây. |
-| **`security.md`** | Bảo mật (Security) | Đăng nhập tài khoản cá nhân, bảo mật file đính kèm, phân quyền RBAC. |
-| **`reliability.md`** | Độ ổn định (Reliability) | Tính sẵn sàng của hệ thống trên môi trường máy chủ của Client. |
-| **`usability.md`** | Tính dễ sử dụng (Usability) | Giao diện Responsive (PC & Mobile), hỗ trợ 2 ngôn ngữ VI/EN. |
-| **`observability.md`** | Ghi vết & Giám sát (Observability) | Nhật ký hoạt động (Audit log) cơ bản và ghi nhận lỗi hệ thống. |
-| **`deployment.md`** | Triển khai (Deployment) | Quy trình đóng gói và bàn giao triển khai trên Server/Domain của Client. |
+## 2. Nguyên Tắc Áp Dụng
+
+- Các NFR áp dụng xuyên suốt M01, M02 và M03.
+- Giới hạn file, trạng thái Ticket, quyền truy cập và Audit phải nhất quán với Domain và PRD.
+- Các chỉ số tải lớn, chứng nhận bảo mật hoặc kiểm thử bảo mật chuyên sâu không thuộc phạm vi dự án hiện tại.
+- Công nghệ triển khai cụ thể được mô tả tại `07-architecture`.

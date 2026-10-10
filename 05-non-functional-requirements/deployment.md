@@ -1,14 +1,30 @@
-# Yêu Cầu Triển Khai Hạ Tầng (Deployment Requirements)
+# NFR-DEP - Triển Khai Và Bàn Giao
 
-## 1. Môi Trường Triển Khai
-* **Hạ tầng triển khai:** Hệ thống UniSupport được triển khai trực tiếp lên hạ tầng máy chủ (Server) do **Aurora University** cung cấp theo thỏa thuận.
-* **Môi trường:**
-  * **Staging / UAT Environment:** Phục vụ công tác kiểm thử chấp nhận người dùng (UAT) trong 10 ngày làm việc.
-  * **Production Environment:** Môi trường vận hành chính thức cho nhà trường.
+## 1. Phạm Vi
 
----
+UniSupport được triển khai dưới dạng Web Application trên hạ tầng do Aurora University cung cấp. Phạm vi triển khai bao gồm chuẩn bị môi trường, cấu hình ứng dụng, triển khai, kiểm tra sau triển khai và bàn giao; không bao gồm vận hành hạ tầng lâu dài.
 
-## 2. Đóng Gói & Tên Miền
-* **Tên miền (Domain):** Hệ thống được cấu hình chạy trên Tên miền chính thức do nhà trường cấp và trỏ về máy chủ triển khai.
-* **Đóng gói phần mềm:** Mã nguồn Frontend và Backend được đóng gói dạng container (như Docker) hoặc các bản build tối ưu để dễ dàng cài đặt và vận hành trên hệ điều hành máy chủ của Client.
-* **Tài liệu hướng dẫn:** Cung cấp tài liệu hướng dẫn cài đặt, cấu hình môi trường và vận hành chi tiết cho bộ phận kỹ thuật của nhà trường khi bàn giao.
+## 2. Trách Nhiệm Hạ Tầng
+
+Aurora University cung cấp:
+- môi trường máy chủ phù hợp;
+- tên miền hoặc địa chỉ truy cập;
+- điều kiện mạng và quyền truy cập cần thiết để triển khai.
+
+Đội dự án chịu trách nhiệm:
+- chuẩn bị phiên bản triển khai;
+- cấu hình ứng dụng phù hợp môi trường được cung cấp;
+- triển khai và kiểm tra các chức năng chính;
+- bàn giao mã nguồn và hướng dẫn cài đặt/vận hành.
+
+## 3. Giới Hạn Phạm Vi
+
+- Hệ điều hành, cấu hình CPU/RAM và công nghệ đóng gói được xác định theo môi trường triển khai thực tế.
+- Không bao gồm thiết lập sao lưu tự động, giám sát vận hành máy chủ lâu dài hoặc hỗ trợ hạ tầng ngoài phạm vi bảo hành.
+- Không tích hợp hệ thống bên thứ ba ngoài phạm vi sản phẩm.
+
+## 4. Nghiệm Thu
+
+- Hệ thống được triển khai và truy cập được trên môi trường Aurora University cung cấp.
+- Các luồng chính của ba phân hệ hoạt động sau triển khai.
+- Mã nguồn và tài liệu cài đặt/vận hành được bàn giao đầy đủ.

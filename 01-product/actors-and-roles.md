@@ -1,81 +1,122 @@
-# Định Nghĩa Vai Trò & Phân Quyền Hệ Thống (Actors & Roles)
+# Các Vai Trò Trong Hệ Thống (Actors & Roles)
 
-## 1. Tổng Quan Kiến Trúc Phân Quyền (RBAC Architecture)
-Hệ thống UniSupport áp dụng mô hình phân quyền dựa trên vai trò (Role-Based Access Control - RBAC). Mỗi người dùng khi đăng nhập sẽ được cấp một danh tính định danh duy nhất (`user_id`), thuộc về một vai trò chính (`role`) và có thể liên kết với một đơn vị phòng ban (`department_id`).
+## 1. Danh Sách Vai Trò
 
-Quyền hạn của người dùng được xác thực tập trung thông qua JWT Access Token trên từng API Endpoint và được kiểm soát phạm vi dữ liệu (Data Isolation) ở cấp CSDL.
+UniSupport có **3 nhóm người dùng chính**, tương ứng với 3 phân hệ của sản phẩm:
 
-## 2. Chi Tiết Danh Mục Vai Trò (System Roles Specification)
+```text
+                    UNISUPPORT
+                        |
+        +---------------+---------------+
+        |               |               |
+        v               v               v
+    SINH VIÊN       NHÂN VIÊN        QUẢN LÝ
+     Student           Staff          Management
+```
 
-### 2.1. Sinh Viên (`role = STUDENT`)
-- **Mô tả:** Sinh viên đang theo học tại Aurora University có nhu cầu gửi yêu cầu giải đáp, hỗ trợ các thủ tục hành chính, đào tạo, tài chính hoặc kỹ thuật.
-- **Phạm vi Dữ liệu (Data Scope):** Chỉ xem và thao tác trên dữ liệu do chính mình tạo ra (`WHERE student_id == current_user_id`). Tuyệt đối không có quyền xem Ticket của sinh viên khác.
-- **Danh mục Quyền chi tiết (Permissions):**
-  - Khởi tạo Ticket mới kèm file đính kèm (Ảnh/PDF $\le 10\text{MB}$, tối đa 3 file).
-  - Tra cứu danh sách, tiến độ và lịch sử cập nhật Ticket cá nhân.
-  - Bổ sung thông tin/file đính kèm khi Ticket ở trạng thái `NEED_MORE_INFO`.
-  - Xem kết quả giải quyết và thực hiện Đánh giá chất lượng dịch vụ (CSAT $1-5$ sao, tối đa 01 lần/Ticket).
-  - Nhận thông báo tự động (In-app Bell Notification / Email) khi Ticket có thay đổi trạng thái.
+Các chức năng quản trị hệ thống thuộc phạm vi của phân hệ **Management** và được phân quyền cho các tài khoản Quản lý phù hợp.
 
-### 2.2. Nhân Viên Phòng Ban (`role = STAFF`)
-- **Mô tả:** Cán bộ/Nhân viên thuộc các phòng ban nghiệp vụ (Phòng Đào tạo, Phòng Công tác sinh viên, Phòng Tài chính, Phòng Kế toán,...).
-- **Phạm vi Dữ liệu (Data Scope):**
-  - Xem danh sách Ticket nằm trong Queue chung của Phòng ban mình phụ trách (`WHERE department_id == current_staff_department_id`).
-  - Thao tác trực tiếp trên các Ticket do cá nhân mình tiếp nhận xử lý (`WHERE assignee_id == current_staff_id`).
-  - Không có quyền xem hoặc can thiệp vào Ticket của phòng ban khác (khi chưa được chuyển giao).
-- **Danh mục Quyền chi tiết (Permissions):**
-  - Tiếp nhận (Claim) Ticket mới (`NEW` / `TRANSFERRED`) từ Queue phòng ban về danh sách cá nhân xử lý.
-  - Điều chỉnh Phân loại nhóm vấn đề (`category_id`) và Mức độ ưu tiên (`priority`: `LOW`, `MEDIUM`, `HIGH`, `URGENT`).
-  - Chuyển tiếp Ticket sang phòng ban khác (`TRANSFERRED`) kèm lý do bắt buộc ($10-500\text{ ký tự}$).
-  - Phát yêu cầu bổ sung hồ sơ/giấy tờ tới sinh viên (`NEED_MORE_INFO`).
-  - Ghi nhận kết quả xử lý ($20-2000\text{ ký tự}$), đính kèm file kết quả và hoàn tất/giải quyết Ticket (`RESOLVED`).
-  - Từ chối Ticket không hợp lệ (`REJECTED`) kèm lý do từ chối ($10-500\text{ ký tự}$).
+---
 
-### 2.3. Quản Lý Phòng Ban (`role = MANAGER`)
-- **Mô tả:** Trưởng/Phó phòng ban chuyên môn chịu trách nhiệm giám sát tiến độ giải quyết công việc, phân công nhân sự và theo dõi chỉ số hài lòng trong phạm vi phòng ban.
-- **Phạm vi Dữ liệu (Data Scope):** Toàn bộ dữ liệu Ticket, Báo cáo và Nhân sự thuộc `department_id` của mình phụ trách.
-- **Danh mục Quyền chi tiết (Permissions):**
-  - Toàn bộ quyền của STAFF trong phòng ban.
-  - Phân công trực tiếp Ticket cho một Nhân viên cụ thể trong phòng ban hoặc thu hồi (Unassign/Reassign) Ticket cấp lại cho người khác.
-  - Xem Dashboard tổng quan chỉ số SLA, cảnh báo quá hạn (SLA Breached) của phòng ban theo thời gian thực.
-  - Báo cáo phân tích hiệu năng xử lý của từng nhân viên và điểm CSAT của phòng ban.
-  - Export báo cáo thống kê phòng ban ra file Excel/CSV (Tối đa 10.000 dòng/lần).
+## 2. Vai Trò & Trách Nhiệm Chính
 
-### 2.4. Quản Trị Hệ Thống (`role = ADMIN`)
-- **Mô tả:** Quản trị viên hệ thống UniSupport (Ban Giám hiệu, Phòng CNTT/Vận hành hệ thống).
-- **Phạm vi Dữ liệu (Data Scope):** Toàn quyền hệ thống (Global Scope) trên toàn bộ Phòng ban, User, Ticket, Báo cáo và System Logs.
-- **Danh mục Quyền chi tiết (Permissions):**
-  - Quản lý danh mục Tài khoản người dùng: Tạo mới, Chỉnh sửa thông tin, Đổi vai trò (Role), Gán phòng ban (Department), Khóa/Mở khóa tài khoản (`ACTIVE`/`INACTIVE`).
-  - Vô hiệu hóa phiên làm việc (Revoke Session/Token) ngay lập tức khi khóa tài khoản.
-  - Xem Dashboard và Báo cáo tổng quan toàn trường (Cross-department Analytics).
-  - Cấu hình danh mục nhóm vấn đề (Categories) và Khung thời gian SLA.
-  - Xem và tra cứu Nhật ký hệ thống (Audit Trail Log) đối với các thao tác quản trị nhạy cảm.
+### 2.1 Sinh viên (Student)
 
-## 3. Ma Trận Phân Quyền Chi Tiết (Access Control Matrix)
+**Mô tả**  
+Người dùng gửi yêu cầu hỗ trợ và theo dõi quá trình xử lý các yêu cầu của chính mình.
 
-| Chức năng / API Endpoint | STUDENT | STAFF | MANAGER | ADMIN |
-| :--- | :---: | :---: | :---: | :---: |
-| **Đăng nhập & Lấy Profile** | X | X | X | X |
-| **Tạo Ticket hỗ trợ mới** | X | - | - | - |
-| **Xem danh sách Ticket cá nhân** | X | - | - | - |
-| **Gửi bổ sung hồ sơ (File/Note)** | X | - | - | - |
-| **Gửi Đánh giá hài lòng (CSAT)** | X | - | - | - |
-| **Xem Queue Ticket Phòng ban** | - | X | X | X |
-| **Tiếp nhận xử lý Ticket (Claim)** | - | X | X | X |
-| **Chuyển phòng ban / Yêu cầu bổ sung** | - | X | X | X |
-| **Ghi kết quả & Hoàn tất Ticket** | - | X | X | X |
-| **Phân công / Thu hồi Ticket người khác** | - | - | X | X |
-| **Xem Dashboard & Báo cáo Phòng ban** | - | - | X | X |
-| **Xem Dashboard & Báo cáo Toàn trường** | - | - | - | X |
-| **Tạo / Sửa / Khóa Tài khoản User** | - | - | - | X |
-| **Xem Audit Log hệ thống** | - | - | - | X |
+**Khả năng chính**
+- Đăng nhập hệ thống.
+- Tra cứu hướng dẫn/FAQ.
+- Tạo và gửi Ticket hỗ trợ.
+- Chọn nhóm vấn đề và cung cấp nội dung, tài liệu liên quan.
+- Xem trạng thái, lịch sử cập nhật và đơn vị/người phụ trách.
+- Bổ sung thông tin hoặc giấy tờ khi được yêu cầu.
+- Nhận thông báo và xem kết quả xử lý.
+- Phản hồi nếu kết quả chưa giải quyết được vấn đề.
+- Đánh giá mức độ hài lòng sau khi yêu cầu được giải quyết.
 
-## 4. Ràng Buộc Kỹ Thuật & Mã Lỗi Truy Cập (Security & Error Handling Specs)
+**Phạm vi dữ liệu**
+- Chỉ được truy cập các Ticket và dữ liệu thuộc chính tài khoản sinh viên đó.
 
-| Ràng buộc Kỹ thuật | Xử lý vi phạm | Mã lỗi HTTP & Error Code | Message hiển thị cho người dùng |
-| :--- | :--- | :--- | :--- |
-| **Chưa xác thực (Unauthenticated)** | Không gửi Bearer Token hoặc Token hết hạn. | `401 Unauthorized`<br><br>`UNAUTHORIZED` | "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại." |
-| **Sai vai trò (Role Mismatch)** | Student cố truy cập API Staff/Admin. | `403 Forbidden`<br><br>`FORBIDDEN_ACCESS` | "Bạn không có quyền truy cập vào chức năng này." |
-| **Thao tác ngoài Scope Dữ liệu** | Staff cố xem/sửa Ticket của Phòng ban khác. | `403 Forbidden`<br><br>`FORBIDDEN_DEPARTMENT_ACCESS` | "Bạn không có quyền thao tác trên Ticket thuộc phòng ban khác." |
-| **Student truy cập Ticket người khác** | Đổi `ticket_id` trên URL sang Ticket của bạn học. | `403 Forbidden`<br><br>`FORBIDDEN_ACCESS` | "Không tìm thấy yêu cầu hoặc bạn không có quyền truy cập." |
-| **Tài khoản bị khóa (INACTIVE)** | Dùng Token của tài khoản đã bị Admin vô hiệu hóa. | `403 Forbidden`<br><br>`ACCOUNT_DISABLED` | "Tài khoản của bạn đã bị vô hiệu hóa. Vui lòng liên hệ Admin." |
+### 2.2 Nhân viên (Staff)
+
+**Mô tả**  
+Nhân viên thuộc các phòng ban chịu trách nhiệm tiếp nhận và xử lý Ticket hỗ trợ sinh viên.
+
+**Khả năng chính**
+- Đăng nhập hệ thống.
+- Xem, tìm kiếm và lọc các yêu cầu trong phạm vi được phép.
+- Tiếp nhận và phân loại Ticket.
+- Xử lý các Ticket được giao.
+- Xác định mức độ ưu tiên và theo dõi thời hạn xử lý.
+- Cập nhật trạng thái và ghi nhận hoạt động xử lý.
+- Yêu cầu sinh viên bổ sung thông tin hoặc giấy tờ.
+- Phân công/phân công lại người phụ trách trong cùng phòng ban khi được cấp quyền.
+- Chuyển Ticket sang phòng ban phù hợp hoặc thực hiện chuyển cấp xử lý khi cần thiết và được cấp quyền.
+- Ghi nhận kết quả xử lý và chuyển Ticket sang `RESOLVED`.
+- Tiếp tục xử lý Ticket khi sinh viên mở lại hợp lệ về `IN_PROGRESS`.
+
+**Phạm vi dữ liệu**
+- Chỉ được truy cập và thao tác trên Ticket trong phạm vi phòng ban, nhiệm vụ và quyền được cấp.
+
+### 2.3 Quản lý (Management)
+
+**Mô tả**  
+Người dùng chịu trách nhiệm giám sát hoạt động hỗ trợ và thực hiện các chức năng quản lý/quản trị được cấp quyền.
+
+**Khả năng chính**
+- Đăng nhập hệ thống.
+- Xem Dashboard và số liệu tổng hợp trong phạm vi được cấp.
+- Theo dõi số lượng Ticket mới, đang xử lý, sắp quá hạn và đã quá hạn.
+- Theo dõi khối lượng công việc theo phòng ban hoặc nhân viên.
+- Xem báo cáo về loại yêu cầu, thời gian xử lý và mức độ hài lòng.
+- Quản lý tài khoản, vai trò và quyền khi được cấp quyền quản trị.
+- Quản lý phòng ban và danh mục Ticket.
+- Tra soát Audit Trail và các thay đổi quan trọng.
+- Quản lý thời hạn lưu trữ dữ liệu theo chính sách của hệ thống.
+- Xuất dữ liệu/báo cáo theo chức năng được cung cấp.
+
+**Phạm vi dữ liệu**
+- Truy cập dữ liệu và chức năng theo phạm vi quyền được cấp.
+- Các chức năng quản trị chỉ được sử dụng bởi tài khoản Management có quyền phù hợp.
+
+---
+
+## 3. Ma Trận Quyền Theo Nhóm Người Dùng
+
+Ma trận dưới đây mô tả phạm vi chức năng chính của từng nhóm người dùng trong UniSupport.
+
+| Chức năng / Hành động | Sinh viên | Nhân viên | Quản lý |
+| :--- | :---: | :---: | :---: |
+| Đăng nhập hệ thống | Được phép | Được phép | Được phép |
+| Tra cứu FAQ/hướng dẫn | Được phép | Không áp dụng | Không áp dụng |
+| Tạo và gửi Ticket | Được phép | Không áp dụng | Không áp dụng |
+| Xem Ticket | Ticket của mình | Theo phạm vi phụ trách | Theo phạm vi quản lý |
+| Tiếp nhận và xử lý Ticket | Không áp dụng | Được phép | Khi được phân quyền |
+| Phân loại Category | Không áp dụng | Người phụ trách hoặc khi được phân quyền | Khi được phân quyền |
+| Thay đổi Priority | Không áp dụng | Người phụ trách hoặc khi được phân quyền | Khi được phân quyền |
+| Tiếp nhận Ticket chưa có người phụ trách | Không áp dụng | Được phép trong phạm vi phòng ban | Khi được phân quyền |
+| Phân công / phân công lại | Không áp dụng | Khi được phân quyền | Khi được phân quyền |
+| Transfer sang phòng ban khác | Không áp dụng | Khi được phân quyền | Khi được phân quyền |
+| Escalation tới Management | Không áp dụng | Khi được phân quyền | Không áp dụng |
+| Yêu cầu sinh viên bổ sung thông tin | Không áp dụng | Người phụ trách hoặc khi được phân quyền | Khi được phân quyền |
+| Bổ sung thông tin theo yêu cầu | Được phép | Không áp dụng | Không áp dụng |
+| Ghi nhận kết quả và chuyển `RESOLVED` | Không áp dụng | Người phụ trách hoặc khi được phân quyền | Khi được phân quyền |
+| Xác nhận kết quả / yêu cầu mở lại | Được phép | Không áp dụng | Không áp dụng |
+| Đánh giá mức độ hài lòng | Được phép | Không áp dụng | Không áp dụng |
+| Xem Dashboard và báo cáo | Không áp dụng | Không áp dụng | Được phép |
+| Quản lý tài khoản và phân quyền | Không áp dụng | Không áp dụng | Được phép |
+| Quản lý phòng ban và danh mục | Không áp dụng | Không áp dụng | Được phép |
+| Xem Audit Trail | Không áp dụng | Không áp dụng | Được phép |
+| Quản lý thời hạn lưu trữ dữ liệu | Không áp dụng | Không áp dụng | Được phép |
+| Xuất báo cáo / dữ liệu | Không áp dụng | Không áp dụng | Được phép |
+
+> **Quy ước:**  
+> **Được phép**: chức năng thuộc trách nhiệm chính của nhóm người dùng.  
+> **Không áp dụng**: chức năng không thuộc phạm vi sử dụng của nhóm.  
+> **Khi được phân quyền**: chỉ được thực hiện khi tài khoản có quyền phù hợp với vai trò và phạm vi trách nhiệm.
+
+> **Quy tắc vòng đời:** Sinh viên xác nhận kết quả hoặc yêu cầu mở lại trong giai đoạn `RESOLVED`; hệ thống tự động đóng Ticket khi hết thời hạn phản hồi. Staff không có thao tác đóng hoặc mở lại Ticket độc lập với các quy tắc này.
+
+> Chi tiết quyền theo dữ liệu, trạng thái Ticket và từng hành động được đặc tả trong phần Domain, Functional Requirements, Workflows và Security.

@@ -1,17 +1,22 @@
-# Thiết Kế Kiến Trúc & Kỹ Thuật Hệ Thống (System Architecture)
+# 07 - Kiến Trúc Hệ Thống
 
-## 1. Tổng Quan
-Thư mục này tài liệu hóa chi tiết kiến trúc tổng thể, mô hình dữ liệu, thiết kế RESTful API và cơ chế bảo mật của hệ thống **UniSupport** tại **Aurora University**. Các thiết kế đảm bảo hệ thống đáp ứng tốt quy mô 3.000 sinh viên, bảo mật dữ liệu và triển khai mượt mà trên hạ tầng của nhà trường.
+Thư mục này mô tả kiến trúc kỹ thuật phục vụ việc triển khai UniSupport trên cơ sở các yêu cầu nghiệp vụ và phi chức năng hiện hành.
 
----
+## 1. Nguyên Tắc
 
-## 2. Cấu Trúc Tài Liệu Kiến Trúc
+- UniSupport là **Web Application** phục vụ ba phân hệ M01, M02, M03.
+- Kiến trúc ưu tiên đơn giản, phù hợp quy mô khoảng 3.000 sinh viên và thời gian triển khai 14 tuần.
+- Thông báo, xác thực, phân quyền và Audit được triển khai như các thành phần kỹ thuật dùng chung cho ba phân hệ.
+- Kiến trúc ưu tiên giải pháp đơn giản, không yêu cầu kiến trúc phân tán phức tạp, auto-scaling hoặc tích hợp bên thứ ba.
+- Công nghệ cụ thể được lựa chọn trong quá trình thiết kế kỹ thuật, với điều kiện đáp ứng PRD, NFR và hạ tầng Aurora University.
 
-| Mã Tài Liệu | Tên Tài Liệu | Nội Dung Trọng Tâm |
-| :--- | :--- | :--- |
-| **`system-context.md`** | Sơ Đồ Ngữ Cảnh (System Context) | Vị trí của UniSupport trong hệ sinh thái ứng dụng của Aurora University. |
-| **`architecture-overview.md`** | Kiến Trúc Tổng Quan | Mô hình phân tầng Web Application (Frontend Responsive, Backend API Server, CSDL). |
-| **`data-model.md`** | Mô Hình Dữ Liệu & ERD | Sơ đồ ERD và chi tiết bảng cơ sở dữ liệu quan hệ (PostgreSQL/MySQL). |
-| **`api-design.md`** | Thiết Kế RESTful API | Danh mục end-points chuẩn RESTful cho 3 phân hệ (Sinh viên, Nhân viên, Quản lý). |
-| **`security-design.md`** | Thiết Kế Bảo Mật & Xác Thực | Cơ chế xác thực Session/JWT, phân quyền RBAC 3 vai trò và bảo vệ File. |
-| **`technical-decisions/`** | Các Quyết Định Kiến Trúc (ADRs) | Báo cáo ADR-001 (Ticket ID), ADR-002 (RBAC), ADR-003 (File Storage). |
+## 2. Tài Liệu
+
+| Tài liệu | Nội dung |
+| :--- | :--- |
+| [system-context.md](./system-context.md) | Actor, ranh giới hệ thống và hệ thống bên ngoài. |
+| [architecture-overview.md](./architecture-overview.md) | Thành phần Frontend, Backend, dữ liệu và file. |
+| [data-model.md](./data-model.md) | Mô hình dữ liệu triển khai ở mức logic. |
+| [api-design.md](./api-design.md) | Nguyên tắc giao tiếp giữa giao diện và Backend. |
+| [security-design.md](./security-design.md) | Thiết kế xác thực, phân quyền, file và Audit. |
+| [technical-decisions/](./technical-decisions/) | Các quyết định kỹ thuật có thể thay đổi mà không đổi nghiệp vụ. |

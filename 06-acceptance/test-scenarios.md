@@ -1,58 +1,46 @@
-# Kịch Bản Kiểm Thử Chấp Nhận Người Dùng (UAT Test Scenarios Specification)
+# Kịch Bản UAT Chính
 
-## 1. Tiêu Chuẩn Đánh Giá UAT (Acceptance Criteria & Test Standards)
-- **Môi trường thử nghiệm:** Staging Environment (`https://staging-unisupport.aurora.edu.vn`).
-- **Thời gian UAT:** 10 ngày làm việc.
-- **Quy tắc Đạt (Pass Criteria):** $100\%$ các Test Case mức Critical/High đạt Pass, không còn lỗi An toàn thông tin hoặc Lỗi gián đoạn Luồng công việc (Blocking Issues).
+Tài liệu này liệt kê các kịch bản nghiệm thu đại diện cho phạm vi chức năng của UniSupport. Các điều kiện kiểm tra chi tiết được kế thừa từ tiêu chí nghiệm thu của từng FR.
 
-## 2. Phân Hệ Sinh Viên (Student Portal UAT)
+## 1. M01 - Sinh Viên
 
-### Scenario ID: `UAT-STU-02` - Sinh viên Khởi tạo Ticket & Kiểm soát Idempotency
-- **Mục tiêu:** Kiểm tra sinh viên tạo Ticket mới thành công kèm file đính kèm, kiểm tra validation Form và cơ chế Idempotency Key chống ghi nhận trùng dữ liệu.
-- **Tiền điều kiện:** Sinh viên `stu01` đã đăng nhập vào hệ thống.
+| Mã | Kịch bản | Kết quả chính |
+| :--- | :--- | :--- |
+| TS-STU-01 | Tra cứu FAQ theo Nhóm vấn đề | Hiển thị nội dung hướng dẫn phù hợp và cho phép chuyển sang tạo Ticket khi cần. |
+| TS-STU-02 | Tạo Ticket với Category, nội dung và file hợp lệ | Tạo đúng một Ticket `NEW`, mã duy nhất, đúng phòng ban và mức `MEDIUM`. |
+| TS-STU-03 | Xem danh sách/chi tiết Ticket của mình | Chỉ hiển thị Ticket thuộc sinh viên và đúng lịch sử được phép xem. |
+| TS-STU-04 | Nhận và mở thông báo Ticket | Thông báo đúng người, đúng Ticket và trạng thái đọc/chưa đọc. |
+| TS-STU-05 | Bổ sung thông tin khi `WAITING_STUDENT` | Ticket quay về `IN_PROGRESS`, thời hạn tiếp tục từ phần còn lại. |
+| TS-STU-06 | Chấp nhận kết quả hoặc yêu cầu mở lại | Chấp nhận → `CLOSED`; mở lại hợp lệ → `IN_PROGRESS`. |
+| TS-STU-07 | Đánh giá sau khi Ticket đóng | Chỉ nhận 1 đánh giá 1–5 sao trong 07 ngày theo lịch. |
 
-| Step | Thao Tác Kiểm Thử | Dữ Liệu Đầu Vào | Kết Quả Mong Đợi (Expected Result) | HTTP / DB Check | Pass/Fail |
-| :---: | :--- | :--- | :--- | :--- | :---: |
-| 1 | Bấm nút "Tạo Ticket" | - | Hiển thị Form Modal tạo Ticket kèm `client_request_id` sinh tự động. | UI Render | Pass |
-| 2 | Nhập Form hợp lệ và đính kèm file | Category: "Đào tạo"<br><br>Title: "Xin hoãn thi môn CSDL"<br><br>Desc: "Do sự cố sức khỏe..."<br><br>File: `xac_nhan.pdf` ($2\text{MB}$) | Form điền đầy đủ dữ liệu, file đính kèm hợp lệ. | Client Validation Pass | Pass |
-| 3 | Click đúp nút "Gửi yêu cầu" 3 lần liên tiếp | Thao tác click liên tục ($< 500\text{ ms}$) | Hệ thống chỉ tạo 01 Ticket duy nhất (VD: `TK-20261009-0001`), hiển thị Toast thành công. | HTTP 201<br><br>`tickets COUNT = 1` | Pass |
-| 4 | Thử tạo Ticket với file vượt $5\text{MB}$ | File: `video_minh_chung.mp4` ($12\text{MB}$) | Hệ thống từ chối file ngay tại Client, báo lỗi: "Dung lượng file vượt quá giới hạn 5MB." | 400 Bad Request<br><br>`FILE_EXCEEDS_LIMIT` | Pass |
-| 5 | Thử tạo Ticket để trống Mô tả | Title: "Cần hỗ trợ"<br><br>Desc: "" (bỏ trống) | Hệ thống chặn submit, hiển thị lỗi validation dưới trường Mô tả. | Client Form Validation | Pass |
+## 2. M02 - Nhân Viên
 
-## 3. Phân Hệ Nhân Viên (Staff Operations UAT)
+| Mã | Kịch bản | Kết quả chính |
+| :--- | :--- | :--- |
+| TS-STF-01 | Xem hàng chờ, tìm kiếm và lọc | Chỉ hiển thị Ticket trong phạm vi quyền và đúng bộ lọc. |
+| TS-STF-02 | Tiếp nhận/phân công Ticket | Tối đa một người phụ trách; Ticket `NEW` chuyển `IN_PROGRESS`. |
+| TS-STF-03 | Điều chỉnh mức độ ưu tiên | Deadline tính lại theo Business Rules, không reset đồng hồ. |
+| TS-STF-04 | Yêu cầu sinh viên bổ sung | `IN_PROGRESS → WAITING_STUDENT`, tạm dừng thời hạn. |
+| TS-STF-05 | Transfer sang phòng ban khác | Category + phòng ban đổi nhất quán, assignee cũ được gỡ, state được giữ. |
+| TS-STF-06 | Escalation tới Quản lý | Không đổi Category/phòng ban/assignee/state; đúng người nhận được thông báo. |
+| TS-STF-07 | Ghi nhận kết quả | `IN_PROGRESS → RESOLVED`, sinh viên xem được kết quả. |
+| TS-STF-08 | Tiếp tục xử lý Ticket được mở lại | Giữ assignee cũ nếu hợp lệ; nếu không thì về hàng chờ phòng ban. |
 
-### Scenario ID: `UAT-STF-03` - Chuyển Tiếp Ticket Sang Phòng Ban Khác
-- **Mục tiêu:** Kiểm tra chức năng chuyển Ticket không đúng thẩm quyền sang phòng ban chuyên trách, xác minh FSM state chuyển `TRANSFERRED` và `assignee_id` bị xóa về `NULL`.
-- **Tiền điều kiện:** Nhân viên Phòng Đào tạo `staff_edu` đang mở Ticket `TK-20261009-0002` ở trạng thái `IN_PROGRESS`.
+## 3. M03 - Quản Lý
 
-| Step | Thao Tác Kiểm Thử | Dữ Liệu Đầu Vào | Kết Quả Mong Đợi (Expected Result) | HTTP / DB Check | Pass/Fail |
-| :---: | :--- | :--- | :--- | :--- | :---: |
-| 1 | Bấm nút "Chuyển phòng ban" | - | Hiển thị Modal chọn phòng ban đích và nhập lý do. | UI Render | Pass |
-| 2 | Chọn trùng phòng ban hiện tại | Target Dept: "Phòng Đào tạo" | Option "Phòng Đào tạo" bị disable hoặc hệ thống báo lỗi nếu cố chọn. | Client Guard | Pass |
-| 3 | Nhập lý do quá ngắn ($< 10$ ký tự) | Lý do: "Sai phong" | Báo lỗi dưới Textarea: "Lý do chuyển tiếp tối thiểu 10 ký tự." | Client Validation | Pass |
-| 4 | Nhập thông tin hợp lệ và bấm "Xác nhận" | Target Dept: "Phòng Tài chính"<br><br>Lý do: "Yêu cầu liên quan đến miễn giảm học phí." | Chuyển phòng thành công, Toast thông báo thành công, tự động điều hướng về Queue làm việc. | HTTP 200 OK<br><br>`status = TRANSFERRED`<br><br>`assignee_id = NULL` | Pass |
-| 5 | Kiểm tra Queue Phòng Tài chính | Log in bằng `staff_fin` | Ticket `TK-20261009-0002` xuất hiện trong Tab "Ticket chờ tiếp nhận" của Phòng Tài chính. | HTTP 200 OK | Pass |
+| Mã | Kịch bản | Kết quả chính |
+| :--- | :--- | :--- |
+| TS-MGT-01 | Tạo/cập nhật/khóa tài khoản | Đúng role/phạm vi; không làm mất tài khoản quản trị cuối cùng. |
+| TS-MGT-02 | Quản lý phòng ban và Category | Category hoạt động có đúng một phòng ban; không vô hiệu hóa phòng ban còn Ticket cần xử lý/mở lại. |
+| TS-MGT-03 | Xem nhật ký tra soát | Đúng phạm vi; bản ghi không sửa/xóa qua chức năng ứng dụng. |
+| TS-MGT-04 | Cấu hình thời hạn lưu trữ | Chỉ đánh dấu dữ liệu đến hạn; không tự động xóa/ẩn danh/di chuyển. |
+| TS-MGT-05 | Dashboard | Số liệu trạng thái, gần quá hạn, quá hạn và workload đúng Business Rules. |
+| TS-MGT-06 | Báo cáo/CSAT/xuất dữ liệu | Đúng công thức thời gian xử lý, CSAT và phạm vi quyền. |
 
-### Scenario ID: `UAT-STF-05` - Ghi Nhận Kết Quả & Hoàn Tất Giải Quyết Ticket
-- **Mục tiêu:** Kiểm tra quy tắc bắt buộc nhập `resolution_note`, chuyển trạng thái FSM sang `RESOLVED` và khởi chạy bộ đếm thời gian.
-- **Tiền điều kiện:** Nhân viên `staff_fin` đang phụ trách Ticket `TK-20261009-0003` ở trạng thái `IN_PROGRESS`.
+## 4. Năng Lực Dùng Chung
 
-| Step | Thao Tác Kiểm Thử | Dữ Liệu Đầu Vào | Kết Quả Mong Đợi (Expected Result) | HTTP / DB Check | Pass/Fail |
-| :---: | :--- | :--- | :--- | :--- | :---: |
-| 1 | Bấm nút "Hoàn thành & Đóng Ticket" | - | Hiển thị Modal nhập kết quả giải quyết. | UI Render | Pass |
-| 2 | Nhập chuỗi chỉ chứa khoảng trắng | `resolution_note`: "   " | Hệ thống chặn submit, báo lỗi: "Kết quả giải quyết không được để trống." | 400 Bad Request<br><br>`INVALID_INPUT` | Pass |
-| 3 | Nhập đầy đủ nội dung giải quyết hợp lệ | `resolution_note`: "Đã miễn giảm 50% học phí kỳ 1 cho sinh viên theo QĐ #123." | Lưu kết quả thành công, Ticket đổi trạng thái thành `RESOLVED`, lưu `resolved_at`. | HTTP 200 OK<br><br>`status = RESOLVED`<br><br>`resolved_at IS NOT NULL` | Pass |
-| 4 | Kiểm tra quyền chỉnh sửa sau khi Complete | `staff_fin` bấm sửa nội dung kết quả | Hệ thống vô hiệu hóa toàn bộ các nút chỉnh sửa/thao tác trên Ticket. | UI Readonly Mode | Pass |
-
-## 4. Phân Hệ Bảo Mật & Phân Quyền (Security & Privacy UAT)
-
-### Scenario ID: `UAT-SEC-02` - Kiểm Soát Quyền Xem & Stream File Đính Kèm (Zero Public Access)
-- **Mục tiêu:** Đảm bảo file đính kèm lưu ở thư mục Private, bắt buộc xác thực token và chỉ cho phép người dùng có quyền hợp lệ xem/stream file.
-- **Tiền điều kiện:** Sinh viên A (`stu_A`) có Ticket chứa file `minh_chung_A.pdf` (ID: `att_1001`). Sinh viên B (`stu_B`) không sở hữu Ticket này.
-
-| Step | Thao Tác Kiểm Thử | Dữ Liệu Đầu Vào | Kết Quả Mong Đợi (Expected Result) | HTTP / DB Check | Pass/Fail |
-| :---: | :--- | :--- | :--- | :--- | :---: |
-| 1 | Sinh viên A xem file đính kèm của mình | Session Sinh viên A | Backend stream thành công dữ liệu file `minh_chung_A.pdf`. | HTTP 200 OK<br><br>`Content-Type: application/pdf` | Pass |
-| 2 | Truy cập URL file trực tiếp không qua Token | `GET /api/v1/attachments/att_1001` (Không gửi Bearer Token) | Hệ thống từ chối truy cập. | HTTP 401 Unauthorized | Pass |
-| 3 | Sinh viên B dùng Token của mình truy cập URL file của Sinh viên A | Session Sinh viên B<br><br>`GET /api/v1/attachments/att_1001` | Hệ thống chặn phân quyền dữ liệu. | HTTP 403 Forbidden<br><br>`FORBIDDEN_ACCESS` | Pass |
-| 4 | Nhân viên thuộc phòng ban thụ lý Ticket xem file | Session Nhân viên `staff_edu` | Tải/Xem file thành công do đúng phạm vi phòng ban. | HTTP 200 OK | Pass |
+- Đăng nhập bằng tài khoản hợp lệ; tài khoản bị khóa không truy cập được.
+- Sinh viên/Staff/Management không truy cập dữ liệu ngoài phạm vi.
+- File đính kèm chỉ người liên quan có quyền mới truy cập được.
+- Các thao tác quan trọng sinh bản ghi Audit tương ứng.

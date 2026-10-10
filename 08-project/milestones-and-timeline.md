@@ -1,30 +1,27 @@
-# Lịch Trình Thực Hiện & Các Cột Mốc Key Milestones
+# PRJ-04 - Tiến Độ Và Cột Mốc
 
-## 1. Kế Hoạch Triển Khai Theo Giai Đoạn (14 Tuần / 70 Ngày Làm Việc)
+## 1. Kế Hoạch 14 Tuần
 
-| Giai Đoạn | Thời Gian | Nội Dung Công Việc Chính |
-| :--- | :--- | :--- |
-| **Giai đoạn 1 – Thu thập yêu cầu** | Tuần 1–2 | Thu thập và phân tích yêu cầu, xác định phạm vi, luồng nghiệp vụ và tiêu chí nghiệm thu. |
-| **Giai đoạn 2 – Thiết kế** | Tuần 3–4 | Thiết kế giao diện (UI/UX), prototype, kiến trúc hệ thống, cơ sở dữ liệu (ERD), API và phân quyền. |
-| **Giai đoạn 3 – Phát triển chính** | Tuần 5–9 | Phát triển 3 phân hệ chức năng cốt lõi:<br>• *Module Sinh viên (Tuần 5–6):* Đăng nhập, Tạo Ticket, Theo dõi, Đánh giá.<br>• *Module Nhân viên (Tuần 7–8):* Tiếp nhận, Phân loại, Xử lý, Chuyển phòng ban, Đóng Ticket.<br>• *Module Quản lý (Tuần 9):* Dashboard, Báo cáo thống kê, Quản trị tài khoản. |
-| **Giai đoạn 4 – Tích hợp hệ thống** | Tuần 10–11 | Tích hợp giao diện Frontend và Backend, xây dựng Dashboard, Báo cáo và kiểm tra phân quyền RBAC. |
-| **Giai đoạn 5 – Kiểm thử & Nghiệm thu** | Tuần 12–13 | Kiểm thử chức năng, kiểm thử tích hợp, kiểm thử hồi quy, UAT với Client và sửa lỗi. |
-| **Giai đoạn 6 – Hoàn thiện & Bàn giao** | Tuần 14 | Sửa lỗi cuối, triển khai hệ thống lên Server Client, hoàn thiện tài liệu và bàn giao chính thức. |
+| Giai đoạn | Thời gian | Nội dung chính |
+| :--- | :---: | :--- |
+| Thu thập yêu cầu | Tuần 1–2 | Phạm vi, luồng nghiệp vụ, tiêu chí nghiệm thu. |
+| Thiết kế | Tuần 3–4 | Giao diện/prototype, kiến trúc, cơ sở dữ liệu, API, phân quyền. |
+| Phát triển M01 | Tuần 5–6 | Đăng nhập, gửi yêu cầu, theo dõi, kết quả, đánh giá. |
+| Phát triển M02 | Tuần 7–8 | Tiếp nhận, phân loại, xử lý và cập nhật tiến độ. |
+| Phát triển M03 | Tuần 9 | Thống kê, báo cáo, tài khoản và phân quyền. |
+| Tích hợp | Tuần 10–11 | Tích hợp giao diện/backend, Dashboard/báo cáo, kiểm tra quyền. |
+| Kiểm thử nội bộ/UAT chuẩn bị | Tuần 12–13 | Kiểm thử chức năng, tích hợp, hồi quy và sửa lỗi. |
+| Hoàn thiện & bàn giao | Tuần 14 | Sửa lỗi cuối, triển khai, tài liệu và bàn giao. |
 
----
+## 2. Cột Mốc
 
-## 2. Các Cột Mốc Quan Trọng (Key Milestones)
+- **Mốc 0 - Tuần 1:** Ký xác nhận hợp tác và đặt cọc.
+- **Mốc 1 - Cuối Tuần 2:** Hoàn tất phạm vi và yêu cầu.
+- **Mốc 2 - Cuối Tuần 4:** Duyệt giao diện/prototype.
+- **Mốc 3 - Cuối Tuần 9:** Hoàn thành phát triển 3 phân hệ, trình diễn nội bộ.
+- **Mốc 4 - Tuần 13:** Hoàn thành kiểm thử/UAT nội bộ và tổng hợp phản hồi.
+- **Mốc 5 - Tuần 14:** Hoàn tất sửa lỗi thuộc phạm vi, triển khai và bàn giao.
 
-* **Mốc 0 (Tuần 1):** Ký xác nhận hợp tác và đặt cọc triển khai dự án.
-* **Mốc 1 (Cuối Tuần 2):** Chốt phạm vi nghiệp vụ và tài liệu yêu cầu dự án.
-* **Mốc 2 (Cuối Tuần 4):** Phê duyệt bản thiết kế giao diện & Prototype.
-* **Mốc 3 (Cuối Tuần 9):** Hoàn thành phát triển 3 phân hệ, Demo nội bộ.
-* **Mốc 4 (Tuần 13):** Hoàn thành đợt kiểm thử UAT và tổng hợp phản hồi từ Client.
-* **Mốc 5 (Tuần 14):** Hoàn tất xử lý các lỗi thuộc phạm vi, triển khai và bàn giao chính thức.
+## 3. Sau Bàn Giao
 
----
-
-## 3. Lịch Trình Nghiệm Thu & Bảo Hành Post-Delivery
-
-* **Quy trình nghiệm thu (10 ngày làm việc):** Aurora University có 10 ngày làm việc kể từ thời điểm bàn giao chính thức (Mốc 5) để tiến hành kiểm thử nghiệm thu. Các lỗi phát sinh do đội phát triển được ghi nhận và khắc phục, không tính là điều kiện từ chối nghiệm thu nếu không ảnh hưởng chức năng chính.
-* **Chính sách bảo hành (30 ngày):** Hỗ trợ khắc phục lỗi kỹ thuật miễn phí trong 30 ngày kể từ ngày ký biên bản nghiệm thu chính thức. Không áp dụng cho các yêu cầu thay đổi hoặc tính năng mới ngoài phạm vi.
+Aurora University có **10 ngày làm việc** để nghiệm thu chính thức sau khi nhận bàn giao. Sau nghiệm thu, hệ thống được bảo hành sửa lỗi kỹ thuật **30 ngày**.

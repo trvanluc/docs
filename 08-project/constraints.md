@@ -1,22 +1,27 @@
-# Các Ràng Buộc Dự Án (Project Constraints)
+# PRJ-02 - Ràng Buộc Dự Án
 
-## 1. Ràng Buộc Về Thời Gian (Schedule Constraints)
-* **Tổng thời gian thực hiện:** Đội ngũ phát triển có **14 tuần** (tương đương **70 ngày làm việc**) để hoàn thiện từ thời điểm khởi động dự án đến khi bàn giao chính thức.
-* **Thời gian nghiệm thu:** Aurora University có **10 ngày làm việc** để tiến hành kiểm thử UAT kể từ khi nhận bàn giao chính thức (mốc Tuần 14).
-* **Thời gian bảo hành:** Hệ thống được hỗ trợ sửa lỗi kỹ thuật miễn phí trong vòng **30 ngày** kể từ ngày hai bên xác nhận biên bản nghiệm thu.
+## 1. Thời Gian
 
----
+- Thời gian triển khai: **14 tuần**, khoảng 70 ngày làm việc.
+- Nghiệm thu chính thức: **10 ngày làm việc sau bàn giao**.
+- Bảo hành sửa lỗi kỹ thuật: **30 ngày sau nghiệm thu**.
 
-## 2. Ràng Buộc Về Ngân Sách (Budget Constraints)
-* **Tổng kinh phí thực hiện:** **300 Triệu VNĐ** (Chưa bao gồm các yêu cầu phát sinh ngoài phạm vi đã cam kết).
-* **Điều khoản thanh toán:** Chi tiết các mốc thanh toán (bao gồm tiền đặt cọc khởi động Mốc 0) được quy định chi tiết trong hợp đồng triển khai chính thức.
+## 2. Ngân Sách Và Nguồn Lực
 
----
+- Ngân sách dự án: **300.000.000 VNĐ**.
+- Tổng effort kế hoạch: **640h**:
+  - M01 Student: 128h.
+  - M02 Staff: 197h.
+  - M03 Management: 215h.
+  - Hoạt động cấp dự án: 100h.
+- Effort của từng gói công việc được giữ ổn định khi phân rã thành nhiều FR/Flow.
 
-## 3. Ràng Buộc Về Phạm Vi (Scope Constraints - Out of Scope)
-Các hạng mục sau tuyệt đối không thuộc phạm vi thực hiện của dự án:
-* Phát triển Mobile App độc lập (iOS/Android).
-* Thiết lập sao lưu tự động (Auto-backup), giám sát hạ tầng máy chủ lâu dài.
-* Phân quyền chi tiết nhiều cấp phức tạp và ghi lịch sử thao tác chi tiết ở mức nâng cao.
-* Chức năng Chat trực tiếp (Livechat) hoặc Gọi thoại/Video trong hệ thống.
-* Tối ưu hóa kiến trúc chịu tải lớn vượt quá quy mô 3.000 sinh viên.
+## 3. Phạm Vi Kỹ Thuật
+
+- Web Application responsive; không phát triển mobile app riêng.
+- Không tích hợp bên thứ ba ngoài phạm vi.
+- Không yêu cầu hạ tầng tải lớn, penetration testing chuyên sâu hoặc chứng nhận bảo mật.
+
+## 4. Quản Lý Thay Đổi
+
+Yêu cầu mới ngoài phạm vi phải được đánh giá ảnh hưởng đến thời gian/chi phí và xác nhận trước khi áp dụng vào kế hoạch dự án.

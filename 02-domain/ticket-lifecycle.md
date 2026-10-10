@@ -1,69 +1,121 @@
-# 1. Tổng Quan Vòng Đời Phiếu Hỗ Trợ (Ticket Lifecycle)
+# Vòng Đời Ticket (Ticket Lifecycle)
 
-Vòng đời của một Ticket trong UniSupport phản ánh chính xác quy trình nghiệp vụ từng bước giữa Sinh viên (Student), Nhân viên (Staff) và Quản lý (Manager/Admin). Trạng thái Ticket được quản lý dưới dạng Máy trạng thái hữu hạn (Finite State Machine - FSM) nhằm đảm bảo dữ liệu không bị chuyển trạng thái sai quy tắc.
+Vòng đời Ticket quy định các giai đoạn xử lý mà một yêu cầu hỗ trợ đi qua từ thời điểm được tạo đến khi kết thúc. Mỗi giai đoạn phản ánh trạng thái nghiệp vụ của Ticket và xác định các hành động được phép thực hiện tại thời điểm tương ứng.
 
-Plaintext
+## 1. Các Trạng Thái Trong Vòng Đời
 
-       [ Khởi Tạo ] (Student)
-            │
-            ▼
-        (  NEW  ) ───────────────┬───────────────┐
-            │                    │               │
-      Claim │              Reject│       Transfer│
-            ▼                    ▼               ▼
-    ( IN_PROGRESS )       ( REJECTED )   ( TRANSFERRED )
-       │        ▲                │               │
-Request│        │Upload          └───────┬───────┘
-       ▼        │                        │ Claim
-(NEED_MORE_INFO)                         ▼
-       │                          ( IN_PROGRESS )
-       │ Resolve                         │
-       └─────────────────────────────────┤ Resolve
-                                         ▼
-                                   ( RESOLVED )
-                                         │
-                                   Rate  │ (or Auto-close)
-                                         ▼
-                                   (  CLOSED  )
+UniSupport sử dụng các trạng thái nghiệp vụ chính sau:
 
-# 2. Chi Tiết Các Giai Đoạn Trong Vòng Đời
+| Trạng thái | Ý nghĩa |
+| :--- | :--- |
+| `NEW` | Ticket đã được tạo thành công và đang chờ tiếp nhận/phân công xử lý. |
+| `IN_PROGRESS` | Ticket đang được nhân viên hoặc phòng ban phụ trách xử lý. |
+| `WAITING_STUDENT` | Quá trình xử lý đang chờ sinh viên bổ sung thông tin hoặc tài liệu cần thiết. |
+| `RESOLVED` | Ticket đã có kết quả xử lý và đang trong thời hạn để sinh viên xem, phản hồi hoặc xác nhận kết quả. |
+| `CLOSED` | Ticket đã kết thúc vòng đời xử lý sau khi kết quả được chấp nhận hoặc hết thời hạn phản hồi. |
 
-## Giai đoạn 1: Khởi Tạo (Created)
-- **Tác nhân:** Sinh viên.
-- **Thao tác:** Nhập tiêu đề, mô tả, chọn nhóm vấn đề (`category_id`), đính kèm file (nếu có).
-- **Trạng thái hệ thống:** Khởi tạo ở trạng thái `NEW`.
-- **Hành vi hệ thống:**
-  - Kiểm tra `client_request_id` (Idempotency Key) để tránh trùng lặp.
-  - Tự động gán `department_id` mặc định dựa trên `category_id`.
-  - Tự động tính toán mốc thời hạn giải quyết `sla_target_at` (= Thời điểm tạo + 24 giờ làm việc).
-  - Khởi tạo `sla_status` = `ON_TRACK`.
+---
 
-## Giai đoạn 2: Tiếp Nhận & Phân Loại (Claim, Triage & Transfer)
-- **Tác nhân:** Nhân viên phòng ban (`department_id`).
-- **Thao tác:**
-  - **Trường hợp 1 (Tiếp nhận):** Nhân viên bấm Tiếp nhận xử lý, điều chỉnh priority (`LOW`, `MEDIUM`, `HIGH`, `URGENT`) nếu cần. Trạng thái chuyển sang `IN_PROGRESS`, gán `assignee_id` = `staff_id`.
-  - **Trường hợp 2 (Từ chối):** Yêu cầu sai quy định, vi phạm chính sách hoặc spam. Nhân viên nhập lý do từ chối (bắt buộc) và chuyển trạng thái sang `REJECTED`.
-  - **Trường hợp 3 (Chuyển phòng ban):** Yêu cầu không thuộc thẩm quyền phòng ban hiện tại. Nhân viên chọn phòng ban mới, nhập lý do chuyển tiếp (bắt buộc, min 10 ký tự). Trạng thái chuyển sang `TRANSFERRED`, gán `assignee_id` = `NULL`.
+## 2. Sơ Đồ Vòng Đời Ticket
 
-## Giai đoạn 3: Xử Lý & Bổ Sung Hồ Sơ (Processing & Supplementation)
-- **Tác nhân:** Nhân viên phụ trách & Sinh viên.
-- **Thao tác:**
-  - **Xử lý bình thường:** Nhân viên thực hiện các nghiệp vụ nội bộ để giải quyết yêu cầu. Ticket giữ nguyên `IN_PROGRESS`.
-  - **Yêu cầu bổ sung (Staff):** Thiếu hồ sơ/giấy tờ. Nhân viên nhập tin nhắn yêu cầu bổ sung. Trạng thái đổi sang `NEED_MORE_INFO`.
-  - **Gửi bổ sung (Student):** Sinh viên tải lên các file/mô tả còn thiếu. Ngay khi bấm Gửi bổ sung, trạng thái tự động chuyển ngược lại về `IN_PROGRESS` và phát thông báo cho Nhân viên.
+```mermaid
+stateDiagram-v2
+    [*] --> NEW : Sinh viên gửi yêu cầu thành công
 
-## Giai đoạn 4: Giải Quyết & Đóng Ticket (Resolution & Closure)
-- **Tác nhân:** Nhân viên phụ trách & Hệ thống (Auto-task).
-- **Thao tác:**
-  - **Nhân viên xử lý xong:** Nhập `resolution_note` (min 20 ký tự), đính kèm file kết quả (nếu có) và bấm Hoàn tất xử lý.
-  - Trạng thái Ticket chuyển sang `RESOLVED`, ghi nhận `resolved_at` = `CURRENT_TIMESTAMP`.
-  - **Đóng Ticket (Closure):**
-    - Sinh viên gửi đánh giá hài lòng -> Ticket tự động chuyển sang `CLOSED`.
-    - Sau 03 ngày làm việc kể từ khi ở `RESOLVED`, nếu sinh viên không có khiếu nại hoặc không đánh giá, Job tự động của Server (Cron job) sẽ chuyển trạng thái Ticket sang `CLOSED` và lưu `closed_at`.
+    NEW --> IN_PROGRESS : Ticket được tiếp nhận / phân công
 
-## Giai đoạn 5: Đánh Giá Chất Lượng Phục Vụ (Feedback & CSAT)
-- **Tác nhân:** Sinh viên.
-- **Thao tác:** Mở Ticket ở trạng thái `RESOLVED` hoặc `CLOSED` để chọn số sao (1–5) và nhập nhận xét.
-- **Ràng buộc:**
-  - Chỉ cho phép đánh giá 01 lần duy nhất.
-  - Khi đã đánh giá, giao diện đánh giá chuyển sang dạng Read-only.
+    IN_PROGRESS --> WAITING_STUDENT : Yêu cầu bổ sung thông tin
+    WAITING_STUDENT --> IN_PROGRESS : Sinh viên bổ sung thông tin / tài liệu
+
+    IN_PROGRESS --> RESOLVED : Ghi nhận kết quả xử lý
+
+    RESOLVED --> IN_PROGRESS : Sinh viên phản hồi chưa được giải quyết
+    RESOLVED --> CLOSED : Sinh viên chấp nhận kết quả
+    RESOLVED --> CLOSED : Hết thời hạn phản hồi
+
+    CLOSED --> [*]
+```
+
+Việc chuyển Ticket sang người phụ trách hoặc phòng ban khác, cũng như escalation, không tạo ra trạng thái vòng đời riêng. Các hành động này làm thay đổi trách nhiệm xử lý nhưng Ticket tiếp tục ở trạng thái nghiệp vụ phù hợp với quá trình xử lý hiện tại.
+
+---
+
+## 3. Chi Tiết Các Giai Đoạn
+
+### 3.1 NEW — Yêu cầu mới
+
+**Điều kiện bắt đầu:** Sinh viên gửi yêu cầu hợp lệ và hệ thống tạo Ticket thành công.
+
+**Đặc điểm nghiệp vụ:**
+- Hệ thống tạo mã Ticket duy nhất.
+- Ticket được ghi nhận vào hệ thống và xác định nhóm vấn đề/phòng ban tiếp nhận theo thông tin yêu cầu.
+- Ticket có thể chưa có người phụ trách cụ thể.
+- Ticket chờ được tiếp nhận, phân loại và phân công xử lý.
+
+**Kết thúc giai đoạn:** Ticket được tiếp nhận hoặc phân công để bắt đầu xử lý.
+
+---
+
+### 3.2 IN_PROGRESS — Đang xử lý
+
+**Điều kiện bắt đầu:** Ticket đã được tiếp nhận hoặc phân công cho phạm vi xử lý phù hợp.
+
+**Đặc điểm nghiệp vụ:**
+- Nhân viên thực hiện xử lý yêu cầu và cập nhật tiến độ.
+- Mức độ ưu tiên và thời hạn xử lý được áp dụng theo quy tắc nghiệp vụ.
+- Ticket có thể được phân công lại, chuyển người/phòng ban xử lý hoặc escalation khi cần thiết.
+- Mọi thay đổi quan trọng phải được ghi nhận trong lịch sử xử lý.
+- Nếu cần thêm thông tin hoặc tài liệu từ sinh viên, Ticket chuyển sang `WAITING_STUDENT`.
+- Khi đã có kết quả xử lý, Ticket chuyển sang `RESOLVED`.
+
+---
+
+### 3.3 WAITING_STUDENT — Chờ sinh viên bổ sung
+
+**Điều kiện bắt đầu:** Nhân viên yêu cầu sinh viên bổ sung thông tin hoặc tài liệu cần thiết để tiếp tục xử lý.
+
+**Đặc điểm nghiệp vụ:**
+- Hệ thống ghi nhận nội dung yêu cầu bổ sung và thông báo cho sinh viên.
+- Ticket tạm thời chờ phản hồi từ sinh viên.
+- Cách tính thời hạn xử lý trong thời gian chờ được áp dụng theo quy tắc tại `business-rules.md`.
+
+**Kết thúc giai đoạn:** Khi sinh viên gửi thông tin hoặc tài liệu bổ sung hợp lệ, Ticket quay lại `IN_PROGRESS`.
+
+---
+
+### 3.4 RESOLVED — Đã có kết quả xử lý
+
+**Điều kiện bắt đầu:** Nhân viên hoàn tất phần xử lý nghiệp vụ và ghi nhận kết quả cho Ticket.
+
+**Đặc điểm nghiệp vụ:**
+- Kết quả xử lý được lưu vào Ticket.
+- Hệ thống ghi nhận thời điểm giải quyết và thông báo kết quả cho sinh viên.
+- Sinh viên có thể xem kết quả và phản hồi trong thời hạn được quy định.
+- Nếu sinh viên xác nhận vấn đề chưa được giải quyết và đáp ứng điều kiện mở lại, Ticket quay về `IN_PROGRESS`.
+- Nếu sinh viên chấp nhận kết quả hoặc hết thời hạn phản hồi, Ticket chuyển sang `CLOSED`.
+
+---
+
+### 3.5 CLOSED — Đã đóng
+
+**Điều kiện bắt đầu:** Sinh viên chấp nhận kết quả hoặc thời hạn phản hồi sau khi Ticket ở trạng thái `RESOLVED` đã kết thúc.
+
+**Đặc điểm nghiệp vụ:**
+- Ticket kết thúc vòng đời xử lý.
+- Kết quả và toàn bộ lịch sử xử lý được giữ lại để phục vụ tra soát, báo cáo và thống kê.
+- Sinh viên có thể thực hiện đánh giá mức độ hài lòng khi Ticket đáp ứng điều kiện đánh giá.
+- Ticket không tiếp tục quay lại quá trình xử lý từ trạng thái `CLOSED`; trường hợp phát sinh vấn đề mới sau khi Ticket đã đóng được xử lý theo quy tắc nghiệp vụ tương ứng.
+
+---
+
+## 4. Nguyên Tắc Mở Lại Ticket
+
+Mở lại Ticket được thực hiện trong giai đoạn `RESOLVED`, trước khi Ticket chuyển sang `CLOSED`.
+
+Khi sinh viên phản hồi rằng kết quả chưa giải quyết được vấn đề và đáp ứng điều kiện mở lại:
+1. Phản hồi của sinh viên được ghi nhận vào lịch sử Ticket.
+2. Ticket chuyển từ `RESOLVED` về `IN_PROGRESS`.
+3. Quá trình xử lý tiếp tục với người/phòng ban phụ trách phù hợp.
+4. Kết quả và lịch sử của vòng xử lý trước đó vẫn được giữ nguyên.
+
+Điều kiện và thời hạn cụ thể để mở lại Ticket được quy định tại `business-rules.md`.

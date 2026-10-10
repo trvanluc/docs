@@ -1,14 +1,11 @@
-# Quyết Định Kiến Trúc & Kỹ Thuật (Architecture Decision Records - ADR)
+# Quyết Định Kỹ Thuật
 
-## 1. Tổng Quan
-Thư mục này lưu trữ các Quyết định Kiến trúc & Kỹ thuật quan trọng (ADR) trong quá trình thiết kế và phát triển hệ thống **UniSupport** cho **Aurora University**. Mỗi tài liệu ADR ghi nhận bối cảnh, lý do lựa chọn giải pháp, cũng như ưu/nhược điểm và hệ quả của quyết định đó.
+Thư mục này lưu các quyết định kỹ thuật có ảnh hưởng đến cách triển khai nhưng không thay đổi hành vi nghiệp vụ của UniSupport.
 
----
+| ADR | Nội dung | Trạng thái |
+| :--- | :--- | :--- |
+| [ADR-001](./ADR-001-ticket-id-generation.md) | Nguyên tắc mã Ticket duy nhất | Áp dụng |
+| [ADR-002](./ADR-002-role-based-access-control.md) | Thực thi phân quyền 3 nhóm người dùng | Áp dụng |
+| [ADR-003](./ADR-003-file-attachment-storage.md) | Bảo vệ file đính kèm | Áp dụng |
 
-## 2. Danh Sách Các Báo Cáo ADR
-
-| Mã ADR | Tiêu Đề Quyết Định | Trạng Thái | Tóm Tắt Giải Pháp |
-| :--- | :--- | :---: | :--- |
-| **`ADR-001`** | Quy tắc sinh mã Ticket duy nhất (Ticket ID Generation) | **ACCEPTED** | Định dạng `TK-YYYYMMDD-XXXX` tự sinh, đảm bảo duy nhất và hỗ trợ tra cứu. |
-| **`ADR-002`** | Giải pháp phân quyền 3 vai trò (Role-Based Access Control) | **ACCEPTED** | Mô hình RBAC tĩnh với 3 vai trò: Sinh viên, Nhân viên, Quản lý. |
-| **`ADR-003`** | Phương án lưu trữ & Phân quyền xem File đính kèm | **ACCEPTED** | Lưu trữ Private Storage, kiểm soát quyền xem qua Chống truy cập trực tiếp URL. |
+Các lựa chọn về framework, hệ quản trị cơ sở dữ liệu, phiên đăng nhập, container, cloud hoặc đường dẫn API được quyết định trong quá trình triển khai kỹ thuật và phải tuân thủ PRD/NFR.

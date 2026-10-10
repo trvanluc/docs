@@ -1,75 +1,86 @@
-# UniSupport - Tài Liệu Dự Án (Documentation Center)
+# Tài Liệu Dự Án UniSupport
 
-Chào mừng bạn đến với kho tài liệu kỹ thuật và quản lý dự án chính thức của **UniSupport** – Nền tảng tiếp nhận, xử lý và quản lý yêu cầu hỗ trợ sinh viên tại **Aurora University**.
+Kho tài liệu này mô tả phạm vi, nghiệp vụ, yêu cầu chức năng, workflow, yêu cầu phi chức năng, nghiệm thu, kiến trúc và các ràng buộc dự án của **UniSupport – Student Support Management System** tại Aurora University.
 
----
+Tài liệu được tổ chức theo chuỗi: **Phạm vi dự án → Sản phẩm → Nghiệp vụ → PRD → Workflow → Yêu cầu phi chức năng → Nghiệm thu/RTM → Kiến trúc → Quản lý dự án**.
 
-## 📌 Tổng Quan Dự Án
-
-* **Tên dự án:** Hệ thống Quản lý Yêu cầu Hỗ trợ Sinh viên (UniSupport)
-* **Khách hàng:** Aurora University
-* **Mục tiêu:** Chuẩn hóa và tập trung hóa toàn bộ quy trình gửi, tiếp nhận, điều phối, xử lý và đánh giá yêu cầu hỗ trợ của sinh viên; loại bỏ sự phụ thuộc vào các kênh rời rạc như email, form online hay tin nhắn tự phát.
-* **Quy mô phục vụ:** Tối ưu cho quy mô khoảng **3.000 sinh viên**.
-* **Nền tảng triển khai:** Web Application (Responsive trên máy tính và thiết bị di động).
-* **Thời gian thực hiện:** **14 tuần** (70 ngày làm việc), bao gồm 6 giai đoạn từ thu thập yêu cầu đến bàn giao.
-* **Tổng ngân sách:** **300 Triệu VNĐ**.
-
----
-
-## 📐 Cấu Trúc Thư Mục Tài Liệu
-
-Bộ tài liệu này được cấu trúc chi tiết thành 8 phần chính nhằm đảm bảo tính đồng bộ thông tin giữa đội ngũ phát triển, kiểm thử, quản lý dự án và đại diện Aurora University:
+## Cấu Trúc Tài Liệu
 
 ```text
-docs/
-├── README.md                           # Tổng quan tài liệu & Hướng dẫn tra cứu
-├── 01-product/                         # Tổng quan sản phẩm & Phạm vi dự án
-│   ├── product-overview.md             # Định hướng & Giải pháp cốt lõi
-│   ├── problem-statement.md            # Khó khăn hiện tại & Động lực dự án
-│   ├── goals-and-non-goals.md          # Mục tiêu dự án & Phạm vi Out of Scope
-│   ├── actors-and-roles.md             # Định nghĩa 3 vai trò (Sinh viên, Nhân viên, Quản lý)
-│   └── product-scope.md                # Phạm vi chi tiết & Giả định kỹ thuật
-├── 02-domain/                          # Nghiệp vụ & Quy tắc hệ thống
-│   ├── domain-overview.md             # Nghiệp vụ hỗ trợ tại Aurora University
-│   ├── terminology.md                  # Thuật ngữ chuyên ngành (Ticket, SLA, UAT,...)
-│   ├── ticket-model.md                 # Cấu trúc & Trường dữ liệu Ticket
-│   ├── ticket-lifecycle.md             # Vòng đời chuyển dịch của Ticket
-│   ├── state-transition.md             # Ma trận chuyển đổi trạng thái
-│   └── business-rules.md               # Các quy tắc nghiệp vụ bắt buộc
-├── 03-modules/                         # Phân hệ chức năng & PRD Chi tiết
-│   ├── M01-student-portal.md       # Phân hệ Sinh viên
-│   ├── M02-staff-operations.md     # Phân hệ Nhân viên
-│   └── M03-management-dashboard.md # Phân hệ Quản lý
-├── 04-workflows/                       # Quy trình nghiệp vụ tiêu chuẩn (Workflows)
-│   ├── WF-01-submit-support-request.md # Sinh viên tạo Ticket mới
-│   ├── WF-02-claim-and-triage.md       # Nhân viên tiếp nhận & Phân loại
-│   ├── WF-03-request-supplement.md     # Yêu cầu bổ sung thông tin/giấy tờ
-│   ├── WF-04-transfer-department.md    # Chuyển tiếp yêu cầu liên phòng ban
-│   ├── WF-05-complete-and-resolve.md   # Xử lý hoàn tất & Đóng Ticket
-│   └── WF-06-close-and-rate.md         # Sinh viên nhận kết quả & Đánh giá
-├── 05-non-functional-requirements/    # Yêu cầu phi chức năng
-│   ├── performance.md                  # Hiệu năng (Đáp ứng 3.000 SV)
-│   ├── security.md                     # Bảo mật & Phân quyền xem File
-│   ├── reliability.md                  # Độ ổn định & Hạ tầng triển khai
-│   ├── usability.md                    # Giao diện Responsive & Đa ngôn ngữ (VI/EN)
-│   ├── observability.md                # Ghi nhận thông tin & Audit Log
-│   └── deployment.md                   # Hạ tầng Server & Tên miền Client
-├── 06-acceptance/                      # Kiểm thử & Nghiệm thu
-│   ├── traceability-matrix.md          # Ma trận truy xuất yêu cầu (RTM)
-│   └── test-scenarios.md               # Kịch bản kiểm thử UAT (10 ngày nghiệm thu)
-├── 07-architecture/                    # Thiết kế Kiến trúc & Kỹ thuật
-│   ├── system-context.md               # Sơ đồ ngữ cảnh hệ thống
-│   ├── architecture-overview.md        # Kiến trúc Frontend & Backend
-│   ├── data-model.md                   # Sơ đồ ERD & Mô hình CSDL
-│   ├── api-design.md                   # Thiết kế chuẩn RESTful API
-│   ├── security-design.md              # Cơ chế xác thực & Phân quyền
-│   └── technical-decisions/            # Các quyết định kỹ thuật quan trọng (ADR)
-│       ├── ADR-001-ticket-id-generation.md
-│       ├── ADR-002-role-based-access-control.md
-│       └── ADR-003-file-attachment-storage.md
-└── 08-project/                         # Quản lý Dự án & Tiến độ
-    ├── assumptions.md                  # Giả định triển khai
-    ├── constraints.md                  # Ràng buộc dự án (14 tuần, 300 tr)
-    ├── milestones-and-timeline.md      # Lịch trình 6 giai đoạn & Lịch nghiệm thu/Bảo hành
-    ├── open-questions.md               # Danh mục trao đổi cần phê duyệt
-    └── glossary.md                     # Thuật ngữ dự án
+unisupport-docs/
+├── README.md
+├── 01-product/
+│   ├── README.md
+│   ├── product-overview.md
+│   ├── actors-and-roles.md
+│   └── product-scope.md
+├── 02-domain/
+│   ├── README.md
+│   ├── domain-overview.md
+│   ├── terminology.md
+│   ├── ticket-model.md
+│   ├── ticket-lifecycle.md
+│   ├── state-transition.md
+│   └── business-rules.md
+├── 03-modules/
+│   ├── README.md
+│   ├── M01-student-portal/
+│   ├── M02-staff-operations/
+│   └── M03-management-dashboard/
+├── 04-workflows/
+│   ├── README.md
+│   ├── WF-01-submit-support-request.md
+│   ├── WF-02-claim-and-triage.md
+│   ├── WF-03-request-supplement.md
+│   ├── WF-04-transfer-department.md
+│   ├── WF-05-complete-and-resolve.md
+│   ├── WF-06-close-and-rate.md
+│   └── WF-07-escalation.md
+├── 05-non-functional-requirements/
+│   ├── README.md
+│   ├── performance.md
+│   ├── reliability.md
+│   ├── security.md
+│   ├── usability.md
+│   ├── deployment.md
+│   └── observability.md
+├── 06-acceptance/
+│   ├── README.md
+│   ├── traceability-matrix.md
+│   └── test-scenarios.md
+├── 07-architecture/
+│   ├── README.md
+│   ├── system-context.md
+│   ├── architecture-overview.md
+│   ├── data-model.md
+│   ├── api-design.md
+│   ├── security-design.md
+│   └── technical-decisions/
+└── 08-project/
+    ├── assumptions.md
+    ├── constraints.md
+    ├── milestones-and-timeline.md
+    ├── open-questions.md
+    └── glossary.md
+```
+
+## Phạm Vi Nghiệp Vụ Chính
+
+UniSupport có đúng **03 phân hệ nghiệp vụ**:
+
+| Mã | Phân hệ | Người dùng chính |
+| :--- | :--- | :--- |
+| **M01** | Student Portal | Sinh viên |
+| **M02** | Staff Operations | Nhân viên |
+| **M03** | Management Dashboard | Quản lý |
+
+Thông báo, xác thực, phân quyền, bảo mật file và Audit được triển khai như **các năng lực dùng chung** xuyên suốt ba phân hệ nghiệp vụ.
+
+## Quy Ước Tài Liệu
+
+- **Product, Domain và PRD** mô tả hành vi nghiệp vụ và không phụ thuộc vào công nghệ triển khai.
+- **Workflows** thể hiện luồng phối hợp giữa các chức năng và phân hệ bằng Mermaid.
+- **Yêu cầu phi chức năng** xác định các thuộc tính chất lượng áp dụng toàn hệ thống.
+- **Kiến trúc** mô tả giải pháp kỹ thuật phục vụ các yêu cầu đã xác định và không làm thay đổi quy tắc nghiệp vụ.
+- **Nghiệm thu và RTM** duy trì truy xuất giữa yêu cầu, workflow và kịch bản UAT.
+- **Tài liệu dự án** quản lý các giả định, ràng buộc, tiến độ và quyết định cấp dự án.

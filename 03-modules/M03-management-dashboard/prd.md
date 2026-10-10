@@ -2,234 +2,411 @@
 
 ## I. TỔNG QUAN PHÂN HỆ
 
-Phân hệ Quản lý cung cấp trung tâm điều hành cho Ban Quản lý và Quản trị viên hệ thống (Admin). Phân hệ bao gồm các nhóm chức năng chính: Bảng theo dõi chỉ số thời gian thực (Real-time Metrics), Giám sát tuân thủ SLA, Báo cáo phân tích xu hướng & chất lượng dịch vụ, Quản lý tài khoản người dùng & Phân quyền (RBAC), và Nhật ký hệ thống (Audit Logs).
+Phân hệ **Management Dashboard** cho phép người dùng Quản lý giám sát hoạt động hỗ trợ sinh viên, xem báo cáo và thực hiện các chức năng quản trị trong phạm vi quyền được cấp.
+
+- **Actor chính:** Quản lý (Management).
+- **Phạm vi quản lý:** Mỗi tài khoản Quản lý được cấu hình ở phạm vi **toàn trường** hoặc **một phòng ban cụ thể**. Mọi dữ liệu hiển thị và thao tác phải giới hạn theo phạm vi này.
+- **Phạm vi quyền:** Không phải mọi tài khoản Quản lý đều mặc định có toàn bộ chức năng quản trị; mỗi chức năng phải kiểm tra quyền tương ứng.
+- **Vai trò hệ thống:** UniSupport sử dụng ba nhóm người dùng chính: Sinh viên, Nhân viên và Quản lý.
+- **Tác động lên Ticket:** Việc xem Dashboard, báo cáo hoặc tra soát không làm thay đổi trạng thái Ticket. Quản lý chỉ tham gia thao tác xử lý Ticket khi được phân quyền theo ma trận vai trò/quyền dùng chung.
 
 ---
 
 ## II. CHI TIẾT CÁC CHỨC NĂNG (FUNCTIONAL REQUIREMENTS)
 
-### [FR-MNG-01] Quản lý đăng nhập & Xác thực phân quyền
+### [FR-MGT-00] Đăng nhập và truy cập Management Dashboard
 
 #### 1. Mô tả & Phạm vi
-Cho phép Trưởng phòng ban (Manager) và Quản trị hệ thống (Admin) đăng nhập vào Cổng Quản trị UniSupport, xác thực hai yếu tố (nếu bật) và phân luồng dữ liệu theo cấp quản lý.
+Cho phép người dùng Management đăng nhập UniSupport và truy cập các chức năng quản lý đúng với phạm vi quyền được cấp.
 
 #### 2. Actors & Điều kiện tiên quyết
-- **Actor:** Quản lý phòng ban (MANAGER), Quản trị viên hệ thống (ADMIN).
-- **Preconditions:** Tài khoản tồn tại trên CSDL, `status = ACTIVE`, thuộc nhóm vai trò `MANAGER` hoặc `ADMIN`.
+- **Actor:** Quản lý (Management).
+- **Preconditions:** Tài khoản tồn tại, đang hoạt động và có vai trò Management.
 
-#### 3. Scope & Phân quyền Dữ liệu (Data Isolation Rules)
-- **Cấp Quản lý Phòng ban (MANAGER):**
-  - Chỉ xem được Dashboard, Metric, Báo cáo và Danh sách Ticket thuộc `department_id` của mình phụ trách.
-  - Không có quyền truy cập vào menu Quản trị tài khoản toàn hệ thống.
-- **Cấp Quản trị Hệ thống (ADMIN):**
-  - Xem toàn bộ Dashboard, Báo cáo toàn trường (All departments).
-  - Toàn quyền tạo, sửa, vô hiệu hóa tài khoản và gán quyền.
+#### 3. Quy tắc Dữ liệu & Validation
+- **Tên đăng nhập:** bắt buộc, sử dụng tài khoản do nhà trường cấp.
+- **Mật khẩu:** bắt buộc.
+- Không chấp nhận dữ liệu chỉ chứa khoảng trắng.
+- Sau khi đăng nhập, hệ thống chỉ hiển thị chức năng và dữ liệu nằm trong quyền và phạm vi quản lý của tài khoản.
 
-#### 4. Giao diện & Hành vi UI/UX (UI States)
-- **Redirect Rule:**
-  - ADMIN đăng nhập thành công -> Điều hướng về `/admin/dashboard`.
-  - MANAGER đăng nhập thành công -> Điều hướng về `/manager/dashboard` (Mặc định filter theo phòng ban cá nhân).
+#### 4. Luồng xử lý chi tiết
+1. Người dùng truy cập UniSupport.
+2. Hệ thống yêu cầu đăng nhập nếu chưa có phiên hợp lệ.
+3. Người dùng nhập thông tin đăng nhập.
+4. Hệ thống xác thực tài khoản, trạng thái hoạt động, vai trò và phạm vi quyền.
+5. Nếu hợp lệ, hệ thống cho phép truy cập Management Dashboard.
+6. Dashboard và các chức năng quản trị được hiển thị theo đúng quyền của tài khoản.
 
-#### 5. Luồng xử lý chi tiết (Flow of Events)
-1. Quản lý truy cập `/admin/login`.
-2. Kiểm tra Token: Nếu hợp lệ và có role `MANAGER`/`ADMIN` -> Chuyển thẳng vào Dashboard.
-3. Nhập Username/Email và Password, nhấn Đăng nhập.
-4. Client validate form -> Gửi request đăng nhập.
-5. Server xác thực thông tin, cấp JWT Access Token chứa: `user_id`, `role`, `department_id`, `permissions_list`.
-6. Client lưu Token an toàn, chuyển hướng dựa theo role.
+#### 5. Luồng ngoại lệ
+- Thông tin đăng nhập không hợp lệ: từ chối truy cập.
+- Tài khoản bị khóa hoặc vô hiệu hóa: không tạo phiên đăng nhập.
+- Tài khoản không có vai trò Management: không cho truy cập Management Dashboard.
+- Phiên hết hạn: yêu cầu xác thực lại.
 
-#### 6. Luồng ngoại lệ & Mã lỗi (Alternative & Error Flows)
-- **Credential không đúng (401 Unauthorized):** Hiển thị Alert error: *"Tài khoản hoặc mật khẩu không chính xác."*
-- **Tài khoản Student/Staff cố truy cập (403 Forbidden):** Hiển thị Alert error: *"Bạn không có quyền truy cập vào Cổng Quản trị."*
-- **Tài khoản bị khóa (403 Forbidden):** Hiển thị Alert error: *"Tài khoản quản trị đã bị vô hiệu hóa."*
+#### 6. Quy tắc nghiệp vụ
+- Quản lý phạm vi toàn trường được xem dữ liệu toàn trường theo quyền chức năng được cấp.
+- Quản lý phạm vi phòng ban chỉ được xem dữ liệu thuộc phòng ban được cấu hình.
+- Quyền truy cập tuân thủ [Actors & Roles](../../01-product/actors-and-roles.md).
 
-#### 7. Tiêu chí nghiệm thu (Acceptance Criteria)
-- **AC-01:** Đăng nhập đúng tài khoản `MANAGER` -> Truy cập Dashboard chỉ hiển thị dữ liệu phòng ban phụ trách.
-- **AC-02:** Đăng nhập đúng tài khoản `ADMIN` -> Truy cập Dashboard hiển thị dữ liệu toàn trường và đầy đủ Menu Quản trị.
-- **AC-03:** Đăng nhập từ tài khoản không phải Admin/Manager -> Trả về lỗi 403, từ chối cấp token.
+#### 7. Tiêu chí nghiệm thu
+- **AC-00-01:** Tài khoản Management hợp lệ truy cập được Management Dashboard.
+- **AC-00-02:** Tài khoản không có vai trò Management không truy cập được phân hệ.
+- **AC-00-03:** Các chức năng quản trị không thuộc quyền của tài khoản không được phép sử dụng.
+- **AC-00-04:** Dữ liệu ngoài phạm vi quản lý không được hiển thị hoặc truy cập trực tiếp.
 
 ---
 
-### [FR-MNG-02] Nắm tổng quan tình hình & Giám sát tiến độ (Real-time Dashboard & SLA Supervision)
+### [FR-MGT-01] Quản lý tài khoản, vai trò và phạm vi quyền
 
 #### 1. Mô tả & Phạm vi
-Cung cấp màn hình Tổng quan chỉ số hoạt động (KPIs), giám sát phân bổ công việc theo Nhân viên/Phòng ban và cảnh báo các Ticket vi phạm hoặc nguy cơ vi phạm thời gian cam kết xử lý (SLA).
+Cho phép Management có quyền quản trị tạo và cập nhật tài khoản, khóa/mở khóa tài khoản, gán nhóm người dùng và xác định phạm vi phòng ban/quyền phù hợp.
 
 #### 2. Actors & Điều kiện tiên quyết
-- **Actor:** `MANAGER`, `ADMIN`.
-- **Preconditions:** Đã đăng nhập thành công.
+- **Actor:** Management có quyền quản lý tài khoản và phân quyền.
+- **Preconditions:** Người dùng đã đăng nhập và có quyền quản trị tài khoản.
 
-#### 3. Quy tắc Dữ liệu & Logic SLA (SLA Calculation Rules)
-- **Quy định Khung giờ SLA (SLA Target):** Mặc định thời hạn xử lý Ticket là 24 giờ làm việc kể từ khi tiếp nhận (không tính Thứ 7, Chủ nhật và ngày Lễ).
-- **Phân loại Trạng thái SLA:**
-  - **Trong hạn (On-Track):** Thời gian còn lại > 25% tổng thời hạn SLA.
-  - **Sắp quá hạn (Warning):** Thời gian còn lại <= 25% tổng thời hạn SLA (Ví dụ: Còn dưới 6 giờ).
-  - **Đã quá hạn (Breached/Overdue):** Thời gian xử lý thực tế đã vượt quá thời hạn SLA nhưng Ticket chưa ở trạng thái `RESOLVED`/`CLOSED`.
-- **Thống kê Chỉ số Cốt lõi (Summary Cards):**
-  - **Total Received:** Tổng số Ticket tiếp nhận trong kỳ chọn.
-  - **In-Progress:** Số Ticket đang xử lý.
-  - **SLA Warning:** Số Ticket đang ở ngưỡng sắp quá hạn.
-  - **SLA Breached:** Số Ticket đã quá hạn chưa xử lý xong.
-  - **Avg Resolution Time:** Thời gian xử lý trung bình (Giờ).
+#### 3. Quy tắc Dữ liệu & Validation
+- **Tên đăng nhập/Mã định danh:** bắt buộc và duy nhất trong hệ thống.
+- **Họ tên:** bắt buộc.
+- **Nhóm người dùng:** bắt buộc chọn một trong Sinh viên (`STUDENT`), Nhân viên (`STAFF`) hoặc Quản lý (`MANAGEMENT`).
+- **Trạng thái tài khoản:** đang hoạt động hoặc bị khóa.
+- **Mật khẩu khởi tạo:** bắt buộc khi tạo tài khoản mới; do người có quyền quản lý tài khoản thiết lập và bàn giao cho người dùng theo quy trình của nhà trường.
+- Tài khoản Nhân viên phải được gắn với **một phòng ban đang hoạt động**.
+- Tài khoản Quản lý phải được xác định phạm vi **toàn trường** hoặc **một phòng ban đang hoạt động**.
+- **Lý do khóa tài khoản:** bắt buộc, từ **10 đến 500 ký tự**.
+- Người thực hiện không được tự khóa chính tài khoản đang đăng nhập.
+- Hệ thống phải luôn còn ít nhất **một tài khoản Quản lý đang hoạt động có quyền quản lý tài khoản và phân quyền**.
+- Người quản trị không được cấp cho tài khoản khác quyền hoặc phạm vi quản lý vượt quá quyền/phạm vi mà chính mình được phép quản lý.
 
-#### 4. Cơ chế Cập nhật Dữ liệu (Data Refresh Specs)
-- **Mặc định:** Dashboard tự động làm mới dữ liệu (Auto-refresh) sau mỗi 60 giây hoặc cung cấp nút Làm mới dữ liệu (Refresh) thủ công.
-- **Tối ưu Hiệu năng Query:** Server không query trực tiếp full CSDL cho mỗi lần render. Các chỉ số Tổng quan phải được tính toán qua Aggregation Query hoặc Cached (Redis Cache duration: 30–60s).
+#### 4. Luồng xử lý chi tiết
 
-#### 5. Luồng xử lý chi tiết (Flow of Events)
-1. Quản lý mở trang Dashboard (`/admin/dashboard`).
-2. Mặc định hệ thống tải dữ liệu theo Bộ lọc thời gian: 7 ngày gần nhất.
-3. Hiển thị 5 Thẻ chỉ số tổng quan (Summary Cards).
-4. Hiển thị Bảng phân bổ workload: Số lượng Ticket đang gán cho từng Nhân viên (Assignee) và Trạng thái tương ứng.
-5. Hiển thị Danh sách Cảnh báo SLA: Liệt kê các Ticket ở trạng thái `Warning` và `Breached` lên trên cùng.
-6. Quản lý có thể thay đổi Bộ lọc thời gian (Hôm nay, 7 ngày, 30 ngày, Tùy chỉnh khoảng ngày).
-7. Client gửi request fetch lại data theo khoảng thời gian đã chọn.
+**Luồng A — Tạo tài khoản**
+1. Management mở chức năng **Quản lý tài khoản**.
+2. Hệ thống hiển thị danh sách tài khoản trong phạm vi được phép quản trị.
+3. Người dùng chọn **Tạo tài khoản**.
+4. Người dùng nhập thông tin bắt buộc, thiết lập mật khẩu khởi tạo, chọn nhóm người dùng và cấu hình phòng ban/phạm vi nếu cần.
+5. Hệ thống kiểm tra dữ liệu, tính duy nhất, phạm vi được phép cấp và quyền thao tác.
+6. Hệ thống tạo tài khoản ở trạng thái hoạt động.
+7. Hệ thống ghi nhận thao tác vào nhật ký tra soát.
 
-#### 6. Luồng ngoại lệ & Mã lỗi (Alternative & Error Flows)
-- **Chọn khoảng thời gian không hợp lệ (400 Bad Request):** Ví dụ Ngày bắt đầu > Ngày kết thúc -> Hiển thị lỗi ngay trên Date Picker: *"Khoảng thời gian không hợp lệ."*
+**Luồng B — Cập nhật vai trò/phạm vi**
+1. Management chọn một tài khoản được phép quản trị.
+2. Hệ thống hiển thị thông tin hiện tại.
+3. Người dùng thay đổi nhóm người dùng, phòng ban hoặc phạm vi quyền.
+4. Hệ thống kiểm tra cấu hình mới, bảo đảm người thực hiện không cấp quyền vượt quá phạm vi của mình và thao tác không làm mất toàn bộ tài khoản Quản lý có quyền quản lý tài khoản/phân quyền.
+5. Nếu hợp lệ, hệ thống lưu thay đổi và áp dụng phạm vi quyền mới.
+6. Hệ thống ghi nhận giá trị trước/sau và người thực hiện vào nhật ký tra soát.
 
-#### 7. Tiêu chí nghiệm thu (Acceptance Criteria)
-- **AC-01:** Số liệu trên Thẻ chỉ số phản ánh chính xác trạng thái thực tế dưới Database.
-- **AC-02:** Click vào thẻ `SLA Breached` -> Chuyển hướng đến danh sách chi tiết các Ticket đã quá hạn.
-- **AC-03:** Nhân viên A được gán 5 Ticket -> Bảng phân bổ workload hiển thị đúng 5 Ticket dưới tên Nhân viên A.
-- **AC-04:** Bấm nút Refresh -> Dữ liệu cập nhật mới nhất trong dưới 1 giây.
+**Luồng C — Khóa hoặc mở khóa**
+1. Management chọn tài khoản.
+2. Người dùng chọn khóa hoặc mở khóa và nhập lý do.
+3. Hệ thống kiểm tra quyền, điều kiện thao tác và bảo đảm việc khóa không làm mất tài khoản Quản lý cuối cùng có quyền quản lý tài khoản/phân quyền.
+4. Khi khóa tài khoản Nhân viên, hệ thống kiểm tra các Ticket chưa hoàn tất mà tài khoản đang là người phụ trách chính. Nếu có Ticket ở `NEW`, `IN_PROGRESS` hoặc `WAITING_STUDENT`, hệ thống gỡ người phụ trách hiện tại và đưa các Ticket đó về hàng chờ chưa có người phụ trách của phòng ban đang xử lý để được phân công lại.
+5. Hệ thống khóa tài khoản ngay sau khi hoàn tất việc cập nhật trách nhiệm xử lý Ticket.
+6. Hệ thống ghi nhận lý do khóa, các Ticket bị ảnh hưởng và người thực hiện vào nhật ký tra soát.
+7. Với thao tác mở khóa, hệ thống cập nhật tài khoản về trạng thái hoạt động nhưng không tự động gán lại các Ticket đã được đưa về hàng chờ trước đó.
+
+#### 5. Luồng ngoại lệ
+- Tên đăng nhập/Mã định danh đã tồn tại: từ chối tạo mới.
+- Tài khoản Nhân viên không có phòng ban hợp lệ: từ chối lưu.
+- Người dùng cố tự khóa tài khoản đang đăng nhập: từ chối.
+- Thao tác khóa/hạ quyền sẽ làm hệ thống không còn tài khoản Quản lý đang hoạt động có quyền quản lý tài khoản/phân quyền: từ chối.
+- Người thực hiện cố cấp quyền hoặc phạm vi vượt quá quyền/phạm vi của chính mình: từ chối.
+- Người dùng không có quyền quản trị tài khoản: từ chối thao tác.
+
+#### 6. Quy tắc nghiệp vụ
+- Tuân thủ ma trận quyền tại [Actors & Roles](../../01-product/actors-and-roles.md).
+- Thay đổi quyền/phạm vi không làm thay đổi lịch sử các Ticket trước đó.
+- Khóa tài khoản Nhân viên có hiệu lực ngay sau khi các Ticket đang được gán cho tài khoản đó được gỡ người phụ trách và đưa về hàng chờ của phòng ban hiện tại.
+- Việc khóa tài khoản không làm thay đổi phòng ban hoặc trạng thái nghiệp vụ của Ticket.
+- Hệ thống luôn phải còn ít nhất một tài khoản Quản lý đang hoạt động có quyền quản lý tài khoản và phân quyền.
+- Người quản trị chỉ được cấp quyền trong giới hạn quyền và phạm vi quản lý của chính mình.
+- Tạo, thay đổi quyền, khóa và mở khóa tài khoản đều phải được ghi nhận để tra soát.
+
+#### 7. Tiêu chí nghiệm thu
+- **AC-01-01:** Tài khoản hợp lệ được tạo với đúng nhóm người dùng, phạm vi và mật khẩu khởi tạo.
+- **AC-01-02:** Không thể tạo hai tài khoản có cùng Tên đăng nhập/Mã định danh.
+- **AC-01-03:** Tài khoản Nhân viên chỉ được lưu khi được gắn với một phòng ban đang hoạt động.
+- **AC-01-04:** Khóa Nhân viên đang phụ trách Ticket hợp lệ sẽ gỡ người phụ trách và đưa các Ticket liên quan về hàng chờ của phòng ban trước khi tài khoản bị khóa.
+- **AC-01-05:** Không thể khóa/hạ quyền nếu thao tác làm hệ thống mất tài khoản Quản lý cuối cùng có quyền quản lý tài khoản và phân quyền.
+- **AC-01-06:** Người quản trị không thể cấp quyền hoặc phạm vi vượt quá quyền/phạm vi của chính mình.
+- **AC-01-07:** Mọi thay đổi vai trò/phạm vi và trạng thái tài khoản được ghi nhận trong nhật ký tra soát.
 
 ---
 
-### [FR-MNG-03] Xem báo cáo thống kê & Xuất dữ liệu (Analytics & Data Export)
+### [FR-MGT-02] Quản lý phòng ban và Nhóm vấn đề
 
 #### 1. Mô tả & Phạm vi
-Cho phép Quản lý xem các biểu đồ phân tích chuyên sâu về xu hướng nhóm vấn đề, hiệu năng xử lý của phòng ban/nhân viên, phân bố điểm đánh giá mức độ hài lòng (CSAT) và xuất báo cáo ra file Excel/CSV.
+Cho phép Management có quyền cấu hình quản lý danh sách phòng ban và **Nhóm vấn đề (Category)** dùng trong quá trình tạo, phân loại và chuyển xử lý Ticket.
 
 #### 2. Actors & Điều kiện tiên quyết
-- **Actor:** `MANAGER`, `ADMIN`.
-- **Preconditions:** Đã đăng nhập thành công.
+- **Actor:** Management có quyền quản lý cấu hình nghiệp vụ.
+- **Preconditions:** Người dùng đã đăng nhập và có quyền quản lý phòng ban/Nhóm vấn đề.
 
-#### 3. Báo cáo Chi tiết & Loại Biểu đồ (Report Specifications)
-- **Báo cáo Xu hướng Yêu cầu (Volume Trend):** Biểu đồ đường (Line Chart) thể hiện biến động số lượng Ticket theo ngày/tuần/tháng, phân loại theo Category.
-- **Báo cáo Thời gian Xử lý (Performance Report):** Biểu đồ cột (Bar Chart) so sánh Thời gian xử lý trung bình giữa các Phòng ban hoặc giữa các Nhân viên trong cùng phòng.
-- **Báo cáo Đánh giá Hài lòng (CSAT Report):**
-  - Biểu đồ tròn (Pie Chart) tỷ lệ % đánh giá 1 sao đến 5 sao.
-  - Điểm CSAT trung bình = (Tổng số sao / (Tổng số lượt đánh giá * 5)) * 100%.
-  - Bảng danh sách phản hồi chi tiết (Gồm: Mã Ticket, Tên Sinh viên, Số sao, Nhận xét, Tên Nhân viên phụ trách).
+#### 3. Quy tắc Dữ liệu & Validation
+- **Phòng ban:** có tên duy nhất trong danh sách đang hoạt động.
+- **Nhóm vấn đề (Category):**
+  - Có tên hiển thị và trạng thái hoạt động.
+  - Tên Category phải **duy nhất trong toàn bộ danh mục**, bao gồm cả Category đang hoạt động và đã vô hiệu hóa.
+  - Nếu cần sử dụng lại tên của Category đã vô hiệu hóa, phải kích hoạt lại Category cũ thay vì tạo Category mới cùng tên.
+  - Mỗi Category đang hoạt động phải được cấu hình với **một phòng ban tiếp nhận mặc định**.
+  - Category đang hoạt động mới được hiển thị cho Student khi tạo Ticket và cho Staff khi phân loại/Transfer.
+- Không xóa dữ liệu lịch sử của phòng ban hoặc Category đã từng được Ticket sử dụng; sử dụng trạng thái hoạt động/không hoạt động.
+- Thay đổi ánh xạ Category → phòng ban chỉ áp dụng cho Ticket được tạo hoặc Transfer sau thời điểm thay đổi; Ticket hiện có không tự động chuyển phòng ban.
+- Không cho vô hiệu hóa phòng ban nếu vẫn còn Ticket ở `NEW`, `IN_PROGRESS`, `WAITING_STUDENT` hoặc Ticket `RESOLVED` vẫn còn trong thời hạn 03 ngày làm việc để sinh viên phản hồi/mở lại thuộc phòng ban đó.
 
-#### 4. Quy tắc Xuất Dữ liệu (Export Rules)
-- **Định dạng hỗ trợ:** Microsoft Excel (`.xlsx`), CSV (`.csv`).
-- **Nội dung file xuất:** Chứa đầy đủ các bản ghi theo đúng bộ lọc đang chọn trên giao diện.
-- **Giới hạn số lượng (Pagination / Export Limit):** Tối đa 10.000 bản ghi / 1 lần xuất. Nếu vượt quá 10.000 bản ghi, hệ thống yêu cầu người dùng hẹp khoảng thời gian lọc.
-- **Đặt tên File tự động:** `[Ma_Bao_Cao]_[Tu_Ngay]_[Den_Ngay].[xlsx]` (Ví dụ: `CSAT_Report_20261001_20261009.xlsx`).
+#### 4. Luồng xử lý chi tiết
 
-#### 5. Luồng xử lý chi tiết (Flow of Events)
-1. Quản lý truy cập menu Báo cáo & Thống kê (`/admin/reports`).
-2. Chọn Tab báo cáo cần xem (Xu hướng / Hiệu năng / CSAT).
-3. Chọn Bộ lọc: Khoảng thời gian, Phòng ban, Nhóm vấn đề. Bấm Xem báo cáo.
-4. Client gửi request fetch data -> Server trả về data dạng JSON -> Client render Biểu đồ và Bảng số liệu.
-5. Quản lý bấm nút Xuất Báo Cáo (Export) -> Chọn định dạng Excel hoặc CSV.
-6. Client gọi API Export -> Server sinh file async/stream -> Trả về link download file.
-7. Trình duyệt tự động tải file về máy người dùng.
+**Luồng A — Quản lý phòng ban**
+1. Management mở **Phòng ban & Nhóm vấn đề**.
+2. Hệ thống hiển thị danh sách phòng ban và trạng thái hiện tại.
+3. Người dùng tạo mới, chỉnh sửa tên hoặc thay đổi trạng thái hoạt động.
+4. Hệ thống kiểm tra tính duy nhất và Ticket đang hoạt động liên quan.
+5. Nếu hợp lệ, hệ thống lưu thay đổi và ghi nhận lịch sử.
 
-#### 6. Luồng ngoại lệ & Mã lỗi (Alternative & Error Flows)
-- **Không có dữ liệu trong kỳ báo cáo (200 OK Data Empty):** Biểu đồ hiển thị trạng thái Empty State: *"Không có dữ liệu trong khoảng thời gian đã chọn"*. Nút Export bị vô hiệu hóa.
-- **Xuất vượt quá 10.000 record (400 Bad Request):** Alert error: *"Dữ liệu xuất vượt quá 10.000 dòng. Vui lòng thu hẹp khoảng thời gian lọc."*
+**Luồng B — Quản lý Nhóm vấn đề**
+1. Management mở danh sách Nhóm vấn đề.
+2. Người dùng tạo mới hoặc chọn một Category hiện có.
+3. Người dùng nhập/chỉnh sửa tên Category, trạng thái và phòng ban tiếp nhận mặc định.
+4. Hệ thống kiểm tra Category và phòng ban được chọn đang hợp lệ.
+5. Nếu hợp lệ, hệ thống lưu cấu hình.
+6. Hệ thống ghi nhận Category/phòng ban trước và sau vào nhật ký tra soát.
 
-#### 7. Tiêu chí nghiệm thu (Acceptance Criteria)
-- **AC-01:** Điểm CSAT trung bình và tỷ lệ % phân bố sao tính toán chính xác theo công thức quy định.
-- **AC-02:** Xuất file Excel mở ra đầy đủ các cột dữ liệu, không bị lỗi font Tiếng Việt, định dạng ngày tháng chuẩn `YYYY-MM-DD HH:mm:ss`.
-- **AC-03:** Lọc báo cáo theo Phòng Đào Tạo -> Toàn bộ số liệu và danh sách phản hồi chỉ liên quan đến Phòng Đào Tạo.
+#### 5. Luồng ngoại lệ
+- Tên phòng ban hoặc Category vi phạm quy tắc duy nhất: từ chối lưu.
+- Category đang hoạt động nhưng không có phòng ban tiếp nhận hợp lệ: từ chối lưu.
+- Vô hiệu hóa phòng ban còn Ticket cần tiếp tục xử lý hoặc có thể được mở lại trong thời hạn phản hồi: từ chối thao tác.
+- Phòng ban được gán cho Category đã không còn hoạt động: không cho kích hoạt Category.
+- Người dùng không có quyền cấu hình: từ chối thao tác.
+
+#### 6. Quy tắc nghiệp vụ
+- Cấu hình Category → phòng ban là cơ sở để M01 xác định nơi tiếp nhận Ticket mới.
+- M02 sử dụng cùng cấu hình này khi Staff thay đổi Category hoặc Transfer.
+- Thay đổi cấu hình không được tự động sửa Category/phòng ban của Ticket đã tồn tại.
+- Mọi thay đổi cấu hình phải được ghi nhận trong nhật ký tra soát.
+
+#### 7. Tiêu chí nghiệm thu
+- **AC-02-01:** Category hoạt động luôn có đúng một phòng ban tiếp nhận mặc định.
+- **AC-02-02:** M01 chỉ hiển thị Category đang hoạt động khi sinh viên tạo Ticket.
+- **AC-02-03:** Thay đổi ánh xạ Nhóm vấn đề → phòng ban không tự động thay đổi Ticket đã tồn tại.
+- **AC-02-04:** Không thể vô hiệu hóa phòng ban nếu còn Ticket ở `NEW`, `IN_PROGRESS`, `WAITING_STUDENT` hoặc `RESOLVED` vẫn còn thời hạn phản hồi/mở lại.
+- **AC-02-05:** M02 sử dụng cấu hình mới cho các thao tác phân loại/chuyển xử lý phát sinh sau khi cấu hình được cập nhật.
+- **AC-02-06:** Thay đổi phòng ban/Category được ghi nhận để tra soát.
 
 ---
 
-### [FR-MNG-04] Quản trị người dùng & Phân quyền (User Management & RBAC)
+### [FR-MGT-03] Tra soát lịch sử thao tác
 
 #### 1. Mô tả & Phạm vi
-Cung cấp công cụ quản lý toàn bộ tài khoản người dùng trong hệ thống (Tạo mới, Cập nhật thông tin, Khóa/Mở khóa tài khoản, Đổi mật khẩu) và phân quyền chi tiết theo vai trò.
+Cho phép Management có quyền tra soát xem các thao tác quan trọng đã phát sinh trên Ticket và các chức năng quản trị hệ thống.
 
 #### 2. Actors & Điều kiện tiên quyết
-- **Actor:** CHỈ ADMIN (Quản trị viên hệ thống).
-- **Preconditions:** Đăng nhập thành công với vai trò `ADMIN`.
+- **Actor:** Management có quyền xem nhật ký tra soát.
+- **Preconditions:** Người dùng đã đăng nhập và có quyền tra soát trong phạm vi dữ liệu tương ứng.
 
-#### 3. Ma trận Phân quyền Vai trò (RBAC Matrix)
+#### 3. Quy tắc Dữ liệu & Validation
+- Có thể tìm/lọc tối thiểu theo: khoảng thời gian, người thực hiện, Mã Ticket nếu sự kiện liên quan Ticket và loại sự kiện.
+- Mỗi bản ghi phải xác định tối thiểu: thời điểm, người/hệ thống thực hiện, loại sự kiện và nội dung thay đổi.
+- Với sự kiện thay đổi dữ liệu, lịch sử phải lưu được giá trị trước và sau khi phù hợp.
+- Nhật ký tra soát không được sửa hoặc xóa thông qua chức năng thông thường của ứng dụng, kể cả bởi tài khoản Management.
 
-| Chức năng / Quyền | STUDENT | STAFF | MANAGER | ADMIN |
-| :--- | :---: | :---: | :---: | :---: |
-| **Tạo Ticket cá nhân** | X | — | — | — |
-| **Xem / Đánh giá Ticket cá nhân** | X | — | — | — |
-| **Tiếp nhận / Xử lý Ticket phòng ban** | — | X | X | X |
-| **Chuyển phòng ban / Yêu cầu bổ sung** | — | X | X | X |
-| **Xem Dashboard & Báo cáo phòng ban** | — | — | X | X |
-| **Xem Báo cáo toàn trường** | — | — | — | X |
-| **Quản lý Tài khoản & Phân quyền** | — | — | — | X |
-| **Xem Audit Log hệ thống** | — | — | — | X |
+#### 4. Luồng xử lý chi tiết
+1. Management mở **Nhật ký tra soát**.
+2. Hệ thống hiển thị các bản ghi trong phạm vi quyền, mới nhất trước.
+3. Người dùng nhập điều kiện tìm kiếm/lọc.
+4. Hệ thống trả về các bản ghi phù hợp.
+5. Người dùng mở một bản ghi để xem nội dung chi tiết của thay đổi.
 
-#### 4. Quy tắc Dữ liệu & Validation Tài khoản (Data Contracts)
-- **Tạo Tài khoản mới (Create User):**
-  - **Username / Student ID / Staff ID:** Bắt buộc, duy nhất (Unique), 6-20 ký tự, không chứa ký tự đặc biệt.
-  - **Email công vụ:** Bắt buộc, duy nhất, đúng định dạng Email (`@aurora.edu.vn`).
-  - **Full Name:** Bắt buộc, 2-50 ký tự.
-  - **Role:** Dropdown bắt buộc chọn 1 (`STUDENT`, `STAFF`, `MANAGER`, `ADMIN`).
-  - **Department:** Bắt buộc chọn nếu Role là `STAFF` hoặc `MANAGER`.
-  - **Password:** Độ dài tối thiểu 8 ký tự, gồm ít nhất 1 chữ hoa, 1 chữ thường, 1 số.
-- **Trạng thái Tài khoản (Account Status):** `ACTIVE` (Hoạt động), `INACTIVE` (Khóa/Vô hiệu hóa).
-- **Quy tắc vô hiệu hóa (Revoke Session):** Khi Admin chuyển trạng thái tài khoản sang `INACTIVE`, hệ thống phải ngay lập tức hủy toàn bộ Active Tokens/Sessions của tài khoản đó. Người dùng bị khóa sẽ bị đẩy văng ra trang Login nếu đang thao tác.
+Các sự kiện tối thiểu cần tra soát gồm:
+- Thay đổi trạng thái Ticket.
+- Phân công/phân công lại.
+- Thay đổi mức độ ưu tiên/thời hạn xử lý.
+- Chuyển xử lý và chuyển cấp xử lý.
+- Ghi nhận kết quả, mở lại và đóng Ticket.
+- Tạo/thay đổi/khóa tài khoản và quyền.
+- Thay đổi phòng ban/Nhóm vấn đề và cấu hình liên quan.
+- Thay đổi chính sách lưu trữ.
 
-#### 5. Luồng xử lý chi tiết (Flow of Events)
-1. Admin truy cập trang Quản lý Tài khoản (`/admin/users`).
-2. Hệ thống hiển thị Bảng danh sách người dùng (Phân trang 15 user/trang, có ô Tìm kiếm theo Name/Email/Code, Filter theo Role/Department).
-3. **Thao tác Tạo mới:**
-   - Admin bấm **+ Tạo tài khoản mới**.
-   - Hiển thị Modal nhập thông tin -> Điền dữ liệu -> Bấm Lưu.
-   - Server validate trùng lặp Username/Email -> Tạo record -> Trả về HTTP 201 Created.
-4. **Thao tác Khóa tài khoản:**
-   - Admin chọn 1 user -> Bấm Vô hiệu hóa.
-   - Hiển thị Modal xác nhận: *"Bạn có chắc chắn muốn khóa tài khoản [Tên_User]?"*
-   - Admin bấm Xác nhận khóa.
-   - Server cập nhật `status = INACTIVE`, xóa Redis Session/Token của user đó -> Trả về HTTP 200 OK.
+#### 5. Luồng ngoại lệ
+- Không có bản ghi phù hợp: hiển thị danh sách trống.
+- Bản ghi ngoài phạm vi quản lý: không hiển thị.
+- Người dùng không có quyền tra soát: từ chối truy cập.
 
-#### 6. Luồng ngoại lệ & Mã lỗi (Alternative & Error Flows)
-- **Trùng Username/Email (409 Conflict):** Hiển thị lỗi dưới field tương ứng: *"Username hoặc Email này đã tồn tại trên hệ thống."*
-- **Self-Deactivation Prevention (400 Bad Request):** Admin không được phép tự khóa tài khoản chính mình đang đăng nhập. Nếu bấm khóa chính mình -> Alert error: *"Bạn không thể tự vô hiệu hóa tài khoản của chính mình."*
+#### 6. Quy tắc nghiệp vụ
+- Tuân thủ `BR-AUD-01` và `BR-AUD-02`.
+- Nhật ký tra soát là dữ liệu chỉ đọc trong ứng dụng, kể cả đối với tài khoản Management.
+- Việc xử lý nhật ký đã hết thời hạn lưu trữ chỉ được thực hiện theo chính sách lưu trữ được phê duyệt, không phải bằng thao tác sửa/xóa nhật ký thông thường.
+- Việc tra cứu nhật ký không làm thay đổi Ticket hoặc dữ liệu nghiệp vụ được tra soát.
 
-#### 7. Tiêu chí nghiệm thu (Acceptance Criteria)
-- **AC-01:** Tạo thành công user role `STAFF` gán cho Phòng Tài chính -> User mới đăng nhập đúng cổng Staff và thấy Queue của Phòng Tài chính.
-- **AC-02:** Khóa tài khoản Staff B đang online -> Trong vòng 5 giây, Staff B bị logout ra màn hình Đăng nhập và không thể đăng nhập lại.
-- **AC-03:** Nhập Email trùng với user đã có -> Báo lỗi validation 409 rõ ràng, không lưu DB.
-- **AC-04:** Tìm kiếm tên "Nguyễn Văn A" -> Bảng kết quả trả về đúng các user có chứa chuỗi tìm kiếm.
+#### 7. Tiêu chí nghiệm thu
+- **AC-03-01:** Các sự kiện quan trọng bắt buộc có bản ghi tra soát tương ứng.
+- **AC-03-02:** Có thể lọc nhật ký theo khoảng thời gian, tác nhân, Mã Ticket và loại sự kiện.
+- **AC-03-03:** Không tài khoản nào, kể cả Management, có thể sửa/xóa bản ghi tra soát qua chức năng thông thường của ứng dụng.
+- **AC-03-04:** Management chỉ xem nhật ký thuộc phạm vi quyền được cấp.
 
 ---
 
-### [FR-MNG-05] Ghi nhận Nhật ký Hệ thống (Audit Trail / Activity Log)
+### [FR-MGT-04] Quản lý chính sách lưu trữ dữ liệu
 
 #### 1. Mô tả & Phạm vi
-Tự động ghi nhận lại toàn bộ các thao tác quản trị quan trọng và sự thay đổi dữ liệu cấu hình hệ thống để phục vụ công tác tra soát, an ninh bảo mật.
+Cho phép Management có quyền cấu hình thời hạn lưu trữ cơ bản cho Ticket đã đóng, file đính kèm và nhật ký tra soát.
 
 #### 2. Actors & Điều kiện tiên quyết
-- **Actor:** System / ADMIN.
+- **Actor:** Management có quyền quản lý chính sách lưu trữ.
+- **Preconditions:** Người dùng đã đăng nhập và có quyền cấu hình chính sách.
 
-#### 3. Quy tắc Dữ liệu Audit Log (Audit Specs)
-- **CÁC THAO TÁC BẮT BUỘC GHI LOG:**
-  - `USER_CREATE`: Tạo tài khoản mới.
-  - `USER_UPDATE_ROLE`: Thay đổi quyền/vai trò user.
-  - `USER_DISABLE`: Khóa tài khoản.
-  - `TICKET_TRANSFER`: Chuyển phòng ban Ticket (Ghi vết người chuyển, phòng ban gốc, phòng ban đích).
-  - `TICKET_DELETE` / `FORCE_CLOSE`: Quản lý can thiệp đóng hoặc xóa Ticket.
-- **Cấu trúc 1 Record Audit Log:** `log_id`, `actor_id` (Người thực hiện), `actor_ip`, `action_type`, `target_object` (User ID hoặc Ticket ID), `description` (Chi tiết thay đổi Old Value -> New Value), `created_at`.
-- **Ràng buộc Toàn vẹn:** Log chỉ được phép ghi mới (Append-Only) và ĐỌC (Read-Only). Tuyệt đối không cho phép bất kỳ ai (kể cả Admin) sửa hoặc xóa các record Audit Log trên giao diện.
+#### 3. Quy tắc Dữ liệu & Validation
+- Chính sách được cấu hình riêng cho: **Ticket đã đóng**, **file đính kèm** và **nhật ký tra soát**.
+- Thời hạn lưu trữ được nhập theo **số tháng nguyên dương**.
+- Giá trị hợp lệ: từ **01 đến 120 tháng**.
+- Thời hạn lưu trữ của Ticket được tính từ thời điểm Ticket chuyển sang `CLOSED`.
+- Thời hạn lưu trữ của file đính kèm gắn với Ticket được tính theo thời điểm đóng của Ticket tương ứng.
+- Thời hạn lưu trữ của nhật ký tra soát được tính từ thời điểm bản ghi nhật ký được tạo.
+- Ticket chưa ở `CLOSED` không được xác định là dữ liệu Ticket đã đến hạn lưu trữ.
+- Thay đổi chính sách không được làm mất lịch sử cấu hình trước đó.
 
-#### 4. Tiêu chí nghiệm thu (Acceptance Criteria)
-- **AC-01:** Khi Admin đổi role của User X từ `STAFF` sang `MANAGER` -> Bảng Audit Log lập tức xuất hiện 01 record ghi nhận đúng IP, thời gian, người thực hiện và nội dung thay đổi.
-- **AC-02:** Giao diện xem Audit Log không có nút Sửa hoặc Xóa.
+#### 4. Luồng xử lý chi tiết
+1. Management mở **Chính sách lưu trữ**.
+2. Hệ thống hiển thị thời hạn hiện tại của từng loại dữ liệu.
+3. Người dùng thay đổi thời hạn cần thiết.
+4. Hệ thống kiểm tra giá trị và quyền thực hiện.
+5. Nếu hợp lệ, hệ thống lưu chính sách mới và ghi nhận thời điểm có hiệu lực.
+6. Hệ thống ghi nhận giá trị trước/sau và người thay đổi vào nhật ký tra soát.
+7. Hệ thống sử dụng chính sách hiện hành để xác định và đánh dấu dữ liệu đã đạt thời hạn lưu trữ phục vụ tra soát/xử lý theo quy trình của nhà trường.
+
+#### 5. Luồng ngoại lệ
+- Giá trị không phải số tháng nguyên dương hoặc ngoài khoảng 01–120 tháng: từ chối lưu.
+- Người dùng không có quyền cấu hình: từ chối thao tác.
+
+#### 6. Quy tắc nghiệp vụ
+- Chính sách lưu trữ chỉ áp dụng cho dữ liệu đáp ứng điều kiện của loại dữ liệu tương ứng.
+- FR-MGT-04 chỉ quản lý thời hạn và xác định dữ liệu đã đến hạn; **không tự động xóa, ẩn danh hoặc di chuyển dữ liệu**.
+- Thay đổi thời hạn không được làm thay đổi nội dung lịch sử nghiệp vụ của Ticket đang hoạt động.
+- Việc thay đổi chính sách phải được ghi nhận để tra soát.
+
+#### 7. Tiêu chí nghiệm thu
+- **AC-04-01:** Chỉ chấp nhận giá trị thời hạn từ 01 đến 120 tháng.
+- **AC-04-02:** Ticket chưa `CLOSED` không bị xác định là dữ liệu Ticket đã đến hạn lưu trữ.
+- **AC-04-03:** Ticket/file được tính thời hạn từ thời điểm Ticket `CLOSED`; nhật ký được tính từ thời điểm bản ghi được tạo.
+- **AC-04-04:** Dữ liệu đến hạn chỉ được đánh dấu để xử lý theo quy trình được phê duyệt; hệ thống không tự động xóa/ẩn danh/di chuyển dữ liệu.
+- **AC-04-05:** Mọi thay đổi chính sách có lịch sử trước/sau để tra soát.
 
 ---
 
-## III. BẢNG MÃ LỖI CHUẨN DÙNG CHUNG PHÂN HỆ MANAGEMENT (SYSTEM ERROR CODES)
+### [FR-MGT-05] Dashboard giám sát hoạt động hỗ trợ
 
-| HTTP Status | Error Code | Message hiển thị người dùng | Kịch bản áp dụng |
-| :--- | :--- | :--- | :--- |
-| **400** | `INVALID_DATE_RANGE` | *"Khoảng thời gian lọc không hợp lệ."* | Ngày bắt đầu lớn hơn ngày kết thúc. |
-| **400** | `EXPORT_LIMIT_EXCEEDED` | *"Dữ liệu xuất vượt quá 10.000 dòng. Vui lòng thu hẹp bộ lọc."* | Xuất file quá giới hạn số dòng. |
-| **400** | `CANNOT_DISABLE_SELF` | *"Bạn không thể tự vô hiệu hóa tài khoản của chính mình."* | Admin tự khóa chính mình. |
-| **401** | `UNAUTHORIZED` | *"Phiên làm việc hết hạn. Vui lòng đăng nhập lại."* | Token hết hạn. |
-| **403** | `FORBIDDEN_ADMIN_ONLY` | *"Chức năng này chỉ dành cho Quản trị viên hệ thống (Admin)."* | Manager cố truy cập chức năng Quản lý User. |
-| **409** | `USERNAME_EXISTS` | *"Tên đăng nhập / Mã định danh đã tồn tại trên hệ thống."* | Tạo trùng Username/Student ID. |
-| **409** | `EMAIL_EXISTS` | *"Địa chỉ Email này đã được đăng ký cho tài khoản khác."* | Tạo trùng Email. |
-| **500** | `INTERNAL_SERVER_ERROR` | *"Hệ thống gặp sự cố kỹ thuật. Vui lòng thử lại sau."* | Lỗi Server/Database unhandled. |
+#### 1. Mô tả & Phạm vi
+Cung cấp màn hình tổng quan để Management theo dõi tình trạng xử lý hiện tại và khối lượng công việc trong phạm vi quản lý được cấp.
+
+#### 2. Actors & Điều kiện tiên quyết
+- **Actor:** Management có quyền xem Dashboard.
+- **Preconditions:** Người dùng đã đăng nhập và có phạm vi dữ liệu quản lý hợp lệ.
+
+#### 3. Quy tắc Dữ liệu & Validation
+Dashboard hiển thị tối thiểu:
+- **Ticket mới:** số Ticket hiện ở `NEW`.
+- **Đang xử lý:** số Ticket hiện ở `IN_PROGRESS`.
+- **Chờ sinh viên:** số Ticket hiện ở `WAITING_STUDENT`.
+- **Sắp quá hạn:** số Ticket đạt ngưỡng từ 80% đến dưới 100% thời gian xử lý mục tiêu.
+- **Quá hạn:** số Ticket đạt từ 100% thời gian xử lý mục tiêu trở lên và chưa `RESOLVED`/`CLOSED`.
+- **Khối lượng theo phòng ban:** số Ticket đang hoạt động (`NEW`, `IN_PROGRESS`, `WAITING_STUDENT`) của từng phòng ban.
+- **Khối lượng theo nhân viên:** số Ticket đang hoạt động mà nhân viên hiện là người phụ trách chính.
+
+Bộ lọc hỗ trợ tối thiểu:
+- Phòng ban.
+- Nhóm vấn đề.
+- Trạng thái.
+
+#### 4. Luồng xử lý chi tiết
+1. Management mở Dashboard.
+2. Hệ thống xác định phạm vi dữ liệu được phép xem.
+3. Hệ thống tính các chỉ số hiện tại theo quy tắc Ticket và thời hạn dùng chung.
+4. Hệ thống hiển thị các chỉ số và số liệu khối lượng công việc.
+5. Người dùng áp dụng một hoặc nhiều bộ lọc.
+6. Hệ thống tính lại số liệu trong phạm vi điều kiện đã chọn.
+7. Người dùng có thể mở một chỉ số để xem danh sách Ticket cấu thành chỉ số đó nếu có quyền xem Ticket.
+
+#### 5. Luồng ngoại lệ
+- Không có dữ liệu: hiển thị giá trị 0 và trạng thái danh sách trống.
+- Ticket ngoài phạm vi quản lý: không được tính vào số liệu.
+- Người dùng không có quyền xem chi tiết Ticket: chỉ hiển thị số liệu tổng hợp được phép.
+
+#### 6. Quy tắc nghiệp vụ
+- Chỉ số sắp quá hạn/quá hạn tuân thủ `BR-DUE-01` và `BR-DUE-02`.
+- Dashboard là ảnh chụp tình trạng hiện tại; không thay đổi trạng thái hay người phụ trách Ticket.
+- Ticket `RESOLVED` và `CLOSED` không được tính vào khối lượng Ticket đang hoạt động.
+
+#### 7. Tiêu chí nghiệm thu
+- **AC-05-01:** Số lượng `NEW`, `IN_PROGRESS` và `WAITING_STUDENT` khớp với trạng thái hiện tại của Ticket trong phạm vi.
+- **AC-05-02:** Sắp quá hạn/quá hạn được tính đúng theo Business Rules, bao gồm việc loại trừ thời gian `WAITING_STUDENT`.
+- **AC-05-03:** Khối lượng phòng ban/nhân viên chỉ tính Ticket đang hoạt động.
+- **AC-05-04:** Bộ lọc chỉ làm thay đổi số liệu trong phạm vi dữ liệu người dùng được phép xem.
+- **AC-05-05:** Mở chỉ số chỉ hiển thị Ticket mà Management có quyền truy cập.
+
+---
+
+### [FR-MGT-06] Báo cáo, mức độ hài lòng (CSAT) và xuất dữ liệu
+
+#### 1. Mô tả & Phạm vi
+Cho phép Management xem báo cáo theo khoảng thời gian về xu hướng Nhóm vấn đề, thời gian xử lý và mức độ hài lòng của sinh viên; người có quyền có thể xuất dữ liệu báo cáo.
+
+#### 2. Actors & Điều kiện tiên quyết
+- **Actor:** Management có quyền xem báo cáo.
+- **Actor bổ sung:** Management có quyền xuất báo cáo nếu thực hiện chức năng xuất.
+- **Preconditions:** Người dùng đã đăng nhập và có phạm vi dữ liệu hợp lệ.
+
+#### 3. Quy tắc Dữ liệu & Validation
+- **Khoảng thời gian:** bắt buộc; ngày bắt đầu không được sau ngày kết thúc.
+- Bộ lọc hỗ trợ tối thiểu: phòng ban và Nhóm vấn đề.
+- **Xu hướng Nhóm vấn đề:** đếm Ticket theo Category dựa trên thời điểm Ticket được tạo trong khoảng báo cáo.
+- **Thời gian xử lý:** chỉ tính Ticket có lần chuyển sang `RESOLVED` trong khoảng báo cáo. Với Ticket chưa từng mở lại, thời gian xử lý được tính từ lúc tạo đến `RESOLVED`, loại trừ thời gian `WAITING_STUDENT` và thời gian ngoài lịch làm việc. Với Ticket đã mở lại, tổng thời gian xử lý bằng tổng các khoảng thời gian Ticket thực sự ở quá trình xử lý đến từng lần `RESOLVED`; khoảng thời gian Ticket nằm ở `RESOLVED` để chờ sinh viên phản hồi không được tính là thời gian xử lý của nhân viên.
+- **CSAT trung bình:** trung bình cộng điểm 1–5 của các đánh giá hợp lệ có **thời điểm gửi đánh giá** nằm trong khoảng báo cáo.
+- **Tỷ lệ phản hồi CSAT:** được tính trên nhóm Ticket có **thời điểm chuyển sang `CLOSED` nằm trong khoảng báo cáo** và đã hết đủ 07 ngày theo lịch để sinh viên gửi đánh giá. Tỷ lệ = số Ticket trong nhóm này đã có đánh giá / tổng số Ticket trong nhóm này. Ticket chưa hết thời hạn 07 ngày không được đưa vào mẫu số.
+- Dữ liệu xuất phải tuân thủ cùng bộ lọc và phạm vi quyền như dữ liệu đang xem.
+
+#### 4. Luồng xử lý chi tiết
+1. Management mở **Báo cáo**.
+2. Người dùng chọn khoảng thời gian và bộ lọc cần thiết.
+3. Hệ thống kiểm tra điều kiện lọc và phạm vi dữ liệu.
+4. Hệ thống tổng hợp:
+   - số lượng Ticket theo Nhóm vấn đề;
+   - thời gian xử lý trung bình;
+   - điểm CSAT trung bình và số lượng đánh giá;
+   - khối lượng theo phòng ban/nhân viên khi cần.
+5. Hệ thống hiển thị kết quả báo cáo.
+6. Nếu người dùng có quyền xuất, người dùng chọn **Xuất báo cáo**.
+7. Hệ thống tạo dữ liệu xuất đúng với phạm vi và bộ lọc hiện tại.
+
+#### 5. Luồng ngoại lệ
+- Ngày kết thúc trước ngày bắt đầu: từ chối chạy báo cáo.
+- Không có dữ liệu phù hợp: hiển thị báo cáo trống/0 thay vì tạo số liệu giả.
+- Không có đánh giá CSAT trong phạm vi: không tính điểm trung bình và hiển thị trạng thái chưa có dữ liệu đánh giá.
+- Người dùng không có quyền xuất: không cho thực hiện chức năng xuất.
+
+#### 6. Quy tắc nghiệp vụ
+- Thời gian xử lý sử dụng cùng cách tính thời gian làm việc tại `BR-DUE-01` và `BR-DUE-02`.
+- CSAT tuân thủ `BR-CSAT-01`.
+- Báo cáo không làm thay đổi dữ liệu Ticket.
+- Dữ liệu xuất không được vượt quá phạm vi quyền của người thực hiện.
+
+#### 7. Tiêu chí nghiệm thu
+- **AC-06-01:** Báo cáo xu hướng Category tính đúng Ticket được tạo trong khoảng thời gian đã chọn.
+- **AC-06-02:** Thời gian xử lý trung bình loại trừ thời gian `WAITING_STUDENT`, thời gian ngoài lịch làm việc và khoảng thời gian chờ phản hồi của sinh viên khi Ticket ở `RESOLVED`.
+- **AC-06-03:** Điểm CSAT trung bình chỉ sử dụng đánh giá hợp lệ 1–5 sao được gửi trong khoảng báo cáo.
+- **AC-06-04:** Tỷ lệ phản hồi CSAT chỉ sử dụng Ticket `CLOSED` trong khoảng báo cáo đã hết đủ 07 ngày đánh giá; Ticket còn thời hạn đánh giá không được tính vào mẫu số.
+- **AC-06-05:** Khoảng thời gian không hợp lệ bị từ chối.
+- **AC-06-06:** Người không có quyền xuất không thể xuất báo cáo.
+- **AC-06-07:** Dữ liệu xuất khớp với bộ lọc và phạm vi quyền của báo cáo đang xem.
+
+
+---
+
+## III. QUY TẮC THAM CHIẾU
+
+Các Functional Requirements của M03 phải tuân thủ thống nhất với:
+
+- [Actors & Roles](../../01-product/actors-and-roles.md)
+- [Ticket Model](../../02-domain/ticket-model.md)
+- [Ticket Lifecycle](../../02-domain/ticket-lifecycle.md)
+- [State Transition](../../02-domain/state-transition.md)
+- [Business Rules](../../02-domain/business-rules.md)

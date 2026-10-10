@@ -1,66 +1,44 @@
-# Mô Hình Dữ Liệu & ERD (Data Model)
+# ARC-04 - Mô Hình Dữ Liệu Logic
 
-## 1. Sơ Đồ Quan Hệ Entiy (ERD Overview)
+Tài liệu này mô tả các thực thể triển khai chính. Đây không thay thế Domain Model và không bắt buộc kiểu dữ liệu/database cụ thể.
 
-```text
- ┌─────────────────┐       1:N       ┌─────────────────┐
- │      users      │─────────────────┤     tickets     │
- └────────┬────────┘                 └────────┬────────┘
-          │                                   │ 1:N
-          │ 1:N                               ▼
-          │                          ┌─────────────────┐
-          │                          │   attachments   │
-          ▼                          └─────────────────┘
- ┌─────────────────┐                          │ 1:N
- │   audit_logs    │                          ▼
- └─────────────────┘                 ┌─────────────────┐
-                                     │  notifications  │
-                                     └─────────────────┘
+## 1. Thực Thể Chính
+
+| Thực thể | Mục đích |
+| :--- | :--- |
+| User | Tài khoản Sinh viên/Nhân viên/Quản lý và trạng thái hoạt động. |
+| Department | Phòng ban tiếp nhận/xử lý Ticket. |
+| Category | Nhóm vấn đề; Category hoạt động ánh xạ tới một phòng ban tiếp nhận. |
+| Ticket | Yêu cầu hỗ trợ và trạng thái vòng đời hiện tại. |
+| Attachment | File gắn với Ticket, bổ sung hoặc kết quả. |
+| Ticket History | Lịch sử sự kiện nghiệp vụ của Ticket. |
+| Notification | Thông báo trong hệ thống cho người dùng. |
+| Rating | Đánh giá CSAT của Ticket đã CLOSED. |
+| Audit Log | Dấu vết các thao tác quan trọng phục vụ tra soát. |
+| Retention Policy | Cấu hình thời hạn lưu trữ cơ bản. |
+
+## 2. Quan Hệ Cốt Lõi
+
+```mermaid
+erDiagram
+    USER ||--o{ TICKET : creates
+    DEPARTMENT ||--o{ TICKET : handles
+    CATEGORY ||--o{ TICKET : classifies
+    DEPARTMENT ||--o{ CATEGORY : receives
+    USER o|--o{ TICKET : assigned_to
+    TICKET ||--o{ ATTACHMENT : has
+    TICKET ||--o{ TICKET_HISTORY : has
+    TICKET ||--o{ NOTIFICATION : causes
+    TICKET ||--o| RATING : receives
+    USER ||--o{ AUDIT_LOG : performs
 ```
 
-## 2. Cấu Trúc Các Bảng Cơ Sở Dữ Liệu
+## 3. Ràng Buộc Nghiệp Vụ Quan Trọng
 
-### 2.1. Bảng `users` (Tài khoản người dùng)
+- Ticket có tối đa một người phụ trách chính tại một thời điểm.
+- Category/Department khi Transfer phải được cập nhật nhất quán.
+- Rating tối đa một bản ghi/Ticket.
+- Ticket chỉ dùng 5 state đã định nghĩa trong Domain.
+- Audit và Ticket History phục vụ mục đích khác nhau và không được thay thế lẫn nhau.
 
-- `id` (VARCHAR/UUID, Primary Key): ID người dùng.
-- `username` (VARCHAR, Unique): Tên đăng nhập / Mã sinh viên / Email công vụ.
-- `password_hash` (VARCHAR): Mật khẩu đã mã hóa.
-- `full_name` (VARCHAR): Họ và tên.
-- `role` (ENUM): Vai trò (`STUDENT`, `STAFF`, `MANAGER`, `ADMIN`).
-- `department_id` (VARCHAR, Foreign Key): ID phòng ban (nếu là Nhân viên).
-- `status` (VARCHAR): Trạng thái tài khoản (`ACTIVE`, `INACTIVE`).
-
-### 2.2. Bảng `tickets` (Thông tin Phiếu hỗ trợ)
-
-- `ticket_id` (VARCHAR, Primary Key): Mã Ticket duy nhất (ví dụ: `TK-20261007-001`).
-- `student_id` (VARCHAR, Foreign Key → `users.id`): Sinh viên khởi tạo.
-- `category_id` (VARCHAR): Nhóm vấn đề chọn xử lý.
-- `title` (VARCHAR): Tiêu đề ngắn gọn.
-- `description` (TEXT): Nội dung mô tả chi tiết vấn đề.
-- `department_id` (VARCHAR): Phòng ban chịu trách nhiệm thụ lý.
-- `assignee_id` (VARCHAR, Foreign Key → `users.id`): Nhân viên được gán xử lý.
-- `priority` (ENUM): Độ ưu tiên (`LOW`, `MEDIUM`, `HIGH`, `URGENT`).
-- `status` (ENUM): Trạng thái (`NEW`, `IN_PROGRESS`, `NEED_MORE_INFO`, `TRANSFERRED`, `CLOSED`, `REJECTED`).
-- `resolution_note` (TEXT): Kết quả giải quyết của nhân viên.
-- `rating_score` (INT): Đánh giá sao của sinh viên (1-5 sao).
-- `rating_comment` (TEXT): Nhận xét đánh giá hài lòng.
-- `created_at`, `updated_at`, `closed_at` (TIMESTAMP): Các mốc thời gian.
-
-### 2.3. Bảng `attachments` (File đính kèm)
-
-- `id` (VARCHAR/UUID, Primary Key): ID bản ghi file.
-- `ticket_id` (VARCHAR, Foreign Key → `tickets.ticket_id`): Mã Ticket liên kết.
-- `file_name` (VARCHAR): Tên file gốc.
-- `file_path` (VARCHAR): Đường dẫn lưu file riêng tư trên Server.
-- `file_size` (INT): Dung lượng file tính bằng bytes (Max 5MB).
-- `file_type` (VARCHAR): Định dạng MIME (`application/pdf`, `image/png`, `image/jpeg`).
-- `uploaded_by` (VARCHAR, Foreign Key → `users.id`): Người đăng file.
-
-### 2.4. Bảng `audit_logs` (Nhật ký rà soát)
-
-- `id` (BIGINT, Primary Key, Auto Increment).
-- `user_id` (VARCHAR, Foreign Key → `users.id`): Người thực hiện.
-- `action` (VARCHAR): Hành động (`CREATE_TICKET`, `TRANSFER_DEPT`, `CLOSE_TICKET`, ...).
-- `target_id` (VARCHAR): Đối tượng chịu tác động (Mã Ticket, User ID).
-- `ip_address` (VARCHAR): Địa chỉ IP truy cập.
-- `timestamp` (TIMESTAMP): Thời điểm thực hiện.
+Kiểu khóa chính, độ dài cột, index và chi tiết vật lý được quyết định khi thiết kế database.

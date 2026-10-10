@@ -1,37 +1,47 @@
-# Kiến Trúc Tổng Quan (Architecture Overview)
+# ARC-02 - Kiến Trúc Tổng Quan
 
-## 1. Mô Hình Mẫu Kiến Trúc (Architectural Pattern)
-UniSupport được thiết kế theo mô hình kiến trúc Phân tầng tiêu chuẩn (3-Tier Layered Architecture) dành cho Web Application:
+## 1. Mô Hình Tổng Quan
 
-```text
-[ Presentation Layer ] ──> Responsive Single Page Application (SPA / Web Client)
-           │
-           ▼ (HTTPS / RESTful APIs)
-[ Application Layer ]  ──> Backend API Server (Node.js / Java Spring / Python)
-           │
-           ▼
-[ Data Layer ]         ──> Relational Database (PostgreSQL / MySQL) + Private File Storage
+UniSupport sử dụng kiến trúc Web Application đơn giản với các lớp chính:
+
+```mermaid
+flowchart TD
+    U[Web Browser] --> FE[Giao diện Web]
+    FE --> BE[Backend Application]
+    BE --> DB[Cơ sở dữ liệu]
+    BE --> FS[Lưu trữ file đính kèm]
+
+    BE --> AUTH[Xác thực & Phân quyền dùng chung]
+    BE --> NTF[Thông báo trong hệ thống]
+    BE --> AUD[Audit / Lịch sử]
 ```
 
----
+## 2. Giao Diện Web
 
-## 2. Chi Tiết Các Tầng Kỹ Thuật
-### 2.1. Presentation Layer (Frontend)
+Giao diện được tổ chức theo ba khu vực nghiệp vụ:
+- Student Portal.
+- Staff Operations.
+- Management Dashboard.
 
-- **Công nghệ:** HTML5, CSS3, JavaScript Framework (ReactJS / Vue.js) chuẩn hóa Responsive.
-- **Đặc điểm:** Hoạt động linh hoạt trên cả trình duyệt máy tính và thiết bị di động. Tích hợp mô-đun chuyển đổi 2 ngôn ngữ Tiếng Việt & Tiếng Anh.
+Giao diện phải responsive trên máy tính và thiết bị di động, hỗ trợ Việt/Anh ở mức cơ bản.
 
-### 2.2. Application Layer (Backend)
+## 3. Backend
 
-- **Công nghệ:** RESTful API Service kết nối bảo mật HTTPS.
-- **Các dịch vụ cốt lõi:**
-  - **Auth & Security Service:** Xác thực người dùng, cấp Token/Session và kiểm tra quyền RBAC.
-  - **Ticket Core Service:** Xử lý nghiệp vụ tạo Ticket, sinh mã Ticket duy nhất (`ADR-001`), chuyển đổi trạng thái và đóng Ticket.
-  - **File Management Service:** Tiếp nhận upload, xác thực định dạng/dung lượng file (PDF/Image <= 5MB) và kiểm soát quyền truy cập file (`ADR-003`).
-  - **Notification Service:** Phát thông báo nội bộ hệ thống (In-app Notification) cho người dùng.
-  - **Reporting Service:** Tổng hợp số liệu Dashboard, thời gian xử lý trung bình và chỉ số hài lòng.
+Backend chịu trách nhiệm:
+- thực thi Business Rules và Ticket Lifecycle;
+- kiểm soát phạm vi dữ liệu theo vai trò/quyền;
+- quản lý giao tiếp với dữ liệu và file;
+- phát sinh thông báo nghiệp vụ;
+- ghi lịch sử/Audit theo yêu cầu.
 
-### 2.3. Data Layer (Database & Storage)
+Các năng lực dùng chung không được coi là module nghiệp vụ độc lập.
 
-- **Cơ sở dữ liệu:** RDBMS (PostgreSQL hoặc MySQL) lưu trữ dữ liệu quan hệ.
-- **Lưu trữ File:** Thư mục bảo vệ (Private Folder) trên Server của nhà trường, ngăn chặn truy cập trực tiếp qua Public URL (`ADR-003`).
+## 4. Dữ Liệu
+
+- Cơ sở dữ liệu lưu thông tin tài khoản, Ticket, Category, phòng ban, phân công, lịch sử, kết quả, đánh giá và cấu hình quản trị.
+- File đính kèm được lưu tách khỏi dữ liệu văn bản nhưng phải liên kết đúng Ticket và kiểm soát quyền truy cập.
+- Công nghệ database/file storage cụ thể được chọn ở giai đoạn triển khai kỹ thuật.
+
+## 5. Triển Khai
+
+Giải pháp triển khai phải phù hợp hạ tầng Aurora University cung cấp và nằm trong phạm vi hoạt động môi trường/CI-CD/triển khai/bàn giao của dự án.

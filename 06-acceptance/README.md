@@ -1,22 +1,26 @@
-# Nghiệm Thu & Kiểm Thử Hệ Thống (Acceptance & Testing)
+# 06 - Nghiệm Thu Và Truy Xuất Yêu Cầu
 
-## 1. Tổng Quan
-Thư mục này tài liệu hóa ma trận truy xuất yêu cầu (Requirements Traceability Matrix - RTM) và các kịch bản kiểm thử chấp nhận người dùng (User Acceptance Testing - UAT) cho hệ thống **UniSupport** tại **Aurora University**.
+Thư mục này quản lý tiêu chí nghiệm thu, kịch bản UAT và khả năng truy xuất giữa gói công việc, yêu cầu chức năng và workflow của UniSupport.
 
----
+## 1. Tài Liệu
 
-## 2. Danh Sách Tài Liệu Trong Thư Mục
+| Tài liệu | Mục đích |
+| :--- | :--- |
+| [traceability-matrix.md](./traceability-matrix.md) | Liên kết gói công việc → FR/Flow → Workflow → UAT. |
+| [test-scenarios.md](./test-scenarios.md) | Các kịch bản UAT đại diện cho ba phân hệ và năng lực dùng chung. |
 
-| Mã Tài Liệu | Tên Tài Liệu | Nội Dung Trọng Tâm |
-| :--- | :--- | :--- |
-| **`traceability-matrix.md`** | Ma Trận Truy Xuất Yêu Cầu (RTM) | Ánh xạ giữa Yêu cầu nghiệp vụ (Proposal) -> PRD -> Kịch bản kiểm thử UAT. |
-| **`test-scenarios.md`** | Kịch Bản Kiểm Thử & UAT Scenarios | Bộ test cases chính thức phục vụ đợt nghiệm thu 10 ngày làm việc của nhà trường. |
+## 2. Nguyên Tắc Nghiệm Thu
 
----
+- Aurora University có **10 ngày làm việc sau bàn giao chính thức** để thực hiện nghiệm thu.
+- Các luồng chính của M01, M02 và M03 phải hoạt động đúng yêu cầu.
+- Phân quyền phải đúng theo vai trò và phạm vi dữ liệu.
+- Không còn lỗi làm gián đoạn chức năng chính.
+- Tài liệu bàn giao phải đầy đủ theo phạm vi dự án.
+- Lỗi kỹ thuật không ảnh hưởng chức năng chính được ghi nhận và theo dõi khắc phục theo quy trình quản lý lỗi.
 
-## 3. Tiêu Chí Nghiệm Thu Chính (Acceptance Criteria)
-Theo mục 5.2 của Project Proposal, việc nghiệm thu đợt UAT 10 ngày làm việc dựa trên các tiêu chí bắt buộc sau:
-1. **Chức năng:** Các luồng chính của ba phân hệ (Sinh viên, Nhân viên, Quản lý) hoạt động đúng và ổn định.
-2. **Bảo mật & Phân quyền:** Cơ chế đăng nhập và phân quyền RBAC 3 vai trò hoạt động chính xác.
-3. **Chất lượng:** Không còn lỗi làm gián đoạn chức năng chính (Critical/Blocker bugs).
-4. **Tài liệu:** Bàn giao đầy đủ mã nguồn, cơ sở dữ liệu (ERD) và tài liệu hướng dẫn sử dụng theo cam kết.
+## 3. Nguyên Tắc Truy Xuất
+
+- Effort kế hoạch được quản lý theo từng gói công việc.
+- Một gói công việc có thể ánh xạ tới nhiều FR hoặc Flow.
+- Xác thực là năng lực dùng chung; effort không được nhân đôi chỉ vì nhiều phân hệ cùng sử dụng.
+- **Quy ước ánh xạ M3:** nhãn `Admin` trong kế hoạch nguồn lực tương ứng với phạm vi chức năng **Management** trong mô hình sản phẩm.

@@ -1,12 +1,19 @@
-# Yêu Cầu Về Độ Ổn Định & Tin Cậy (Reliability Requirements)
+# NFR-REL - Độ Ổn Định Và Tin Cậy
 
-## 1. Tính Sẵn Sàng Của Hệ Thống (Availability)
-* **Thời gian hoạt động (Uptime):** Hệ thống hướng tới duy trì độ sẵn sàng khoảng 98.5% trong thời gian vận hành chính thức tại nhà trường.
-* **Phụ thuộc hạ tầng:** Tính ổn định và độ sẵn sàng của hệ thống phụ thuộc trực tiếp vào chất lượng hạ tầng máy chủ, đường truyền mạng và Tên miền do Aurora University cung cấp.
+## 1. Mục Tiêu
 
----
+Đảm bảo các thao tác nghiệp vụ quan trọng không tạo dữ liệu dở dang hoặc làm sai vòng đời Ticket.
 
-## 2. Toàn Vẹn Dữ Liệu & Xử Lý Sự Cố
-* **Toàn vẹn giao dịch:** Các thao tác quan trọng như tạo Ticket, chuyển phòng ban, đóng Ticket phải đảm bảo tính toàn vẹn dữ liệu (Atomic Transaction). Nếu có lỗi xảy ra giữa chừng, hệ thống phải Rollback hoàn toàn dữ liệu về trạng thái trước đó.
-* **Khôi phục trạng thái:** Khi gặp sự cố ngắt kết nối mạng hoặc treo máy chủ, hệ thống không được làm mất mát dữ liệu đang ở trạng thái đã lưu thành công trước đó.
-* **Bảo trì & Sao lưu (Out of Scope):** Việc thiết lập cơ chế tự động sao lưu định kỳ (Auto Backup) và theo dõi vận hành máy chủ không thuộc phạm vi trách nhiệm của đơn vị phát triển.
+## 2. Yêu Cầu
+
+- Tạo Ticket thành công phải tạo đầy đủ Ticket, mã Ticket, Category, phòng ban và trạng thái ban đầu.
+- Các thao tác thay đổi đồng thời nhiều dữ liệu nghiệp vụ, ví dụ Transfer cập nhật Category + phòng ban, phải hoàn tất nhất quán hoặc không ghi nhận thay đổi.
+- Lỗi khi lưu dữ liệu không được để Ticket ở trạng thái không hợp lệ so với Domain.
+- Lịch sử xử lý đã ghi nhận không bị mất khi Transfer, reopen hoặc cập nhật kết quả.
+- Hệ thống phải hiển thị thông báo lỗi dễ hiểu cho người dùng, không để lỗi kỹ thuật thay thế kết quả nghiệp vụ.
+- Khả năng vận hành thực tế phụ thuộc hạ tầng máy chủ, mạng và tên miền do Aurora University cung cấp.
+
+## 3. Nghiệm Thu
+
+- Các trường hợp lỗi trong luồng tạo, phân công, Transfer, bổ sung và ghi kết quả không tạo trạng thái dữ liệu trái Business Rules.
+- Sau lỗi, người dùng có thể tải lại và thấy trạng thái nghiệp vụ cuối cùng đã được ghi nhận thành công.
