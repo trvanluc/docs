@@ -22,9 +22,19 @@ Aurora University cung cấp:
 - Hệ điều hành, cấu hình CPU/RAM và công nghệ đóng gói được xác định theo môi trường triển khai thực tế.
 - Không bao gồm thiết lập sao lưu tự động, giám sát vận hành máy chủ lâu dài hoặc hỗ trợ hạ tầng ngoài phạm vi bảo hành.
 - Không tích hợp hệ thống bên thứ ba ngoài phạm vi sản phẩm.
+- Bảo hành kỹ thuật (`08-project/constraints.md` mục 1) chỉ áp dụng cho lỗi kỹ thuật phát sinh từ phía đội dự án; yêu cầu tính năng mới hoặc thay đổi ngoài phạm vi không thuộc bảo hành.
 
-## 4. Nghiệm Thu
+## 4. Danh Mục Bàn Giao
+
+| Nhóm | Hạng mục bàn giao |
+| :--- | :--- |
+| Hệ thống | Hệ thống UniSupport sử dụng được trên trình duyệt máy tính và thiết bị di động, đã triển khai trên môi trường bàn giao |
+| Mã nguồn | Mã nguồn frontend và backend; tài liệu hướng dẫn cài đặt và vận hành |
+| Cơ sở dữ liệu | Cấu trúc cơ sở dữ liệu và ERD; dữ liệu mẫu phục vụ kiểm thử |
+| Tài liệu | Tài liệu phạm vi và yêu cầu đã xác nhận; hướng dẫn sử dụng cho từng vai trò; test case và kết quả kiểm thử |
+
+## 5. Nghiệm Thu
 
 - Hệ thống được triển khai và truy cập được trên môi trường Aurora University cung cấp.
 - Các luồng chính của ba phân hệ hoạt động sau triển khai.
-- Mã nguồn và tài liệu cài đặt/vận hành được bàn giao đầy đủ.
+- Các hạng mục tại mục 4 được bàn giao đầy đủ.
