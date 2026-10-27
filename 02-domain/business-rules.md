@@ -82,6 +82,7 @@ UniSupport sử dụng bốn mức độ ưu tiên:
 ### `BR-DUE-02` — Cách tính ngày làm việc và tình trạng thời hạn
 
 - UniSupport sử dụng lịch làm việc của Aurora University theo múi giờ Việt Nam.
+- Danh sách ngày nghỉ lễ/ngày nghỉ chính thức được nạp sẵn khi triển khai; phạm vi hiện tại không bao gồm chức năng cấu hình ngày nghỉ trên giao diện.
 - **Ngày làm việc** là thứ Hai đến thứ Sáu, không bao gồm ngày nghỉ lễ hoặc ngày nghỉ chính thức của Aurora University.
 - Một ngày làm việc được quy đổi thành **08 giờ làm việc** để tính thời lượng SLA.
 - **Thời gian xử lý hợp lệ đã sử dụng** là tổng thời gian làm việc từ lúc Ticket được tạo đến thời điểm hiện tại, sau khi loại trừ toàn bộ khoảng thời gian Ticket ở `WAITING_STUDENT` và các khoảng thời gian ngoài lịch làm việc.

@@ -79,6 +79,7 @@ Giúp sinh viên tra cứu các vấn đề thường gặp và thông tin cần
 #### 6. Quy tắc nghiệp vụ
 - FAQ chỉ hỗ trợ tra cứu, không thay thế quy trình xử lý Ticket.
 - Không bao gồm chatbot AI hoặc hệ thống CMS FAQ chuyên biệt.
+- Nội dung FAQ được nạp sẵn khi triển khai; phạm vi hiện tại không bao gồm chức năng thêm, sửa hoặc xóa FAQ trên giao diện.
 
 #### 7. Tiêu chí nghiệm thu
 - **AC-01-01:** Sinh viên xem được danh sách FAQ theo nhóm vấn đề.

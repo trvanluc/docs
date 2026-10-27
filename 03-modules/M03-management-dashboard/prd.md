@@ -363,6 +363,7 @@ Cho phép Management xem báo cáo theo khoảng thời gian về xu hướng Nh
 - **CSAT trung bình:** trung bình cộng điểm 1–5 của các đánh giá hợp lệ có **thời điểm gửi đánh giá** nằm trong khoảng báo cáo.
 - **Tỷ lệ phản hồi CSAT:** được tính trên nhóm Ticket có **thời điểm chuyển sang `CLOSED` nằm trong khoảng báo cáo** và đã hết đủ 07 ngày theo lịch để sinh viên gửi đánh giá. Tỷ lệ = số Ticket trong nhóm này đã có đánh giá / tổng số Ticket trong nhóm này. Ticket chưa hết thời hạn 07 ngày không được đưa vào mẫu số.
 - Dữ liệu xuất phải tuân thủ cùng bộ lọc và phạm vi quyền như dữ liệu đang xem.
+- **Định dạng xuất:** CSV (UTF-8), mở được bằng Microsoft Excel với nội dung tiếng Việt hiển thị đúng.
 
 #### 4. Luồng xử lý chi tiết
 1. Management mở **Báo cáo**.
@@ -397,6 +398,7 @@ Cho phép Management xem báo cáo theo khoảng thời gian về xu hướng Nh
 - **AC-06-05:** Khoảng thời gian không hợp lệ bị từ chối.
 - **AC-06-06:** Người không có quyền xuất không thể xuất báo cáo.
 - **AC-06-07:** Dữ liệu xuất khớp với bộ lọc và phạm vi quyền của báo cáo đang xem.
+- **AC-06-08:** Dữ liệu xuất ở định dạng CSV và hiển thị đúng tiếng Việt khi mở bằng Microsoft Excel.
 
 
 ---
