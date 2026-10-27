@@ -25,3 +25,9 @@ Tài liệu này ghi nhận các giả định vận hành và triển khai đư
 
 - Thời gian 14 tuần không bao gồm thời gian chờ phản hồi hoặc phê duyệt vượt quá kế hoạch phối hợp.
 - Điều chỉnh phạm vi, chi phí hoặc tiến độ phải được hai bên xác nhận lại.
+
+## 5. Dữ Liệu
+
+- Môi trường phát triển, kiểm thử, UAT và trình diễn sử dụng **dữ liệu giả lập** có cấu trúc tương ứng dữ liệu của Aurora University: tài khoản, phòng ban, Nhóm vấn đề, FAQ, Ticket và file đính kèm.
+- Không sử dụng dữ liệu cá nhân thật của sinh viên hoặc nhân viên.
+- Bộ dữ liệu giả lập đáp ứng các kịch bản tại `06-acceptance/test-scenarios.md` và các chỉ tiêu tại `06-acceptance/success-metrics.md`.

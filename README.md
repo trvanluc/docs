@@ -47,7 +47,8 @@ unisupport-docs/
 ├── 06-acceptance/
 │   ├── README.md
 │   ├── traceability-matrix.md
-│   └── test-scenarios.md
+│   ├── test-scenarios.md
+│   └── success-metrics.md
 ├── 07-architecture/
 │   ├── README.md
 │   ├── system-context.md

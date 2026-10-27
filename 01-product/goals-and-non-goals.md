@@ -4,23 +4,27 @@
 
 ### G-01: Tập trung hóa đầu mối tiếp nhận
 - **Mục tiêu**: Tập trung 100% các yêu cầu hỗ trợ trực tuyến của sinh viên Aurora University vào hệ thống UniSupport.
-- **Tiêu chí đo lường**: 100% yêu cầu khởi tạo trên hệ thống đều được cấp mã Ticket định danh duy nhất (ví dụ: `TK-20261004-001`).
+- **Tiêu chí đo lường**: 100% yêu cầu khởi tạo trên hệ thống được cấp mã Ticket định danh duy nhất (định dạng mã theo ADR-001).
 
 ### G-02: Minh bạch hóa tiến độ xử lý
 - **Mục tiêu**: Giúp sinh viên dễ dàng tra cứu trạng thái xử lý và đơn vị/nhân viên đang thụ lý yêu cầu.
-- **Tiêu chí đo lường**: Sinh viên xem được tiến độ theo thời gian thực (Real-time status) ngay trên trang cá nhân mà không cần gọi điện hay gửi email truy vấn.
+- **Tiêu chí đo lường**: ≥ 90% yêu cầu có trạng thái theo dõi được; giảm ≥ 30% số lần sinh viên phải liên hệ để hỏi tiến độ.
+- **Kiểm chứng**: SM-02, SM-04 (`06-acceptance/success-metrics.md`).
 
 ### G-03: Tối ưu quy trình vận hành phòng ban
 - **Mục tiêu**: Chuẩn hóa luồng làm việc của nhân viên từ khâu tiếp nhận, phân loại, chuyển phòng ban đến cập nhật kết quả.
-- **Tiêu chí đo lường**: Giảm tỷ lệ bỏ sót yêu cầu xuống **0%**; giảm thời gian chuyển tiếp công việc giữa các phòng ban.
+- **Tiêu chí đo lường**: ≥ 90% yêu cầu có người chịu trách nhiệm rõ ràng; giảm số yêu cầu bị bỏ sót hoặc xử lý trùng lặp.
+- **Kiểm chứng**: SM-01, SM-03 (`06-acceptance/success-metrics.md`).
 
 ### G-04: Cung cấp năng lực giám sát cho Ban quản lý
 - **Mục tiêu**: Cung cấp Dashboard tổng quan và Báo cáo chi tiết về khối lượng công việc, tỷ lệ hoàn thành, thời gian xử lý trung bình và chỉ số hài lòng.
-- **Tiêu chí đo lường**: Xuất được báo cáo trực quan theo khoảng thời gian và theo từng phòng ban.
+- **Tiêu chí đo lường**: Ban quản lý nhận biết được yêu cầu quá hạn và các nhóm vấn đề thường gặp; xem và xuất được báo cáo theo khoảng thời gian và theo phòng ban.
+- **Kiểm chứng**: SM-05, SM-06 (`06-acceptance/success-metrics.md`).
 
 ### G-05: Bảo mật và Phân quyền truy cập
 - **Mục tiêu**: Đảm bảo đúng người đúng việc, file đính kèm chỉ người có thẩm quyền mới được truy cập.
-- **Tiêu chí đo lường**: Áp dụng mô hình RBAC cho 3 vai trò, tra soát log thao tác cho các hành động quan trọng.
+- **Tiêu chí đo lường**: Áp dụng mô hình RBAC cho 3 vai trò; tra soát log thao tác cho các hành động quan trọng; dữ liệu chỉ được truy cập bởi người có thẩm quyền.
+- **Kiểm chứng**: SM-07 (`06-acceptance/success-metrics.md`).
 
 ---
 

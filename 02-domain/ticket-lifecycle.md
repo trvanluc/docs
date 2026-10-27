@@ -119,3 +119,18 @@ Khi sinh viên phản hồi rằng kết quả chưa giải quyết được v�
 4. Kết quả và lịch sử của vòng xử lý trước đó vẫn được giữ nguyên.
 
 Điều kiện và thời hạn cụ thể để mở lại Ticket được quy định tại `business-rules.md`.
+
+---
+
+## 5. Hoàn Tất Xử Lý Và Kết Thúc Vòng Đời
+
+Việc đóng một yêu cầu hỗ trợ được thực hiện qua hai giai đoạn:
+
+| Giai đoạn | Tác nhân | Chuyển trạng thái | Quy tắc |
+| :--- | :--- | :--- | :--- |
+| Hoàn tất xử lý | Nhân viên phụ trách hoặc người có quyền | `IN_PROGRESS` → `RESOLVED` | `BR-LIFE-01`, FR-STF-06 |
+| Kết thúc vòng đời | Sinh viên (chấp nhận kết quả) hoặc Hệ thống (hết thời hạn phản hồi) | `RESOLVED` → `CLOSED` | `BR-LIFE-02`, FR-STU-06 |
+
+- Thao tác đóng yêu cầu của nhân viên là **Ghi nhận kết quả**, đưa Ticket sang `RESOLVED`.
+- Nhân viên không có thao tác chuyển Ticket trực tiếp sang `CLOSED`.
+- Trong thời hạn phản hồi, sinh viên có thể mở lại Ticket theo mục 4.

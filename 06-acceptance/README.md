@@ -8,6 +8,7 @@ Thư mục này quản lý tiêu chí nghiệm thu, kịch bản UAT và khả n
 | :--- | :--- |
 | [traceability-matrix.md](./traceability-matrix.md) | Liên kết gói công việc → FR/Flow → Workflow → UAT. |
 | [test-scenarios.md](./test-scenarios.md) | Các kịch bản UAT đại diện cho ba phân hệ và năng lực dùng chung. |
+| [success-metrics.md](./success-metrics.md) | Chỉ tiêu thành công, ngưỡng đạt và phương pháp kiểm chứng. |
 
 ## 2. Nguyên Tắc Nghiệm Thu
 
