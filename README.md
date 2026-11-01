@@ -12,6 +12,8 @@ unisupport-docs/
 ├── 01-product/
 │   ├── README.md
 │   ├── product-overview.md
+│   ├── problem-statement.md
+│   ├── goals-and-non-goals.md
 │   ├── actors-and-roles.md
 │   └── product-scope.md
 ├── 02-domain/
@@ -58,11 +60,23 @@ unisupport-docs/
 │   ├── security-design.md
 │   └── technical-decisions/
 └── 08-project/
+    ├── README.md
+    ├── proposal.md
+    ├── team-charter.md
     ├── assumptions.md
     ├── constraints.md
     ├── milestones-and-timeline.md
     ├── open-questions.md
-    └── glossary.md
+    ├── glossary.md
+    └── plans/
+        ├── README.md
+        ├── wbs.xlsx
+        ├── ngan-sach-noi-bo.xlsx
+        ├── master-schedule.xlsx
+        ├── ke-hoach-quan-ly-chat-luong.md
+        ├── ke-hoach-quan-tri-giam-sat.md
+        ├── ke-hoach-quan-ly-san-pham.md
+        └── images/
 ```
 
 ## Phạm Vi Nghiệp Vụ Chính
