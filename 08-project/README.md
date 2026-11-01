@@ -23,11 +23,9 @@ Thư mục này quản lý các tài liệu cấp dự án của UniSupport: đ�
 
 | Tài liệu | Mục đích |
 | :--- | :--- |
-| [plans/wbs.md](./plans/wbs.md) | Cấu trúc phân rã công việc (WBS) và từ điển WBS. Bản bảng tính: [plans/wbs.xlsx](./plans/wbs.xlsx). |
+| [plans/wbs.xlsx](./plans/wbs.xlsx) | Cấu trúc phân rã công việc (WBS) và từ điển WBS. |
+| [plans/ngan-sach-noi-bo.xlsx](./plans/ngan-sach-noi-bo.xlsx) | Kế hoạch ngân sách nội bộ. |
+| [plans/master-schedule.xlsx](./plans/master-schedule.xlsx) | Master Schedule. |
 | [plans/ke-hoach-quan-ly-chat-luong.md](./plans/ke-hoach-quan-ly-chat-luong.md) | Kế hoạch quản lý chất lượng. |
 | [plans/ke-hoach-quan-tri-giam-sat.md](./plans/ke-hoach-quan-tri-giam-sat.md) | Kế hoạch quản trị và giám sát dự án. |
 | [plans/ke-hoach-quan-ly-san-pham.md](./plans/ke-hoach-quan-ly-san-pham.md) | Kế hoạch quản lý sản phẩm. |
-
-## 4. Tài Liệu Lưu Ngoài Kho
-
-Kế hoạch ngân sách nội bộ và Master Schedule được lưu trên Google Drive của nhóm theo Team Charter.

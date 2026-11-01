@@ -70,8 +70,9 @@ unisupport-docs/
     ├── glossary.md
     └── plans/
         ├── README.md
-        ├── wbs.md
         ├── wbs.xlsx
+        ├── ngan-sach-noi-bo.xlsx
+        ├── master-schedule.xlsx
         ├── ke-hoach-quan-ly-chat-luong.md
         ├── ke-hoach-quan-tri-giam-sat.md
         ├── ke-hoach-quan-ly-san-pham.md

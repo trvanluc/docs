@@ -5,8 +5,8 @@ Tài liệu nghiệp vụ chi tiết sử dụng [Terminology](../02-domain/term
 | Thuật ngữ | Giải thích |
 | :--- | :--- |
 | **PRD** | Tài liệu yêu cầu sản phẩm/chức năng. |
-| **WBS** | Cấu trúc phân rã công việc, xem [WBS](./plans/wbs.md). |
-| **WP (Work Package)** | Gói công việc. Trong kế hoạch ngân sách nội bộ và RTM, gói công việc mang mã WP-STU, WP-STF, WP-MGT dùng để ước tính effort. Trong [WBS](./plans/wbs.md), gói công việc là thành phần cấp thấp nhất, mang mã dạng 1.x.y. |
+| **WBS** | Cấu trúc phân rã công việc, xem [WBS](./plans/wbs.xlsx). |
+| **WP (Work Package)** | Gói công việc. Trong kế hoạch ngân sách nội bộ và RTM, gói công việc mang mã WP-STU, WP-STF, WP-MGT dùng để ước tính effort. Trong [WBS](./plans/wbs.xlsx), gói công việc là thành phần cấp thấp nhất, mang mã dạng 1.x.y. |
 | **RTM** | Ma trận truy xuất gói công việc → FR/Flow → Workflow → UAT. |
 | **UAT** | Kiểm thử chấp nhận người dùng/khách hàng. |
 | **RBAC** | Phân quyền dựa trên vai trò/quyền; UniSupport có ba nhóm người dùng chính Student, Staff, Management. |
