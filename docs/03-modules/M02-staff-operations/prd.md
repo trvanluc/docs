@@ -66,7 +66,7 @@ Cho phép nhân viên đăng nhập vào UniSupport và truy cập không gian l
 
 ### [FR-STF-01] Xem hàng chờ, tìm kiếm và lọc Ticket
 
-**Priority:** Cao: nhân viên chỉ làm việc được khi có hàng chờ (tìm kiếm và lọc nâng cao ở mức Trung bình, #135). **Mốc giao:** MS-02.
+**Priority:** Cao: nhân viên chỉ làm việc được khi có hàng chờ (riêng tìm kiếm và lọc nâng cao ở mức Trung bình). **Mốc giao:** MS-02.
 
 #### 1. Mô tả & Phạm vi
 Cung cấp danh sách công việc để nhân viên xem Ticket mới, Ticket được giao và Ticket đang cần xử lý trong phạm vi của mình.
@@ -320,7 +320,7 @@ Cho phép nhân viên xử lý Ticket đang phụ trách, ghi nhận tiến đ�
 
 ### [FR-STF-05] Chuyển xử lý và Escalation
 
-**Priority:** Cao: Transfer tránh Ticket sai phòng ban bị kẹt. Riêng Escalation ở mức Trung bình (#147), có thể dời qua CR nếu thiếu thời gian. **Mốc giao:** MS-03.
+**Priority:** Cao: Transfer tránh Ticket sai phòng ban bị kẹt. Riêng Escalation ở mức Trung bình, có thể dời qua CR nếu thiếu thời gian. **Mốc giao:** MS-03.
 
 #### 1. Mô tả & Phạm vi
 Cho phép chuyển Ticket sang **phòng ban khác** khi cần thay đổi đơn vị chịu trách nhiệm, hoặc thực hiện Escalation khi Ticket cần hỗ trợ/chuyển cấp xử lý. Việc đổi người phụ trách trong cùng phòng ban được thực hiện bằng luồng phân công lại tại FR-STF-02.
