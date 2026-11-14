@@ -16,7 +16,7 @@ Phân hệ **Staff Operations** cung cấp không gian làm việc để nhân v
 
 ### [FR-STF-00] Đăng nhập và truy cập Staff Operations
 
-**Priority:** Cao: nhân viên không làm được việc gì nếu không đăng nhập đúng phạm vi. **Mốc giao:** MS-01. **Task GitHub:** #120, #121.
+**Priority:** Cao: nhân viên không làm được việc gì nếu không đăng nhập đúng phạm vi. **Mốc giao:** MS-01.
 
 #### 1. Mô tả & Phạm vi
 Cho phép nhân viên đăng nhập vào UniSupport và truy cập không gian làm việc phù hợp với phòng ban và quyền được cấp.
@@ -66,7 +66,7 @@ Cho phép nhân viên đăng nhập vào UniSupport và truy cập không gian l
 
 ### [FR-STF-01] Xem hàng chờ, tìm kiếm và lọc Ticket
 
-**Priority:** Cao: nhân viên chỉ làm việc được khi có hàng chờ (tìm kiếm và lọc nâng cao ở mức Trung bình, #135). **Mốc giao:** MS-02. **Task GitHub:** #134, #135.
+**Priority:** Cao: nhân viên chỉ làm việc được khi có hàng chờ (tìm kiếm và lọc nâng cao ở mức Trung bình, #135). **Mốc giao:** MS-02.
 
 #### 1. Mô tả & Phạm vi
 Cung cấp danh sách công việc để nhân viên xem Ticket mới, Ticket được giao và Ticket đang cần xử lý trong phạm vi của mình.
@@ -123,7 +123,7 @@ Cung cấp danh sách công việc để nhân viên xem Ticket mới, Ticket đ
 
 ### [FR-STF-02] Phân loại, tiếp nhận và phân công Ticket
 
-**Priority:** Cao: quyết định người chịu trách nhiệm xử lý; thiếu thì Ticket không ra khỏi `NEW`. **Mốc giao:** MS-02. **Task GitHub:** #136, #137.
+**Priority:** Cao: quyết định người chịu trách nhiệm xử lý; thiếu thì Ticket không ra khỏi `NEW`. **Mốc giao:** MS-02.
 
 #### 1. Mô tả & Phạm vi
 Cho phép nhân viên kiểm tra **Nhóm vấn đề (Category)** đã được sinh viên chọn từ danh mục có sẵn, điều chỉnh Category khi nội dung thực tế được phân loại khác, tiếp nhận Ticket chưa có người phụ trách và cho phép người dùng có quyền phân công hoặc phân công lại Ticket cho nhân viên phù hợp.
@@ -197,7 +197,7 @@ Cho phép nhân viên kiểm tra **Nhóm vấn đề (Category)** đã được 
 
 ### [FR-STF-03] Quản lý mức độ ưu tiên và thời hạn xử lý
 
-**Priority:** Cao: thời hạn là căn cứ của Dashboard sắp quá hạn/quá hạn, mục tiêu giám sát của dự án. **Mốc giao:** MS-03. **Task GitHub:** #141, #142.
+**Priority:** Cao: thời hạn là căn cứ của Dashboard sắp quá hạn/quá hạn, mục tiêu giám sát của dự án. **Mốc giao:** MS-03.
 
 #### 1. Mô tả & Phạm vi
 Cho phép người dùng có quyền thiết lập mức độ ưu tiên của Ticket và theo dõi thời hạn xử lý tương ứng.
@@ -257,7 +257,7 @@ Cho phép người dùng có quyền thiết lập mức độ ưu tiên của T
 
 ### [FR-STF-04] Xử lý Ticket và yêu cầu sinh viên bổ sung
 
-**Priority:** Cao: thiếu thì nhân viên không xin được thông tin còn thiếu và thời hạn bị tính sai. **Mốc giao:** MS-03. **Task GitHub:** #143, #144.
+**Priority:** Cao: thiếu thì nhân viên không xin được thông tin còn thiếu và thời hạn bị tính sai. **Mốc giao:** MS-03.
 
 #### 1. Mô tả & Phạm vi
 Cho phép nhân viên xử lý Ticket đang phụ trách, ghi nhận tiến độ và yêu cầu sinh viên bổ sung thông tin hoặc tài liệu khi dữ liệu hiện có chưa đủ để tiếp tục xử lý.
@@ -320,7 +320,7 @@ Cho phép nhân viên xử lý Ticket đang phụ trách, ghi nhận tiến đ�
 
 ### [FR-STF-05] Chuyển xử lý và Escalation
 
-**Priority:** Cao: Transfer tránh Ticket sai phòng ban bị kẹt. Riêng Escalation ở mức Trung bình (#147), có thể dời qua CR nếu thiếu thời gian. **Mốc giao:** MS-03. **Task GitHub:** #146, #147.
+**Priority:** Cao: Transfer tránh Ticket sai phòng ban bị kẹt. Riêng Escalation ở mức Trung bình (#147), có thể dời qua CR nếu thiếu thời gian. **Mốc giao:** MS-03.
 
 #### 1. Mô tả & Phạm vi
 Cho phép chuyển Ticket sang **phòng ban khác** khi cần thay đổi đơn vị chịu trách nhiệm, hoặc thực hiện Escalation khi Ticket cần hỗ trợ/chuyển cấp xử lý. Việc đổi người phụ trách trong cùng phòng ban được thực hiện bằng luồng phân công lại tại FR-STF-02.
@@ -406,7 +406,7 @@ Cho phép chuyển Ticket sang **phòng ban khác** khi cần thay đổi đơn 
 
 ### [FR-STF-06] Ghi nhận kết quả và hoàn tất phần xử lý
 
-**Priority:** Cao: kết quả xử lý là đầu ra chính sinh viên cần; thiếu thì Ticket không đến `RESOLVED`. **Mốc giao:** MS-04. **Task GitHub:** #149, #153.
+**Priority:** Cao: kết quả xử lý là đầu ra chính sinh viên cần; thiếu thì Ticket không đến `RESOLVED`. **Mốc giao:** MS-04.
 
 #### 1. Mô tả & Phạm vi
 Cho phép nhân viên ghi nhận kết quả xử lý chính thức của Ticket và chuyển Ticket sang `RESOLVED` để sinh viên xem và phản hồi.

@@ -15,7 +15,7 @@ Phân hệ **Student Portal** cung cấp giao diện để sinh viên Aurora Uni
 
 ### [FR-STU-00] Đăng nhập và truy cập Student Portal
 
-**Priority:** Cao: mọi chức năng của Student Portal cần đăng nhập và phân quyền. **Mốc giao:** MS-01. **Task GitHub:** #120, #121.
+**Priority:** Cao: mọi chức năng của Student Portal cần đăng nhập và phân quyền. **Mốc giao:** MS-01.
 
 #### 1. Mô tả & Phạm vi
 Cho phép sinh viên đăng nhập vào UniSupport bằng tài khoản hợp lệ và truy cập Student Portal theo đúng phạm vi quyền.
@@ -65,7 +65,7 @@ Cho phép sinh viên đăng nhập vào UniSupport bằng tài khoản hợp l�
 
 ### [FR-STU-01] Tra cứu hướng dẫn và FAQ
 
-**Priority:** Trung bình: giúp giảm Ticket không cần thiết nhưng luồng Ticket vẫn chạy khi chưa có FAQ; là FR cắt giảm đầu tiên nếu thiếu thời gian (qua CR). **Mốc giao:** MS-02. **Task GitHub:** #131.
+**Priority:** Trung bình: giúp giảm Ticket không cần thiết nhưng luồng Ticket vẫn chạy khi chưa có FAQ; là FR cắt giảm đầu tiên nếu thiếu thời gian (qua CR). **Mốc giao:** MS-02.
 
 #### 1. Mô tả & Phạm vi
 Giúp sinh viên tra cứu các vấn đề thường gặp và thông tin cần chuẩn bị trước khi tạo Ticket.
@@ -111,7 +111,7 @@ Giúp sinh viên tra cứu các vấn đề thường gặp và thông tin cần
 
 ### [FR-STU-02] Tạo và gửi yêu cầu hỗ trợ
 
-**Priority:** Cao: là điểm khởi đầu của toàn bộ vòng đời Ticket. **Mốc giao:** MS-02. **Task GitHub:** #132, #133.
+**Priority:** Cao: là điểm khởi đầu của toàn bộ vòng đời Ticket. **Mốc giao:** MS-02.
 
 #### 1. Mô tả & Phạm vi
 Cho phép sinh viên tạo Ticket mới bằng cách chọn một **Nhóm vấn đề (Category)** từ danh mục có sẵn do hệ thống cung cấp, nhập nội dung mô tả chi tiết vấn đề và đính kèm tài liệu minh chứng khi cần. Mỗi Nhóm vấn đề được cấu hình gắn với phòng ban tiếp nhận phù hợp để hệ thống xác định nơi tiếp nhận Ticket sau khi gửi.
@@ -179,7 +179,7 @@ Cho phép sinh viên tạo Ticket mới bằng cách chọn một **Nhóm vấn 
 
 ### [FR-STU-03] Xem và theo dõi Ticket
 
-**Priority:** Cao: sinh viên phải theo dõi được Ticket; là mục tiêu minh bạch tiến độ của dự án. **Mốc giao:** MS-02. **Task GitHub:** #138.
+**Priority:** Cao: sinh viên phải theo dõi được Ticket; là mục tiêu minh bạch tiến độ của dự án. **Mốc giao:** MS-02.
 
 #### 1. Mô tả & Phạm vi
 Cho phép sinh viên xem danh sách Ticket của mình và theo dõi trạng thái, trách nhiệm xử lý, thời hạn và lịch sử cập nhật.
@@ -231,7 +231,7 @@ Cho phép sinh viên xem danh sách Ticket của mình và theo dõi trạng th�
 
 ### [FR-STU-04] Nhận và xem thông báo Ticket
 
-**Priority:** Trung bình: sinh viên vẫn theo dõi được bằng FR-STU-03 khi thông báo chậm; thông báo cải thiện trải nghiệm nhưng không chặn luồng Ticket. **Mốc giao:** MS-02 (hoàn thiện ở MS-04). **Task GitHub:** #139.
+**Priority:** Trung bình: sinh viên vẫn theo dõi được bằng FR-STU-03 khi thông báo chậm; thông báo cải thiện trải nghiệm nhưng không chặn luồng Ticket. **Mốc giao:** MS-02 (hoàn thiện ở MS-04).
 
 #### 1. Mô tả & Phạm vi
 Thông báo cho sinh viên khi Ticket của mình có sự kiện nghiệp vụ cần biết hoặc cần hành động.
@@ -289,7 +289,7 @@ Các sự kiện chính gồm:
 
 ### [FR-STU-05] Bổ sung thông tin và tài liệu
 
-**Priority:** Cao: không có bước bổ sung thì Ticket `WAITING_STUDENT` bị kẹt và thời hạn xử lý tính sai. **Mốc giao:** MS-03. **Task GitHub:** #145.
+**Priority:** Cao: không có bước bổ sung thì Ticket `WAITING_STUDENT` bị kẹt và thời hạn xử lý tính sai. **Mốc giao:** MS-03.
 
 #### 1. Mô tả & Phạm vi
 Cho phép sinh viên cung cấp thông tin hoặc tài liệu còn thiếu khi nhân viên yêu cầu.
@@ -341,7 +341,7 @@ Cho phép sinh viên cung cấp thông tin hoặc tài liệu còn thiếu khi n
 
 ### [FR-STU-06] Xem kết quả, phản hồi và yêu cầu mở lại
 
-**Priority:** Cao: hoàn tất vòng đời Ticket; thiếu FR này Ticket không bao giờ `CLOSED`. **Mốc giao:** MS-04. **Task GitHub:** #150, #151, #152, #154.
+**Priority:** Cao: hoàn tất vòng đời Ticket; thiếu FR này Ticket không bao giờ `CLOSED`. **Mốc giao:** MS-04.
 
 #### 1. Mô tả & Phạm vi
 Cho phép sinh viên xem nội dung kết quả xử lý và tài liệu kết quả nếu có, sau đó xác nhận Ticket đã được giải quyết hoặc phản hồi rằng vấn đề vẫn chưa được giải quyết.
@@ -410,7 +410,7 @@ Cho phép sinh viên xem nội dung kết quả xử lý và tài liệu kết q
 
 ### [FR-STU-07] Đánh giá mức độ hài lòng (CSAT)
 
-**Priority:** Trung bình: cung cấp dữ liệu CSAT cho báo cáo nhưng không ảnh hưởng xử lý Ticket. **Mốc giao:** MS-04. **Task GitHub:** #155.
+**Priority:** Trung bình: cung cấp dữ liệu CSAT cho báo cáo nhưng không ảnh hưởng xử lý Ticket. **Mốc giao:** MS-04.
 
 #### 1. Mô tả & Phạm vi
 Ghi nhận mức độ hài lòng của sinh viên sau khi Ticket đã kết thúc vòng đời xử lý.

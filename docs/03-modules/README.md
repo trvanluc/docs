@@ -24,11 +24,11 @@ Các năng lực dùng chung được đặc tả tại Domain, Workflows, yêu 
 Mỗi phân hệ gồm:
 
 - `README.md`: phạm vi, đối tượng sử dụng, danh sách yêu cầu chức năng, luồng nghiệp vụ chính và quan hệ với các phần còn lại.
-- `prd.md`: mỗi FR gồm dòng **Priority** (kèm mốc giao và task GitHub), rồi 9 mục: 1. Mô tả & phạm vi, 2. Actors & điều kiện tiên quyết, 3. Validation, 4. Luồng xử lý chính, 5. Luồng ngoại lệ (lỗi và từ chối), 6. Quy tắc nghiệp vụ, 7. Tiêu chí nghiệm thu (AC), 8. Luồng thay thế (Alternative Flows), 9. Ví dụ Edge Case. Mục 8–9 được thêm sau mục 7 để giữ nguyên số mục mà các issue GitHub đang dẫn tới.
+- `prd.md`: mỗi FR gồm dòng **Priority** (kèm mốc giao), rồi 9 mục: 1. Mô tả & phạm vi, 2. Actors & điều kiện tiên quyết, 3. Validation, 4. Luồng xử lý chính, 5. Luồng ngoại lệ (lỗi và từ chối), 6. Quy tắc nghiệp vụ, 7. Tiêu chí nghiệm thu (AC), 8. Luồng thay thế (Alternative Flows), 9. Ví dụ Edge Case. Mục 8–9 được thêm sau mục 7 để giữ nguyên số mục mà các issue GitHub đang dẫn tới.
 
 ## Mức Ưu Tiên FR
 
-Priority của FR là nơi gốc; dòng **Priority** trong parent task trên GitHub lấy theo PRD. Một FR có thể có task con ở mức thấp hơn, ví dụ phần xuất CSV của FR-MGT-06.
+Priority của FR là nơi gốc; dòng **Priority** trong parent task trên GitHub lấy theo PRD. Liên kết chỉ ghi một phía: parent task ghi mã FR, PRD không ghi ngược số issue. Một FR có thể có task con ở mức thấp hơn, ví dụ phần xuất CSV của FR-MGT-06.
 
 | Mức | Tiêu chí | Khi thiếu thời gian hoặc có CR |
 | --- | --- | --- |

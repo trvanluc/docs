@@ -12,12 +12,27 @@ Trang này giải thích các quyết định của kế hoạch. Số liệu (n
 | Giá | [quotation.xlsx](quotation.xlsx) |
 | Rủi ro | [risk-register.md](risk-register.md) |
 
+## Thời điểm của dự án
+
+**Quyết định:** dự án đang ở trước ngày khởi động. Proposal `v1.0` đang được hoàn thiện theo góp ý của giảng viên và **chưa gửi khách**, nên [sent/](sent/) chưa có bản nào. Lịch 05/10/2026–08/01/2027 là **lịch đề xuất** trong Proposal, giả định khách duyệt và khởi động ngày 05/10/2026.
+
+**Lý do:** đây là dự án môn học; chuẩn của môn chấm tài liệu, kế hoạch và quy trình, không yêu cầu thực hiện. Nhóm **không mô phỏng tiến độ thực hiện**, vì vậy:
+
+- Mọi parent task trên GitHub để open. Chúng là việc trong kế hoạch, chưa có task nào được làm.
+- Không có báo cáo tiến độ hay số giờ thực tế. Ví dụ báo cáo tuần trong [kế hoạch quản trị mục 6.2](../11-governance/ke-hoach-quan-tri-giam-sat.md#62-mẫu-và-ví-dụ-báo-cáo-tuần) ghi `Mô phỏng`, chỉ để minh hoạ mẫu.
+- Ngày thực tế trên lịch không được dùng để so tiến độ với kế hoạch.
+
+Nếu khách duyệt muộn hơn 05/10/2026, toàn bộ lịch dời theo ngày khởi động thực tế (Proposal mục 3.1: thời gian chờ khách được điều chỉnh vào tiến độ). Việc dời lịch ghi một dòng vào sheet `Change log`.
+
 ## Cách chia milestone
 
 Dự án có **giai đoạn khởi động** (05/10–14/10/2026) và **6 mốc** `MS-01`…`MS-06` chia theo **luồng đi của một Ticket** (nền tảng → tiếp nhận → xử lý → trả kết quả → quản trị → tích hợp và bàn giao), không theo phân hệ hay theo tầng kỹ thuật. Lý do:
 
 - Mỗi mốc giao cho client một phần phần mềm **chạy được trên staging**, gồm cả màn hình Sinh viên lẫn Nhân viên của cùng một đoạn luồng. Client kiểm tra được ngay giá trị nghiệp vụ, không phải chờ "xong phân hệ Sinh viên" mới thấy Ticket được xử lý.
 - Giai đoạn khởi động (chốt phạm vi, prototype tương tác 3 vai trò, thiết kế kỹ thuật) **không phải milestone** vì chưa giao phần mềm chạy được. Client vẫn duyệt prototype ở cuối giai đoạn này: đây là điểm dừng rẻ nhất để đổi ý về luồng màn hình trước khi code.
+- **MS-01 (Nền tảng hệ thống) được giữ làm mốc đầu, dù sinh viên và nhân viên chưa làm được việc nghiệp vụ nào.** Sau MS-01, người quản lý phía khách đăng nhập bản staging và tự tạo tài khoản, phòng ban, nhóm vấn đề và phòng ban tiếp nhận trên phần mềm thật. Đây là dữ liệu mà luồng Ticket ở MS-02 cần. Client cũng kiểm tra được ngay việc chặn truy cập sai quyền (R-01, rủi ro mức Cao).
+  - Đánh đổi: phân quyền được làm chắc trước khi có dữ liệu Ticket, đổi lại sinh viên thấy giá trị nghiệp vụ muộn hơn khoảng 2 tuần (cuối MS-02, 12/11/2026).
+  - Phương án đã cân nhắc: đưa một lát mỏng "sinh viên gửi Ticket, nhân viên thấy trong hàng chờ" vào MS-01. Nhóm không chọn vì phương án này phải làm luồng Ticket trên phân quyền chưa xong, dễ phải làm lại khi phân quyền thay đổi.
 - Thứ tự mốc khớp thứ tự ưu tiên FR trong PRD (xem [03-modules/README.md](../03-modules/README.md#mức-ưu-tiên-fr)): FR mức Cao nằm ở `MS-01`…`MS-04`. `MS-05` có Dashboard và báo cáo (mức Cao) nhưng phải đi sau vì cần dữ liệu của vòng đời Ticket đầy đủ.
 
 Phần giao được, kịch bản kiểm tra (`TS-xx`) và điều kiện nghiệm thu của từng `MS-xx` ở sheet `Milestones`; bản tóm tắt ở [milestones-and-timeline.md](milestones-and-timeline.md).

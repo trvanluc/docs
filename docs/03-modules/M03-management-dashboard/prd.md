@@ -16,7 +16,7 @@ Phân hệ **Management Dashboard** cho phép người dùng Quản lý giám s�
 
 ### [FR-MGT-00] Đăng nhập và truy cập Management Dashboard
 
-**Priority:** Cao: mọi chức năng quản trị và giám sát cần đăng nhập theo phạm vi. **Mốc giao:** MS-01. **Task GitHub:** #120, #121.
+**Priority:** Cao: mọi chức năng quản trị và giám sát cần đăng nhập theo phạm vi. **Mốc giao:** MS-01.
 
 #### 1. Mô tả & Phạm vi
 Cho phép người dùng Management đăng nhập UniSupport và truy cập các chức năng quản lý đúng với phạm vi quyền được cấp.
@@ -68,7 +68,7 @@ Cho phép người dùng Management đăng nhập UniSupport và truy cập các
 
 ### [FR-MGT-01] Quản lý tài khoản, vai trò và phạm vi quyền
 
-**Priority:** Cao: cần tài khoản và vai trò đúng trước khi kiểm thử mọi luồng khác. **Mốc giao:** MS-01. **Task GitHub:** #122, #123.
+**Priority:** Cao: cần tài khoản và vai trò đúng trước khi kiểm thử mọi luồng khác. **Mốc giao:** MS-01.
 
 #### 1. Mô tả & Phạm vi
 Cho phép Management có quyền quản trị tạo và cập nhật tài khoản, khóa/mở khóa tài khoản, gán nhóm người dùng và xác định phạm vi phòng ban/quyền phù hợp.
@@ -158,7 +158,7 @@ Cho phép Management có quyền quản trị tạo và cập nhật tài khoả
 
 ### [FR-MGT-02] Quản lý phòng ban và Nhóm vấn đề
 
-**Priority:** Cao: Ticket cần Category và phòng ban tiếp nhận hợp lệ ngay từ lúc tạo. **Mốc giao:** MS-01. **Task GitHub:** #124, #125.
+**Priority:** Cao: Ticket cần Category và phòng ban tiếp nhận hợp lệ ngay từ lúc tạo. **Mốc giao:** MS-01.
 
 #### 1. Mô tả & Phạm vi
 Cho phép Management có quyền cấu hình quản lý danh sách phòng ban và **Nhóm vấn đề (Category)** dùng trong quá trình tạo, phân loại và chuyển xử lý Ticket.
@@ -230,7 +230,7 @@ Cho phép Management có quyền cấu hình quản lý danh sách phòng ban v�
 
 ### [FR-MGT-03] Tra soát lịch sử thao tác
 
-**Priority:** Trung bình: nền tảng ghi lịch sử (#127) làm từ MS-01; màn hình tra soát phục vụ khiếu nại và sự cố, không chặn luồng Ticket. **Mốc giao:** MS-01 (ghi nhận) và MS-05 (màn hình tra soát). **Task GitHub:** #126, #127, #156.
+**Priority:** Trung bình: nền tảng ghi lịch sử (#127) làm từ MS-01; màn hình tra soát phục vụ khiếu nại và sự cố, không chặn luồng Ticket. **Mốc giao:** MS-01 (ghi nhận) và MS-05 (màn hình tra soát).
 
 #### 1. Mô tả & Phạm vi
 Cho phép Management có quyền tra soát xem các thao tác quan trọng đã phát sinh trên Ticket và các chức năng quản trị hệ thống.
@@ -291,7 +291,7 @@ Các sự kiện tối thiểu cần tra soát gồm:
 
 ### [FR-MGT-04] Quản lý chính sách lưu trữ dữ liệu
 
-**Priority:** Thấp: chỉ đánh dấu dữ liệu đến hạn, không ảnh hưởng luồng xử lý; có thể dời qua CR nếu thiếu thời gian. **Mốc giao:** MS-05. **Task GitHub:** #157, #158.
+**Priority:** Thấp: chỉ đánh dấu dữ liệu đến hạn, không ảnh hưởng luồng xử lý; có thể dời qua CR nếu thiếu thời gian. **Mốc giao:** MS-05.
 
 #### 1. Mô tả & Phạm vi
 Cho phép Management có quyền cấu hình thời hạn lưu trữ cơ bản cho Ticket đã đóng, file đính kèm và nhật ký tra soát.
@@ -347,7 +347,7 @@ Cho phép Management có quyền cấu hình thời hạn lưu trữ cơ bản c
 
 ### [FR-MGT-05] Dashboard giám sát hoạt động hỗ trợ
 
-**Priority:** Cao: giám sát khối lượng và Ticket quá hạn là mục tiêu cốt lõi G-04 của dự án. **Mốc giao:** MS-05. **Task GitHub:** #159, #160.
+**Priority:** Cao: giám sát khối lượng và Ticket quá hạn là mục tiêu cốt lõi G-04 của dự án. **Mốc giao:** MS-05.
 
 #### 1. Mô tả & Phạm vi
 Cung cấp màn hình tổng quan để Management theo dõi tình trạng xử lý hiện tại và khối lượng công việc trong phạm vi quản lý được cấp.
@@ -410,7 +410,7 @@ Bộ lọc hỗ trợ tối thiểu:
 
 ### [FR-MGT-06] Báo cáo, mức độ hài lòng (CSAT) và xuất dữ liệu
 
-**Priority:** Cao: báo cáo xu hướng, thời gian xử lý và CSAT là cam kết trong Proposal. Riêng xuất CSV ở mức Trung bình (#162). **Mốc giao:** MS-05. **Task GitHub:** #161, #162.
+**Priority:** Cao: báo cáo xu hướng, thời gian xử lý và CSAT là cam kết trong Proposal. Riêng xuất CSV ở mức Trung bình (#162). **Mốc giao:** MS-05.
 
 #### 1. Mô tả & Phạm vi
 Cho phép Management xem báo cáo theo khoảng thời gian về xu hướng Nhóm vấn đề, thời gian xử lý và mức độ hài lòng của sinh viên; người có quyền có thể xuất dữ liệu báo cáo.
