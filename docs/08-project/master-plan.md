@@ -95,7 +95,7 @@ Bảo hành **có tính vào giá**: Proposal cam kết sửa lỗi kỹ thuật
   3. Nếu không thoả bước 2: dời mốc bị ảnh hưởng. PM ghi phiên bản mới vào sheet `Change log` và gửi khách xác nhận ngày mới cùng báo giá CR.
   4. PM quyết định cách xếp theo quy trình CR ([kế hoạch quản trị mục 5](../11-governance/ke-hoach-quan-tri-giam-sat.md#5-kiểm-soát-thay-đổi), bước 2–3).
 
-  Đánh đổi: giữ được ngày bàn giao khi khách đổi ý nhỏ, đổi lại đội làm gần hết năng lực ở mốc có CR. Ngưỡng 16h tương đương khoảng 4 ngày làm việc của một người ở 20h/tuần, đủ cho thay đổi nhỏ mà không ăn hết năng lực còn trống của cả mốc. Điểm căng nhất là **BE2 trong đoạn MS-02 + MS-03** (phụ trách backend luồng Nhân viên): đã dùng khoảng 96% năng lực, nên CR cần BE2 trong đoạn này gần như luôn phải dời mốc; tương tự BE1 ở MS-05 (khoảng 88%).
+  Đánh đổi: giữ được ngày bàn giao khi khách đổi ý nhỏ, đổi lại đội làm gần hết năng lực ở mốc có CR. Ngưỡng 16h tương đương khoảng 4 ngày làm việc của một người ở 20h/tuần, đủ cho thay đổi nhỏ mà không ăn hết năng lực còn trống của cả mốc. Điểm căng nhất là **BE1 ở MS-05** (Dashboard và báo cáo): đã dùng khoảng 88% năng lực, còn khoảng 4h, nên CR cần BE1 ở MS-05 gần như luôn phải dời mốc. Kế đến là **BE2 trong đoạn MS-02 + MS-03** (backend luồng Nhân viên, hai mốc chồng nhau 7 ngày): dùng khoảng 82%, còn khoảng 12h cho cả đoạn.
 - Tổng: 823h cơ sở + 62h dự phòng = **885h**. Chi phí nội bộ khoảng 261,4 triệu (sheet `BẢNG CHI PHÍ NHÂN SỰ`); giá bán 300 triệu (chênh lệch ≈ 12,9% cho chi phí chung, công cụ và lợi nhuận).
 
 ## Cách nhận feedback của client sau mỗi milestone
