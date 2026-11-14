@@ -54,18 +54,21 @@ Phần giao được, kịch bản kiểm tra (`TS-xx`) và điều kiện nghi�
 | Việc | Giờ | Dòng WBS | Hạng mục báo giá |
 | --- | ---: | --- | --- |
 | Test chức năng trong từng gói chức năng (QA) | 98h | 1.7.2 | trong `Q-01`, `Q-02`, `Q-03` |
-| Regression trước mỗi lần giao mốc (3h × 5 lần, MS-01…MS-05) | 15h | 1.7.2 | `Q-07` |
+| Regression trước mỗi lần giao mốc, tăng theo số kịch bản phải chạy lại: 1h, 2h, 3h, 4h, 5h ở MS-01…MS-05 | 15h | 1.7.2 | `Q-07` |
 | Kiểm thử hệ thống: chức năng, tích hợp, phân quyền, hiệu năng (MS-06) | 34h | 1.7.2 | `Q-07` |
 | Hỗ trợ UAT (MS-06) | 16h | 1.7.3 | `Q-07` |
 | Tích hợp toàn hệ thống (MS-06) | 36h | 1.7.1 | `Q-06` |
-| Sửa lỗi sau kiểm thử hệ thống và UAT (MS-06) | 32h | 1.7.2 | `Q-08` |
+| Sửa lỗi giữa các mốc: lỗi do regression hoặc feedback của client ở mốc trước, sửa trong mốc kế tiếp (MS-02…MS-05, mỗi mốc 4h: BE1, BE2, FE1, FE2 mỗi người 1h) | 16h | 1.7.2 | `Q-08` |
+| Sửa lỗi sau kiểm thử hệ thống và UAT (MS-06) | 16h | 1.7.2 | `Q-08` |
 | Triển khai production, bàn giao mã nguồn (MS-06) | 16h | 1.8.1, 1.8.2 | `Q-05` |
 | Hướng dẫn sử dụng (MS-06) | 16h | 1.8.4 | `Q-09` |
 | Bảo hành 30 ngày sau nghiệm thu | 26h | 1.8.5 | `Q-10` |
 
 **Tích hợp không dồn vào mốc cuối.** Mỗi mốc giao một luồng chạy xuyên cổng Sinh viên ↔ Nhân viên (↔ Quản lý), nên tích hợp FE–BE và giữa các cổng của luồng đó làm ngay trong mốc, giờ nằm trong gói chức năng của mốc (WBS 1.3–1.6), và được regression trước khi giao. `Q-06` (36h) ở MS-06 chỉ dành cho tích hợp end-to-end toàn bộ luồng và nối dữ liệu vận hành vào Dashboard/báo cáo.
 
-`MS-06` (15 ngày làm việc) có 162h kế hoạch: TL 16h, BA 21h, UI/UX 2h, FE1 11h, FE2 11h, BE1 18h, BE2 18h, QA 40h, DevOps 14h, PM 11h (sheet `Resources`).
+`MS-06` (14 ngày làm việc, trừ ngày nghỉ 01/01/2027 ở sheet `Ngày nghỉ`) có 146h kế hoạch: TL 16h, BA 21h, UI/UX 2h, FE1 7h, FE2 7h, BE1 14h, BE2 14h, QA 40h, DevOps 14h, PM 11h (sheet `Resources`).
+
+Lỗi phát hiện ở MS-01…MS-05 được sửa trong mốc kế tiếp bằng 16h sửa lỗi giữa các mốc, không chờ tới MS-06; vì vậy MS-06 chỉ còn 16h sửa lỗi sau UAT. Nếu lỗi của một mốc vượt 4h, phần vượt lấy từ năng lực còn trống của mốc kế tiếp (xem mục dưới) hoặc từ buffer kỹ thuật của module đó.
 
 Bảo hành **có tính vào giá**: Proposal cam kết sửa lỗi kỹ thuật miễn phí 30 ngày, nên phần công này nằm trong 300 triệu (`Q-10`, 26h ≈ 8,9 triệu).
 
@@ -76,6 +79,13 @@ Bảo hành **có tính vào giá**: Proposal cam kết sửa lỗi kỹ thuật
   - 40h dự phòng rủi ro dự án (`Q-11`), dùng khi một rủi ro trong [risk-register.md](risk-register.md) xảy ra.
 - Dự phòng **có tính vào giá**. PM quyết định dùng dự phòng trong phạm vi tổng ngân sách ([kế hoạch quản trị](../11-governance/ke-hoach-quan-tri-giam-sat.md#4-chuyển-cấp-vấn-đề-và-quyền-quyết-định)).
 - **CR không lấy từ dự phòng.** Mọi CR làm tăng phạm vi được đánh giá tác động và báo giá riêng theo cùng đơn giá trong `quotation.xlsx`, sheet `Đơn giá`.
+- **Năng lực cho CR: dùng năng lực còn trống của đội.** Mỗi vai trò có 20h/tuần cho dự án nhưng kế hoạch chỉ dùng 2–88% tuỳ mốc. Phần còn trống theo vai trò × mốc nằm ở `master-schedule.xlsx` sheet `Resources`, bảng "Năng lực còn trống". Cách xếp một CR đã được khách duyệt:
+  1. BA và TL ước lượng giờ CR theo từng vai trò, **gồm cả giờ QA để test và regression phần bị ảnh hưởng**.
+  2. Nếu tổng giờ CR không quá 16h, và giờ của từng vai trò không vượt năng lực còn trống của vai trò đó ở **mốc kế tiếp**: CR được làm trong mốc kế tiếp, **không dời ngày mốc**. Với MS-02 và MS-03 (chồng nhau 7 ngày), kiểm thêm bảng tỷ lệ sử dụng MS-02 + MS-03 không vượt 100%.
+  3. Nếu không thoả bước 2: dời mốc bị ảnh hưởng. PM ghi phiên bản mới vào sheet `Change log` và gửi khách xác nhận ngày mới cùng báo giá CR.
+  4. PM quyết định cách xếp theo quy trình CR ([kế hoạch quản trị mục 5](../11-governance/ke-hoach-quan-tri-giam-sat.md#5-kiểm-soát-thay-đổi), bước 2–3).
+
+  Đánh đổi: giữ được ngày bàn giao khi khách đổi ý nhỏ, đổi lại đội làm gần hết năng lực ở mốc có CR. Ngưỡng 16h giữ cho một CR không chiếm quá khoảng 1/3 năng lực còn trống của vai trò bận nhất (BE1 ở MS-02 còn khoảng 15h).
 - Tổng: 823h cơ sở + 62h dự phòng = **885h**. Chi phí nội bộ khoảng 263,7 triệu (sheet `BẢNG CHI PHÍ NHÂN SỰ`); giá bán 300 triệu (chênh lệch ≈ 12% cho chi phí chung, công cụ và lợi nhuận).
 
 ## Cách nhận feedback của client sau mỗi milestone
@@ -84,7 +94,7 @@ Bảo hành **có tính vào giá**: Proposal cam kết sửa lỗi kỹ thuật
 2. Client (`Mô phỏng`) tự dùng thử và gửi phản hồi trong 02 ngày làm việc (giả định `A-16`).
 3. PM ghi mỗi phản hồi thành một GitHub Issue theo mẫu **Feedback**, ghi mã `MS-xx` trong nội dung. Issue Feedback không gắn GitHub milestone, vì milestone trên GitHub chỉ chứa task dev.
 4. BA phân loại phản hồi theo [ke-hoach-quan-ly-san-pham.md](../10-product-management/ke-hoach-quan-ly-san-pham.md#42-đo-lường-và-thu-thập-phản-hồi):
-   - Lỗi: tạo issue **Bug**, sửa trong mốc kế tiếp.
+   - Lỗi: tạo issue **Bug**, sửa trong mốc kế tiếp bằng giờ "sửa lỗi giữa các mốc" (`Q-08`, 4h mỗi mốc MS-02…MS-05).
    - Thay đổi phạm vi: tạo issue **Change request** `CR-xx`, đi theo quy trình ở [mục 5 kế hoạch quản trị](../11-governance/ke-hoach-quan-tri-giam-sat.md#5-kiểm-soát-thay-đổi).
    - Làm rõ: trả lời ngay trong issue.
 5. GitHub milestone `MS-01`…`MS-06` được đóng khi mọi task dev đạt DoD và kịch bản test của mốc đạt; việc client nghiệm thu mốc và UAT được theo dõi trong báo cáo mốc, không trên GitHub.
