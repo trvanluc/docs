@@ -58,7 +58,7 @@ RTM liên kết **Gói công việc → Functional Requirement/Flow → Workflow
 | Môi trường, CI/CD; triển khai production, bàn giao mã nguồn | 46h | `Q-05` | MS-01, MS-06 | NFR-DEP |
 | Tích hợp toàn hệ thống | 36h | `Q-06` | MS-06 | WF-01…WF-07 |
 | Kiểm thử hệ thống, regression mỗi mốc, hỗ trợ UAT | 65h | `Q-07` | MS-01…MS-06 | Toàn bộ TS, NFR |
-| Sửa lỗi sau kiểm thử hệ thống và UAT | 32h | `Q-08` | MS-06 | Regression |
+| Sửa lỗi giữa các mốc (16h) và sau kiểm thử hệ thống/UAT (16h) | 32h | `Q-08` | MS-02…MS-06 | Regression |
 | Hướng dẫn sử dụng | 16h | `Q-09` | MS-06 | Tài liệu bàn giao |
 | Bảo hành 30 ngày | 26h | `Q-10` | Sau MS-06 | — |
 
