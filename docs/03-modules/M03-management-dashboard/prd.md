@@ -51,10 +51,13 @@ Cho phép người dùng Management đăng nhập UniSupport và truy cập các
 - Quyền truy cập tuân thủ [Actors & Roles](../../01-product/actors-and-roles.md).
 
 #### 7. Tiêu chí nghiệm thu
-- **AC-00-01:** Tài khoản Management hợp lệ truy cập được Management Dashboard.
-- **AC-00-02:** Tài khoản không có vai trò Management không truy cập được phân hệ.
-- **AC-00-03:** Các chức năng quản trị không thuộc quyền của tài khoản không được phép sử dụng.
-- **AC-00-04:** Dữ liệu ngoài phạm vi quản lý không được hiển thị hoặc truy cập trực tiếp.
+- **FR-MGT-00/AC-01:** Tài khoản Management hợp lệ đăng nhập thành công và được đưa vào Management Dashboard.
+- **FR-MGT-00/AC-02:** Tài khoản không có vai trò Management mở Management Dashboard: hiển thị trang "không có quyền truy cập".
+- **FR-MGT-00/AC-03:** Chức năng quản trị không thuộc quyền của tài khoản không hiển thị trên menu; gọi trực tiếp tới hệ thống bị từ chối với thông báo "không có quyền thực hiện".
+- **FR-MGT-00/AC-04:** Dữ liệu ngoài phạm vi quản lý không được hiển thị hoặc mở trực tiếp bằng đường dẫn.
+- **FR-MGT-00/AC-05:** Sai thông tin đăng nhập hoặc tài khoản bị khóa: thông báo tương ứng ("thông tin đăng nhập không đúng" / "tài khoản đã bị khóa"), không tạo phiên.
+- **FR-MGT-00/AC-06:** Phiên hết hạn: thao tác tiếp theo đưa người dùng về màn hình đăng nhập kèm thông báo "phiên đã hết hạn"; dữ liệu chưa lưu không được ghi.
+- **FR-MGT-00/AC-07:** Quản lý phạm vi toàn trường thấy dữ liệu mọi phòng ban; quản lý phạm vi một phòng ban chỉ thấy dữ liệu phòng ban đó trên mọi màn hình (Dashboard, báo cáo, tra soát).
 
 #### 8. Luồng thay thế (Alternative Flows)
 - **A1 — Quản lý phạm vi phòng ban** đăng nhập: chỉ thấy dữ liệu và chức năng của phòng ban đó.
@@ -62,7 +65,7 @@ Cho phép người dùng Management đăng nhập UniSupport và truy cập các
 
 #### 9. Ví dụ Edge Case
 - Quản lý bị đổi phạm vi từ toàn trường sang một phòng ban khi đang đăng nhập: lần tải tiếp theo áp dụng phạm vi mới.
-- Gọi trực tiếp API quản trị bằng tài khoản không có quyền: bị từ chối (AC-00-03).
+- Gọi trực tiếp API quản trị bằng tài khoản không có quyền: bị từ chối (FR-MGT-00/AC-03).
 
 ---
 
@@ -136,23 +139,28 @@ Cho phép Management có quyền quản trị tạo và cập nhật tài khoả
 - Tạo, thay đổi quyền, khóa và mở khóa tài khoản đều phải được ghi nhận để tra soát.
 
 #### 7. Tiêu chí nghiệm thu
-- **AC-01-01:** Tài khoản hợp lệ được tạo với đúng nhóm người dùng, phạm vi và mật khẩu khởi tạo.
-- **AC-01-02:** Không thể tạo hai tài khoản có cùng Tên đăng nhập/Mã định danh.
-- **AC-01-03:** Tài khoản Nhân viên chỉ được lưu khi được gắn với một phòng ban đang hoạt động.
-- **AC-01-04:** Khóa Nhân viên đang phụ trách Ticket hợp lệ sẽ gỡ người phụ trách và đưa các Ticket liên quan về hàng chờ của phòng ban trước khi tài khoản bị khóa.
-- **AC-01-05:** Không thể khóa/hạ quyền nếu thao tác làm hệ thống mất tài khoản Quản lý cuối cùng có quyền quản lý tài khoản và phân quyền.
-- **AC-01-06:** Người quản trị không thể cấp quyền hoặc phạm vi vượt quá quyền/phạm vi của chính mình.
-- **AC-01-07:** Mọi thay đổi vai trò/phạm vi và trạng thái tài khoản được ghi nhận trong nhật ký tra soát.
+- **FR-MGT-01/AC-01:** Tài khoản hợp lệ được tạo ở trạng thái hoạt động với đúng nhóm người dùng, phạm vi và mật khẩu khởi tạo.
+- **FR-MGT-01/AC-02:** Tên đăng nhập/Mã định danh đã tồn tại (không phân biệt hoa thường): không tạo tài khoản, thông báo "tên đăng nhập đã tồn tại", số tài khoản không đổi.
+- **FR-MGT-01/AC-03:** Tài khoản Nhân viên không gắn phòng ban đang hoạt động: không lưu, thông báo tại trường phòng ban.
+- **FR-MGT-01/AC-04:** Khóa Nhân viên đang phụ trách Ticket hợp lệ sẽ gỡ người phụ trách và đưa các Ticket liên quan về hàng chờ của phòng ban trước khi tài khoản bị khóa.
+- **FR-MGT-01/AC-05:** Khóa hoặc hạ quyền tài khoản Quản lý cuối cùng có quyền quản lý tài khoản và phân quyền: bị từ chối với thông báo nêu lý do; tài khoản giữ nguyên trạng thái và quyền.
+- **FR-MGT-01/AC-06:** Cấp quyền hoặc phạm vi vượt quá quyền/phạm vi của chính người thực hiện: bị từ chối với thông báo, quyền của tài khoản đích không đổi.
+- **FR-MGT-01/AC-07:** Mọi lần tạo, thay đổi vai trò/phạm vi, khóa và mở khóa tài khoản được ghi trong nhật ký tra soát với giá trị trước/sau và người thực hiện.
+- **FR-MGT-01/AC-08:** Người dùng không có thao tác khóa cho chính tài khoản đang đăng nhập; yêu cầu tự khóa gửi trực tiếp bị từ chối, tài khoản vẫn hoạt động.
+- **FR-MGT-01/AC-09:** Người không có quyền quản trị tài khoản: người dùng không thấy thao tác này; nếu gửi trực tiếp tới hệ thống thì nhận thông báo "không có quyền thực hiện" và dữ liệu không đổi.
+- **FR-MGT-01/AC-10:** Thay đổi quyền/phạm vi hoặc khóa tài khoản không làm thay đổi lịch sử, phòng ban hay trạng thái của Ticket (ngoài việc gỡ người phụ trách theo FR-MGT-01/AC-04).
+- **FR-MGT-01/AC-11:** Lý do khóa rỗng, dưới 10 hoặc trên 500 ký tự: thông báo tại trường lý do, tài khoản không bị khóa.
+- **FR-MGT-01/AC-12:** Mở khóa đưa tài khoản về trạng thái hoạt động nhưng không tự gán lại các Ticket đã được đưa về hàng chờ trước đó.
 
 #### 8. Luồng thay thế (Alternative Flows)
 - Luồng B (cập nhật vai trò/phạm vi) và Luồng C (khóa/mở khóa) ở mục 4 là các luồng thay thế của Luồng A (tạo tài khoản).
 - **A1 — Mở khóa tài khoản Nhân viên:** tài khoản hoạt động lại nhưng không tự nhận lại Ticket cũ.
 
 #### 9. Ví dụ Edge Case
-- Khóa tài khoản Quản lý cuối cùng có quyền quản trị: bị từ chối (AC-01-05).
+- Khóa tài khoản Quản lý cuối cùng có quyền quản trị: bị từ chối (FR-MGT-01/AC-05).
 - Lý do khóa 9 ký tự: từ chối; 500 ký tự: chấp nhận; 501: từ chối.
 - Tên đăng nhập trùng nhưng khác hoa/thường (`sv001` và `SV001`): coi là trùng, bị từ chối.
-- Khóa Nhân viên đang phụ trách 3 Ticket (`NEW`, `IN_PROGRESS`, `WAITING_STUDENT`): cả 3 về hàng chờ phòng ban, trạng thái giữ nguyên (AC-01-04).
+- Khóa Nhân viên đang phụ trách 3 Ticket (`NEW`, `IN_PROGRESS`, `WAITING_STUDENT`): cả 3 về hàng chờ phòng ban, trạng thái giữ nguyên (FR-MGT-01/AC-04).
 
 ---
 
@@ -210,20 +218,25 @@ Cho phép Management có quyền cấu hình quản lý danh sách phòng ban v�
 - Mọi thay đổi cấu hình phải được ghi nhận trong nhật ký tra soát.
 
 #### 7. Tiêu chí nghiệm thu
-- **AC-02-01:** Category hoạt động luôn có đúng một phòng ban tiếp nhận mặc định.
-- **AC-02-02:** M01 chỉ hiển thị Category đang hoạt động khi sinh viên tạo Ticket.
-- **AC-02-03:** Thay đổi ánh xạ Nhóm vấn đề → phòng ban không tự động thay đổi Ticket đã tồn tại.
-- **AC-02-04:** Không thể vô hiệu hóa phòng ban nếu còn Ticket ở `NEW`, `IN_PROGRESS`, `WAITING_STUDENT` hoặc `RESOLVED` vẫn còn thời hạn phản hồi/mở lại.
-- **AC-02-05:** M02 sử dụng cấu hình mới cho các thao tác phân loại/chuyển xử lý phát sinh sau khi cấu hình được cập nhật.
-- **AC-02-06:** Thay đổi phòng ban/Category được ghi nhận để tra soát.
+- **FR-MGT-02/AC-01:** Category đang hoạt động luôn có đúng một phòng ban tiếp nhận mặc định.
+- **FR-MGT-02/AC-02:** M01 chỉ hiển thị Category đang hoạt động khi sinh viên tạo Ticket.
+- **FR-MGT-02/AC-03:** Thay đổi ánh xạ Nhóm vấn đề → phòng ban không tự động thay đổi Category/phòng ban của Ticket đã tồn tại.
+- **FR-MGT-02/AC-04:** Vô hiệu hóa phòng ban còn Ticket ở `NEW`, `IN_PROGRESS`, `WAITING_STUDENT` hoặc `RESOLVED` còn thời hạn phản hồi: bị từ chối với thông báo nêu số Ticket còn mở, phòng ban giữ trạng thái hoạt động.
+- **FR-MGT-02/AC-05:** M02 dùng cấu hình mới cho các thao tác phân loại/chuyển xử lý phát sinh sau khi cấu hình được cập nhật.
+- **FR-MGT-02/AC-06:** Mọi thay đổi phòng ban/Category được ghi trong nhật ký tra soát với giá trị trước/sau.
+- **FR-MGT-02/AC-07:** Tên phòng ban trùng phòng ban đang hoạt động, hoặc tên Category trùng bất kỳ Category nào (kể cả đã vô hiệu hóa): không lưu, thông báo nêu tên bị trùng; nếu trùng Category đã vô hiệu hóa thì thông báo gợi ý kích hoạt lại.
+- **FR-MGT-02/AC-08:** Lưu Category đang hoạt động mà không có phòng ban tiếp nhận hợp lệ: không lưu, thông báo tại trường phòng ban.
+- **FR-MGT-02/AC-09:** Kích hoạt Category khi phòng ban được gán đã ngừng hoạt động: bị từ chối với thông báo, Category giữ trạng thái không hoạt động.
+- **FR-MGT-02/AC-10:** Người không có quyền cấu hình: người dùng không thấy thao tác này; nếu gửi trực tiếp tới hệ thống thì nhận thông báo "không có quyền thực hiện" và dữ liệu không đổi.
+- **FR-MGT-02/AC-11:** Ticket mới tạo ở M01 được gắn phòng ban theo cấu hình Category → phòng ban hiện hành tại thời điểm tạo.
 
 #### 8. Luồng thay thế (Alternative Flows)
 - Luồng B (Nhóm vấn đề) ở mục 4 là luồng song song với Luồng A (phòng ban).
 - **A1 — Kích hoạt lại Category đã vô hiệu hóa** thay cho tạo mới cùng tên.
 
 #### 9. Ví dụ Edge Case
-- Vô hiệu hóa phòng ban còn một Ticket `RESOLVED` ở ngày làm việc thứ 3: bị từ chối; sang ngày thứ 4: được phép (AC-02-04).
-- Đổi ánh xạ Category → phòng ban khi đang có Ticket mở: Ticket cũ giữ phòng ban cũ (AC-02-03).
+- Vô hiệu hóa phòng ban còn một Ticket `RESOLVED` ở ngày làm việc thứ 3: bị từ chối; sang ngày thứ 4: được phép (FR-MGT-02/AC-04).
+- Đổi ánh xạ Category → phòng ban khi đang có Ticket mở: Ticket cũ giữ phòng ban cũ (FR-MGT-02/AC-03).
 - Tạo Category trùng tên với Category đã vô hiệu hóa: bị từ chối và gợi ý kích hoạt lại.
 
 ---
@@ -274,18 +287,22 @@ Các sự kiện tối thiểu cần tra soát gồm:
 - Việc tra cứu nhật ký không làm thay đổi Ticket hoặc dữ liệu nghiệp vụ được tra soát.
 
 #### 7. Tiêu chí nghiệm thu
-- **AC-03-01:** Các sự kiện quan trọng bắt buộc có bản ghi tra soát tương ứng.
-- **AC-03-02:** Có thể lọc nhật ký theo khoảng thời gian, tác nhân, Mã Ticket và loại sự kiện.
-- **AC-03-03:** Không tài khoản nào, kể cả Management, có thể sửa/xóa bản ghi tra soát qua chức năng thông thường của ứng dụng.
-- **AC-03-04:** Management chỉ xem nhật ký thuộc phạm vi quyền được cấp.
+- **FR-MGT-03/AC-01:** Mỗi sự kiện bắt buộc trong danh sách ở mục 4 tạo một bản ghi tra soát có thời điểm, người/hệ thống thực hiện, loại sự kiện và giá trị trước/sau khi phù hợp.
+- **FR-MGT-03/AC-02:** Lọc được nhật ký theo khoảng thời gian, tác nhân, Mã Ticket và loại sự kiện, dùng riêng hay kết hợp.
+- **FR-MGT-03/AC-03:** Không tài khoản nào, kể cả Management, sửa hoặc xóa được bản ghi tra soát qua ứng dụng: màn hình không có thao tác sửa/xóa và yêu cầu sửa/xóa gửi trực tiếp bị từ chối.
+- **FR-MGT-03/AC-04:** Management chỉ xem nhật ký thuộc phạm vi quyền được cấp; bản ghi ngoài phạm vi không xuất hiện trong kết quả.
+- **FR-MGT-03/AC-05:** Không có bản ghi phù hợp: danh sách trống kèm thông báo "không có bản ghi phù hợp".
+- **FR-MGT-03/AC-06:** Người không có quyền tra soát: không thấy mục Nhật ký tra soát; mở đường dẫn trực tiếp nhận trang "không có quyền truy cập".
+- **FR-MGT-03/AC-07:** Xem và lọc nhật ký không tạo thay đổi nào trên Ticket hay dữ liệu được tra soát.
+- **FR-MGT-03/AC-08:** Bản ghi đã hết thời hạn lưu trữ chỉ được đánh dấu theo chính sách của FR-MGT-04, không bị xóa qua màn hình tra soát.
 
 #### 8. Luồng thay thế (Alternative Flows)
 - **A1 — Tra soát sự kiện quản trị:** lọc theo loại sự kiện (ví dụ khóa tài khoản) mà không nhập mã Ticket, vì sự kiện quản trị không gắn Ticket.
 
 #### 9. Ví dụ Edge Case
 - Lọc khoảng thời gian có ngày bắt đầu sau ngày kết thúc: bị từ chối.
-- Gọi API sửa/xóa bản ghi tra soát bằng tài khoản Management: bị từ chối (AC-03-03).
-- Quản lý phòng ban A lọc theo mã Ticket của phòng ban B: không trả bản ghi nào (AC-03-04).
+- Gọi API sửa/xóa bản ghi tra soát bằng tài khoản Management: bị từ chối (FR-MGT-03/AC-03).
+- Quản lý phòng ban A lọc theo mã Ticket của phòng ban B: không trả bản ghi nào (FR-MGT-03/AC-04).
 
 ---
 
@@ -330,18 +347,20 @@ Cho phép Management có quyền cấu hình thời hạn lưu trữ cơ bản c
 - Việc thay đổi chính sách phải được ghi nhận để tra soát.
 
 #### 7. Tiêu chí nghiệm thu
-- **AC-04-01:** Chỉ chấp nhận giá trị thời hạn từ 01 đến 120 tháng.
-- **AC-04-02:** Ticket chưa `CLOSED` không bị xác định là dữ liệu Ticket đã đến hạn lưu trữ.
-- **AC-04-03:** Ticket/file được tính thời hạn từ thời điểm Ticket `CLOSED`; nhật ký được tính từ thời điểm bản ghi được tạo.
-- **AC-04-04:** Dữ liệu đến hạn chỉ được đánh dấu để xử lý theo quy trình được phê duyệt; hệ thống không tự động xóa/ẩn danh/di chuyển dữ liệu.
-- **AC-04-05:** Mọi thay đổi chính sách có lịch sử trước/sau để tra soát.
+- **FR-MGT-04/AC-01:** Chỉ chấp nhận số tháng nguyên từ 01 đến 120; giá trị như 0, 121, 12,5 hoặc chữ không được lưu, thông báo nêu khoảng hợp lệ, chính sách cũ giữ nguyên.
+- **FR-MGT-04/AC-02:** Ticket chưa `CLOSED` không bị xác định là dữ liệu Ticket đã đến hạn lưu trữ.
+- **FR-MGT-04/AC-03:** Ticket/file được tính thời hạn từ thời điểm Ticket `CLOSED`; nhật ký được tính từ thời điểm bản ghi được tạo.
+- **FR-MGT-04/AC-04:** Dữ liệu đến hạn chỉ được đánh dấu để xử lý theo quy trình được phê duyệt; hệ thống không tự động xóa/ẩn danh/di chuyển dữ liệu.
+- **FR-MGT-04/AC-05:** Mọi thay đổi chính sách có lịch sử trước/sau và thời điểm hiệu lực để tra soát.
+- **FR-MGT-04/AC-06:** Người không có quyền cấu hình chính sách lưu trữ: người dùng không thấy thao tác này; nếu gửi trực tiếp tới hệ thống thì nhận thông báo "không có quyền thực hiện" và dữ liệu không đổi.
+- **FR-MGT-04/AC-07:** Đổi thời hạn lưu trữ không làm thay đổi nội dung lịch sử nghiệp vụ của Ticket đang hoạt động.
 
 #### 8. Luồng thay thế (Alternative Flows)
 - **A1 — Chỉ đổi một loại dữ liệu** (ví dụ file đính kèm); hai loại còn lại giữ nguyên chính sách cũ.
 
 #### 9. Ví dụ Edge Case
-- Nhập 0 hoặc 121 tháng: từ chối; 1 và 120: chấp nhận; 12,5: từ chối (AC-04-01).
-- Ticket mở lại sau khi đã tính thời hạn lưu trữ: không phát sinh vì Ticket `CLOSED` không mở lại được; Ticket chưa `CLOSED` không bao giờ đến hạn (AC-04-02).
+- Nhập 0 hoặc 121 tháng: từ chối; 1 và 120: chấp nhận; 12,5: từ chối (FR-MGT-04/AC-01).
+- Ticket mở lại sau khi đã tính thời hạn lưu trữ: không phát sinh vì Ticket `CLOSED` không mở lại được; Ticket chưa `CLOSED` không bao giờ đến hạn (FR-MGT-04/AC-02).
 
 ---
 
@@ -391,11 +410,14 @@ Bộ lọc hỗ trợ tối thiểu:
 - Ticket `RESOLVED` và `CLOSED` không được tính vào khối lượng Ticket đang hoạt động.
 
 #### 7. Tiêu chí nghiệm thu
-- **AC-05-01:** Số lượng `NEW`, `IN_PROGRESS` và `WAITING_STUDENT` khớp với trạng thái hiện tại của Ticket trong phạm vi.
-- **AC-05-02:** Sắp quá hạn/quá hạn được tính đúng theo Business Rules, bao gồm việc loại trừ thời gian `WAITING_STUDENT`.
-- **AC-05-03:** Khối lượng phòng ban/nhân viên chỉ tính Ticket đang hoạt động.
-- **AC-05-04:** Bộ lọc chỉ làm thay đổi số liệu trong phạm vi dữ liệu người dùng được phép xem.
-- **AC-05-05:** Mở chỉ số chỉ hiển thị Ticket mà Management có quyền truy cập.
+- **FR-MGT-05/AC-01:** Số lượng `NEW`, `IN_PROGRESS` và `WAITING_STUDENT` khớp với trạng thái hiện tại của Ticket trong phạm vi.
+- **FR-MGT-05/AC-02:** Sắp quá hạn/quá hạn được tính đúng theo Business Rules, bao gồm việc loại trừ thời gian `WAITING_STUDENT`.
+- **FR-MGT-05/AC-03:** Khối lượng phòng ban/nhân viên chỉ tính Ticket đang hoạt động; Ticket `RESOLVED`, `CLOSED` không được tính.
+- **FR-MGT-05/AC-04:** Bộ lọc chỉ làm thay đổi số liệu trong phạm vi dữ liệu người dùng được phép xem.
+- **FR-MGT-05/AC-05:** Mở một chỉ số chỉ hiển thị Ticket mà Management có quyền truy cập.
+- **FR-MGT-05/AC-06:** Không có dữ liệu trong phạm vi: mọi chỉ số hiển thị 0 và danh sách trống, không có lỗi.
+- **FR-MGT-05/AC-07:** Người không có quyền xem chi tiết Ticket thấy số liệu tổng hợp nhưng không mở được danh sách Ticket cấu thành chỉ số.
+- **FR-MGT-05/AC-08:** Xem Dashboard và dùng bộ lọc không thay đổi trạng thái hay người phụ trách của Ticket nào.
 
 #### 8. Luồng thay thế (Alternative Flows)
 - **A1 — Mở một chỉ số** để xem danh sách Ticket cấu thành (bước 7 mục 4).
@@ -403,8 +425,8 @@ Bộ lọc hỗ trợ tối thiểu:
 
 #### 9. Ví dụ Edge Case
 - Không có Ticket nào trong phạm vi: mọi chỉ số bằng 0, không lỗi.
-- Ticket ở `WAITING_STUDENT` lâu hơn thời hạn: không bị tính quá hạn (AC-05-02).
-- Ticket vừa chuyển `RESOLVED`: lần tải tiếp theo không còn trong khối lượng đang hoạt động (AC-05-03).
+- Ticket ở `WAITING_STUDENT` lâu hơn thời hạn: không bị tính quá hạn (FR-MGT-05/AC-02).
+- Ticket vừa chuyển `RESOLVED`: lần tải tiếp theo không còn trong khối lượng đang hoạt động (FR-MGT-05/AC-03).
 
 ---
 
@@ -456,23 +478,26 @@ Cho phép Management xem báo cáo theo khoảng thời gian về xu hướng Nh
 - Dữ liệu xuất không được vượt quá phạm vi quyền của người thực hiện.
 
 #### 7. Tiêu chí nghiệm thu
-- **AC-06-01:** Báo cáo xu hướng Category tính đúng Ticket được tạo trong khoảng thời gian đã chọn.
-- **AC-06-02:** Thời gian xử lý trung bình loại trừ thời gian `WAITING_STUDENT`, thời gian ngoài lịch làm việc và khoảng thời gian chờ phản hồi của sinh viên khi Ticket ở `RESOLVED`.
-- **AC-06-03:** Điểm CSAT trung bình chỉ sử dụng đánh giá hợp lệ 1–5 sao được gửi trong khoảng báo cáo.
-- **AC-06-04:** Tỷ lệ phản hồi CSAT chỉ sử dụng Ticket `CLOSED` trong khoảng báo cáo đã hết đủ 07 ngày đánh giá; Ticket còn thời hạn đánh giá không được tính vào mẫu số.
-- **AC-06-05:** Khoảng thời gian không hợp lệ bị từ chối.
-- **AC-06-06:** Người không có quyền xuất không thể xuất báo cáo.
-- **AC-06-07:** Dữ liệu xuất khớp với bộ lọc và phạm vi quyền của báo cáo đang xem.
-- **AC-06-08:** Dữ liệu xuất ở định dạng CSV và hiển thị đúng tiếng Việt khi mở bằng Microsoft Excel.
+- **FR-MGT-06/AC-01:** Báo cáo xu hướng Category tính đúng Ticket được tạo trong khoảng thời gian đã chọn.
+- **FR-MGT-06/AC-02:** Thời gian xử lý trung bình loại trừ thời gian `WAITING_STUDENT`, thời gian ngoài lịch làm việc và khoảng thời gian chờ phản hồi của sinh viên khi Ticket ở `RESOLVED`.
+- **FR-MGT-06/AC-03:** Điểm CSAT trung bình chỉ sử dụng đánh giá hợp lệ 1–5 sao được gửi trong khoảng báo cáo.
+- **FR-MGT-06/AC-04:** Tỷ lệ phản hồi CSAT chỉ sử dụng Ticket `CLOSED` trong khoảng báo cáo đã hết đủ 07 ngày đánh giá; Ticket còn thời hạn đánh giá không được tính vào mẫu số.
+- **FR-MGT-06/AC-05:** Ngày kết thúc trước ngày bắt đầu, hoặc thiếu ngày: không chạy báo cáo, thông báo tại trường ngày.
+- **FR-MGT-06/AC-06:** Người không có quyền xuất không thấy nút Xuất báo cáo; yêu cầu xuất gửi trực tiếp bị từ chối, không tạo file.
+- **FR-MGT-06/AC-07:** Dữ liệu xuất khớp với bộ lọc và phạm vi quyền của báo cáo đang xem.
+- **FR-MGT-06/AC-08:** Dữ liệu xuất ở định dạng CSV và hiển thị đúng tiếng Việt khi mở bằng Microsoft Excel.
+- **FR-MGT-06/AC-09:** Không có dữ liệu phù hợp: báo cáo hiển thị 0 hoặc trống, không có số liệu giả.
+- **FR-MGT-06/AC-10:** Không có đánh giá CSAT trong phạm vi: điểm trung bình hiển thị "chưa có dữ liệu đánh giá" thay vì 0.
+- **FR-MGT-06/AC-11:** Chạy và xuất báo cáo không thay đổi dữ liệu Ticket.
 
 #### 8. Luồng thay thế (Alternative Flows)
 - **A1 — Chỉ xem, không xuất:** Quản lý không có quyền xuất vẫn xem được báo cáo.
 
 #### 9. Ví dụ Edge Case
 - Khoảng báo cáo một ngày (bắt đầu = kết thúc): hợp lệ.
-- Ticket mở lại hai lần: thời gian xử lý là tổng các đoạn xử lý, không tính thời gian chờ ở `RESOLVED` (AC-06-02).
-- Ticket `CLOSED` cách đây 6 ngày: không vào mẫu số tỷ lệ phản hồi CSAT (AC-06-04).
-- Tên Category có dấu tiếng Việt và dấu phẩy: file CSV mở bằng Excel đúng dấu, đúng cột (AC-06-08).
+- Ticket mở lại hai lần: thời gian xử lý là tổng các đoạn xử lý, không tính thời gian chờ ở `RESOLVED` (FR-MGT-06/AC-02).
+- Ticket `CLOSED` cách đây 6 ngày: không vào mẫu số tỷ lệ phản hồi CSAT (FR-MGT-06/AC-04).
+- Tên Category có dấu tiếng Việt và dấu phẩy: file CSV mở bằng Excel đúng dấu, đúng cột (FR-MGT-06/AC-08).
 
 ---
 

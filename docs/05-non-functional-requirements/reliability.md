@@ -1,5 +1,16 @@
 # NFR-REL - Độ Ổn Định Và Tin Cậy
 
+## Mã yêu cầu
+
+Nơi gốc của mã và ngưỡng. Kịch bản test (`06-acceptance/test-scenarios.md`) và các tài liệu khác chỉ dẫn mã.
+
+| Mã | Yêu cầu | Ngưỡng / cách đo | Loại |
+| --- | --- | --- | --- |
+| `NFR-REL-01` | Thao tác nhiều bước hoàn tất trọn vẹn hoặc không ghi gì | Mô phỏng lỗi giữa chừng ở tạo Ticket, tiếp nhận, Transfer, bổ sung, ghi kết quả, khóa tài khoản: 0 trường hợp dữ liệu dở dang hoặc trạng thái trái Business Rules. | Cam kết với khách |
+| `NFR-REL-02` | Lịch sử xử lý không bị mất | Sau Transfer, mở lại và ghi kết quả, 100% sự kiện lịch sử trước đó vẫn còn. | Cam kết với khách |
+| `NFR-REL-03` | Trạng thái nhất quán sau lỗi | Sau một lỗi, tải lại trang thấy đúng trạng thái cuối cùng đã lưu thành công. | Cam kết với khách |
+| `NFR-REL-04` | Lỗi hiển thị cho người dùng dễ hiểu | 0 màn hình hiển thị lỗi kỹ thuật (mã lỗi máy chủ, stack trace) cho người dùng trong UAT. | Cam kết với khách |
+
 ## 1. Mục Tiêu
 
 Đảm bảo các thao tác nghiệp vụ quan trọng không tạo dữ liệu dở dang hoặc làm sai vòng đời Ticket.

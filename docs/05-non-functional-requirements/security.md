@@ -1,5 +1,17 @@
 # NFR-SEC - Bảo Mật Và Phân Quyền
 
+## Mã yêu cầu
+
+Nơi gốc của mã và ngưỡng. Kịch bản test (`06-acceptance/test-scenarios.md`) và các tài liệu khác chỉ dẫn mã.
+
+| Mã | Yêu cầu | Ngưỡng / cách đo | Loại |
+| --- | --- | --- | --- |
+| `NFR-SEC-01` | Đăng nhập bằng tài khoản riêng; tài khoản khóa không đăng nhập được | 0 lần đăng nhập thành công bằng tài khoản bị khóa trong kiểm thử. | Cam kết với khách |
+| `NFR-SEC-02` | Phân quyền theo vai trò và phạm vi, kiểm ở phía máy chủ | 0 lần truy cập thành công vào Ticket hoặc chức năng ngoài phạm vi khi kiểm thử phân quyền, kể cả gọi trực tiếp tới hệ thống (chỉ tiêu SM-07). | Cam kết với khách |
+| `NFR-SEC-03` | File đính kèm chỉ người liên quan có quyền mới xem/tải | Kiểm quyền ở mỗi lần xem/tải: 0 lần tải thành công file ngoài phạm vi (`BR-FILE-01`). | Cam kết với khách |
+| `NFR-SEC-04` | Mật khẩu không lưu hay hiển thị ở dạng đọc được | 0 mật khẩu đọc được trong cơ sở dữ liệu, màn hình và nhật ký. | Cam kết với khách |
+| `NFR-SEC-05` | Thao tác quan trọng được ghi để tra soát | Theo NFR-OBS-02 và NFR-OBS-03. | Cam kết với khách |
+
 ## 1. Phạm Vi
 
 UniSupport áp dụng các kiểm soát bảo mật cần thiết cho xác thực, phân quyền, dữ liệu Ticket, file đính kèm và Audit trong phạm vi dự án.
