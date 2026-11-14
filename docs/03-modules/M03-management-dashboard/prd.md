@@ -230,7 +230,7 @@ Cho phép Management có quyền cấu hình quản lý danh sách phòng ban v�
 
 ### [FR-MGT-03] Tra soát lịch sử thao tác
 
-**Priority:** Trung bình: nền tảng ghi lịch sử (#127) làm từ MS-01; màn hình tra soát phục vụ khiếu nại và sự cố, không chặn luồng Ticket. **Mốc giao:** MS-01 (ghi nhận) và MS-05 (màn hình tra soát).
+**Priority:** Trung bình: nền tảng ghi lịch sử làm từ MS-01; màn hình tra soát phục vụ khiếu nại và sự cố, không chặn luồng Ticket. **Mốc giao:** MS-01 (ghi nhận) và MS-05 (màn hình tra soát).
 
 #### 1. Mô tả & Phạm vi
 Cho phép Management có quyền tra soát xem các thao tác quan trọng đã phát sinh trên Ticket và các chức năng quản trị hệ thống.
@@ -410,7 +410,7 @@ Bộ lọc hỗ trợ tối thiểu:
 
 ### [FR-MGT-06] Báo cáo, mức độ hài lòng (CSAT) và xuất dữ liệu
 
-**Priority:** Cao: báo cáo xu hướng, thời gian xử lý và CSAT là cam kết trong Proposal. Riêng xuất CSV ở mức Trung bình (#162). **Mốc giao:** MS-05.
+**Priority:** Cao: báo cáo xu hướng, thời gian xử lý và CSAT là cam kết trong Proposal. Riêng xuất CSV ở mức Trung bình. **Mốc giao:** MS-05.
 
 #### 1. Mô tả & Phạm vi
 Cho phép Management xem báo cáo theo khoảng thời gian về xu hướng Nhóm vấn đề, thời gian xử lý và mức độ hài lòng của sinh viên; người có quyền có thể xuất dữ liệu báo cáo.
