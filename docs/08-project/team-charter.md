@@ -25,7 +25,7 @@ Team Charter này quy định cách Nhóm 3 phối hợp và làm việc trong d
 | Hạng mục | Công cụ | Mục đích sử dụng |
 |---|---|---|
 | Kênh trao đổi chính | Discord (chia kênh chuyên môn) | Giao tiếp hàng ngày, họp nhanh, thông báo khẩn |
-| Quản lý công việc | GitHub Issues + GitHub Projects (board UniSupport) | Nơi duy nhất giao task và cập nhật trạng thái theo 5 cột: To do → Doing → Review → QA verify → Done (mục 4.3). Kế hoạch quản trị và kế hoạch chất lượng lấy số liệu từ đây |
+| Quản lý công việc | GitHub Issues + GitHub Projects ([board UniSupport](https://github.com/users/trvannhan/projects/6)) | Nơi duy nhất giao task và cập nhật trạng thái theo 5 cột: To do → Doing → Review → QA verify → Done (mục 4.3). Kế hoạch quản trị và kế hoạch chất lượng lấy số liệu từ đây |
 | Kho mã nguồn | GitHub | Lưu trữ mã nguồn, quản lý phiên bản theo Git Flow |
 | Review & CI/CD | GitHub Pull Request | Review code trước khi merge vào nhánh chính |
 | Thiết kế giao diện | Figma | Thiết kế Design System, Wireframe, Prototype |

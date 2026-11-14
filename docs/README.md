@@ -109,6 +109,7 @@ docs/
 | Priority FR | [03-modules/README.md](03-modules/README.md#mức-ưu-tiên-fr) |
 | Rủi ro | [risk-register.md](08-project/risk-register.md) |
 | Change request | Quy trình: [ke-hoach-quan-tri-giam-sat.md, mục 5](11-governance/ke-hoach-quan-tri-giam-sat.md#5-kiểm-soát-thay-đổi); CR thực tế: GitHub Issues nhãn `change-request` (mẫu [4-change-request.md](../.github/ISSUE_TEMPLATE/4-change-request.md)) |
+| Nhãn GitHub | [ke-hoach-quan-tri-giam-sat.md, mục 6.1a](11-governance/ke-hoach-quan-tri-giam-sat.md#61a-nhãn-github) |
 | Definition of Done | [quality-plan.md, mục 5](09-quality/quality-plan.md#5-definition-of-done-dod--tiêu-chuẩn-hoàn-thành) |
 | Giả định, ràng buộc, câu hỏi mở | [assumptions.md](08-project/assumptions.md), [constraints.md](08-project/constraints.md), [open-questions.md](08-project/open-questions.md) |
 | Quy trình báo cáo | [ke-hoach-quan-tri-giam-sat.md, mục 2](11-governance/ke-hoach-quan-tri-giam-sat.md#2-quy-trình-báo-cáo) |

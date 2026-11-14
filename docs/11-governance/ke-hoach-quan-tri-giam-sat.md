@@ -189,6 +189,24 @@ Yêu cầu tính năng mới phát sinh trong thời gian bảo hành không thu
 | Biên bản họp tuần | Nội dung thảo luận, việc cần làm, người phụ trách, thời hạn. | Thành viên ghi biên bản theo lượt | GitHub Issues nhãn `meeting` |
 | Báo cáo tuần, tháng và báo cáo mốc | Theo mục 2.2, 2.3, 2.4 và mẫu tại mục 6.2. | PM | GitHub Issues nhãn `report` (số liệu ghi `Mô phỏng`) |
 
+### 6.1a. Nhãn GitHub
+
+Bộ nhãn chính thức của repo (nơi gốc là bảng này). Mẫu issue trong `.github/ISSUE_TEMPLATE/` tự gắn nhãn loại; người tạo issue gắn thêm nhãn module. Các chỉ số ở mục 3.1 lọc theo nhãn này.
+
+| Nhãn | Dùng cho | Gắn bởi |
+| --- | --- | --- |
+| `task` | Parent task trong kế hoạch, để open | Mẫu Parent task |
+| `bug` | Lỗi | Mẫu Bug |
+| `feedback` | Phản hồi của client/người dùng (thật hoặc `Mô phỏng`) | Mẫu Feedback |
+| `change-request` | Yêu cầu thay đổi `CR-xx`; chỉ số Phạm vi đếm issue mở có nhãn này | Mẫu Change request |
+| `issue-log` | Vấn đề hoặc rủi ro đã xảy ra (nhật ký vấn đề) | PM |
+| `report` | Báo cáo tuần, tháng, mốc | PM |
+| `meeting` | Biên bản họp | Người ghi biên bản |
+| `M01`, `M02`, `M03` | Task thuộc phân hệ Sinh viên, Nhân viên, Quản lý (theo mã FR trong task) | Người tạo task |
+| `chung` | Task dùng chung hoặc cấp dự án: đăng nhập, NFR, tích hợp, kiểm thử, triển khai | Người tạo task |
+
+Các nhãn `status:*` có sẵn trên repo không dùng; trạng thái task theo 5 cột của GitHub Projects (Team Charter mục 4.3).
+
 ### 6.2. Mẫu và ví dụ báo cáo tuần
 
 Báo cáo tình hình dự án tuần được lập theo mẫu dưới đây. Cột Ví dụ minh họa báo cáo tuần 02/11–08/11/2026 của `MS-02`; toàn bộ số liệu là `Mô phỏng`.
