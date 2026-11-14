@@ -37,6 +37,16 @@ Dự án có **giai đoạn khởi động** (05/10–14/10/2026) và **6 mốc*
 
 Phần giao được, kịch bản kiểm tra (`TS-xx`) và điều kiện nghiệm thu của từng `MS-xx` ở sheet `Milestones`; bản tóm tắt ở [milestones-and-timeline.md](milestones-and-timeline.md).
 
+## Ai làm việc gì
+
+Người làm từng chức năng lấy theo Gantt (`master-schedule.xlsx` sheet `Master Schedule`, cột Phụ trách), và giờ trong sheet `Resource` của ngân sách được chia theo đúng người đó:
+
+- **BE1, FE1:** luồng Sinh viên (FAQ, tạo và theo dõi Ticket, bổ sung, kết quả, CSAT), tài khoản và phân quyền, Dashboard, báo cáo.
+- **BE2, FE2:** luồng Nhân viên (hàng chờ, phân công, ưu tiên và thời hạn, xử lý, Transfer, Escalation, ghi kết quả), phòng ban và Category, Audit, chính sách lưu trữ.
+- **BE1 và BE2 cùng làm:** thông báo xuyên suốt vòng đời Ticket.
+
+Parent task trên GitHub ghi cùng người phụ trách. Đổi người làm một chức năng là đổi cả giờ ở `Resource`, Gantt, task và có thể đổi giá (đơn giá BE1/FE1 khác BE2/FE2), nên đi qua quy trình CR nếu proposal đã gửi.
+
 ## Phụ thuộc giữa các milestone
 
 - Khởi động → `MS-01`: phạm vi, prototype và thiết kế dữ liệu/phân quyền đã duyệt.
@@ -79,14 +89,14 @@ Bảo hành **có tính vào giá**: Proposal cam kết sửa lỗi kỹ thuật
   - 40h dự phòng rủi ro dự án (`Q-11`), dùng khi một rủi ro trong [risk-register.md](risk-register.md) xảy ra.
 - Dự phòng **có tính vào giá**. PM quyết định dùng dự phòng trong phạm vi tổng ngân sách ([kế hoạch quản trị](../11-governance/ke-hoach-quan-tri-giam-sat.md#4-chuyển-cấp-vấn-đề-và-quyền-quyết-định)).
 - **CR không lấy từ dự phòng.** Mọi CR làm tăng phạm vi được đánh giá tác động và báo giá riêng theo cùng đơn giá trong `quotation.xlsx`, sheet `Đơn giá`.
-- **Năng lực cho CR: dùng năng lực còn trống của đội.** Mỗi vai trò có 20h/tuần cho dự án nhưng kế hoạch chỉ dùng 2–88% tuỳ mốc. Phần còn trống theo vai trò × mốc nằm ở `master-schedule.xlsx` sheet `Resources`, bảng "Năng lực còn trống". Cách xếp một CR đã được khách duyệt:
+- **Năng lực cho CR: dùng năng lực còn trống của đội.** Mỗi vai trò có 20h/tuần cho dự án; kế hoạch dùng từ 0% (UI/UX chỉ làm ở giai đoạn khởi động và MS-06) đến 88% tuỳ vai trò và mốc. Phần còn trống theo vai trò × mốc nằm ở `master-schedule.xlsx` sheet `Resources`, bảng "Năng lực còn trống". Cách xếp một CR đã được khách duyệt:
   1. BA và TL ước lượng giờ CR theo từng vai trò, **gồm cả giờ QA để test và regression phần bị ảnh hưởng**.
   2. Nếu tổng giờ CR không quá 16h, và giờ của từng vai trò không vượt năng lực còn trống của vai trò đó ở **mốc kế tiếp**: CR được làm trong mốc kế tiếp, **không dời ngày mốc**. Với MS-02 và MS-03 (chồng nhau 7 ngày), kiểm thêm bảng tỷ lệ sử dụng MS-02 + MS-03 không vượt 100%.
   3. Nếu không thoả bước 2: dời mốc bị ảnh hưởng. PM ghi phiên bản mới vào sheet `Change log` và gửi khách xác nhận ngày mới cùng báo giá CR.
   4. PM quyết định cách xếp theo quy trình CR ([kế hoạch quản trị mục 5](../11-governance/ke-hoach-quan-tri-giam-sat.md#5-kiểm-soát-thay-đổi), bước 2–3).
 
-  Đánh đổi: giữ được ngày bàn giao khi khách đổi ý nhỏ, đổi lại đội làm gần hết năng lực ở mốc có CR. Ngưỡng 16h giữ cho một CR không chiếm quá khoảng 1/3 năng lực còn trống của vai trò bận nhất (BE1 ở MS-02 còn khoảng 15h).
-- Tổng: 823h cơ sở + 62h dự phòng = **885h**. Chi phí nội bộ khoảng 263,7 triệu (sheet `BẢNG CHI PHÍ NHÂN SỰ`); giá bán 300 triệu (chênh lệch ≈ 12% cho chi phí chung, công cụ và lợi nhuận).
+  Đánh đổi: giữ được ngày bàn giao khi khách đổi ý nhỏ, đổi lại đội làm gần hết năng lực ở mốc có CR. Ngưỡng 16h tương đương khoảng 4 ngày làm việc của một người ở 20h/tuần, đủ cho thay đổi nhỏ mà không ăn hết năng lực còn trống của cả mốc. Điểm căng nhất là **BE2 trong đoạn MS-02 + MS-03** (phụ trách backend luồng Nhân viên): đã dùng khoảng 96% năng lực, nên CR cần BE2 trong đoạn này gần như luôn phải dời mốc; tương tự BE1 ở MS-05 (khoảng 88%).
+- Tổng: 823h cơ sở + 62h dự phòng = **885h**. Chi phí nội bộ khoảng 261,4 triệu (sheet `BẢNG CHI PHÍ NHÂN SỰ`); giá bán 300 triệu (chênh lệch ≈ 12,9% cho chi phí chung, công cụ và lợi nhuận).
 
 ## Cách nhận feedback của client sau mỗi milestone
 
