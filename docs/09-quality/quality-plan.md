@@ -49,11 +49,11 @@ Số liệu được lấy từ GitHub (issue, lỗi, Pull Request) và kết qu
 | Bảo mật và phân quyền | Số lần truy cập thành công vào Ticket, file hoặc chức năng ngoài phạm vi quyền khi kiểm thử phân quyền (chỉ tiêu SM-07); số mật khẩu được lưu ở dạng đọc được. | 0 trường hợp. |
 | Chỉ tiêu thành công SM-01 đến SM-07 | Đo theo phương pháp trong PRD, dùng dữ liệu giả lập và kết quả đúng được tính trước. | Đạt ngưỡng của từng chỉ tiêu. |
 | Mã nguồn được review trước khi gộp | Số Pull Request được người khác chấp thuận trước khi gộp, chia cho tổng số Pull Request đã gộp. | 100%. |
-| Hiệu năng | Thời gian phản hồi của các thao tác chính (đăng nhập, tạo Ticket, xem danh sách Ticket, xem Dashboard), đo trên môi trường kiểm thử với dữ liệu khoảng 3.000 sinh viên. | Ít nhất 95% lượt đo phản hồi trong 3 giây; không có tình trạng treo. |
+| Hiệu năng | Theo `NFR-PERF-02` và `NFR-PERF-03` (nơi gốc: `05-non-functional-requirements/performance.md`), chạy bằng kịch bản TS-NFR-01. | Đạt ngưỡng ghi ở `NFR-PERF-02`, `NFR-PERF-03`. |
 | Lỗi phát hiện sau khi đã đóng issue | Số lỗi tìm thấy trong chức năng đã được xác minh và đóng, chia cho tổng số lỗi của mốc. | Không quá 10%. |
 | Lỗi phải mở lại sau khi sửa | Số lỗi chưa đạt ở lần kiểm thử lại đầu tiên, chia cho tổng số lỗi đã sửa trong mốc. | Không quá 10%. |
 
-Các ngưỡng về hiệu năng, lỗi phát hiện sau khi đóng issue và lỗi phải mở lại là mục tiêu kiểm soát nội bộ của nhóm dự án, không thuộc tiêu chí nghiệm thu của Aurora University. Các ngưỡng này được rà soát lại khi kết thúc MS-01 dựa trên số liệu thực tế; mọi điều chỉnh do PM quyết định và được ghi vào [Decision Log](../08-project/decision-log.md).
+Ngưỡng hiệu năng (`NFR-PERF-02`) và các ngưỡng về lỗi phát hiện sau khi đóng issue, lỗi phải mở lại là mục tiêu kiểm soát nội bộ của nhóm dự án, không thuộc tiêu chí nghiệm thu của Aurora University. Các ngưỡng này được rà soát lại khi kết thúc MS-01 dựa trên số liệu thực tế; mọi điều chỉnh do PM quyết định và được ghi vào [Decision Log](../08-project/decision-log.md).
 
 ### 1.4. Cổng chất lượng
 
@@ -148,12 +148,12 @@ Sau khi bàn giao, Aurora University nghiệm thu chính thức dựa trên các
 
 | Yêu cầu | Nội dung theo PRD | Bằng chứng |
 |---|---|---|
-| Hiệu năng | Các luồng chính hoạt động ổn định với dữ liệu đại diện khoảng 3.000 sinh viên, không bị treo. File đính kèm tối đa 10 MB. | Kết quả đo thời gian phản hồi theo mục 1.3, ghi kèm quy mô dữ liệu và điều kiện môi trường |
-| Bảo mật | Người dùng không truy cập được Ticket và file ngoài phạm vi quyền. Tài khoản bị khóa không đăng nhập được. Mật khẩu không được lưu ở dạng đọc được. | Bảng kết quả kiểm thử phân quyền |
-| Độ tin cậy | Khi thao tác gặp lỗi, hệ thống không để lại dữ liệu dở dang hoặc trạng thái sai quy tắc. Tải lại trang vẫn thấy đúng trạng thái đã lưu. | Kết quả các test case mô phỏng lỗi giữa chừng |
-| Tính dễ sử dụng | Dùng được trên máy tính và điện thoại; có tiếng Việt và tiếng Anh ở mức cơ bản; thông báo lỗi chỉ rõ thông tin cần sửa. | Ảnh chụp các luồng chính trên hai loại thiết bị |
-| Ghi nhật ký | Mọi thao tác quan trọng theo quy định đều được ghi nhật ký; nhật ký không thể sửa hoặc xóa bằng chức năng thông thường. | Đối chiếu thao tác đã thực hiện với nhật ký |
-| Triển khai | Hệ thống truy cập được trên môi trường bàn giao và đủ các hạng mục bàn giao. | Kết quả kiểm tra sau triển khai; danh mục bàn giao |
+| Hiệu năng (`NFR-PERF-01…04`) | Các luồng chính hoạt động ổn định với dữ liệu đại diện khoảng 3.000 sinh viên, không bị treo. File đính kèm tối đa 10 MB. | Kết quả TS-NFR-01 theo ngưỡng `NFR-PERF-02`, ghi kèm quy mô dữ liệu và điều kiện môi trường |
+| Bảo mật (`NFR-SEC-01…05`) | Người dùng không truy cập được Ticket và file ngoài phạm vi quyền. Tài khoản bị khóa không đăng nhập được. Mật khẩu không được lưu ở dạng đọc được. | Bảng kết quả kiểm thử phân quyền |
+| Độ tin cậy (`NFR-REL-01…04`) | Khi thao tác gặp lỗi, hệ thống không để lại dữ liệu dở dang hoặc trạng thái sai quy tắc. Tải lại trang vẫn thấy đúng trạng thái đã lưu. | Kết quả các test case mô phỏng lỗi giữa chừng |
+| Tính dễ sử dụng (`NFR-USA-01…04`) | Dùng được trên máy tính và điện thoại; có tiếng Việt và tiếng Anh ở mức cơ bản; thông báo lỗi chỉ rõ thông tin cần sửa. | Ảnh chụp các luồng chính trên hai loại thiết bị |
+| Ghi nhật ký (`NFR-OBS-01…03`) | Mọi thao tác quan trọng theo quy định đều được ghi nhật ký; nhật ký không thể sửa hoặc xóa bằng chức năng thông thường. | Đối chiếu thao tác đã thực hiện với nhật ký |
+| Triển khai (`NFR-DEP-01…03`) | Hệ thống truy cập được trên môi trường bàn giao và đủ các hạng mục bàn giao. | Kết quả kiểm tra sau triển khai; danh mục bàn giao |
 
 Phạm vi kiểm tra bảo mật gồm phân quyền, đăng nhập và lưu trữ mật khẩu. Kiểm thử thâm nhập (pentest) và chứng nhận bảo mật nằm ngoài phạm vi dự án theo PRD.
 

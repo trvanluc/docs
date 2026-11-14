@@ -48,10 +48,12 @@ Cho phép nhân viên đăng nhập vào UniSupport và truy cập không gian l
 - Cơ chế xác thực và quản lý phiên được dùng chung với các phân hệ khác.
 
 #### 7. Tiêu chí nghiệm thu
-- **AC-00-01:** Tài khoản Staff hợp lệ truy cập được Staff Operations.
-- **AC-00-02:** Nhân viên chỉ xem dữ liệu thuộc phạm vi phòng ban/quyền được cấp.
-- **AC-00-03:** Tài khoản không hợp lệ hoặc bị vô hiệu hóa không truy cập được chức năng được bảo vệ.
-- **AC-00-04:** Phiên hết hạn yêu cầu xác thực lại.
+- **FR-STF-00/AC-01:** Tài khoản Staff hợp lệ đăng nhập thành công và được đưa vào Staff Operations.
+- **FR-STF-00/AC-02:** Nhân viên chỉ thấy Ticket thuộc phòng ban/phạm vi được cấp; mở Ticket ngoài phạm vi bằng đường dẫn nhận trang "không có quyền truy cập".
+- **FR-STF-00/AC-03:** Sai thông tin đăng nhập: thông báo "thông tin đăng nhập không đúng"; tài khoản bị khóa: thông báo "tài khoản đã bị khóa"; cả hai trường hợp không tạo phiên.
+- **FR-STF-00/AC-04:** Phiên hết hạn: thao tác tiếp theo đưa người dùng về màn hình đăng nhập kèm thông báo "phiên đã hết hạn"; dữ liệu chưa lưu không được ghi.
+- **FR-STF-00/AC-05:** Tài khoản Staff chưa gắn phòng ban: đăng nhập được nhưng hàng chờ trống kèm thông báo liên hệ quản trị; không mở được Ticket nào.
+- **FR-STF-00/AC-06:** Nhân viên đăng nhập trên màn hình đăng nhập dùng chung và được điều hướng tới Staff Operations theo vai trò.
 
 #### 8. Luồng thay thế (Alternative Flows)
 - **A1 — Đã có phiên hợp lệ:** vào thẳng Staff Operations.
@@ -66,7 +68,7 @@ Cho phép nhân viên đăng nhập vào UniSupport và truy cập không gian l
 
 ### [FR-STF-01] Xem hàng chờ, tìm kiếm và lọc Ticket
 
-**Priority:** Cao: nhân viên chỉ làm việc được khi có hàng chờ (tìm kiếm và lọc nâng cao ở mức Trung bình, #135). **Mốc giao:** MS-02.
+**Priority:** Cao: nhân viên chỉ làm việc được khi có hàng chờ (riêng tìm kiếm và lọc nâng cao ở mức Trung bình). **Mốc giao:** MS-02.
 
 #### 1. Mô tả & Phạm vi
 Cung cấp danh sách công việc để nhân viên xem Ticket mới, Ticket được giao và Ticket đang cần xử lý trong phạm vi của mình.
@@ -105,18 +107,20 @@ Cung cấp danh sách công việc để nhân viên xem Ticket mới, Ticket đ
 - Danh sách phải phản ánh trạng thái và người phụ trách hiện tại của Ticket.
 
 #### 7. Tiêu chí nghiệm thu
-- **AC-01-01:** Tìm kiếm bằng Mã Ticket hợp lệ trả về đúng Ticket nếu người dùng có quyền.
-- **AC-01-02:** Bộ lọc chỉ trả về Ticket thỏa điều kiện đã chọn.
-- **AC-01-03:** Ticket ngoài phạm vi không xuất hiện trong danh sách và không thể mở trực tiếp.
-- **AC-01-04:** Ticket được mở lại xuất hiện lại trong danh sách xử lý phù hợp ở trạng thái `IN_PROGRESS`.
+- **FR-STF-01/AC-01:** Tìm bằng mã Ticket hợp lệ trong phạm vi trả về đúng Ticket đó.
+- **FR-STF-01/AC-02:** Bộ lọc trạng thái, Category, Priority, người phụ trách, dùng riêng hay kết hợp, chỉ trả về Ticket thỏa mọi điều kiện đã chọn.
+- **FR-STF-01/AC-03:** Ticket ngoài phạm vi không xuất hiện trong danh sách hay kết quả tìm kiếm; mở trực tiếp bằng đường dẫn nhận trang "không có quyền truy cập".
+- **FR-STF-01/AC-04:** Ticket được mở lại xuất hiện lại trong danh sách xử lý phù hợp ở trạng thái `IN_PROGRESS`.
+- **FR-STF-01/AC-05:** Không có Ticket phù hợp: danh sách trống kèm thông báo "không có Ticket phù hợp"; mã Ticket không tồn tại: thông báo "không tìm thấy".
+- **FR-STF-01/AC-06:** Sau Transfer hoặc phân công lại, ở lần tải tiếp theo Ticket rời danh sách của người/phòng ban cũ; danh sách luôn hiển thị trạng thái và người phụ trách hiện tại.
 
 #### 8. Luồng thay thế (Alternative Flows)
 - **A1 — Chuyển giữa các hàng chờ** (Ticket mới, Ticket của tôi, Chờ sinh viên, Sắp quá hạn/Quá hạn) mà không cần nhập bộ lọc.
 - **A2 — Kết hợp nhiều bộ lọc:** hệ thống trả các Ticket thỏa đồng thời mọi điều kiện.
 
 #### 9. Ví dụ Edge Case
-- Tìm mã Ticket thuộc phòng ban khác: không trả kết quả và không mở được chi tiết (AC-01-03).
-- Ticket vừa được mở lại: xuất hiện lại trong "Ticket của tôi" của người phụ trách cũ nếu còn hợp lệ (AC-01-04).
+- Tìm mã Ticket thuộc phòng ban khác: không trả kết quả và không mở được chi tiết (FR-STF-01/AC-03).
+- Ticket vừa được mở lại: xuất hiện lại trong "Ticket của tôi" của người phụ trách cũ nếu còn hợp lệ (FR-STF-01/AC-04).
 - Ticket bị Transfer khi nhân viên đang xem danh sách: lần tải lại tiếp theo Ticket biến mất khỏi danh sách của nhân viên.
 
 ---
@@ -176,11 +180,14 @@ Cho phép nhân viên kiểm tra **Nhóm vấn đề (Category)** đã được 
 - Nhân viên không được tự tạo Category mới trong luồng xử lý Ticket.
 
 #### 7. Tiêu chí nghiệm thu
-- **AC-02-01:** Tiếp nhận Ticket `NEW` hợp lệ gán đúng người phụ trách và chuyển sang `IN_PROGRESS`.
-- **AC-02-02:** Không thể có hai người phụ trách chính đồng thời cho cùng một Ticket.
-- **AC-02-03:** Phân công chỉ chấp nhận nhân viên hợp lệ thuộc phòng ban đang xử lý.
-- **AC-02-04:** Thay đổi Category hợp lệ được ghi nhận trong lịch sử.
-- **AC-02-05:** Category thuộc phòng ban khác chỉ được lưu khi Transfer sang đúng phòng ban tương ứng được thực hiện thành công.
+- **FR-STF-02/AC-01:** Tiếp nhận Ticket `NEW` chưa có người phụ trách gán đúng người tiếp nhận làm người phụ trách chính và chuyển Ticket sang `IN_PROGRESS`.
+- **FR-STF-02/AC-02:** Hai nhân viên tiếp nhận cùng lúc: chỉ một người trở thành người phụ trách; người còn lại nhận thông báo "Ticket đã được tiếp nhận" và thấy dữ liệu mới nhất.
+- **FR-STF-02/AC-03:** Danh sách phân công chỉ gồm nhân viên đang hoạt động của phòng ban hiện tại; phân công cho người ngoài phòng ban (gửi trực tiếp) bị từ chối với thông báo, người phụ trách không đổi.
+- **FR-STF-02/AC-04:** Đổi Category sang Category cùng phòng ban được lưu và ghi lịch sử (Category trước/sau, người thực hiện).
+- **FR-STF-02/AC-05:** Category thuộc phòng ban khác chỉ được lưu khi Transfer sang đúng phòng ban tương ứng thành công.
+- **FR-STF-02/AC-06:** Ticket đã được Transfer trước khi tiếp nhận/phân công hoàn tất: thao tác bị từ chối với thông báo "Ticket đã chuyển phòng ban", màn hình tải lại dữ liệu mới nhất.
+- **FR-STF-02/AC-07:** Mỗi lần tiếp nhận, phân công, phân công lại ghi lịch sử gồm người phụ trách trước/sau và người thực hiện.
+- **FR-STF-02/AC-08:** Màn hình xử lý Ticket không có chức năng tạo Category mới; Category chỉ chọn từ danh mục đang hoạt động.
 
 #### 8. Luồng thay thế (Alternative Flows)
 - Luồng B (phân công/phân công lại) ở mục 4 là luồng thay thế của Luồng A (tự tiếp nhận).
@@ -188,7 +195,7 @@ Cho phép nhân viên kiểm tra **Nhóm vấn đề (Category)** đã được 
 - **A2 — Đổi Category sang Category thuộc phòng ban khác:** hệ thống chuyển sang luồng Transfer của FR-STF-05.
 
 #### 9. Ví dụ Edge Case
-- Hai nhân viên bấm Tiếp nhận cùng lúc: chỉ một người thành người phụ trách (AC-02-02).
+- Hai nhân viên bấm Tiếp nhận cùng lúc: chỉ một người thành người phụ trách (FR-STF-02/AC-02).
 - Phân công lại cho chính người đang phụ trách: không tạo sự kiện lịch sử mới.
 - Phân công cho nhân viên vừa bị khóa: bị từ chối.
 - Ticket đang `WAITING_STUDENT` được phân công lại: giữ trạng thái `WAITING_STUDENT`.
@@ -237,18 +244,21 @@ Cho phép người dùng có quyền thiết lập mức độ ưu tiên của T
 - Khi Priority thay đổi, Deadline được tính lại theo công thức tại `BR-DUE-01` và `BR-DUE-02`; đồng hồ không được đặt lại từ đầu.
 
 #### 7. Tiêu chí nghiệm thu
-- **AC-03-01:** Mỗi Priority tạo ra Deadline đúng theo Business Rules.
-- **AC-03-02:** Thay đổi Priority hợp lệ cập nhật Deadline và lịch sử Ticket.
-- **AC-03-03:** Ticket có tỷ lệ sử dụng thời hạn từ 80% đến dưới 100% được nhận diện là sắp quá hạn.
-- **AC-03-04:** Ticket có tỷ lệ sử dụng thời hạn từ 100% trở lên và chưa `RESOLVED`/`CLOSED` được nhận diện là quá hạn.
-- **AC-03-05:** Khoảng thời gian `WAITING_STUDENT` không làm tiêu hao thời gian xử lý còn lại.
+- **FR-STF-03/AC-01:** Mỗi Priority cho Deadline đúng mục tiêu: `LOW` 05, `MEDIUM` 03, `HIGH` 02, `URGENT` 01 ngày làm việc.
+- **FR-STF-03/AC-02:** Đổi Priority hợp lệ cập nhật Deadline bằng mục tiêu mới trừ thời gian hợp lệ đã dùng (không đặt lại đồng hồ) và ghi lịch sử Priority/Deadline trước–sau.
+- **FR-STF-03/AC-03:** Ticket có tỷ lệ sử dụng thời hạn từ 80% đến dưới 100% được hiển thị là sắp quá hạn.
+- **FR-STF-03/AC-04:** Ticket có tỷ lệ sử dụng thời hạn từ 100% trở lên và chưa `RESOLVED`/`CLOSED` được hiển thị là quá hạn.
+- **FR-STF-03/AC-05:** Khoảng thời gian `WAITING_STUDENT` không làm tiêu hao thời gian xử lý còn lại.
+- **FR-STF-03/AC-06:** Người không có quyền đổi Priority: người dùng không thấy thao tác này; nếu gửi trực tiếp tới hệ thống thì nhận thông báo "không có quyền thực hiện" và dữ liệu không đổi.
+- **FR-STF-03/AC-07:** Ticket đã chuyển sang phạm vi khác trước khi lưu: thao tác bị từ chối với thông báo yêu cầu tải lại, Priority và Deadline không đổi.
+- **FR-STF-03/AC-08:** Giá trị Priority ngoài `LOW`/`MEDIUM`/`HIGH`/`URGENT` gửi trực tiếp tới hệ thống bị từ chối, dữ liệu không đổi.
 
 #### 8. Luồng thay thế (Alternative Flows)
 - **A1 — Giảm Priority** (ví dụ `HIGH` → `LOW`): Deadline tính lại bằng mục tiêu mới trừ thời gian hợp lệ đã dùng (`BR-DUE-01`), đồng hồ không đặt lại.
 - **A2 — Đổi Priority khi Ticket đang `WAITING_STUDENT`:** lưu Priority mới, Deadline tính lại khi Ticket quay về `IN_PROGRESS`.
 
 #### 9. Ví dụ Edge Case
-- Tỷ lệ sử dụng 79,9%: chưa sắp quá hạn; đúng 80%: sắp quá hạn; đúng 100%: quá hạn (AC-03-03, AC-03-04).
+- Tỷ lệ sử dụng 79,9%: chưa sắp quá hạn; đúng 80%: sắp quá hạn; đúng 100%: quá hạn (FR-STF-03/AC-03, FR-STF-03/AC-04).
 - Ticket tạo 16:30 thứ Sáu với `URGENT`: thời hạn chỉ tính giờ làm việc, không tính cuối tuần.
 - Đặt lại cùng Priority đang có: không ghi lịch sử, không tính lại Deadline.
 - Ticket đã quá hạn được nâng lên `URGENT`: vẫn ở trạng thái quá hạn, không "hết quá hạn" nhờ đổi Priority.
@@ -301,11 +311,15 @@ Cho phép nhân viên xử lý Ticket đang phụ trách, ghi nhận tiến đ�
 - Khi sinh viên bổ sung hợp lệ, Ticket quay về `IN_PROGRESS`.
 
 #### 7. Tiêu chí nghiệm thu
-- **AC-04-01:** Cập nhật tiến độ hợp lệ được lưu vào đúng Ticket.
-- **AC-04-02:** Yêu cầu bổ sung hợp lệ chuyển Ticket sang `WAITING_STUDENT`.
-- **AC-04-03:** Sinh viên nhận được thông báo và xem được nội dung cần bổ sung.
-- **AC-04-04:** Thời gian xử lý tạm dừng trong `WAITING_STUDENT` và tiếp tục khi Ticket quay về `IN_PROGRESS`.
-- **AC-04-05:** Ticket ngoài `IN_PROGRESS` không thể phát sinh yêu cầu bổ sung mới.
+- **FR-STF-04/AC-01:** Cập nhật tiến độ hợp lệ (10–1.000 ký tự) được lưu vào lịch sử nội bộ của đúng Ticket; Ticket giữ `IN_PROGRESS`.
+- **FR-STF-04/AC-02:** Yêu cầu bổ sung hợp lệ chuyển Ticket sang `WAITING_STUDENT`.
+- **FR-STF-04/AC-03:** Sinh viên nhận thông báo trong hệ thống và xem được nội dung cần bổ sung.
+- **FR-STF-04/AC-04:** Thời gian xử lý tạm dừng trong `WAITING_STUDENT` và tiếp tục khi Ticket quay về `IN_PROGRESS`.
+- **FR-STF-04/AC-05:** Ticket ngoài `IN_PROGRESS`: không có thao tác yêu cầu bổ sung; yêu cầu gửi trực tiếp bị từ chối với thông báo trạng thái hiện tại, trạng thái không đổi.
+- **FR-STF-04/AC-06:** Nội dung cập nhật tiến độ hoặc yêu cầu bổ sung rỗng, chỉ có khoảng trắng, dưới 10 hoặc trên 1.000 ký tự: thông báo tại trường nội dung, không lưu, trạng thái không đổi.
+- **FR-STF-04/AC-07:** Nhân viên không còn là người phụ trách hoặc đã mất quyền xử lý: cập nhật hoặc yêu cầu bổ sung bị từ chối với thông báo, không ghi lịch sử.
+- **FR-STF-04/AC-08:** Yêu cầu bổ sung và phản hồi của sinh viên được giữ nguyên trong lịch sử, kể cả sau nhiều vòng bổ sung.
+- **FR-STF-04/AC-09:** Sau khi sinh viên bổ sung hợp lệ (FR-STU-05/AC-01), Ticket quay về `IN_PROGRESS` và xuất hiện lại trong "Ticket của tôi" của người phụ trách.
 
 #### 8. Luồng thay thế (Alternative Flows)
 - Luồng B (yêu cầu bổ sung) ở mục 4 là luồng thay thế của Luồng A (cập nhật tiến độ).
@@ -313,14 +327,14 @@ Cho phép nhân viên xử lý Ticket đang phụ trách, ghi nhận tiến đ�
 
 #### 9. Ví dụ Edge Case
 - Nội dung 9 ký tự: từ chối; 10: chấp nhận; 1.000: chấp nhận; 1.001: từ chối.
-- Yêu cầu bổ sung khi Ticket đang `WAITING_STUDENT`: bị từ chối (AC-04-05).
+- Yêu cầu bổ sung khi Ticket đang `WAITING_STUDENT`: bị từ chối (FR-STF-04/AC-05).
 - Nhân viên vừa bị phân công lại cho người khác rồi gửi cập nhật: bị từ chối.
 
 ---
 
 ### [FR-STF-05] Chuyển xử lý và Escalation
 
-**Priority:** Cao: Transfer tránh Ticket sai phòng ban bị kẹt. Riêng Escalation ở mức Trung bình (#147), có thể dời qua CR nếu thiếu thời gian. **Mốc giao:** MS-03.
+**Priority:** Cao: Transfer tránh Ticket sai phòng ban bị kẹt. Riêng Escalation ở mức Trung bình, có thể dời qua CR nếu thiếu thời gian. **Mốc giao:** MS-03.
 
 #### 1. Mô tả & Phạm vi
 Cho phép chuyển Ticket sang **phòng ban khác** khi cần thay đổi đơn vị chịu trách nhiệm, hoặc thực hiện Escalation khi Ticket cần hỗ trợ/chuyển cấp xử lý. Việc đổi người phụ trách trong cùng phòng ban được thực hiện bằng luồng phân công lại tại FR-STF-02.
@@ -384,12 +398,17 @@ Cho phép chuyển Ticket sang **phòng ban khác** khi cần thay đổi đơn 
 - Transfer/Escalation không tự động chuyển Ticket sang `RESOLVED` hoặc `CLOSED`.
 
 #### 7. Tiêu chí nghiệm thu
-- **AC-05-01:** Transfer hợp lệ cập nhật đồng thời Category và phòng ban theo cấu hình, không thay đổi mã Ticket.
-- **AC-05-02:** Transfer sang phòng ban khác luôn gỡ người phụ trách hiện tại để phòng ban mới tiếp nhận hoặc phân công lại.
-- **AC-05-03:** Lịch sử Transfer ghi nhận Category trước/sau, phòng ban trước/sau, lý do và người thực hiện; sinh viên và phòng ban mới nhận thông báo trong hệ thống.
-- **AC-05-04:** Escalation hợp lệ được gửi tới đúng Management được chọn, giữ nguyên Category/phòng ban/người phụ trách/trạng thái và được ghi nhận trong lịch sử.
-- **AC-05-05:** Management nhận escalation và người phụ trách hiện tại nhận thông báo; sinh viên không nhận thông báo chỉ vì escalation.
-- **AC-05-06:** Lịch sử trước Transfer/Escalation được giữ nguyên.
+- **FR-STF-05/AC-01:** Transfer hợp lệ cập nhật Category và phòng ban trong cùng một thao tác theo cấu hình; mã Ticket, trạng thái, nội dung và file giữ nguyên.
+- **FR-STF-05/AC-02:** Transfer sang phòng ban khác luôn gỡ người phụ trách hiện tại; Ticket xuất hiện ở hàng chờ chưa có người phụ trách của phòng ban mới.
+- **FR-STF-05/AC-03:** Lịch sử Transfer ghi Category trước/sau, phòng ban trước/sau, lý do và người thực hiện; sinh viên và phòng ban mới nhận thông báo trong hệ thống.
+- **FR-STF-05/AC-04:** Escalation hợp lệ được gửi tới đúng Management được chọn, giữ nguyên Category/phòng ban/người phụ trách/trạng thái và được ghi trong lịch sử.
+- **FR-STF-05/AC-05:** Management nhận escalation và người phụ trách hiện tại nhận thông báo; sinh viên không nhận thông báo chỉ vì escalation.
+- **FR-STF-05/AC-06:** Lịch sử có trước Transfer/Escalation được giữ nguyên.
+- **FR-STF-05/AC-07:** Transfer thiếu Category đích, Category đích cùng phòng ban hiện tại, hoặc lý do dưới 10/trên 1.000 ký tự: bị từ chối với thông báo nêu trường cần sửa; Category, phòng ban, người phụ trách không đổi.
+- **FR-STF-05/AC-08:** Escalation không chọn người nhận Management hợp lệ hoặc lý do không hợp lệ: bị từ chối với thông báo nêu trường cần sửa; không gửi thông báo, không ghi lịch sử.
+- **FR-STF-05/AC-09:** Người không có quyền Transfer/Escalation: người dùng không thấy thao tác này; nếu gửi trực tiếp tới hệ thống thì nhận thông báo "không có quyền thực hiện" và dữ liệu không đổi.
+- **FR-STF-05/AC-10:** Ticket đã đổi phạm vi hoặc trạng thái (ví dụ đã `RESOLVED`) trước khi xác nhận: thao tác bị từ chối, màn hình hiển thị dữ liệu mới nhất, không thay đổi nào được lưu.
+- **FR-STF-05/AC-11:** Transfer và Escalation không tạo trạng thái mới và không làm Ticket chuyển sang `RESOLVED` hoặc `CLOSED`.
 
 #### 8. Luồng thay thế (Alternative Flows)
 - Luồng B (Escalation) ở mục 4 là luồng thay thế của Luồng A (Transfer).
@@ -459,13 +478,17 @@ Cho phép nhân viên ghi nhận kết quả xử lý chính thức của Ticket
 - Nếu người phụ trách trước đó vẫn đang hoạt động và còn thuộc phòng ban phụ trách Ticket, Ticket tiếp tục được giao cho người đó; nếu không, Ticket quay về hàng chờ chưa có người phụ trách của phòng ban hiện tại để được tiếp nhận/phân công lại.
 
 #### 7. Tiêu chí nghiệm thu
-- **AC-06-01:** Kết quả hợp lệ chuyển Ticket từ `IN_PROGRESS` sang `RESOLVED`.
-- **AC-06-02:** Sinh viên nhận thông báo và xem được nội dung/tài liệu kết quả thuộc Ticket của mình.
-- **AC-06-03:** Thiếu nội dung kết quả không làm Ticket chuyển trạng thái.
-- **AC-06-04:** Ghi nhận kết quả không làm mất lịch sử xử lý trước đó.
-- **AC-06-05:** Ticket được mở lại hợp lệ quay về `IN_PROGRESS`; hệ thống giữ người phụ trách cũ nếu vẫn hợp lệ, nếu không Ticket quay về hàng chờ chưa có người phụ trách của phòng ban hiện tại.
-- **AC-06-06:** Ticket mở lại có người phụ trách cũ còn hợp lệ xuất hiện lại trong danh sách xử lý của người đó và người phụ trách nhận thông báo trong hệ thống.
-- **AC-06-07:** Ticket mở lại không còn người phụ trách hợp lệ xuất hiện trong hàng chờ chưa có người phụ trách của phòng ban hiện tại để được tiếp nhận hoặc phân công lại.
+- **FR-STF-06/AC-01:** Kết quả hợp lệ (20–2.000 ký tự, file tùy chọn) chuyển Ticket từ `IN_PROGRESS` sang `RESOLVED` và ghi thời điểm giải quyết.
+- **FR-STF-06/AC-02:** Sinh viên nhận thông báo và xem được nội dung/tài liệu kết quả thuộc Ticket của mình.
+- **FR-STF-06/AC-03:** Thiếu nội dung kết quả, hoặc nội dung dưới 20/trên 2.000 ký tự: thông báo tại trường kết quả, Ticket giữ `IN_PROGRESS`.
+- **FR-STF-06/AC-04:** Ghi nhận kết quả không làm mất lịch sử xử lý trước đó.
+- **FR-STF-06/AC-05:** Ticket được mở lại hợp lệ quay về `IN_PROGRESS`; hệ thống giữ người phụ trách cũ nếu vẫn hợp lệ, nếu không Ticket quay về hàng chờ chưa có người phụ trách của phòng ban hiện tại.
+- **FR-STF-06/AC-06:** Ticket mở lại có người phụ trách cũ còn hợp lệ xuất hiện lại trong danh sách xử lý của người đó và người phụ trách nhận thông báo trong hệ thống.
+- **FR-STF-06/AC-07:** Ticket mở lại không còn người phụ trách hợp lệ xuất hiện trong hàng chờ chưa có người phụ trách của phòng ban hiện tại để được tiếp nhận hoặc phân công lại.
+- **FR-STF-06/AC-08:** File kết quả sai định dạng, trên 10 MB hoặc vượt 03 file: file đó bị loại kèm thông báo nêu lý do, file hợp lệ được giữ.
+- **FR-STF-06/AC-09:** Ticket không còn ở `IN_PROGRESS`, hoặc người dùng không có quyền ghi kết quả: thao tác bị từ chối với thông báo, trạng thái không đổi.
+- **FR-STF-06/AC-10:** Khi Ticket `RESOLVED`, Staff Operations không có chức năng CSAT; sinh viên chỉ thấy form đánh giá sau khi Ticket `CLOSED` (FR-STU-07).
+- **FR-STF-06/AC-11:** Ticket `RESOLVED` chưa kết thúc vòng đời: sinh viên vẫn chấp nhận hoặc mở lại được trong 03 ngày làm việc (FR-STU-06/AC-02, FR-STU-06/AC-03, FR-STU-06/AC-05).
 
 #### 8. Luồng thay thế (Alternative Flows)
 - Luồng B (tiếp tục xử lý Ticket mở lại) ở mục 4 là luồng thay thế sau khi sinh viên mở lại.
@@ -473,7 +496,7 @@ Cho phép nhân viên ghi nhận kết quả xử lý chính thức của Ticket
 
 #### 9. Ví dụ Edge Case
 - Nội dung kết quả 19 ký tự: từ chối; 20: chấp nhận.
-- Người phụ trách cũ bị khóa trước khi sinh viên mở lại: Ticket về hàng chờ chưa có người phụ trách (AC-06-07).
+- Người phụ trách cũ bị khóa trước khi sinh viên mở lại: Ticket về hàng chờ chưa có người phụ trách (FR-STF-06/AC-07).
 - Ghi kết quả đúng lúc sinh viên gửi bổ sung: chỉ một thao tác thành công; thao tác kia thấy trạng thái mới nhất.
 
 ---

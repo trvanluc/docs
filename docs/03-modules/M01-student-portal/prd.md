@@ -47,10 +47,13 @@ Cho phép sinh viên đăng nhập vào UniSupport bằng tài khoản hợp l�
 - Cơ chế xác thực và quản lý phiên được dùng chung với các phân hệ khác.
 
 #### 7. Tiêu chí nghiệm thu
-- **AC-00-01:** Tài khoản hợp lệ và đang hoạt động đăng nhập thành công vào Student Portal.
-- **AC-00-02:** Thông tin đăng nhập sai hoặc tài khoản bị vô hiệu hóa không tạo được phiên hợp lệ.
-- **AC-00-03:** Phiên Student không cho phép truy cập dữ liệu vượt phạm vi quyền.
-- **AC-00-04:** Phiên hết hạn yêu cầu người dùng đăng nhập lại trước khi tiếp tục thao tác được bảo vệ.
+- **FR-STU-00/AC-01:** Tài khoản sinh viên hợp lệ, đang hoạt động đăng nhập thành công và được đưa vào Student Portal.
+- **FR-STU-00/AC-02:** Sai tên đăng nhập hoặc mật khẩu: màn hình hiển thị thông báo "thông tin đăng nhập không đúng" (không nói rõ sai trường nào), không tạo phiên, người dùng vẫn ở màn hình đăng nhập.
+- **FR-STU-00/AC-03:** Tài khoản bị khóa hoặc vô hiệu hóa nhập đúng mật khẩu: hiển thị thông báo "tài khoản đã bị khóa", không tạo phiên.
+- **FR-STU-00/AC-04:** Bỏ trống hoặc chỉ nhập khoảng trắng ở tên đăng nhập/mật khẩu: thông báo chỉ rõ trường bắt buộc, yêu cầu đăng nhập không được gửi.
+- **FR-STU-00/AC-05:** Phiên Student mở đường dẫn hoặc gọi chức năng của Staff Operations/Management Dashboard: hiển thị trang "không có quyền truy cập", không hiển thị dữ liệu nào của phân hệ đó.
+- **FR-STU-00/AC-06:** Phiên hết hạn: thao tác được bảo vệ tiếp theo đưa người dùng về màn hình đăng nhập kèm thông báo "phiên đã hết hạn"; dữ liệu chưa lưu không được ghi.
+- **FR-STU-00/AC-07:** Sinh viên đăng nhập trên cùng màn hình đăng nhập dùng chung với Nhân viên và Quản lý, và được điều hướng tới Student Portal theo vai trò.
 
 #### 8. Luồng thay thế (Alternative Flows)
 - **A1 — Đã có phiên hợp lệ:** sinh viên mở UniSupport khi phiên còn hiệu lực; hệ thống bỏ qua bước đăng nhập và vào thẳng Student Portal.
@@ -58,8 +61,8 @@ Cho phép sinh viên đăng nhập vào UniSupport bằng tài khoản hợp l�
 
 #### 9. Ví dụ Edge Case
 - Tên đăng nhập có khoảng trắng ở đầu/cuối: hệ thống bỏ khoảng trắng trước khi kiểm tra; chỉ toàn khoảng trắng thì báo thiếu dữ liệu (mục 3).
-- Tài khoản bị khóa trong lúc đang có phiên: thao tác được bảo vệ tiếp theo bị từ chối và yêu cầu đăng nhập lại (AC-00-02, AC-00-04).
-- Tài khoản Staff đăng nhập và cố mở URL của Student Portal: bị từ chối (AC-00-03).
+- Tài khoản bị khóa trong lúc đang có phiên: thao tác được bảo vệ tiếp theo bị từ chối và yêu cầu đăng nhập lại (FR-STU-00/AC-03, FR-STU-00/AC-06).
+- Tài khoản Staff đăng nhập và cố mở URL của Student Portal: bị từ chối (FR-STU-00/AC-05).
 
 ---
 
@@ -94,9 +97,11 @@ Giúp sinh viên tra cứu các vấn đề thường gặp và thông tin cần
 - Nội dung FAQ được nạp sẵn khi triển khai; phạm vi hiện tại không bao gồm chức năng thêm, sửa hoặc xóa FAQ trên giao diện.
 
 #### 7. Tiêu chí nghiệm thu
-- **AC-01-01:** Sinh viên xem được danh sách FAQ theo nhóm vấn đề.
-- **AC-01-02:** Tìm kiếm hoặc chọn nhóm vấn đề trả về nội dung phù hợp với dữ liệu FAQ hiện có.
-- **AC-01-03:** Sinh viên có thể chuyển từ FAQ sang chức năng tạo Ticket khi cần hỗ trợ thêm.
+- **FR-STU-01/AC-01:** Sinh viên xem được danh sách FAQ theo các nhóm vấn đề đang hoạt động.
+- **FR-STU-01/AC-02:** Tìm theo từ khóa hoặc chọn nhóm vấn đề trả về các FAQ khớp; không có kết quả thì hiển thị "không tìm thấy" kèm nút chuyển sang tạo Ticket.
+- **FR-STU-01/AC-03:** Từ một FAQ hoặc từ màn hình không tìm thấy, sinh viên chuyển được sang màn hình tạo Ticket.
+- **FR-STU-01/AC-04:** Khi dữ liệu FAQ không tải được, màn hình hiển thị thông báo "chưa thể tải hướng dẫn, vui lòng thử lại" và không có Ticket nào được tạo tự động.
+- **FR-STU-01/AC-05:** Xem và tìm FAQ không tạo hay thay đổi Ticket nào; Student Portal không có chức năng thêm, sửa, xóa FAQ và không có chatbot.
 
 #### 8. Luồng thay thế (Alternative Flows)
 - **A1 — Không tìm thấy nội dung phù hợp:** hệ thống hiển thị trạng thái không tìm thấy và nút chuyển sang tạo Ticket (chuyển từ mục 5).
@@ -157,12 +162,15 @@ Cho phép sinh viên tạo Ticket mới bằng cách chọn một **Nhóm vấn 
 - Mã Ticket phải duy nhất trong hệ thống.
 
 #### 7. Tiêu chí nghiệm thu
-- **AC-02-01:** Dữ liệu hợp lệ tạo đúng một Ticket ở trạng thái `NEW`.
-- **AC-02-02:** Ticket mới có mã Ticket duy nhất và thuộc đúng sinh viên tạo.
-- **AC-02-03:** Ticket mới được gắn nhóm vấn đề, phòng ban tiếp nhận, priority `MEDIUM` và thời hạn xử lý tương ứng.
-- **AC-02-04:** Dữ liệu bắt buộc không hợp lệ không làm phát sinh Ticket.
-- **AC-02-05:** File không đáp ứng quy tắc định dạng, dung lượng hoặc số lượng không được chấp nhận.
-- **AC-02-06:** Thao tác gửi lặp không tạo nhiều Ticket từ cùng một lần gửi.
+- **FR-STU-02/AC-01:** Dữ liệu hợp lệ tạo đúng một Ticket ở trạng thái `NEW`; màn hình hiển thị thông báo thành công kèm mã Ticket vừa tạo.
+- **FR-STU-02/AC-02:** Ticket mới có mã duy nhất trong hệ thống và thuộc đúng sinh viên tạo.
+- **FR-STU-02/AC-03:** Ticket mới được gắn đúng Category, phòng ban tiếp nhận theo cấu hình, priority `MEDIUM` và Deadline 03 ngày làm việc (`BR-DUE-01`).
+- **FR-STU-02/AC-04:** Thiếu Category, hoặc nội dung rỗng, chỉ có khoảng trắng, dưới 20 hoặc trên 2.000 ký tự: không tạo Ticket; form giữ nguyên dữ liệu đã nhập và hiển thị thông báo ngay tại trường cần sửa.
+- **FR-STU-02/AC-05:** File sai định dạng (ngoài PDF/PNG/JPG/JPEG), trên 10 MB hoặc vượt 03 file: file đó bị loại kèm thông báo nêu tên file và lý do; các file hợp lệ vẫn được giữ trên form.
+- **FR-STU-02/AC-06:** Bấm gửi nhiều lần hoặc gửi lại cùng một form chỉ tạo một Ticket.
+- **FR-STU-02/AC-07:** Category bị vô hiệu hóa sau khi sinh viên mở form: lúc gửi không tạo Ticket, hiển thị thông báo yêu cầu chọn lại Category, danh sách Category chỉ còn các mục đang hoạt động.
+- **FR-STU-02/AC-08:** Form tạo Ticket không có trường chọn người phụ trách; Ticket mới chưa có người phụ trách.
+- **FR-STU-02/AC-09:** File đính kèm của Ticket chỉ xem/tải được bởi sinh viên tạo Ticket và người có quyền xử lý (`BR-FILE-01`); người khác mở đường dẫn file nhận thông báo "không có quyền truy cập".
 
 #### 8. Luồng thay thế (Alternative Flows)
 - **A1 — Tạo Ticket không có file:** sinh viên bỏ qua bước 4; Ticket vẫn được tạo bình thường.
@@ -172,7 +180,7 @@ Cho phép sinh viên tạo Ticket mới bằng cách chọn một **Nhóm vấn 
 - Nội dung đúng 19 ký tự: từ chối; đúng 20 ký tự: chấp nhận; 2.000 ký tự: chấp nhận; 2.001 ký tự: từ chối.
 - File đúng 10 MB: chấp nhận; 10 MB + 1 byte: từ chối. Chọn 4 file: chỉ nhận 3 và báo vượt số lượng.
 - File `.docx` hoặc `.zip`: bị từ chối vì ngoài định dạng PDF/PNG/JPG/JPEG (`BR-FILE-02`).
-- Bấm Gửi hai lần liên tiếp hoặc mạng chậm rồi gửi lại: chỉ một Ticket được tạo (AC-02-06).
+- Bấm Gửi hai lần liên tiếp hoặc mạng chậm rồi gửi lại: chỉ một Ticket được tạo (FR-STU-02/AC-06).
 - Category bị vô hiệu hóa giữa lúc sinh viên đang điền form: lúc gửi bị từ chối và yêu cầu chọn lại.
 
 ---
@@ -211,10 +219,13 @@ Cho phép sinh viên xem danh sách Ticket của mình và theo dõi trạng th�
 - Các sự kiện quản trị hoặc Audit Trail không liên quan trực tiếp đến quá trình hỗ trợ của sinh viên không hiển thị trong Student Portal.
 
 #### 7. Tiêu chí nghiệm thu
-- **AC-03-01:** Danh sách chỉ chứa Ticket thuộc sinh viên đang đăng nhập.
-- **AC-03-02:** Chi tiết Ticket hiển thị đúng trạng thái hiện tại và lịch sử xử lý được phép xem.
-- **AC-03-03:** Ticket của sinh viên khác không thể được truy cập thông qua đường dẫn hoặc mã Ticket.
-- **AC-03-04:** Khi trạng thái, phòng ban hoặc người phụ trách thay đổi hợp lệ, thông tin theo dõi phản ánh giá trị mới.
+- **FR-STU-03/AC-01:** Danh sách chỉ chứa Ticket của sinh viên đang đăng nhập, Ticket cập nhật gần nhất ở đầu, mỗi dòng có mã, Category, thời điểm tạo và trạng thái.
+- **FR-STU-03/AC-02:** Chi tiết Ticket hiển thị đúng trạng thái hiện tại, phòng ban/người phụ trách (nếu đã phân công), Deadline, file được phép xem và kết quả nếu có.
+- **FR-STU-03/AC-03:** Mở Ticket của sinh viên khác bằng đường dẫn hoặc mã Ticket: hiển thị trang "không tìm thấy hoặc không có quyền", không hiện mã, nội dung hay file của Ticket đó.
+- **FR-STU-03/AC-04:** Khi trạng thái, phòng ban hoặc người phụ trách thay đổi hợp lệ, lần tải tiếp theo hiển thị giá trị mới.
+- **FR-STU-03/AC-05:** Sinh viên chưa có Ticket nào: hiển thị danh sách trống kèm nút tạo Ticket.
+- **FR-STU-03/AC-06:** Lịch sử hiển thị sự kiện chuyển phòng ban nhưng không hiển thị sự kiện Escalation (`BR-OWN-03`).
+- **FR-STU-03/AC-07:** Lịch sử có đủ các sự kiện tối thiểu (tạo, đổi trạng thái, yêu cầu bổ sung, sinh viên bổ sung, chuyển phòng ban, ghi kết quả, mở lại, đóng) và không có sự kiện quản trị như thay đổi tài khoản hay cấu hình.
 
 #### 8. Luồng thay thế (Alternative Flows)
 - **A1 — Tìm theo mã Ticket:** sinh viên nhập mã; hệ thống chỉ trả kết quả nếu Ticket thuộc sinh viên.
@@ -223,7 +234,7 @@ Cho phép sinh viên xem danh sách Ticket của mình và theo dõi trạng th�
 
 #### 9. Ví dụ Edge Case
 - Sinh viên chưa có Ticket nào: hiển thị danh sách trống kèm nút tạo Ticket.
-- Đổi ID trên URL sang Ticket của sinh viên khác: bị từ chối, không lộ mã hay tiêu đề Ticket (AC-03-03).
+- Đổi ID trên URL sang Ticket của sinh viên khác: bị từ chối, không lộ mã hay tiêu đề Ticket (FR-STU-03/AC-03).
 - Ticket vừa Transfer: sinh viên thấy phòng ban mới, không thấy người phụ trách cũ; không thấy sự kiện Escalation.
 - Ticket có trên 100 sự kiện lịch sử: vẫn hiển thị đủ, theo thứ tự thời gian.
 
@@ -270,10 +281,12 @@ Các sự kiện chính gồm:
 - Thông báo của M01 là **thông báo trong hệ thống (in-app notification)**.
 
 #### 7. Tiêu chí nghiệm thu
-- **AC-04-01:** Sự kiện hợp lệ tạo thông báo cho đúng sinh viên.
-- **AC-04-02:** Thông báo liên kết đúng Ticket và chỉ mở được khi người dùng có quyền.
-- **AC-04-03:** Trạng thái đã đọc/chưa đọc được ghi nhận nhất quán.
-- **AC-04-04:** Sinh viên không xem được thông báo thuộc tài khoản khác.
+- **FR-STU-04/AC-01:** Mỗi sự kiện trong danh sách ở mục 4 (tạo, đổi trạng thái, yêu cầu bổ sung, chuyển phòng ban, có kết quả, mở lại, đóng) tạo đúng một thông báo trong hệ thống cho sinh viên sở hữu Ticket.
+- **FR-STU-04/AC-02:** Bấm vào thông báo mở đúng chi tiết Ticket liên quan.
+- **FR-STU-04/AC-03:** Mở thông báo hoặc đánh dấu đã đọc làm thông báo chuyển sang "đã đọc" và số thông báo chưa đọc giảm tương ứng, giống nhau trên mọi thiết bị.
+- **FR-STU-04/AC-04:** Sinh viên không thấy thông báo của tài khoản khác; mở thông báo của người khác bằng đường dẫn nhận trang "không có quyền truy cập".
+- **FR-STU-04/AC-05:** Thông báo trỏ tới Ticket không còn truy cập được hoặc không còn tồn tại: hiển thị "nội dung không còn khả dụng", không hiện mã hay nội dung Ticket.
+- **FR-STU-04/AC-06:** Thông báo chỉ hiển thị trong Student Portal (in-app); hệ thống không gửi email hay SMS.
 
 #### 8. Luồng thay thế (Alternative Flows)
 - **A1 — Mở lại thông báo đã đọc:** vẫn điều hướng đến Ticket liên quan; trạng thái giữ là đã đọc.
@@ -281,9 +294,9 @@ Các sự kiện chính gồm:
 
 #### 9. Ví dụ Edge Case
 - Thông báo của Ticket đã bị Transfer: vẫn mở được vì Ticket vẫn thuộc sinh viên.
-- Mở thông báo trên hai thiết bị: trạng thái đã đọc đồng bộ ở cả hai (AC-04-03).
+- Mở thông báo trên hai thiết bị: trạng thái đã đọc đồng bộ ở cả hai (FR-STU-04/AC-03).
 - Sự kiện Escalation: không tạo thông báo cho sinh viên.
-- Đổi ID thông báo trên URL sang thông báo của tài khoản khác: bị từ chối (AC-04-04).
+- Đổi ID thông báo trên URL sang thông báo của tài khoản khác: bị từ chối (FR-STU-04/AC-04).
 
 ---
 
@@ -323,10 +336,12 @@ Cho phép sinh viên cung cấp thông tin hoặc tài liệu còn thiếu khi n
 - Bổ sung thành công phải được ghi nhận trong lịch sử Ticket.
 
 #### 7. Tiêu chí nghiệm thu
-- **AC-05-01:** Ticket `WAITING_STUDENT` nhận bổ sung hợp lệ và chuyển về `IN_PROGRESS`.
-- **AC-05-02:** Nội dung/file bổ sung được lưu đúng Ticket và nhân viên có quyền có thể truy cập.
-- **AC-05-03:** Ticket ngoài `WAITING_STUDENT` không chấp nhận bổ sung theo luồng này.
-- **AC-05-04:** Thời gian chờ sinh viên không bị tính vào thời gian xử lý.
+- **FR-STU-05/AC-01:** Ticket `WAITING_STUDENT` nhận bổ sung hợp lệ (nội dung, file hoặc cả hai) và chuyển về `IN_PROGRESS`.
+- **FR-STU-05/AC-02:** Nội dung/file bổ sung được lưu đúng Ticket, hiện trong lịch sử Ticket và nhân viên có quyền mở được.
+- **FR-STU-05/AC-03:** Gửi bổ sung khi Ticket không còn ở `WAITING_STUDENT`: hiển thị thông báo kèm trạng thái mới nhất của Ticket; không có nội dung hay file nào được lưu.
+- **FR-STU-05/AC-04:** Thời gian Ticket ở `WAITING_STUDENT` không tính vào thời gian xử lý; Deadline sau khi bổ sung bằng thời điểm bổ sung cộng phần thời hạn còn lại (`BR-DUE-02`).
+- **FR-STU-05/AC-05:** Không nhập nội dung và không đính kèm file: hiển thị thông báo "cần nhập nội dung hoặc đính kèm file", Ticket giữ `WAITING_STUDENT`.
+- **FR-STU-05/AC-06:** Nội dung trên 2.000 ký tự hoặc file sai quy tắc (`BR-FILE-02`): thông báo nêu lý do tại trường/file đó; file sai bị loại, phần hợp lệ được giữ trên form.
 
 #### 8. Luồng thay thế (Alternative Flows)
 - **A1 — Chỉ gửi nội dung, không có file** hoặc **A2 — chỉ gửi file, không có nội dung:** đều hợp lệ vì đủ "ít nhất một trong hai".
@@ -335,7 +350,7 @@ Cho phép sinh viên cung cấp thông tin hoặc tài liệu còn thiếu khi n
 #### 9. Ví dụ Edge Case
 - Nội dung 2.000 ký tự: chấp nhận; 2.001: từ chối.
 - Hai tab cùng gửi bổ sung: tab đầu thành công, tab sau bị từ chối vì Ticket đã về `IN_PROGRESS`.
-- Ticket ở `WAITING_STUDENT` 5 ngày rồi được bổ sung: phần thời hạn còn lại giữ nguyên như lúc tạm dừng (AC-05-04).
+- Ticket ở `WAITING_STUDENT` 5 ngày rồi được bổ sung: phần thời hạn còn lại giữ nguyên như lúc tạm dừng (FR-STU-05/AC-04).
 
 ---
 
@@ -390,11 +405,14 @@ Cho phép sinh viên xem nội dung kết quả xử lý và tài liệu kết q
 - Mọi lần chấp nhận, mở lại và tự động đóng phải được ghi nhận trong lịch sử.
 
 #### 7. Tiêu chí nghiệm thu
-- **AC-06-01:** Sinh viên xem được kết quả của Ticket `RESOLVED` hoặc `CLOSED` thuộc mình.
-- **AC-06-02:** Xác nhận kết quả khi Ticket đang `RESOLVED` làm Ticket chuyển sang `CLOSED`.
-- **AC-06-03:** Yêu cầu mở lại hợp lệ trong 03 ngày làm việc chuyển Ticket từ `RESOLVED` về `IN_PROGRESS`.
-- **AC-06-04:** Reopen thiếu lý do, hết thời hạn hoặc Ticket đã `CLOSED` bị từ chối.
-- **AC-06-05:** Ticket `RESOLVED` không có yêu cầu xử lý tiếp được tự động đóng khi hết thời hạn phản hồi.
+- **FR-STU-06/AC-01:** Sinh viên xem được nội dung kết quả, tài liệu kết quả và thời hạn phản hồi còn lại của Ticket `RESOLVED` hoặc `CLOSED` thuộc mình.
+- **FR-STU-06/AC-02:** Xác nhận kết quả khi Ticket đang `RESOLVED` chuyển Ticket sang `CLOSED` và ghi thời điểm đóng.
+- **FR-STU-06/AC-03:** Yêu cầu mở lại có lý do 10–1.000 ký tự, gửi trong 03 ngày làm việc, chuyển Ticket từ `RESOLVED` về `IN_PROGRESS` và tạo thông báo cho người phụ trách hoặc phòng ban hiện tại.
+- **FR-STU-06/AC-04:** Yêu cầu mở lại thiếu lý do, hoặc lý do dưới 10 hay trên 1.000 ký tự: thông báo nêu yêu cầu về lý do, Ticket giữ `RESOLVED`.
+- **FR-STU-06/AC-05:** Ticket `RESOLVED` quá 03 ngày làm việc mà không có yêu cầu xử lý tiếp được hệ thống tự chuyển sang `CLOSED`.
+- **FR-STU-06/AC-06:** Ticket đã `CLOSED` hoặc đã hết thời hạn phản hồi: không còn nút mở lại; yêu cầu mở lại gửi trực tiếp bị từ chối với thông báo "Ticket đã đóng hoặc hết thời hạn phản hồi", trạng thái không đổi.
+- **FR-STU-06/AC-07:** Sinh viên mở hoặc thao tác trên Ticket của người khác: trang "không có quyền truy cập", không hiển thị kết quả, trạng thái Ticket không đổi.
+- **FR-STU-06/AC-08:** Mỗi lần chấp nhận, mở lại và tự động đóng tạo một sự kiện trong lịch sử Ticket, ghi người thực hiện (hoặc "hệ thống") và thời điểm.
 
 #### 8. Luồng thay thế (Alternative Flows)
 - Luồng B (mở lại) và Luồng C (tự động đóng) ở mục 4 là luồng thay thế của Luồng A (chấp nhận kết quả).
@@ -443,20 +461,21 @@ Ghi nhận mức độ hài lòng của sinh viên sau khi Ticket đã kết th�
 - Đánh giá không làm thay đổi trạng thái Ticket.
 
 #### 7. Tiêu chí nghiệm thu
-- **AC-07-01:** Ticket `CLOSED` còn trong thời hạn cho phép nhận đánh giá 1-5 sao.
-- **AC-07-02:** Đánh giá hợp lệ được lưu đúng Ticket và sử dụng cho báo cáo CSAT.
-- **AC-07-03:** Không thể gửi đánh giá lần thứ hai cho cùng Ticket.
-- **AC-07-04:** Ticket quá thời hạn 07 ngày theo lịch không nhận đánh giá mới.
-- **AC-07-05:** Gửi CSAT không thay đổi trạng thái `CLOSED`.
+- **FR-STU-07/AC-01:** Ticket `CLOSED` thuộc sinh viên, chưa có đánh giá, trong 07 ngày theo lịch kể từ khi đóng, nhận đánh giá 1–5 sao kèm nhận xét tùy chọn tối đa 500 ký tự.
+- **FR-STU-07/AC-02:** Đánh giá hợp lệ được lưu đúng Ticket và được tính vào báo cáo CSAT (FR-MGT-06).
+- **FR-STU-07/AC-03:** Ticket đã có đánh giá: không còn form đánh giá; đánh giá gửi lần hai bị từ chối với thông báo "Ticket đã được đánh giá", đánh giá cũ giữ nguyên.
+- **FR-STU-07/AC-04:** Quá 07 ngày theo lịch kể từ khi `CLOSED`: không còn form đánh giá; đánh giá gửi trực tiếp bị từ chối với thông báo hết thời hạn, không có đánh giá nào được lưu.
+- **FR-STU-07/AC-05:** Gửi CSAT không làm thay đổi trạng thái `CLOSED`.
+- **FR-STU-07/AC-06:** Gửi mà không chọn số sao, hoặc nhận xét trên 500 ký tự: thông báo nêu trường cần sửa, không lưu đánh giá.
 
 #### 8. Luồng thay thế (Alternative Flows)
 - **A1 — Đánh giá không kèm nhận xét:** chỉ chọn số sao rồi gửi.
 - **A2 — Ticket tự động đóng:** sinh viên vẫn được đánh giá trong 07 ngày kể từ lúc tự đóng.
 
 #### 9. Ví dụ Edge Case
-- Gửi đánh giá ở ngày thứ 7 theo lịch: chấp nhận; ngày thứ 8: từ chối (AC-07-04).
+- Gửi đánh giá ở ngày thứ 7 theo lịch: chấp nhận; ngày thứ 8: từ chối (FR-STU-07/AC-04).
 - Nhận xét 500 ký tự: chấp nhận; 501: từ chối.
-- Gửi đánh giá đồng thời từ hai tab: chỉ một đánh giá được lưu (AC-07-03).
+- Gửi đánh giá đồng thời từ hai tab: chỉ một đánh giá được lưu (FR-STU-07/AC-03).
 - Điểm 0 hoặc 6 gửi trực tiếp qua API: bị từ chối.
 
 ---

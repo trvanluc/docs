@@ -8,7 +8,7 @@ labels: bug
 <!-- Trường bắt buộc theo docs/09-quality/quality-plan.md mục 2.2. Lỗi minh hoạ (không phải lỗi thật) phải ghi `Mô phỏng`. -->
 
 **Mức độ:** Nghiêm trọng / Thông thường <!-- định nghĩa ở quality-plan.md mục 2.2 -->
-**Yêu cầu liên quan (PRD):** FR-XXX-00/AC-00-00
+**Yêu cầu liên quan (PRD):** FR-XXX-00/AC-00
 **Issue chức năng liên quan:** #
 **Kịch bản test:** TS-xxx-00
 **Milestone:** MS-xx

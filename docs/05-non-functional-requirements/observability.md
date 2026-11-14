@@ -1,5 +1,15 @@
 # NFR-OBS - Ghi Log Và Tra Soát
 
+## Mã yêu cầu
+
+Nơi gốc của mã và ngưỡng. Kịch bản test (`06-acceptance/test-scenarios.md`) và các tài liệu khác chỉ dẫn mã.
+
+| Mã | Yêu cầu | Ngưỡng / cách đo | Loại |
+| --- | --- | --- | --- |
+| `NFR-OBS-01` | Nhật ký kỹ thuật phục vụ chẩn đoán lỗi | Mỗi lỗi có thời điểm, mức độ, khu vực chức năng; 0 mật khẩu hoặc nội dung bí mật trong nhật ký. | Nội bộ đội dự án |
+| `NFR-OBS-02` | Nhật ký tra soát đủ sự kiện bắt buộc | Đối chiếu thao tác đã làm trong kịch bản test với nhật ký: 100% sự kiện ở mục 2.2 có bản ghi. | Cam kết với khách |
+| `NFR-OBS-03` | Nhật ký tra soát không sửa/xóa được qua ứng dụng | 0 thao tác sửa/xóa thành công, kể cả bằng tài khoản Management. | Cam kết với khách |
+
 ## 1. Phạm Vi
 
 Tách biệt hai mục đích:

@@ -1,5 +1,15 @@
 # NFR-DEP - Triển Khai Và Bàn Giao
 
+## Mã yêu cầu
+
+Nơi gốc của mã và ngưỡng. Kịch bản test (`06-acceptance/test-scenarios.md`) và các tài liệu khác chỉ dẫn mã.
+
+| Mã | Yêu cầu | Ngưỡng / cách đo | Loại |
+| --- | --- | --- | --- |
+| `NFR-DEP-01` | Triển khai lên hạ tầng do khách cấp | Hệ thống truy cập được qua địa chỉ/tên miền do Aurora University cung cấp. | Cam kết với khách |
+| `NFR-DEP-02` | Bàn giao đủ hạng mục | Đủ 100% hạng mục ở mục 4. | Cam kết với khách |
+| `NFR-DEP-03` | Luồng chính chạy được sau triển khai | Kiểm tra sau triển khai: luồng chính của ba phân hệ chạy hết trên môi trường bàn giao. | Cam kết với khách |
+
 ## 1. Phạm Vi
 
 UniSupport được triển khai dưới dạng Web Application trên hạ tầng do Aurora University cung cấp. Phạm vi triển khai bao gồm chuẩn bị môi trường, cấu hình ứng dụng, triển khai, kiểm tra sau triển khai và bàn giao; không bao gồm vận hành hạ tầng lâu dài.
