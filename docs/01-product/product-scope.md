@@ -1,10 +1,12 @@
 # Phạm Vi Sản Phẩm & Các Giả Định Dự Án (Product Scope & Assumptions)
 
+> **Nơi gốc của phạm vi với khách là [Proposal.docx](../08-project/Proposal.docx) mục 2 "Phạm Vi Chức Năng" và mục "Các hạng mục ngoài phạm vi hiện tại (Out of Scope)"** (decision-log `D-05`). File này là bản chi tiết cho nhóm, liệt kê cùng phạm vi đó theo từng phân hệ. Nếu hai nơi lệch nhau thì Proposal là căn cứ, sửa file này cho khớp; muốn đổi phạm vi thì đi qua quy trình CR.
+
 ## 1. Phạm Vi Chức Năng Sản Phẩm (Functional Scope)
 
 UniSupport gồm **3 phân hệ chính**. Thông báo, xác thực, RBAC và bảo mật là các năng lực dùng chung, không được xem là các phân hệ nghiệp vụ độc lập.
 
-### 1.1 Module Sinh viên (Student Portal)
+### 1.1 Module Sinh viên (Student Portal) — báo giá `Q-01`
 
 - Đăng nhập hệ thống.
 - Tra cứu hướng dẫn/FAQ.
@@ -19,7 +21,7 @@ UniSupport gồm **3 phân hệ chính**. Thông báo, xác thực, RBAC và b�
 - Phản hồi khi kết quả chưa giải quyết được vấn đề.
 - Đánh giá mức độ hài lòng sau khi yêu cầu được giải quyết.
 
-### 1.2 Module Nhân viên (Staff Operations)
+### 1.2 Module Nhân viên (Staff Operations) — báo giá `Q-02`
 
 - Đăng nhập hệ thống.
 - Xem, tìm kiếm và lọc các yêu cầu mới/được giao trong phạm vi quyền.
@@ -31,7 +33,7 @@ UniSupport gồm **3 phân hệ chính**. Thông báo, xác thực, RBAC và b�
 - Ghi nhận kết quả xử lý và chuyển Ticket sang `RESOLVED`.
 - Tiếp tục xử lý khi Ticket được sinh viên mở lại hợp lệ về `IN_PROGRESS`.
 
-### 1.3 Module Quản lý (Management Dashboard)
+### 1.3 Module Quản lý (Management Dashboard) — báo giá `Q-03`
 
 - Đăng nhập hệ thống.
 - Xem số lượng yêu cầu mới, đang xử lý, sắp quá hạn hoặc đã quá hạn.
@@ -47,7 +49,7 @@ UniSupport gồm **3 phân hệ chính**. Thông báo, xác thực, RBAC và b�
 
 > Các chức năng quản trị hệ thống thuộc phạm vi của phân hệ **Management** và được kiểm soát theo quyền của tài khoản Quản lý.
 
-### 1.4 Năng lực dùng chung
+### 1.4 Năng lực dùng chung — báo giá `Q-03`
 
 **Thông báo trong hệ thống**
 - Tạo và hiển thị thông báo cho người dùng liên quan khi Ticket phát sinh các sự kiện nghiệp vụ được quy định.
@@ -64,6 +66,8 @@ UniSupport gồm **3 phân hệ chính**. Thông báo, xác thực, RBAC và b�
 ---
 
 ## 2. Các Hạng Mục Ngoài Phạm Vi (Out of Scope)
+
+Danh sách gốc ở Proposal mục "Out of Scope"; lý do từng mục ở [goals-and-non-goals.md mục 2](goals-and-non-goals.md#2-các-mục-nằm-ngoài-phạm-vi-hiện-tại-out-of-scope--non-goals).
 
 - Mobile App độc lập cho iOS/Android.
 - Tích hợp hệ thống bên thứ ba ngoài phạm vi sản phẩm.
