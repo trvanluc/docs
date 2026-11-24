@@ -21,4 +21,21 @@ Nơi gốc duy nhất của rủi ro dự án (không còn lưu trên Google Dri
 | `R-06` | Hạ tầng staging/production do Aurora University cấp chậm hoặc không đủ cấu hình | 2 | 4 | 8 | DevOps | Xin hạ tầng từ giai đoạn khởi động; dựng staging nội bộ dự phòng | Dùng staging nội bộ để demo; báo PM để thông báo client | Chưa có thông tin server khi bắt đầu MS-01 | Mở | `MS-01`, `MS-06`, A-08 |
 | `R-07` | Thiếu người: một dev vắng dài ngày (≥ 3 ngày làm việc) | 2 | 3 | 6 | PM | Mỗi module có người thay thế theo Team Charter mục 3.1; PR review chéo để nhiều người hiểu code | Chuyển việc cho người thay thế; dùng `Q-11` | Thành viên báo bận dài ngày | Mở | Mọi `MS-xx` |
 | `R-08` | Dữ liệu UAT không đại diện, không phát hiện được lỗi hiệu năng với 3.000 sinh viên | 2 | 3 | 6 | QA | Sinh dữ liệu giả lập theo quy mô A-01 trước MS-06 | Chạy lại kịch bản TS-NFR-01 (`NFR-PERF-01`, `NFR-PERF-02`) với dữ liệu bổ sung | Dữ liệu UAT ít hơn quy mô đã cam kết | Mở | `MS-06`, `NFR-PERF-01`, A-13 |
-| `R-09` | Xuất CSV lỗi font tiếng Việt khi mở bằng Excel | 2 | 2 | 4 | FE2 | Dùng UTF-8 có BOM; thêm vào kịch bản TS-MGT-06 | Sửa định dạng xuất | Thử mở file CSV trên Excel bị lỗi dấu | Mở | `MS-05`, FR-MGT-06 |
+| `R-09` | Xuất CSV lỗi font tiếng Việt khi mở bằng Excel | 2 | 2 | 4 | BE1 | BE1 bảo đảm đầu ra UTF-8 có BOM; FE1 kiểm tra tải và mở file bằng Excel; QA xác minh trong TS-MGT-06 | BE1 sửa định dạng xuất, FE1 và QA kiểm tra lại dấu tiếng Việt | Thử mở file CSV trên Excel bị lỗi dấu | Mở | `MS-05`, FR-MGT-06, [RPT-02 #162](https://github.com/trvanluc/docs/issues/162) |
+
+## Đối chiếu người theo dõi rủi ro với kế hoạch
+
+Owner chịu trách nhiệm theo dõi và điều phối phòng ngừa, không nhất thiết là toàn bộ nhóm triển khai. Nơi gốc người làm chức năng là [Master Schedule](plans/master-schedule.xlsx), sheet `Master Schedule`; vai trò và quyền điều phối theo [Team Charter mục 3.1](team-charter.md#31-đội-thực-thi-mô-phỏng).
+
+| Rủi ro | Đối chiếu / lý do giữ owner |
+| --- | --- |
+| R-01 | TL phụ trách kiến trúc/bảo mật, review chéo SEC-01/SEC-02 và ACC-02; người triển khai là BE/FE theo Gantt. Đây là owner giám sát xuyên module, không chuyển effort lập trình sang TL. |
+| R-02 | BE2 làm SLA-01/SLA-02 ở MS-03; BE1/FE1 dùng kết quả SLA cho Dashboard MS-05. |
+| R-03 | BE1 cùng BE2 làm REL-01 (#148); BE1 điều phối tính nhất quán giữa hai cổng, không thay người làm ASSIGN-01/02 phía nhân viên. |
+| R-04 | TL điều phối tích hợp toàn hệ thống (INT-01/02); các dev tham gia theo Gantt MS-06. |
+| R-05, R-07 | PM quản lý phản hồi, thay đổi và điều phối nguồn lực; không phải gói chức năng giao riêng cho dev. |
+| R-06 | DevOps trực tiếp chuẩn bị môi trường và triển khai (ENV-01/02, DEP-01). |
+| R-08 | QA phụ trách dữ liệu đại diện và kiểm thử hiệu năng (PERF-01); DevOps hỗ trợ hạ tầng. |
+| R-09 | BE1 là owner đầu ra CSV, phối hợp FE1 theo Gantt hàng 31 và RPT-02 #162. Không giao việc CSV cho FE2 hoặc cộng giờ vào FE2 ở MS-05. |
+
+Lần rà này chỉ điều chỉnh phân công R-09; không thay ngày, effort, giá hoặc kịch bản nghiệm thu của các rủi ro khác.
