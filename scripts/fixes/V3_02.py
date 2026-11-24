@@ -6,6 +6,7 @@ from pathlib import Path
 from docx import Document
 from docx.text.paragraph import Paragraph
 from openpyxl import load_workbook
+from ooxml_cache import save_workbook
 from openpyxl.styles import Alignment
 
 ROOT = Path("docs/08-project")
@@ -111,7 +112,7 @@ for cell in doc.tables[1].rows[-2].cells:
     for p in cell.paragraphs:
         p.paragraph_format.keep_with_next = True
 doc.save(ROOT / "Proposal.docx")
-quote.save(ROOT / "quotation.xlsx")
+save_workbook(quote, ROOT / "quotation.xlsx")
 text = "\n".join(p.text for p in Document(ROOT / "Proposal.docx").paragraphs)
 check = load_workbook(ROOT / "quotation.xlsx")["Giả định"]
 for row in range(4,14):
