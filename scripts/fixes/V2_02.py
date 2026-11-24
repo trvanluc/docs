@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 from openpyxl import load_workbook
+from ooxml_cache import save_workbook
 from openpyxl.formatting.rule import FormulaRule
 from openpyxl.styles import Alignment, Font, PatternFill
 from openpyxl.utils import get_column_letter
@@ -65,6 +66,16 @@ for index, (code, number, owners, start, end, month, detail_row) in enumerate(ta
     group = 24 if number <= 150 else 26 if number == 155 else 25
     for col, value in enumerate([code, f"#{number}", owners, start, end, group, detail_row], 1):
         sheet.cell(index, col, value)
+    listing = book["Danh sách issue"]
+    listing_row = next(r for r in range(5,65) if listing.cell(r,3).value == code)
+    for col, label in [(12,"Bắt đầu MS-04"),(13,"Kết thúc MS-04"),(14,"Chi tiết Gantt task")]:
+        listing.cell(4,col,label)._style = copy(listing.cell(4,3)._style)
+        listing.column_dimensions[get_column_letter(col)].width = 25
+    listing.cell(listing_row,12,start).number_format = "dd/mm/yyyy"
+    listing.cell(listing_row,13,end).number_format = "dd/mm/yyyy"
+    listing.cell(listing_row,14,f"Gantt MS-04 hàng {index}")
+    if code == "RES-02":
+        listing.cell(listing_row,2,"Xem kết quả")
     sheet.cell(index, 2).hyperlink = f"https://github.com/trvanluc/docs/issues/{number}"
     for col in [4, 5]:
         sheet.cell(index, col).number_format = "dd/mm/yyyy"
@@ -108,7 +119,7 @@ if not any(row[0].value == "v1.0.1-V2-02" for row in book["Change log"]):
     "khỏi phản hồi kết quả; giữ ngày/owner task, không đổi effort/giá.",
     "MS-04", 885, 300000000, "Chờ PM review PR"
     ])
-book.save(path)
+save_workbook(book, path)
 check = load_workbook(path)
 assert len(list(check["Gantt MS-04"].iter_rows(min_row=4, max_row=10))) == 7
 for row in check["Gantt MS-04"].iter_rows(min_row=4, max_row=10):
