@@ -24,4 +24,5 @@ Thư mục này quản lý tiêu chí nghiệm thu, kịch bản UAT và khả n
 - Effort kế hoạch được quản lý theo từng gói công việc.
 - Một gói công việc có thể ánh xạ tới nhiều FR hoặc Flow.
 - Xác thực là năng lực dùng chung; effort không được nhân đôi chỉ vì nhiều phân hệ cùng sử dụng.
-- **Quy ước ánh xạ M3:** nhãn `Admin` trong kế hoạch nguồn lực tương ứng với phạm vi chức năng **Management** trong mô hình sản phẩm.
+- Kế hoạch nguồn lực dùng cùng mã `M01` (Student Portal), `M02` (Staff Operations), `M03` (Management Dashboard) với PRD.
+- Nơi gốc mã gói và giờ là [wbs.xlsx](../08-project/plans/wbs.xlsx), sheet `WBS`; sheet `Đối chiếu mã` nối từng parent task với WBS, hàng Gantt, WP và hàng `Resource`. Sheet `Đối chiếu effort` giải thích các gói có ranh giới khác nhau, không cộng giờ của cùng một gói nhiều lần.

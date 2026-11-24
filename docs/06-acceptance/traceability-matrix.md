@@ -273,7 +273,7 @@ Bảng tổng hợp effort theo gói công việc (WP), dùng để đối chi�
 
 **Tổng M03: 215h.**
 
-> **Quy ước ánh xạ M3:** nhãn `Admin` trong kế hoạch nguồn lực tương ứng với phạm vi chức năng **Management** trong Product/PRD.
+> Ngân sách nội bộ dùng mã `M03 – Management Dashboard`, thống nhất với Product/PRD.
 
 ### A.4 Năng Lực Dùng Chung Và Hoạt Động Cấp Dự Án
 
@@ -293,3 +293,20 @@ Bảng tổng hợp effort theo gói công việc (WP), dùng để đối chi�
 
 - Dự phòng rủi ro dự án: **40h** (`Q-11`).
 - Tổng effort kế hoạch: **885h** (= 540h chức năng + 305h cấp dự án + 40h dự phòng), khớp [quotation.xlsx](../08-project/quotation.xlsx).
+
+### A.5 Đối chiếu WP với WBS và parent task
+
+Nơi gốc mã gói và giờ kế hoạch là [wbs.xlsx](../08-project/plans/wbs.xlsx), sheet `WBS`. WP ở phụ lục này là cách nhóm theo chức năng trong ngân sách, **không phải mã WBS**. Sheet `Đối chiếu effort` phân bổ 540h chức năng giữa hai cách nhóm; tổng theo từng WBS và từng hàng `Resource` đều khớp.
+
+- `1.3.3` (52h) = WP-STU-03 (33h) + WP-STU-04 (19h).
+- WP-STU-05 (25h) = `1.3.4` (12h) + `1.3.5` (13h).
+- `1.4.2` (67h) = WP-STF-02 (38h) + WP-STF-03 (29h).
+- WP-STF-05 (32h) = `1.4.3` (20h chuyển xử lý/escalation) + 12h ghi kết quả thuộc `1.4.5`.
+- `1.4.5` (38h) = 12h của WP-STF-05 + WP-STF-06 (26h). WP-STF-06 không cộng lại effort hàng chờ FR-STF-01 đã nằm ở `1.4.1`.
+- WP-MGT-01 (64h) = `1.6.1` (24h) + `1.5.3` (40h).
+- `1.5.4` (41h) = WP-MGT-02 (26h) + WP-MGT-04 (15h).
+- WP-MGT-03 (40h) = `1.6.2` (24h) + `1.6.3` (16h).
+
+Từ #153 (`REOPEN-02`), mở sheet `Đối chiếu mã`: WBS `1.4.5`, hàng WBS 30, Gantt tổng hợp hàng 25, `Chi tiết công việc` hàng 30, WP-STF-06, ngân sách `Resource` hàng 17. Giờ 38h là **giờ gói WBS dùng chung**; 26h là phần WP-STF-06 bao gồm cả phân tích, thiết kế, QA. Không coi 38h hay 26h là ước lượng riêng của #153 và không cộng cột giờ gói theo từng issue. Giờ thực tế cần ghi kèm mã WBS để so tổng gói; muốn kiểm soát riêng từng task thì phải duyệt phân bổ task-level trước, không suy đoán từ tổng gói.
+
+Các gói thiết kế WBS `1.2.1`…`1.2.3` ghi 0h vì giờ các vai trò đã nằm trong gói chức năng. Bảng đối chiếu vẫn dẫn tới các gói có giờ và hàng `Resource`; không cộng thêm 78h khởi động. Các mã `FAQ-01`, `REOPEN-02`… trong issue được gọi đúng là **Mã công việc**, kèm trường WBS thực và liên kết bảng đối chiếu.
