@@ -12,3 +12,15 @@ Thư mục này chứa các kế hoạch quản lý của dự án UniSupport �
 | [ke-hoach-quan-ly-san-pham.md](../../10-product-management/ke-hoach-quan-ly-san-pham.md) | Kế hoạch quản lý sản phẩm: người dùng và giá trị, chỉ số sản phẩm, ra mắt, đo lường, định hướng phát triển. |
 
 Hình minh họa được lưu trong thư mục [images](images/).
+
+### Lịch sử phiên bản Word và Excel
+
+| File | Nơi ghi lịch sử |
+| --- | --- |
+| [wbs.xlsx](wbs.xlsx) | Sheet `Change log` |
+| [ngan-sach-noi-bo.xlsx](ngan-sach-noi-bo.xlsx) | Sheet `Change log` |
+| [master-schedule.xlsx](master-schedule.xlsx) | Sheet `Change log` |
+| [quotation.xlsx](../quotation.xlsx) | Sheet `Phiên bản` |
+| [Proposal.docx](../Proposal.docx) | Dùng chung sheet `Phiên bản` của báo giá gửi kèm; dòng thay đổi ghi rõ tên Proposal |
+
+Giữ tên file cố định. Mỗi dòng có phiên bản, ngày, nội dung, issue/CR và người duyệt hoặc trạng thái chờ duyệt; xác nhận sau review phải dẫn bằng chứng. Dòng `v1.0-baseline` chỉ ghi nhận hiện trạng ngày 24/11/2026, không suy diễn ngày hay người đã phê duyệt trước đó. Khi CR thêm giờ cho một FR, cập nhật WBS, ngân sách theo vai trò/chi phí, báo giá, nguồn lực/Gantt, truy vết/test và lịch sử các file bị ảnh hưởng theo [quy trình CR mục 5](../../11-governance/ke-hoach-quan-tri-giam-sat.md#5-kiểm-soát-thay-đổi).
