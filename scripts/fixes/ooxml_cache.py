@@ -9,12 +9,14 @@ from pathlib import Path
 from zipfile import ZipFile, ZIP_DEFLATED
 
 from lxml import etree as ET
+from openpyxl import load_workbook
 
 NS = {"s": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
 
 
 def retain_formula_cache(before, path):
     """Transfer caches by sheet name and formula identity, never by sheet order."""
+    old_book = load_workbook(BytesIO(before),data_only=False)
     before = ZipFile(BytesIO(before))
     with ZipFile(path) as after:
         parts = {n: after.read(n) for n in after.namelist()}
@@ -41,7 +43,12 @@ def retain_formula_cache(before, path):
             if old is None:
                 continue
             f, pf = c.find("s:f",NS), old.find("s:f",NS)
-            if f is None or pf is None or f.text != pf.text or f.attrib != pf.attrib:
+            if f is None or pf is None:
+                continue
+            # Excel stores shared formulas only once. openpyxl expands them;
+            # compare expanded expressions, not the shared-formula attributes.
+            prior_formula = old_book[name][c.get("r")].value
+            if not isinstance(prior_formula,str) or prior_formula != "=" + (f.text or ""):
                 continue
             v = old.find("s:v",NS)
             if v is None:
