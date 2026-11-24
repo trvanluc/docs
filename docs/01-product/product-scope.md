@@ -1,6 +1,6 @@
 # Phạm Vi Sản Phẩm & Các Giả Định Dự Án (Product Scope & Assumptions)
 
-> **Nơi gốc của phạm vi với khách là [Proposal.docx](../08-project/Proposal.docx) mục 2 "Phạm Vi Chức Năng" và mục "Các hạng mục ngoài phạm vi hiện tại (Out of Scope)"** (decision-log `D-05`). File này là bản chi tiết cho nhóm, liệt kê cùng phạm vi đó theo từng phân hệ. Nếu hai nơi lệch nhau thì Proposal là căn cứ, sửa file này cho khớp; muốn đổi phạm vi thì đi qua quy trình CR.
+> **Nơi gốc của phạm vi với khách là [Proposal.docx](../08-project/Proposal.docx) mục 2.1–2.3 "Phạm Vi Chức Năng" và mục 2.5 "Các hạng mục ngoài phạm vi hiện tại (Out of Scope)"** (decision-log `D-05`); giả định ở mục 2.4. File này là bản chi tiết cho nhóm, liệt kê cùng phạm vi đó theo từng phân hệ. Nếu hai nơi lệch nhau thì Proposal là căn cứ, sửa file này cho khớp; muốn đổi phạm vi thì đi qua quy trình CR.
 
 ## 1. Phạm Vi Chức Năng Sản Phẩm (Functional Scope)
 
@@ -67,7 +67,7 @@ UniSupport gồm **3 phân hệ chính**. Thông báo, xác thực, RBAC và b�
 
 ## 2. Các Hạng Mục Ngoài Phạm Vi (Out of Scope)
 
-Danh sách gốc ở Proposal mục "Out of Scope"; lý do từng mục ở [goals-and-non-goals.md mục 2](goals-and-non-goals.md#2-các-mục-nằm-ngoài-phạm-vi-hiện-tại-out-of-scope--non-goals).
+Danh sách gốc ở Proposal mục 2.5 "Out of Scope"; lý do từng mục ở [goals-and-non-goals.md mục 2](goals-and-non-goals.md#2-các-mục-nằm-ngoài-phạm-vi-hiện-tại-out-of-scope--non-goals).
 
 - Mobile App độc lập cho iOS/Android.
 - Tích hợp hệ thống bên thứ ba ngoài phạm vi sản phẩm.

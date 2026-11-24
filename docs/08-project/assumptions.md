@@ -1,6 +1,6 @@
 # PRJ-01 - Giả Định Dự Án
 
-Tài liệu này ghi nhận các giả định vận hành và triển khai được sử dụng trong kế hoạch dự án. Mỗi giả định có mã `A-xx`; hạng mục báo giá bị ảnh hưởng được nối ở [quotation.xlsx](quotation.xlsx) sheet `Giả định`.
+Tài liệu này ghi nhận các giả định vận hành và triển khai được sử dụng trong kế hoạch dự án. Mỗi giả định có mã `A-xx`; hạng mục báo giá bị ảnh hưởng được nối ở [quotation.xlsx](quotation.xlsx) sheet `Giả định`. Phần giả định gửi khách nằm ở [Proposal.docx](Proposal.docx) mục 2.4 "Assumptions (Giả định)".
 
 ## 1. Phạm Vi Sử Dụng
 

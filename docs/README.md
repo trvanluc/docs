@@ -102,7 +102,7 @@ docs/
 
 | Nội dung | Ở đâu |
 | --- | --- |
-| Scope (làm và không làm) | **Nơi gốc:** [Proposal.docx](08-project/Proposal.docx) mục 2 "Phạm Vi Chức Năng" (theo Q-01…Q-03) và mục "Các hạng mục ngoài phạm vi hiện tại (Out of Scope)". Dẫn về nơi gốc: [product-scope.md](01-product/product-scope.md) (chi tiết theo phân hệ), [goals-and-non-goals.md](01-product/goals-and-non-goals.md) (lý do từng mục ngoài phạm vi). Lệch nhau thì Proposal là căn cứ (decision-log `D-05`) |
+| Scope (làm và không làm) | **Nơi gốc:** [Proposal.docx](08-project/Proposal.docx) mục 2.1–2.3 (theo Q-01…Q-03) và mục 2.5 "Các hạng mục ngoài phạm vi hiện tại (Out of Scope)". Giả định ở mục 2.4. Dẫn về nơi gốc: [product-scope.md](01-product/product-scope.md) (chi tiết theo phân hệ), [goals-and-non-goals.md](01-product/goals-and-non-goals.md) (lý do từng mục ngoài phạm vi). Lệch nhau thì Proposal là căn cứ (decision-log `D-05`) |
 | Nguồn lực | [ngan-sach-noi-bo.xlsx](08-project/plans/ngan-sach-noi-bo.xlsx) sheet `Resource` (theo vai trò); [master-schedule.xlsx](08-project/plans/master-schedule.xlsx) sheet `Resources` (theo mốc); đội thực thi `Mô phỏng`: [Team Charter mục 3](08-project/team-charter.md#3-vai-trò-và-trách-nhiệm) |
 | Giá và hạng mục báo giá | [quotation.xlsx](08-project/quotation.xlsx) sheet `Hạng mục` |
 | Milestones, Gantt, Change log | [master-schedule.xlsx](08-project/plans/master-schedule.xlsx) sheet `Milestones`, `Master Schedule`, `Change log`; giải thích: [master-plan.md](08-project/master-plan.md) |
