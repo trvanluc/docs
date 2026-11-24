@@ -12,3 +12,7 @@ Thư mục này chứa các kế hoạch quản lý của dự án UniSupport �
 | [ke-hoach-quan-ly-san-pham.md](../../10-product-management/ke-hoach-quan-ly-san-pham.md) | Kế hoạch quản lý sản phẩm: người dùng và giá trị, chỉ số sản phẩm, ra mắt, đo lường, định hướng phát triển. |
 
 Hình minh họa được lưu trong thư mục [images](images/).
+
+### Tra từ task về giờ kế hoạch
+
+Mở [wbs.xlsx](wbs.xlsx), sheet `Đối chiếu mã`: tra mã task hoặc số issue để tìm WBS thực, hàng Gantt, dòng công việc chi tiết, WP và hàng ngân sách `Resource`. Sheet `Đối chiếu effort` là cầu nối số giờ giữa hai cách nhóm WBS và WP; 540h chức năng được đối chiếu một lần. Các giờ hiện bên từng task là giờ **gói WBS dùng chung**, không phải effort riêng và không được cộng theo số issue. Xem [phụ lục A.5](../../06-acceptance/traceability-matrix.md#a5-đối-chiếu-wp-với-wbs-và-parent-task) để hiểu ranh giới gói và ví dụ #153.
