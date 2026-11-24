@@ -11,6 +11,7 @@ from copy import copy
 from pathlib import Path
 
 from openpyxl import load_workbook
+from ooxml_cache import save_workbook
 from openpyxl.styles import Alignment, Font, PatternFill
 from openpyxl.utils import get_column_letter
 
@@ -75,21 +76,22 @@ group("AUTH-01 AUTH-02", ["1.6.1"], [12], 9, [22])
 group("ACC-01 ACC-02", ["1.5.3"], [13], 10, [22])
 group("CFG-01 CFG-02", ["1.5.4"], [14], 11, [23])
 group("SEC-01", ["1.6.2"], [15], 12, [24])
-group("AUD-01", ["1.6.3"], [15], 13, [24])
-group("SEC-02", ["1.6.2"], [11, 12, 13, 14, 15], 14, [24])
-group("OBS-01", ["1.6.3", "1.8.1"], [11, 12, 13, 14, 15], 15, [24, 37])
-group("UI-01", ["1.2.2", "1.3.1", "1.3.2", "1.5.3", "1.5.4", "1.6.1"], [12, 13, 14], 16, [3, 4, 22, 23])
-group("FAQ-01", ["1.3.1"], [16], 17, [3])
-group("TKT-01 TKT-02", ["1.3.2"], [17], 18, [4])
-group("QUEUE-01 QUEUE-02", ["1.4.1"], [18], 19, [12])
-group("ASSIGN-01 ASSIGN-02", ["1.4.2"], [18], 20, [13])
-group("TRACK-01", ["1.3.3"], [19], 21, [5])
-group("NOTI-01", ["1.3.3"], [19, 27], 22, [6])
-group("UI-02", ["1.2.2", "1.3.1", "1.3.2", "1.3.3", "1.4.1", "1.4.2"], [16, 17, 18, 19], 23, [3, 4, 5, 6, 12, 13])
-group("SLA-01 SLA-02", ["1.4.2"], [20], 24, [14])
-group("SUP-01 SUP-02", ["1.4.4"], [21], 25, [15])
-group("SUP-03", ["1.3.4"], [22], 26, [7])
-group("TRANSFER-01 ESC-01", ["1.4.3"], [23], 27, [16])
+group("AUD-01", ["1.6.3"], [15], 12, [24])
+group("SEC-02", ["1.6.2"], [11, 12, 13, 14, 15], 13, [24])
+group("OBS-01", ["1.6.3", "1.8.1"], [11, 12, 13, 14, 15], 14, [24, 37])
+group("UI-01", ["1.2.2", "1.3.1", "1.3.2", "1.5.3", "1.5.4", "1.6.1"], [12, 13, 14], 15, [3, 4, 22, 23])
+group("FAQ-01", ["1.3.1"], [16], 16, [3])
+group("TKT-01 TKT-02", ["1.3.2"], [17], 17, [4])
+group("QUEUE-01 QUEUE-02", ["1.4.1"], [18], 18, [12])
+group("ASSIGN-01 ASSIGN-02", ["1.4.2"], [18], 19, [13])
+group("TRACK-01", ["1.3.3"], [19], 20, [5])
+group("NOTI-01", ["1.3.3"], [19, 27], 20, [6])
+group("UI-02", ["1.2.2", "1.3.1", "1.3.2", "1.3.3", "1.4.1", "1.4.2"], [16, 17, 18, 19], 21, [3, 4, 5, 6, 12, 13])
+group("SLA-01 SLA-02", ["1.4.2"], [20], 22, [14])
+group("SUP-01 SUP-02", ["1.4.4"], [21], 23, [15])
+group("SUP-03", ["1.3.4"], [22], 24, [7])
+group("TRANSFER-01", ["1.4.3"], [23], 25, [16])
+group("ESC-01", ["1.4.3"], [23], 26, [16])
 group("REL-01", ["1.3.2", "1.3.4", "1.4.2", "1.4.3", "1.4.4", "1.4.5"], [20, 21, 22, 23], 27, [4, 7, 13, 14, 15, 16, 17])
 group("RES-01", ["1.4.5"], [24], 28, [16])
 group("RES-02 RES-03 REOPEN-01", ["1.3.5"], [24, 25], 29, [7])
@@ -104,13 +106,17 @@ group("INT-01 INT-02", ["1.7.1"], [32], 37, [39])
 group("TEST-01 TEST-02", ["1.7.2"], [33], 38, [40, 41])
 group("FIX-01 REG-01", ["1.7.2"], [34], 39, [41, 43])
 group("DEP-01", ["1.8.1"], [35], 40, [38])
-group("DOC-01", ["1.1.5", "1.8.2", "1.8.3", "1.8.4"], [35], 41, [35, 38, 44])
-group("PERF-01", ["1.7.2"], [33], 42, [40])
+group("DOC-01", ["1.1.5", "1.8.2", "1.8.3", "1.8.4"], [35], 40, [35, 38, 44])
+group("PERF-01", ["1.7.2"], [33], 41, [40])
 
 def main():
     wbs = load_workbook(BASE / "wbs.xlsx")
     schedule = load_workbook(BASE / "master-schedule.xlsx")
     budget = load_workbook(BASE / "ngan-sach-noi-bo.xlsx")
+    # If V2-02 was merged first, it split RES-02 into its own detail row.
+    if "Gantt MS-04" in schedule and schedule["Chi tiết công việc"]["B44"].value == "Xem kết quả":
+        ids, rows, _, resource = MAP["RES-02"]
+        MAP["RES-02"] = (ids, [24], 44, resource)
     wbs_rows = {wbs["WBS"].cell(r, 2).value: r for r in range(8, 51)}
     issues = json.loads(gh("issue", "list", "--repo", REPO, "--state", "all",
                            "--limit", "500", "--json", "number,title,body,url"))
@@ -120,6 +126,16 @@ def main():
     records = []
     for code, (ids, gantt, detail, resource) in MAP.items():
         issue = by_code[code]
+        body_source = issue["body"].replace("\r","")
+        owners_match = re.search(r"\*\*(?:Parent Assignee / Phụ trách|Owner):\*\* ([^\n]+)",body_source)
+        if owners_match:
+            owners = owners_match.group(1).split(" (")[0]
+            expected = {x.strip() for x in owners.split(",")}
+            actual = {x.strip() for x in schedule["Chi tiết công việc"].cell(detail,4).value.split(",")}
+            assert expected <= actual, (code,detail,expected,actual)
+        milestone = re.search(r"\*\*Milestone:\*\* (MS-\d+)",body_source)
+        if milestone:
+            assert schedule["Chi tiết công việc"].cell(detail,1).value == milestone.group(1), (code,detail)
         package_hours = "; ".join(f"{x}: {wbs['WBS'].cell(wbs_rows[x],10).value}h"
                                    for x in ids)
         wp = sorted({p for x, p, r, h in BRIDGE if x in ids and r in resource})
@@ -152,8 +168,9 @@ def main():
                      f"- [Bảng đối chiếu đầy đủ](https://github.com/{REPO}/blob/fix/V3-01/"
                      "docs/08-project/plans/wbs.xlsx) — sheet Đối chiếu mã và Đối chiếu effort. "
                      "Nhánh PR này giữ được link cả trước/sau merge; nơi gốc sau merge là master.\n")
-            gh("issue", "edit", str(issue["number"]), "--repo", REPO, "--body", body)
-            print("Updated", code, issue["number"], flush=True)
+            if body != issue["body"].replace("\r", ""):
+                gh("issue", "edit", str(issue["number"]), "--repo", REPO, "--body", body)
+                print("Updated", code, issue["number"], flush=True)
     crosswalk = table(wbs, "Đối chiếu mã",
         ["Mã task", "Issue", "Link issue", "WBS thực", "Hàng WBS", "Hàng Gantt",
          "Hàng Chi tiết", "WP", "Hàng Resource", "Giờ gói WBS (không cộng)", "Quy tắc"],
@@ -206,7 +223,7 @@ def main():
     ds.column_dimensions["G"].width = 42
     for r in range(8,36):
         gs.cell(r,107,", ".join(c for c,(_,rows,_,_) in MAP.items() if r in rows))
-    for r in range(5,43):
+    for r in range(5,45):
         ds.cell(r,7,", ".join(c for c,(_,_,rr,_) in MAP.items() if r == rr))
     if not any(row[0].value == "v1.0.1-V3-01" for row in schedule["Change log"]):
         schedule["Change log"].append([
@@ -215,7 +232,7 @@ def main():
             "và ranh giới gói; chuẩn hóa nhãn module. Không đổi effort/giá.",
             "Toàn dự án", 885, 300000000, "Chờ PM review PR"])
     for name, book in [("wbs.xlsx",wbs),("master-schedule.xlsx",schedule),("ngan-sach-noi-bo.xlsx",budget)]:
-        book.save(BASE/name)
+        save_workbook(book, BASE/name)
     quote_path = BASE.parent / "quotation.xlsx"
     quote = load_workbook(quote_path)
     for s in quote:
@@ -228,7 +245,7 @@ def main():
         quote["Phiên bản"].append([
             "v1.0.1-V3-01", "24/11/2026", "#192", "Chuẩn hóa nhãn module M01/M02/M03 theo ngân sách; không đổi giờ/giá.",
             300000000, 300000000, "Chờ PM review PR"])
-    quote.save(quote_path)
+    save_workbook(quote, quote_path)
     print(f"PASS: {len(records)} task crosswalks; 540 functional hours reconcile by WBS AND Resource.")
 
 if __name__ == "__main__":
