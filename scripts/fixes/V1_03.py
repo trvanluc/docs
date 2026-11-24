@@ -9,6 +9,7 @@ from copy import copy
 from pathlib import Path
 
 from openpyxl import load_workbook
+from ooxml_cache import save_workbook
 
 REPO = "trvanluc/docs"
 ROOT = Path(__file__).resolve().parents[2]
@@ -78,7 +79,8 @@ def main():
         sheet.cell(row, 9, "#" + url.rsplit("/", 1)[1])
         cell = sheet.cell(row, 10, url)
         cell.hyperlink = url
-        sheet.cell(row, 7, sheet.cell(row, 7).value + " " + approval)
+        if approval not in sheet.cell(row, 7).value:
+            sheet.cell(row, 7, sheet.cell(row, 7).value + " " + approval)
         sheet.row_dimensions[row].height = max(sheet.row_dimensions[row].height or 0, 78)
     sheet["A65"] = (
         "Quy ước: QA-01 xuyên suốt, kiểm thử nằm trong DoD từng task. "
@@ -89,12 +91,13 @@ def main():
     )
     sheet.row_dimensions[65].height = 60
     log = book["Change log"]
-    log.append(["v1.0.1-V1-03", "24/11/2026", "#182",
-                "Bổ sung bốn parent task khởi động; không đổi ngày, effort hoặc giá.",
-                "Khởi động", 885, 300000000, "Chờ PM review PR"])
+    if not any(row[0].value == "v1.0.1-V1-03" for row in log):
+        log.append(["v1.0.1-V1-03", "24/11/2026", "#182",
+                    "Bổ sung bốn parent task khởi động; không đổi ngày, effort hoặc giá.",
+                    "Khởi động", 885, 300000000, "Chờ PM review PR"])
     for cell in log[5]:
         cell._style = copy(log.cell(4, cell.column)._style)
-    book.save(path)
+    save_workbook(book, path)
     check = load_workbook(path)
     assert all(check["Danh sách issue"].cell(r, 10).value.startswith("https://github.com/")
                for r in range(6, 10))
