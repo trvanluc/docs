@@ -1,6 +1,6 @@
 # PRJ-01 - Giả Định Dự Án
 
-Tài liệu này là **nơi gốc nội bộ** của các giả định vận hành và triển khai. Mỗi giả định có mã `A-xx`. Bộ hồ sơ gửi khách gồm [Proposal.docx](Proposal.docx), phần Assumptions, và [quotation.xlsx](quotation.xlsx), sheet `Giả định`, chứa bản sao đầy đủ cùng mã, nội dung, hạng mục bị ảnh hưởng và hệ quả khi giả định sai; khách không cần truy cập repo. Khi đổi giả định ảnh hưởng giá, người phụ trách đồng bộ cả hai bản gửi khách và ghi chung lịch sử ở sheet `Phiên bản` của báo giá trước khi gửi.
+Tài liệu này là **nơi gốc nội bộ** của các giả định vận hành và triển khai. Mỗi giả định có mã `A-xx`. Bộ hồ sơ gửi khách gồm [Proposal.docx](Proposal.docx), phần Assumptions, và [quotation.xlsx](quotation.xlsx), sheet `Giả định`, chứa bản sao đầy đủ cùng mã, nội dung, hạng mục bị ảnh hưởng và hệ quả khi giả định sai; khách không cần truy cập repo. Khi đổi giả định ảnh hưởng giá, người phụ trách đồng bộ cả hai bản gửi khách và ghi chung lịch sử ở sheet `Phiên bản` của báo giá trước khi gửi. Phần giả định gửi khách nằm ở [Proposal.docx](Proposal.docx) mục 2.4 "Assumptions (Giả định)".
 
 ## 1. Phạm Vi Sử Dụng
 

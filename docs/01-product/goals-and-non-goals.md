@@ -30,7 +30,7 @@
 
 ## 2. Các Mục Nằm Ngoài Phạm Vi Hiện Tại (Out of Scope / Non-Goals)
 
-Để đảm bảo dự án hoàn thành đúng tiến độ **14 tuần** và ngân sách **300 triệu VNĐ**, các hạng mục sau **KHÔNG** thuộc phạm vi triển khai của hợp đồng này. Danh sách gốc với khách ở [Proposal.docx](../08-project/Proposal.docx) mục "Out of Scope" (decision-log `D-05`); bảng dưới giải thích lý do từng mục, phần được làm ở [product-scope.md](product-scope.md):
+Để đảm bảo dự án hoàn thành đúng tiến độ **14 tuần** và ngân sách **300 triệu VNĐ**, các hạng mục sau **KHÔNG** thuộc phạm vi triển khai của hợp đồng này. Danh sách gốc với khách ở [Proposal.docx](../08-project/Proposal.docx) mục 2.5 "Out of Scope" (decision-log `D-05`); bảng dưới giải thích lý do từng mục, phần được làm ở [product-scope.md](product-scope.md):
 
 | STT | Hạng Mục Nằm Ngoài Phạm Vi | Lý Do / Giải Thích |
 | :---: | :--- | :--- |

@@ -1,5 +1,7 @@
 # Decision Log
 
+**Dẫn chiếu cấu trúc hiện tại:** mục "Out of Scope" được D-05 nhắc tới nay là mục **2.5** của [Proposal.docx](Proposal.docx); giả định ở **2.4**, phạm vi chức năng ở **2.1–2.3**. V3-04 chỉ đổi cấu trúc và số mục, giữ nguyên nội dung quyết định lịch sử bên dưới.
+
 Nơi gốc của các quyết định quan trọng (thay cho bản trên Google Drive). PM ghi; mỗi quyết định một dòng, không sửa dòng cũ. Quyết định thuộc một CR thì ghi mã `CR-xx` và link issue; quyết định đổi mốc, giờ hoặc giá thì ghi thêm sheet `Change log` của [master-schedule.xlsx](plans/master-schedule.xlsx).
 
 | Mã | Ngày | Quyết định | Người quyết định | Lý do | Tài liệu đã cập nhật |
