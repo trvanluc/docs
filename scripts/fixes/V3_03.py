@@ -5,6 +5,7 @@ from copy import deepcopy
 
 from docx import Document
 from openpyxl import load_workbook
+from ooxml_cache import save_workbook
 from openpyxl.styles import Alignment, Font, PatternFill
 
 root = Path("docs/08-project")
@@ -50,7 +51,7 @@ for name in ["wbs.xlsx", "ngan-sach-noi-bo.xlsx"]:
         s.page_setup.fitToWidth = 1
         s.page_setup.fitToHeight = 1
         s.print_area = "A1:F5"
-    book.save(path)
+    save_workbook(book, path)
     assert load_workbook(path)["Change log"]["E5"].value == "Chờ PM review PR"
 
 # Proposal's shared register is explicit INSIDE the Word file.
@@ -79,7 +80,7 @@ if not any(row[0].value == "v1.0.1-V3-03" for row in book["Phiên bản"]):
         "Proposal.docx: khai báo dùng chung lịch sử tại đây; "
         "wbs.xlsx và ngan-sach-noi-bo.xlsx có Change log riêng. Không đổi nội dung thương mại.",
         300000000, 300000000, "Chờ PM review PR"])
-book.save(quote_path)
+save_workbook(book, quote_path)
 
 expected = {
     "quotation.xlsx": "Phiên bản",
