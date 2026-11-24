@@ -49,7 +49,7 @@ Parent task trên GitHub ghi cùng người phụ trách. Đổi người làm m
 
 ## Phụ thuộc giữa các milestone
 
-- Khởi động → `MS-01`: phạm vi, prototype và thiết kế dữ liệu/phân quyền đã duyệt.
+- Khởi động → `MS-01`: phạm vi, prototype và thiết kế dữ liệu/phân quyền đã duyệt. Theo dõi tại [PLN-01 #183](https://github.com/trvanluc/docs/issues/183), [UX-01 #184](https://github.com/trvanluc/docs/issues/184), [ARCH-01 #185](https://github.com/trvanluc/docs/issues/185), [ARCH-02 #186](https://github.com/trvanluc/docs/issues/186). Các parent task này không gắn MS-xx nhưng vẫn được đếm trong tiến độ toàn dự án; người có thẩm quyền xác minh đầu ra và bằng chứng duyệt trong issue trước khi đóng.
 
 - `MS-01` → mọi mốc sau: đăng nhập, phân quyền, phòng ban và Category là điều kiện để tạo Ticket.
 - `MS-02` → `MS-03`: xử lý chỉ bắt đầu khi Ticket đã được tiếp nhận và có người phụ trách. Hai mốc chồng nhau 04/11–12/11/2026: phần ưu tiên/thời hạn (BE2, FE2) bắt đầu ngay khi hàng chờ và phân công xong.
