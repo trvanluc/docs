@@ -418,7 +418,7 @@ Bộ lọc hỗ trợ tối thiểu:
 #### 5. Luồng ngoại lệ (lỗi và từ chối)
 - Không có dữ liệu: hiển thị giá trị 0 và trạng thái danh sách trống.
 - Ticket ngoài phạm vi quản lý: không được tính vào số liệu.
-- Người dùng không có quyền xem chi tiết Ticket: chỉ hiển thị số liệu tổng hợp được phép.
+- Phiên hết hiệu lực, tài khoản bị khóa hoặc không còn thuộc MANAGEMENT: từ chối Dashboard và danh sách Ticket; không trả cả số liệu tổng hợp. Management hợp lệ có quyền cơ sở xem Ticket trong phạm vi theo danh mục quyền, không có cấu hình chỉ xem tổng hợp nhưng bị cấm xem mọi Ticket cùng phạm vi.
 
 #### 6. Quy tắc nghiệp vụ
 - Chỉ số sắp quá hạn/quá hạn tuân thủ `BR-DUE-01` và `BR-DUE-02`.
@@ -432,12 +432,12 @@ Bộ lọc hỗ trợ tối thiểu:
 - **FR-MGT-05/AC-04:** Bộ lọc chỉ làm thay đổi số liệu trong phạm vi dữ liệu người dùng được phép xem.
 - **FR-MGT-05/AC-05:** Mở một chỉ số chỉ hiển thị Ticket mà Management có quyền truy cập.
 - **FR-MGT-05/AC-06:** Không có dữ liệu trong phạm vi: mọi chỉ số hiển thị 0 và danh sách trống, không có lỗi.
-- **FR-MGT-05/AC-07:** Người không có quyền xem chi tiết Ticket thấy số liệu tổng hợp nhưng không mở được danh sách Ticket cấu thành chỉ số.
+- **FR-MGT-05/AC-07:** Phiên hết hiệu lực, tài khoản bị khóa hoặc không còn thuộc MANAGEMENT bị từ chối cả Dashboard lẫn API tổng hợp/danh sách Ticket; không trả số liệu tổng hợp khi gọi trực tiếp. Management hợp lệ được mở danh sách Ticket trong cùng phạm vi cơ sở, không cần cờ quản trị hoặc REPORT_EXPORT.
 - **FR-MGT-05/AC-08:** Xem Dashboard và dùng bộ lọc không thay đổi trạng thái hay người phụ trách của Ticket nào.
 
 #### 8. Luồng thay thế (Alternative Flows)
 - **A1 — Mở một chỉ số** để xem danh sách Ticket cấu thành (bước 7 mục 4).
-- **A2 — Quản lý không có quyền xem Ticket:** chỉ thấy số liệu tổng hợp.
+- **A2 — Quyền cơ sở đổi giữa lúc đang mở Dashboard:** khi tài khoản bị khóa, phiên hết hiệu lực hoặc bị chuyển khỏi MANAGEMENT, yêu cầu tải lại/chọn bộ lọc/mở danh sách bị từ chối ở backend; không giữ đường truy cập số liệu tổng hợp bằng API cũ.
 
 #### 9. Ví dụ Edge Case
 - Không có Ticket nào trong phạm vi: mọi chỉ số bằng 0, không lỗi.

@@ -6,7 +6,7 @@
 
 Closes #
 
-Mã liên quan (FR, AC, Q, MS, CR, R1-xx):
+Mã liên quan (FR, AC, Q, MS, CR, R-xx):
 
 ## Tài liệu Word/Excel đã đổi
 

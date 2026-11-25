@@ -225,10 +225,10 @@ Ma trận **tổng hợp** chuỗi Báo giá → PRD → Master Plan → Parent 
 | `NFR-PERF-02` | TS-NFR-01 | #171 | MS-06 | `Q-07` |
 | `NFR-PERF-03` | TS-NFR-01 | #171 | MS-06 | `Q-07` |
 | `NFR-PERF-04` | TS-NFR-01 | #171 | MS-06 | `Q-07` |
-| `NFR-REL-01` | TS-STF-10, TS-NFR-02 | #148 (nền tảng MS-03, hoàn thiện MS-04); #167 (hệ thống) | MS-02 kiểm phân công theo TS-STF-10; MS-03 kiểm chức năng đã có; MS-04 resolve/reopen; MS-06 toàn hệ thống | `Q-02, Q-07` |
-| `NFR-REL-02` | TS-STF-05, TS-NFR-02 | #148 (nền tảng MS-03, hoàn thiện MS-04); #167 (hệ thống) | MS-02 kiểm phân công theo TS-STF-10; MS-03 kiểm chức năng đã có; MS-04 resolve/reopen; MS-06 toàn hệ thống | `Q-02, Q-07` |
-| `NFR-REL-03` | TS-NFR-02 | #148 (nền tảng MS-03, hoàn thiện MS-04); #167 (hệ thống) | MS-02 kiểm phân công theo TS-STF-10; MS-03 kiểm chức năng đã có; MS-04 resolve/reopen; MS-06 toàn hệ thống | `Q-02, Q-07` |
-| `NFR-REL-04` | TS-NFR-02 | #148 (nền tảng MS-03, hoàn thiện MS-04); #167 (hệ thống) | MS-02 kiểm phân công theo TS-STF-10; MS-03 kiểm chức năng đã có; MS-04 resolve/reopen; MS-06 toàn hệ thống | `Q-02, Q-07` |
+| `NFR-REL-01` | TS-STF-10, TS-NFR-02 | #132/#133/#136/#137 (MS-02); #145/#146/#148 (MS-03); #149/#152/#153/#148 (MS-04); #165/#167/#168 (hệ thống) | TS-NFR-02: MS-02 lỗi tạo/tiếp nhận; MS-03 bổ sung/Transfer; MS-04 resolve/reopen; MS-06 toàn hệ thống (bộ ca mục 7 test-scenarios); TS-STF-10 chỉ kiểm cạnh tranh MS-02 | `Q-02, Q-07` |
+| `NFR-REL-02` | TS-STF-05, TS-NFR-02 | #132/#133/#136/#137 (MS-02); #145/#146/#148 (MS-03); #149/#152/#153/#148 (MS-04); #165/#167/#168 (hệ thống) | TS-NFR-02: MS-02 lỗi tạo/tiếp nhận; MS-03 bổ sung/Transfer; MS-04 resolve/reopen; MS-06 toàn hệ thống (bộ ca mục 7 test-scenarios); TS-STF-10 chỉ kiểm cạnh tranh MS-02 | `Q-02, Q-07` |
+| `NFR-REL-03` | TS-NFR-02 | #132/#133/#136/#137 (MS-02); #145/#146/#148 (MS-03); #149/#152/#153/#148 (MS-04); #165/#167/#168 (hệ thống) | TS-NFR-02: MS-02 lỗi tạo/tiếp nhận; MS-03 bổ sung/Transfer; MS-04 resolve/reopen; MS-06 toàn hệ thống (bộ ca mục 7 test-scenarios); TS-STF-10 chỉ kiểm cạnh tranh MS-02 | `Q-02, Q-07` |
+| `NFR-REL-04` | TS-NFR-02 | #132/#133/#136/#137 (MS-02); #145/#146/#148 (MS-03); #149/#152/#153/#148 (MS-04); #165/#167/#168 (hệ thống) | TS-NFR-02: MS-02 lỗi tạo/tiếp nhận; MS-03 bổ sung/Transfer; MS-04 resolve/reopen; MS-06 toàn hệ thống (bộ ca mục 7 test-scenarios); TS-STF-10 chỉ kiểm cạnh tranh MS-02 | `Q-02, Q-07` |
 | `NFR-SEC-01` | TS-AUTH-02, TS-NFR-03 | #126, #128, #166 | MS-01, MS-06 | `Q-03, Q-07` |
 | `NFR-SEC-02` | TS-AUTH-04, TS-NFR-03 | #126, #128, #166 | MS-01, MS-06 | `Q-03, Q-07` |
 | `NFR-SEC-03` | TS-STU-10, TS-NFR-03 | #126, #128, #166 | MS-01 policy/harness; MS-02 file Ticket; MS-03 bổ sung; MS-04 file kết quả; MS-06 toàn hệ thống | `Q-03, Q-07` |

@@ -228,7 +228,7 @@ Cho phép sinh viên xem danh sách Ticket của mình và theo dõi trạng th�
 - **FR-STU-03/AC-04:** Khi trạng thái, phòng ban hoặc người phụ trách thay đổi hợp lệ, lần tải tiếp theo hiển thị giá trị mới.
 - **FR-STU-03/AC-05:** Sinh viên chưa có Ticket nào: hiển thị danh sách trống kèm nút tạo Ticket.
 - **FR-STU-03/AC-06:** Lịch sử hiển thị sự kiện chuyển phòng ban nhưng không hiển thị sự kiện Escalation (`BR-OWN-03`).
-- **FR-STU-03/AC-07:** Lịch sử có đủ các sự kiện tối thiểu (tạo, đổi trạng thái, yêu cầu bổ sung, sinh viên bổ sung, chuyển phòng ban, ghi kết quả, mở lại, đóng) và không có sự kiện quản trị như thay đổi tài khoản hay cấu hình.
+- **FR-STU-03/AC-07:** Lịch sử có đủ các sự kiện tối thiểu (tạo, đổi trạng thái, yêu cầu bổ sung, sinh viên bổ sung, chuyển phòng ban, ghi kết quả, mở lại, đóng); không hiển thị ghi chú xử lý nội bộ hoặc sự kiện quản trị như thay đổi tài khoản hay cấu hình, kể cả nội dung trả về từ API chi tiết/lịch sử cho sinh viên.
 
 #### 8. Luồng thay thế (Alternative Flows)
 - **A1 — Tìm theo mã Ticket:** sinh viên nhập mã; hệ thống chỉ trả kết quả nếu Ticket thuộc sinh viên.

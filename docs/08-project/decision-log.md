@@ -28,3 +28,14 @@ Các dòng D-01…D-05 phía trên là lịch sử, giữ nguyên ngày, lý do 
 Không sửa các dòng lịch sử phía trên. Bản v1.1 giữ ordinal/chồng mốc nhưng chưa chứng minh tải trong cửa sổ task: UI/UX 27h/5 ngày và DevOps 30h/3 ngày vượt 4h/ngày. Bản v1.2 thay cách xếp đó bằng phân bổ task–vai trò từ budget nguồn, scope gate trước thiết kế, tách đầu ra môi trường tối thiểu và CI/CD, QA sau đầu ra có thể kiểm. Bỏ chồng mốc; khởi động 07–18/12/2026, MS-06 kết thúc 18/05/2027, tổng 108 ngày làm việc/163 ngày lịch; nghiệm thu dự kiến 01/06, bảo hành 01–30/06 khi nghiệm thu đúng mục tiêu. Các ngày ở ghi chú v1.1 không còn là lịch hiện hành.
 
 Giữ 58 parent task, 885h = 823h cơ sở + 62h dự phòng, 540h chức năng và 300 triệu; không cộng lại 78h khởi động. NOTI-01 #139 và REL-01 #148 hoàn tất MS-04 theo chức năng nguồn. Audit kỹ thuật dùng TS-AUTH-05 ở MS-01; UI và quyền Audit/lưu trữ/xuất báo cáo kiểm ở MS-05. Lịch nghỉ, phân bổ chi tiết và dependency là giả định chờ xác nhận, không phải approval. Đối chiếu [Master Plan](master-plan.md), [bộ mốc](milestones-and-timeline.md) và Change log từng file Office. GitHub chưa đồng bộ, Proposal chưa gửi, không backdate approval.
+
+## Bổ sung v1.2.1-draft — 25/11/2026, Chờ PM/TL review
+
+Không đổi lịch hoặc số liệu của v1.2 và không sửa các quyết định lịch sử. [PR #203](https://github.com/trvanluc/docs/pull/203) là bản nháp chờ review, không phải approval.
+
+- Dashboard dùng quyền cơ sở MANAGEMENT trong scope: không thêm biến thể chỉ xem tổng hợp nhưng cấm mọi Ticket cùng scope; phiên hết hiệu lực/khóa/hạ nhóm bị từ chối cả tổng hợp và danh sách. AC/test đồng bộ với mô hình quyền hữu hạn.
+- TS-NFR-02 có bộ ca failure/reload/error theo phần chức năng MS-02, MS-03, MS-04 và kiểm toàn hệ thống MS-06; RTM, Milestones và DoD task nguồn được nối lại. Bộ ca cạnh tranh không thay kiểm lỗi giữa chừng; chưa có test result thực tế.
+- AC hiển thị lịch sử Student nêu rõ không trả ghi chú xử lý nội bộ. Quy trình CR phải kiểm slot/ngày/tuần, predecessor và QA gate; tổng Resources hoặc ngưỡng 16h không đủ để hứa giữ hạn, năng lực trống không thay báo giá phần tăng.
+- Sửa căn cột metadata dòng v1.2 trong Change log kế hoạch, ghi 885h/300 triệu đúng cột và chờ rà soát đúng cột người duyệt. Proposal đọc độc lập có nhãn khách/Sponsor/đội thực thi Mô phỏng; sổ phiên bản chung ở quotation.xlsx.
+
+Nhánh tài liệu đã được đưa lên PR; **milestone, nội dung parent task và trường Hạn của GitHub Projects chưa được đồng bộ**. Không dùng PR này hoặc bản nháp đã push để suy diễn remote kế hoạch đã khớp, Proposal đã gửi hay khách đã phê duyệt. Các phần chưa áp dụng phải được đọc lại và đối chiếu live trước cập nhật.
