@@ -409,7 +409,7 @@ Cho phép chuyển Ticket sang **phòng ban khác** khi cần thay đổi đơn 
 - **FR-STF-05/AC-04:** Escalation hợp lệ được gửi tới đúng Management được chọn, giữ nguyên Category/phòng ban/người phụ trách/trạng thái và được ghi trong lịch sử.
 - **FR-STF-05/AC-05:** Management nhận escalation và người phụ trách hiện tại nhận thông báo; sinh viên không nhận thông báo chỉ vì escalation.
 - **FR-STF-05/AC-06:** Lịch sử có trước Transfer/Escalation được giữ nguyên.
-- **FR-STF-05/AC-07:** Transfer thiếu Category đích, Category đích cùng phòng ban hiện tại, hoặc lý do dưới 10/trên 1.000 ký tự: bị từ chối với thông báo nêu trường cần sửa; Category, phòng ban, người phụ trách không đổi.
+- **FR-STF-05/AC-07:** Transfer thiếu Category đích, Category đích không hoạt động (kể cả bị vô hiệu hóa sau khi chọn nhưng trước khi xác nhận), Category đích cùng phòng ban hiện tại, hoặc lý do dưới 10/trên 1.000 ký tự: hệ thống kiểm tra lại khi xử lý yêu cầu, kể cả yêu cầu gửi trực tiếp, và từ chối với thông báo nêu trường cần sửa; Category, phòng ban, người phụ trách và trạng thái Ticket không đổi, không ghi sự kiện Transfer hoặc gửi thông báo Transfer.
 - **FR-STF-05/AC-08:** Escalation không chọn người nhận Management hợp lệ hoặc lý do không hợp lệ: bị từ chối với thông báo nêu trường cần sửa; không gửi thông báo, không ghi lịch sử.
 - **FR-STF-05/AC-09:** Người không có quyền Transfer/Escalation: người dùng không thấy thao tác này; nếu gửi trực tiếp tới hệ thống thì nhận thông báo "không có quyền thực hiện" và dữ liệu không đổi.
 - **FR-STF-05/AC-10:** Ticket đã đổi phạm vi hoặc trạng thái (ví dụ đã `RESOLVED`) trước khi xác nhận: thao tác bị từ chối, màn hình hiển thị dữ liệu mới nhất, không thay đổi nào được lưu.
