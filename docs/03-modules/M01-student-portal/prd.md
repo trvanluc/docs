@@ -410,8 +410,8 @@ Cho phép sinh viên xem nội dung kết quả xử lý và tài liệu kết q
 #### 7. Tiêu chí nghiệm thu
 - **FR-STU-06/AC-01:** Sinh viên xem được nội dung kết quả, tài liệu kết quả và thời hạn phản hồi còn lại của Ticket `RESOLVED` hoặc `CLOSED` thuộc mình.
 - **FR-STU-06/AC-02:** Xác nhận kết quả khi Ticket đang `RESOLVED` chuyển Ticket sang `CLOSED` và ghi thời điểm đóng.
-- **FR-STU-06/AC-03:** Yêu cầu mở lại có lý do 10–1.000 ký tự, gửi trong 03 ngày làm việc, chuyển Ticket từ `RESOLVED` về `IN_PROGRESS` và tạo thông báo cho người phụ trách hoặc phòng ban hiện tại.
-- **FR-STU-06/AC-04:** Yêu cầu mở lại thiếu lý do, hoặc lý do dưới 10 hay trên 1.000 ký tự: thông báo nêu yêu cầu về lý do, Ticket giữ `RESOLVED`.
+- **FR-STU-06/AC-03:** Yêu cầu mở lại có lý do 10–1.000 ký tự và không chỉ chứa khoảng trắng, gửi trong 03 ngày làm việc, chuyển Ticket từ `RESOLVED` về `IN_PROGRESS` và tạo thông báo cho người phụ trách hoặc phòng ban hiện tại.
+- **FR-STU-06/AC-04:** Yêu cầu mở lại thiếu lý do, lý do dưới 10 hay trên 1.000 ký tự, hoặc chỉ chứa khoảng trắng dù độ dài đầu vào nằm trong 10–1.000 ký tự: hệ thống từ chối, kể cả yêu cầu gửi trực tiếp, với thông báo nêu yêu cầu về lý do; Ticket giữ `RESOLVED`, không ghi sự kiện mở lại hoặc gửi thông báo mở lại.
 - **FR-STU-06/AC-05:** Ticket `RESOLVED` quá 03 ngày làm việc mà không có yêu cầu xử lý tiếp được hệ thống tự chuyển sang `CLOSED`.
 - **FR-STU-06/AC-06:** Ticket đã `CLOSED` hoặc đã hết thời hạn phản hồi: không còn nút mở lại; yêu cầu mở lại gửi trực tiếp bị từ chối với thông báo "Ticket đã đóng hoặc hết thời hạn phản hồi", trạng thái không đổi.
 - **FR-STU-06/AC-07:** Sinh viên mở hoặc thao tác trên Ticket của người khác: trang "không có quyền truy cập", không hiển thị kết quả, trạng thái Ticket không đổi.
@@ -424,7 +424,7 @@ Cho phép sinh viên xem nội dung kết quả xử lý và tài liệu kết q
 
 #### 9. Ví dụ Edge Case
 - Yêu cầu mở lại ngay trước khi đủ 03 ngày làm việc (24 giờ làm việc theo `BR-DUE-02`) kể từ `RESOLVED`: chấp nhận; ngay sau thời điểm đó: từ chối. Cuối tuần và ngoài giờ không tính.
-- Lý do mở lại 9 ký tự: từ chối; 10 ký tự: chấp nhận; 1.000: chấp nhận; 1.001: từ chối.
+- Với lý do không chỉ chứa khoảng trắng và các điều kiện mở lại khác hợp lệ: 9 ký tự bị từ chối; 10 và 1.000 ký tự được chấp nhận; 1.001 ký tự bị từ chối. Đầu vào gồm toàn 10 hoặc 1.000 dấu cách vẫn bị từ chối.
 - Sinh viên bấm "Chấp nhận" đúng lúc job tự động đóng chạy: Ticket chỉ chuyển `CLOSED` một lần, lịch sử chỉ có một sự kiện đóng.
 - Ticket đã mở lại một lần và được `RESOLVED` lần hai: sinh viên vẫn được mở lại trong thời hạn mới.
 

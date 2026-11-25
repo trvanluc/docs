@@ -7,6 +7,7 @@ Ma trận **tổng hợp** chuỗi Báo giá → PRD → Master Plan → Parent 
 - **Parent task:** các issue GitHub hiện hữu triển khai phần tính năng tại mốc ghi trong dòng; test/AC bao quát nhiều mốc chỉ hoàn tất sau mốc cuối. Không thêm task (vẫn 58). Ngày 25/11/2026 đã đồng bộ và đọc lại DoD/ngày/mốc của 58 parent task, 6 milestone cùng membership/Hạn trên Projects theo bản nháp ở [PR #203](https://github.com/trvanluc/docs/pull/203); #139/#148 gắn mốc hoàn tất MS-04. Không phải bằng chứng đã chạy test, hoàn thành task hoặc phê duyệt baseline.
 - **Báo giá:** `Q-01` M01, `Q-02` M02, `Q-03` M03 và năng lực dùng chung (đăng nhập FR-STU-00, FR-STF-00 dùng xác thực chung nên tính ở `Q-03`). Tích hợp, kiểm thử hệ thống, regression và sửa lỗi của mọi AC thuộc `Q-06`, `Q-07`, `Q-08`.
 - Tổng: 187 AC, 23 NFR; mỗi mã có ít nhất một kịch bản test.
+- Làm rõ validation sau góp ý R2: giữ `FR-STF-05/AC-07` → TS-STF-13 (Category đích không hoạt động), `FR-STU-06/AC-04` → TS-STU-13 (lý do chỉ chứa khoảng trắng) và `FR-STU-06/AC-03` → TS-STU-06 (đối chứng hợp lệ). Bộ ca và kết quả mong đợi nằm ở [test-scenarios.md mục 8](test-scenarios.md#8-bộ-ca-validation-transfer-và-mở-lại); điều kiện gốc nằm ở PRD M02/FR-STF-05 mục 3, 7 và PRD M01/FR-STU-06 mục 3, 7. Không thêm AC/task, không đổi mốc/giờ/giá; đây không phải kết quả test hoặc kết luận R2.
 
 
 ## 2. M01 - Sinh Viên
