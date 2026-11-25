@@ -118,7 +118,7 @@ docs/
 
 Liên kết chỉ ghi ở **một phía**: phía ghi là cột "Liên kết phải ghi". Ví dụ kịch bản test ghi mã AC mà nó kiểm; PRD không ghi ngược lại mã test.
 
-Bộ khung không yêu cầu phần mềm chạy thật: nhóm làm tài liệu, kế hoạch và quy trình cho toàn dự án.
+Hồ sơ hiện ở giai đoạn rà soát nội bộ trước phát hành: `v1.2-draft` ngày 25/11/2026, **Chờ PM rà soát**, **chưa gửi khách**. Đề xuất gửi 30/11, mục tiêu xác nhận 04/12 và khởi động có điều kiện 07/12/2026; xem [Master Plan](08-project/master-plan.md#thời-điểm-của-dự-án). Kế hoạch không phải bằng chứng triển khai, kiểm thử hay nghiệm thu đã diễn ra.
 
 | Đối tượng | Dạng | Nơi gốc | Liên kết phải ghi |
 | --- | --- | --- | --- |
@@ -138,11 +138,11 @@ Bộ khung không yêu cầu phần mềm chạy thật: nhóm làm tài liệu,
 
 ## Dữ liệu mô phỏng
 
-Đây là dự án môn học: phần mềm không chạy thật. Những phần dưới đây là `Mô phỏng` và được ghi chữ `Mô phỏng` ngay tại chỗ dùng (giả định `A-17` trong [assumptions.md](08-project/assumptions.md)).
+Chưa có bằng chứng thực thi sản phẩm hoặc nghiệm thu khách hàng trong hồ sơ hiện tại. Những phần dưới đây là `Mô phỏng` và được ghi chữ `Mô phỏng` ngay tại chỗ dùng (giả định `A-17` trong [assumptions.md](08-project/assumptions.md)).
 
 | Phần | Mô phỏng? | Ghi chú |
 | --- | --- | --- |
-| Client (Aurora University), Nhà tài trợ dự án | Có | Khách hàng giả định của đề bài |
+| Client (Aurora University), Nhà tài trợ dự án | Có | Khách hàng giả định trong hồ sơ |
 | Đội thực thi 10 vai trò (PM, BA, UI/UX, TL, FE1, FE2, BE1, BE2, QA, DevOps) | Có | Giờ công, đơn giá, owner task và rủi ro tính theo vai trò; 4 thành viên nhóm là ban quản lý thật ([Team Charter mục 3](08-project/team-charter.md#3-vai-trò-và-trách-nhiệm)) |
 | Feedback | Có | GitHub Issues nhãn `feedback` |
 | Change request | Có | GitHub Issues nhãn `change-request`, mã `CR-xx` |

@@ -4,9 +4,9 @@
 
 Ma trận **tổng hợp** chuỗi Báo giá → PRD → Master Plan → Parent task → Kịch bản test theo **từng AC**. Đây không phải nơi gốc để sửa: AC sửa ở `prd.md` của module, kịch bản sửa ở [test-scenarios.md](test-scenarios.md), task và milestone sửa trên GitHub, hạng mục giá sửa ở [quotation.xlsx](../08-project/quotation.xlsx). Khi một nơi gốc thay đổi, người phụ trách nghiệm thu (Team Charter mục 3.2) cập nhật lại bảng này trong cùng PR.
 
-- **Parent task:** các issue GitHub ghi mã FR của AC trong mục PRD Reference; milestone là milestone của các task đó.
+- **Parent task:** các issue GitHub hiện hữu triển khai phần tính năng tại mốc ghi trong dòng; test/AC bao quát nhiều mốc chỉ hoàn tất sau mốc cuối. Không thêm task (vẫn 58). Ngày 25/11/2026 đã đồng bộ và đọc lại DoD/ngày/mốc của 58 parent task, 6 milestone cùng membership/Hạn trên Projects theo bản nháp ở [PR #203](https://github.com/trvanluc/docs/pull/203); #139/#148 gắn mốc hoàn tất MS-04. Không phải bằng chứng đã chạy test, hoàn thành task hoặc phê duyệt baseline.
 - **Báo giá:** `Q-01` M01, `Q-02` M02, `Q-03` M03 và năng lực dùng chung (đăng nhập FR-STU-00, FR-STF-00 dùng xác thực chung nên tính ở `Q-03`). Tích hợp, kiểm thử hệ thống, regression và sửa lỗi của mọi AC thuộc `Q-06`, `Q-07`, `Q-08`.
-- Tổng: 177 AC, 23 NFR; mỗi mã có ít nhất một kịch bản test.
+- Tổng: 187 AC, 23 NFR; mỗi mã có ít nhất một kịch bản test.
 
 
 ## 2. M01 - Sinh Viên
@@ -35,15 +35,15 @@ Ma trận **tổng hợp** chuỗi Báo giá → PRD → Master Plan → Parent 
 | `FR-STU-02/AC-08` | TS-STU-02 | #132, #133 | MS-02 | `Q-01` |
 | `FR-STU-02/AC-09` | TS-STU-02 | #132, #133 | MS-02 | `Q-01` |
 | `FR-STU-03/AC-01` | TS-STU-03 | #138 | MS-02 | `Q-01` |
-| `FR-STU-03/AC-02` | TS-STU-03 | #138 | MS-02 | `Q-01` |
+| `FR-STU-03/AC-02` | TS-STU-03 (MS-02), TS-STU-15 (MS-03), TS-STU-16 (MS-04) | #138 (MS-02); #143, #144, #145, #146, #147 (MS-03); #149, #150, #151, #152, #153, #154 (MS-04) | MS-02 → MS-04 | `Q-01` |
 | `FR-STU-03/AC-03` | TS-STU-10 | #138 | MS-02 | `Q-01` |
-| `FR-STU-03/AC-04` | TS-STU-03 | #138 | MS-02 | `Q-01` |
+| `FR-STU-03/AC-04` | TS-STU-03 (MS-02), TS-STU-15 (MS-03), TS-STU-16 (MS-04) | #138 (MS-02); #143, #144, #145, #146, #147 (MS-03); #149, #150, #151, #152, #153, #154 (MS-04) | MS-02 → MS-04 | `Q-01` |
 | `FR-STU-03/AC-05` | TS-STU-03 | #138 | MS-02 | `Q-01` |
-| `FR-STU-03/AC-06` | TS-STU-03 | #138 | MS-02 | `Q-01` |
-| `FR-STU-03/AC-07` | TS-STU-03 | #138 | MS-02 | `Q-01` |
-| `FR-STU-04/AC-01` | TS-STU-04 | #139 | MS-02 | `Q-01` |
-| `FR-STU-04/AC-02` | TS-STU-04 | #139 | MS-02 | `Q-01` |
-| `FR-STU-04/AC-03` | TS-STU-04 | #139 | MS-02 | `Q-01` |
+| `FR-STU-03/AC-06` | TS-STU-15 | #138 (nền tảng); #146, #147 (sự kiện) | MS-03 | `Q-01` |
+| `FR-STU-03/AC-07` | TS-STU-03 (MS-02), TS-STU-15 (MS-03), TS-STU-16 (MS-04) | #138 (MS-02); #143, #144, #145, #146, #147 (MS-03); #149, #150, #151, #152, #153, #154 (MS-04) | MS-02 → MS-04 | `Q-01` |
+| `FR-STU-04/AC-01` | TS-STU-04 (MS-02), TS-STU-15 (MS-03), TS-STU-16 (MS-04) | #139 (MS-02); #143, #144, #145, #146, #147 (MS-03); #149, #150, #151, #152, #153, #154 (MS-04) | MS-02 → MS-04 | `Q-01` |
+| `FR-STU-04/AC-02` | TS-STU-04 (MS-02), TS-STU-15 (MS-03), TS-STU-16 (MS-04) | #139 (MS-02); #143, #144, #145, #146, #147 (MS-03); #149, #150, #151, #152, #153, #154 (MS-04) | MS-02 → MS-04 | `Q-01` |
+| `FR-STU-04/AC-03` | TS-STU-04 (MS-02), TS-STU-15 (MS-03), TS-STU-16 (MS-04) | #139 (MS-02); #143, #144, #145, #146, #147 (MS-03); #149, #150, #151, #152, #153, #154 (MS-04) | MS-02 → MS-04 | `Q-01` |
 | `FR-STU-04/AC-04` | TS-STU-10 | #139 | MS-02 | `Q-01` |
 | `FR-STU-04/AC-05` | TS-STU-11 | #139 | MS-02 | `Q-01` |
 | `FR-STU-04/AC-06` | TS-STU-04 | #139 | MS-02 | `Q-01` |
@@ -61,6 +61,7 @@ Ma trận **tổng hợp** chuỗi Báo giá → PRD → Master Plan → Parent 
 | `FR-STU-06/AC-06` | TS-STU-13 | #150, #151, #152, #154 | MS-04 | `Q-01` |
 | `FR-STU-06/AC-07` | TS-STU-13 | #150, #151, #152, #154 | MS-04 | `Q-01` |
 | `FR-STU-06/AC-08` | TS-STU-06 | #150, #151, #152, #154 | MS-04 | `Q-01` |
+| `FR-STU-06/AC-09` | TS-STU-16 | #152, #153 | MS-04 | `Q-01` |
 | `FR-STU-07/AC-01` | TS-STU-07 | #155 | MS-04 | `Q-01` |
 | `FR-STU-07/AC-02` | TS-STU-07 | #155 | MS-04 | `Q-01` |
 | `FR-STU-07/AC-03` | TS-STU-14 | #155 | MS-04 | `Q-01` |
@@ -81,15 +82,15 @@ Ma trận **tổng hợp** chuỗi Báo giá → PRD → Master Plan → Parent 
 | `FR-STF-01/AC-01` | TS-STF-01 | #134, #135 | MS-02 | `Q-02` |
 | `FR-STF-01/AC-02` | TS-STF-01 | #134, #135 | MS-02 | `Q-02` |
 | `FR-STF-01/AC-03` | TS-STF-09 | #134, #135 | MS-02 | `Q-02` |
-| `FR-STF-01/AC-04` | TS-STF-01, TS-STF-08 | #134, #135 | MS-02 | `Q-02` |
+| `FR-STF-01/AC-04` | TS-STF-01 (MS-02), TS-STF-08 (MS-04) | #134, #135 (hàng chờ); #152, #153 (mở lại) | MS-02; MS-04 | `Q-02` |
 | `FR-STF-01/AC-05` | TS-STF-01 | #134, #135 | MS-02 | `Q-02` |
 | `FR-STF-01/AC-06` | TS-STF-01 | #134, #135 | MS-02 | `Q-02` |
 | `FR-STF-02/AC-01` | TS-STF-02 | #136, #137 | MS-02 | `Q-02` |
 | `FR-STF-02/AC-02` | TS-STF-10 | #136, #137 | MS-02 | `Q-02` |
 | `FR-STF-02/AC-03` | TS-STF-02 | #136, #137 | MS-02 | `Q-02` |
 | `FR-STF-02/AC-04` | TS-STF-02 | #136, #137 | MS-02 | `Q-02` |
-| `FR-STF-02/AC-05` | TS-STF-05 | #136, #137 | MS-02 | `Q-02` |
-| `FR-STF-02/AC-06` | TS-STF-10 | #136, #137 | MS-02 | `Q-02` |
+| `FR-STF-02/AC-05` | TS-STF-05 | #136, #137 (nền tảng); #146 (Transfer) | MS-03 | `Q-02` |
+| `FR-STF-02/AC-06` | TS-STF-10 (Transfer) | #136, #137 (kiểm tiếp nhận); #146 (Transfer) | MS-03 | `Q-02` |
 | `FR-STF-02/AC-07` | TS-STF-02 | #136, #137 | MS-02 | `Q-02` |
 | `FR-STF-02/AC-08` | TS-STF-02 | #136, #137 | MS-02 | `Q-02` |
 | `FR-STF-03/AC-01` | TS-STF-03 | #141, #142 | MS-03 | `Q-02` |
@@ -100,6 +101,9 @@ Ma trận **tổng hợp** chuỗi Báo giá → PRD → Master Plan → Parent 
 | `FR-STF-03/AC-06` | TS-STF-11 | #141, #142 | MS-03 | `Q-02` |
 | `FR-STF-03/AC-07` | TS-STF-11 | #141, #142 | MS-03 | `Q-02` |
 | `FR-STF-03/AC-08` | TS-STF-11 | #141, #142 | MS-03 | `Q-02` |
+| `FR-STF-03/AC-09` | TS-STF-15 | #141, #142 | MS-03 | `Q-02` |
+| `FR-STF-03/AC-10` | TS-STF-15 | #141, #142 | MS-03 | `Q-02` |
+| `FR-STF-03/AC-11` | TS-STF-16 | #141, #142 (quy tắc); #149, #151, #154 (trạng thái nguồn) | MS-04 | `Q-02` |
 | `FR-STF-04/AC-01` | TS-STF-04 | #143, #144 | MS-03 | `Q-02` |
 | `FR-STF-04/AC-02` | TS-STF-04 | #143, #144 | MS-03 | `Q-02` |
 | `FR-STF-04/AC-03` | TS-STF-04 | #143, #144 | MS-03 | `Q-02` |
@@ -146,34 +150,40 @@ Ma trận **tổng hợp** chuỗi Báo giá → PRD → Master Plan → Parent 
 | `FR-MGT-01/AC-01` | TS-MGT-01 | #122, #123 | MS-01 | `Q-03` |
 | `FR-MGT-01/AC-02` | TS-MGT-07 | #122, #123 | MS-01 | `Q-03` |
 | `FR-MGT-01/AC-03` | TS-MGT-07 | #122, #123 | MS-01 | `Q-03` |
-| `FR-MGT-01/AC-04` | TS-MGT-01 | #122, #123 | MS-01 | `Q-03` |
+| `FR-MGT-01/AC-04` | TS-MGT-01 | #122, #123 (khóa); #132, #133, #136, #137 (Ticket/assignee MS-02); #143 (WAITING_STUDENT MS-03) | MS-02; MS-03 | `Q-03` |
 | `FR-MGT-01/AC-05` | TS-MGT-07 | #122, #123 | MS-01 | `Q-03` |
 | `FR-MGT-01/AC-06` | TS-MGT-07 | #122, #123 | MS-01 | `Q-03` |
 | `FR-MGT-01/AC-07` | TS-MGT-01 | #122, #123 | MS-01 | `Q-03` |
 | `FR-MGT-01/AC-08` | TS-MGT-07 | #122, #123 | MS-01 | `Q-03` |
 | `FR-MGT-01/AC-09` | TS-MGT-07 | #122, #123 | MS-01 | `Q-03` |
-| `FR-MGT-01/AC-10` | TS-MGT-01 | #122, #123 | MS-01 | `Q-03` |
+| `FR-MGT-01/AC-10` | TS-MGT-01 | #122, #123 (quyền/khóa); #132, #133, #136, #137, #143 (Ticket/assignee) | MS-01 (quyền); MS-02/03 (Ticket) | `Q-03` |
 | `FR-MGT-01/AC-11` | TS-MGT-07 | #122, #123 | MS-01 | `Q-03` |
 | `FR-MGT-01/AC-12` | TS-MGT-01 | #122, #123 | MS-01 | `Q-03` |
+| `FR-MGT-01/AC-13` | TS-MGT-11 | #122, #123 | MS-01 | `Q-03` |
+| `FR-MGT-01/AC-14` | TS-MGT-11 | #122, #123, #126 (MS-01); #136, #137 (MS-02); #141, #142, #143, #146, #147 (MS-03); #149 (MS-04); #156, #157, #158, #162 (MS-05) | MS-01; MS-02/03/04/05 theo thao tác dùng cờ | `Q-03` |
+| `FR-MGT-01/AC-15` | TS-MGT-11 | #122, #123 | MS-01 | `Q-03` |
+| `FR-MGT-01/AC-16` | TS-MGT-11 | #122, #123, #126 (MS-01); #136, #137 (MS-02); #141, #142, #143, #146, #147 (MS-03); #149 (MS-04); #156, #157, #158, #162 (MS-05) | MS-01; MS-02/03/04/05 theo thao tác dùng cờ | `Q-03` |
+| `FR-MGT-01/AC-17` | TS-MGT-11 | #122, #123 | MS-01 | `Q-03` |
+| `FR-MGT-01/AC-18` | TS-MGT-11 | #122, #123 | MS-01 | `Q-03` |
 | `FR-MGT-02/AC-01` | TS-MGT-02 | #124, #125 | MS-01 | `Q-03` |
-| `FR-MGT-02/AC-02` | TS-STU-02 | #124, #125 | MS-01 | `Q-03` |
+| `FR-MGT-02/AC-02` | TS-STU-02 | #124, #125 (cấu hình); #132, #133 (tạo Ticket) | MS-02 | `Q-03` |
 | `FR-MGT-02/AC-03` | TS-MGT-02 | #124, #125 | MS-01 | `Q-03` |
-| `FR-MGT-02/AC-04` | TS-MGT-08 | #124, #125 | MS-01 | `Q-03` |
-| `FR-MGT-02/AC-05` | TS-STF-05 | #124, #125 | MS-01 | `Q-03` |
+| `FR-MGT-02/AC-04` | TS-MGT-08 | #124, #125 (cấu hình); #132, #136, #143, #149, #152, #154 (trạng thái nguồn) | MS-02/03; đầy đủ MS-04 | `Q-03` |
+| `FR-MGT-02/AC-05` | TS-STF-05 | #124, #125 (cấu hình); #146 (Transfer) | MS-03 | `Q-03` |
 | `FR-MGT-02/AC-06` | TS-MGT-02 | #124, #125 | MS-01 | `Q-03` |
 | `FR-MGT-02/AC-07` | TS-MGT-08 | #124, #125 | MS-01 | `Q-03` |
 | `FR-MGT-02/AC-08` | TS-MGT-08 | #124, #125 | MS-01 | `Q-03` |
 | `FR-MGT-02/AC-09` | TS-MGT-08 | #124, #125 | MS-01 | `Q-03` |
 | `FR-MGT-02/AC-10` | TS-MGT-08 | #124, #125 | MS-01 | `Q-03` |
-| `FR-MGT-02/AC-11` | TS-STU-02 | #124, #125 | MS-01 | `Q-03` |
-| `FR-MGT-03/AC-01` | TS-MGT-03 | #126, #127, #156 | MS-01, MS-05 | `Q-03` |
-| `FR-MGT-03/AC-02` | TS-MGT-03 | #126, #127, #156 | MS-01, MS-05 | `Q-03` |
-| `FR-MGT-03/AC-03` | TS-MGT-03 | #126, #127, #156 | MS-01, MS-05 | `Q-03` |
-| `FR-MGT-03/AC-04` | TS-MGT-03 | #126, #127, #156 | MS-01, MS-05 | `Q-03` |
-| `FR-MGT-03/AC-05` | TS-MGT-03 | #126, #127, #156 | MS-01, MS-05 | `Q-03` |
-| `FR-MGT-03/AC-06` | TS-MGT-09 | #126, #127, #156 | MS-01, MS-05 | `Q-03` |
-| `FR-MGT-03/AC-07` | TS-MGT-03 | #126, #127, #156 | MS-01, MS-05 | `Q-03` |
-| `FR-MGT-03/AC-08` | TS-MGT-03 | #126, #127, #156 | MS-01, MS-05 | `Q-03` |
+| `FR-MGT-02/AC-11` | TS-STU-02 | #124, #125 (cấu hình); #132, #133 (tạo Ticket) | MS-02 | `Q-03` |
+| `FR-MGT-03/AC-01` | TS-AUTH-05 (nền tảng MS-01), TS-MGT-03 (UI MS-05) | #126, #127 (MS-01); #156 (MS-05) | MS-01; MS-05 | `Q-03` |
+| `FR-MGT-03/AC-02` | TS-MGT-03 | #156 | MS-05 | `Q-03` |
+| `FR-MGT-03/AC-03` | TS-AUTH-05 (nền tảng MS-01), TS-MGT-03 (UI MS-05) | #126, #127 (MS-01); #156 (MS-05) | MS-01; MS-05 | `Q-03` |
+| `FR-MGT-03/AC-04` | TS-MGT-03 | #156 | MS-05 | `Q-03` |
+| `FR-MGT-03/AC-05` | TS-MGT-03 | #156 | MS-05 | `Q-03` |
+| `FR-MGT-03/AC-06` | TS-MGT-09 | #156 | MS-05 | `Q-03` |
+| `FR-MGT-03/AC-07` | TS-MGT-03 | #156 | MS-05 | `Q-03` |
+| `FR-MGT-03/AC-08` | TS-MGT-03 | #156 | MS-05 | `Q-03` |
 | `FR-MGT-04/AC-01` | TS-MGT-04 | #157, #158 | MS-05 | `Q-03` |
 | `FR-MGT-04/AC-02` | TS-MGT-04 | #157, #158 | MS-05 | `Q-03` |
 | `FR-MGT-04/AC-03` | TS-MGT-04 | #157, #158 | MS-05 | `Q-03` |
@@ -205,29 +215,29 @@ Ma trận **tổng hợp** chuỗi Báo giá → PRD → Master Plan → Parent 
 
 | NFR | Kịch bản test | Parent task | Milestone | Báo giá |
 | --- | --- | --- | --- | --- |
-| `NFR-DEP-01` | TS-NFR-06 | #118, #119, #169, #170 | MS-01, MS-06 | `Q-05` |
-| `NFR-DEP-02` | TS-NFR-06 | #118, #119, #169, #170 | MS-01, MS-06 | `Q-05` |
-| `NFR-DEP-03` | TS-NFR-06 | #118, #119, #169, #170 | MS-01, MS-06 | `Q-05` |
-| `NFR-OBS-01` | TS-NFR-05 | #129 | MS-01 | `Q-03` |
-| `NFR-OBS-02` | TS-MGT-03, TS-NFR-05 | #129 | MS-01 | `Q-03` |
-| `NFR-OBS-03` | TS-MGT-03, TS-NFR-05 | #129 | MS-01 | `Q-03` |
+| `NFR-DEP-01` | TS-NFR-06 | #118, #119 (môi trường); #169, #170 (bàn giao) | MS-01 chuẩn bị; MS-06 nghiệm thu môi trường bàn giao | `Q-05` |
+| `NFR-DEP-02` | TS-NFR-06 | #118, #119 (môi trường); #169, #170 (bàn giao) | MS-01 chuẩn bị; MS-06 nghiệm thu đủ danh mục | `Q-05` |
+| `NFR-DEP-03` | TS-NFR-06 | #118, #119 (môi trường); #169, #170 (bàn giao) | MS-01 chuẩn bị; MS-06 kiểm luồng đầy đủ sau triển khai | `Q-05` |
+| `NFR-OBS-01` | TS-NFR-05 | #129 (nền tảng), #167 (kiểm toàn hệ thống) | MS-01 nền tảng; MS-06 đối chiếu log toàn hệ thống | `Q-03, Q-07` |
+| `NFR-OBS-02` | TS-AUTH-05, TS-MGT-03, TS-NFR-05 | #127, #129 (ghi nhận), #156 (UI), #167 (kiểm toàn hệ thống) | MS-01 và mốc sự kiện nguồn; MS-05 UI; MS-06 toàn hệ thống | `Q-03, Q-07` |
+| `NFR-OBS-03` | TS-AUTH-05, TS-MGT-03, TS-NFR-05 | #127, #129 (ghi nhận), #156 (UI), #167 (kiểm toàn hệ thống) | MS-01 nền tảng; MS-05 UI; MS-06 toàn hệ thống | `Q-03, Q-07` |
 | `NFR-PERF-01` | TS-NFR-01 | #171 | MS-06 | `Q-07` |
 | `NFR-PERF-02` | TS-NFR-01 | #171 | MS-06 | `Q-07` |
 | `NFR-PERF-03` | TS-NFR-01 | #171 | MS-06 | `Q-07` |
 | `NFR-PERF-04` | TS-NFR-01 | #171 | MS-06 | `Q-07` |
-| `NFR-REL-01` | TS-STF-10, TS-NFR-02 | #148 | MS-03 | `Q-02, Q-07` |
-| `NFR-REL-02` | TS-STF-05, TS-NFR-02 | #148 | MS-03 | `Q-02, Q-07` |
-| `NFR-REL-03` | TS-NFR-02 | #148 | MS-03 | `Q-02, Q-07` |
-| `NFR-REL-04` | TS-NFR-02 | #148 | MS-03 | `Q-02, Q-07` |
+| `NFR-REL-01` | TS-STF-10, TS-NFR-02 | #132/#133/#136/#137 (MS-02); #145/#146/#148 (MS-03); #149/#152/#153/#148 (MS-04); #165/#167/#168 (hệ thống) | TS-NFR-02: MS-02 lỗi tạo/tiếp nhận; MS-03 bổ sung/Transfer; MS-04 resolve/reopen; MS-06 toàn hệ thống (bộ ca mục 7 test-scenarios); TS-STF-10 chỉ kiểm cạnh tranh MS-02 | `Q-02, Q-07` |
+| `NFR-REL-02` | TS-STF-05, TS-NFR-02 | #132/#133/#136/#137 (MS-02); #145/#146/#148 (MS-03); #149/#152/#153/#148 (MS-04); #165/#167/#168 (hệ thống) | TS-NFR-02: MS-02 lỗi tạo/tiếp nhận; MS-03 bổ sung/Transfer; MS-04 resolve/reopen; MS-06 toàn hệ thống (bộ ca mục 7 test-scenarios); TS-STF-10 chỉ kiểm cạnh tranh MS-02 | `Q-02, Q-07` |
+| `NFR-REL-03` | TS-NFR-02 | #132/#133/#136/#137 (MS-02); #145/#146/#148 (MS-03); #149/#152/#153/#148 (MS-04); #165/#167/#168 (hệ thống) | TS-NFR-02: MS-02 lỗi tạo/tiếp nhận; MS-03 bổ sung/Transfer; MS-04 resolve/reopen; MS-06 toàn hệ thống (bộ ca mục 7 test-scenarios); TS-STF-10 chỉ kiểm cạnh tranh MS-02 | `Q-02, Q-07` |
+| `NFR-REL-04` | TS-NFR-02 | #132/#133/#136/#137 (MS-02); #145/#146/#148 (MS-03); #149/#152/#153/#148 (MS-04); #165/#167/#168 (hệ thống) | TS-NFR-02: MS-02 lỗi tạo/tiếp nhận; MS-03 bổ sung/Transfer; MS-04 resolve/reopen; MS-06 toàn hệ thống (bộ ca mục 7 test-scenarios); TS-STF-10 chỉ kiểm cạnh tranh MS-02 | `Q-02, Q-07` |
 | `NFR-SEC-01` | TS-AUTH-02, TS-NFR-03 | #126, #128, #166 | MS-01, MS-06 | `Q-03, Q-07` |
 | `NFR-SEC-02` | TS-AUTH-04, TS-NFR-03 | #126, #128, #166 | MS-01, MS-06 | `Q-03, Q-07` |
-| `NFR-SEC-03` | TS-STU-10, TS-NFR-03 | #126, #128, #166 | MS-01, MS-06 | `Q-03, Q-07` |
+| `NFR-SEC-03` | TS-STU-10, TS-NFR-03 | #126, #128, #166 | MS-01 policy/harness; MS-02 file Ticket; MS-03 bổ sung; MS-04 file kết quả; MS-06 toàn hệ thống | `Q-03, Q-07` |
 | `NFR-SEC-04` | TS-MGT-01, TS-NFR-03 | #126, #128, #166 | MS-01, MS-06 | `Q-03, Q-07` |
 | `NFR-SEC-05` | TS-NFR-03 | #126, #128, #166 | MS-01, MS-06 | `Q-03, Q-07` |
-| `NFR-USA-01` | TS-NFR-04 | #130, #140 | MS-01, MS-02 | `Q-01…Q-03` |
-| `NFR-USA-02` | TS-NFR-04 | #130, #140 | MS-01, MS-02 | `Q-01…Q-03` |
-| `NFR-USA-03` | TS-STU-09, TS-NFR-04 | #130, #140 | MS-01, MS-02 | `Q-01…Q-03` |
-| `NFR-USA-04` | TS-NFR-04 | #130, #140 | MS-01, MS-02 | `Q-01…Q-03` |
+| `NFR-USA-01` | TS-NFR-04 | #130, #140 | MS-01/02 nền tảng UI; kiểm từng luồng MS-03…MS-05; TS-NFR-04 toàn hệ thống MS-06 | `Q-01…Q-03` |
+| `NFR-USA-02` | TS-NFR-04 | #130, #140 | MS-01/02 nền tảng UI; kiểm từng luồng MS-03…MS-05; TS-NFR-04 toàn hệ thống MS-06 | `Q-01…Q-03` |
+| `NFR-USA-03` | TS-STU-09, TS-NFR-04 | #130, #140 | MS-01/02 nền tảng UI; kiểm từng luồng MS-03…MS-05; TS-NFR-04 toàn hệ thống MS-06 | `Q-01…Q-03` |
+| `NFR-USA-04` | TS-NFR-04 | #130, #140 | MS-01/02 nền tảng UI; kiểm từng luồng MS-03…MS-05; TS-NFR-04 toàn hệ thống MS-06 | `Q-01…Q-03` |
 
 ## Phụ Lục: Effort Theo Gói Công Việc
 

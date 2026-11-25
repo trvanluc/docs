@@ -2,7 +2,7 @@
 
 ## 1. Thời Gian
 
-- Thời gian triển khai: **14 tuần**, khoảng 70 ngày làm việc.
+- Thời gian triển khai: **108 ngày làm việc / 163 ngày lịch**. Lịch dự kiến **07/12/2026–18/05/2027** phụ thuộc xác nhận khởi động và lịch nghỉ trường tại [Master Plan](master-plan.md#thời-điểm-của-dự-án); giả định nghỉ Tết 08–12/02/2027 chưa phải lịch chính thức.
 - Nghiệm thu chính thức: **10 ngày làm việc sau bàn giao**.
 - Bảo hành sửa lỗi kỹ thuật: **30 ngày sau nghiệm thu**.
 

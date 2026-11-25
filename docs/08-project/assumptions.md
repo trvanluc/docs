@@ -23,7 +23,7 @@ Tài liệu này là **nơi gốc nội bộ** của các giả định vận h�
 
 ## 4. Phối Hợp
 
-- `A-11` Thời gian 14 tuần không bao gồm thời gian chờ phản hồi hoặc phê duyệt vượt quá kế hoạch phối hợp.
+- `A-11` Thời lượng dự thảo 108 ngày làm việc (07/12/2026–18/05/2027; 163 ngày lịch), gồm khởi động 10 ngày làm việc và 6 mốc không chồng nhau. Lịch task/vai trò giữ tối đa 4h/ngày, 20h/tuần/người; 885h = 823h cơ sở (gồm 26h bảo hành) + 22h dự phòng kỹ thuật + 40h dự phòng rủi ro được giữ năng lực, chưa sử dụng. Giả định nghỉ 01/01, 08–12/02, 16/04, 30/04, 01/05 và nghỉ bù 03/05/2027; lịch nghỉ trường chưa được xác nhận. Bàn giao dự kiến 18/05/2027; nghiệm thu mục tiêu 01/06/2027 sau 10 ngày làm việc; bảo hành 01/06/2027–30/06/2027 (30 ngày lịch gồm ngày xác nhận). Gửi đề xuất mục tiêu 30/11/2026, xác nhận mục tiêu 04/12, kickoff 07/12 có điều kiện. Chờ PM/TL và khách rà soát; đây không phải baseline, actual hoặc approval. Nếu lịch nghỉ/đầu vào/phạm vi thay đổi hoặc chờ phản hồi vượt kế hoạch phải tính lại, không tự cộng giờ ngoài báo giá.
 - `A-12` Điều chỉnh phạm vi, chi phí hoặc tiến độ phải được hai bên xác nhận lại.
 - `A-16` Cuối mỗi mốc `MS-xx`, client dùng thử bản staging và gửi phản hồi trong **02 ngày làm việc** sau buổi demo.
 
@@ -33,6 +33,6 @@ Tài liệu này là **nơi gốc nội bộ** của các giả định vận h�
 - `A-14` Không sử dụng dữ liệu cá nhân thật của sinh viên hoặc nhân viên.
 - `A-15` Bộ dữ liệu giả lập đáp ứng các kịch bản tại `06-acceptance/test-scenarios.md` và các chỉ tiêu tại `06-acceptance/success-metrics.md`.
 
-## 6. Môn Học
+## 6. Tính Chất Mô Phỏng
 
-- `A-17` Đây là dự án môn học. Đội thực thi 10 vai trò, Aurora University (client), Nhà tài trợ dự án, feedback, change request và số liệu báo cáo là `Mô phỏng`; 4 thành viên nhóm là ban quản lý dự án thật (xem [Team Charter](team-charter.md)).
+- `A-17` Đội thực thi 10 vai trò, Aurora University (client), Nhà tài trợ dự án, feedback, change request và số liệu báo cáo là `Mô phỏng`; 4 thành viên nhóm là ban quản lý dự án thật (xem [Team Charter](team-charter.md)).

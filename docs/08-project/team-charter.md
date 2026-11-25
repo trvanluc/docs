@@ -159,3 +159,9 @@ Khi gặp vấn đề trong quá trình làm việc, thành viên ưu tiên liê
 - Lần 1 — Nhắc nhở riêng: PM trao đổi trực tiếp, làm rõ khó khăn và nhắc lại cam kết.
 - Lần 2 — Ghi nhận biên bản: nêu trong họp nhóm và ghi chính thức vào biên bản.
 - Lần 3 — Tái cấu trúc công việc: PM điều chỉnh/tái phân bổ task; ghi nhận vào đánh giá cuối dự án.
+
+### Kiểm soát approval trước merge
+
+Rà soát ngày **25/11/2026** ghi nhận PR **#199/#202 không có recorded approval** dù quy tắc Git yêu cầu tối thiểu một reviewer có chuyên môn approve trước merge. Đây là khoảng trống bằng chứng tuân thủ quy trình; không được tự điền hoặc backdate approval, và review sau merge không thay thế kiểm soát trước merge.
+
+Với PR tiếp theo, tác giả ghi reviewer dự kiến, phạm vi kiểm và link review; người merge kiểm tra có ít nhất một review **APPROVED** hợp lệ trên phiên bản cuối cần review, xử lý các yêu cầu sửa còn mở và lưu bằng chứng trong PR. Nếu thiếu approval thì **không merge**. TL tham gia khi ảnh hưởng kiến trúc, công nghệ dùng chung, bảo mật hoặc nhiều module theo quy tắc hiện có. Không đánh dấu đã review chỉ dựa vào người đã merge. PM theo dõi việc thực hiện quy tắc này; cấu hình bảo vệ nhánh là hành động cần được cho phép riêng, chưa thực hiện trong đợt sửa local.

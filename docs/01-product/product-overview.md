@@ -85,7 +85,7 @@ UniSupport gồm **3 phân hệ chính**:
 ## 7. Thông Số Dự Án
 
 - **Quy mô phục vụ**: Khoảng 3.000 sinh viên.
-- **Thời gian thực hiện**: 14 tuần.
+- **Thời gian thực hiện**: 108 ngày làm việc / 163 ngày lịch; dự kiến 07/12/2026–18/05/2027, có điều kiện theo [Master Plan](../08-project/master-plan.md#thời-điểm-của-dự-án).
 - **Tổng kinh phí**: 300.000.000 VNĐ.
 - **Thời gian nghiệm thu chính thức**: 10 ngày làm việc sau bàn giao.
 - **Thời gian bảo hành kỹ thuật**: 30 ngày kể từ ngày nghiệm thu.

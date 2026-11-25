@@ -6,7 +6,7 @@
 
 Closes #
 
-Mã liên quan (FR, AC, Q, MS, CR, R1-xx):
+Mã liên quan (FR, AC, Q, MS, CR, R-xx):
 
 ## Tài liệu Word/Excel đã đổi
 
@@ -16,6 +16,7 @@ Mã liên quan (FR, AC, Q, MS, CR, R1-xx):
 
 <!-- Ghi ngắn, không chỉ đánh dấu. -->
 
-- Đã review theo quy tắc trong Team Charter: ai review
+- Review theo Team Charter: reviewer có chuyên môn; link review **APPROVED** và thời điểm trước merge (chưa có thì ghi **Chờ review**, không tự xác nhận)
+- Chỉ merge sau ít nhất một approval hợp lệ; thay đổi kiến trúc/bảo mật/nhiều module cần TL. Rà soát sau merge không thay thế approval trước merge
 - Mục lục `docs/README.md` còn đúng đường dẫn không
 - Các nơi dẫn lại mã đã cập nhật (ma trận truy vết, plan, test)

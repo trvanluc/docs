@@ -77,7 +77,7 @@ UniSupport sử dụng bốn mức độ ưu tiên:
 - Nếu thời gian còn lại lớn hơn 0, Deadline mới được xác định bằng cách cộng phần thời gian còn lại vào lịch làm việc kể từ thời điểm thay đổi Priority.
 - Nếu thời gian còn lại nhỏ hơn hoặc bằng 0, Ticket được xem là **quá hạn ngay tại thời điểm thay đổi Priority**.
 - Ví dụ: Ticket `MEDIUM` có mục tiêu 03 ngày làm việc và đã sử dụng 01 ngày làm việc hợp lệ. Khi đổi sang `HIGH` có mục tiêu 02 ngày, Ticket còn **01 ngày làm việc** để xử lý.
-- Việc thay đổi Priority phải có quyền phù hợp và được ghi nhận trong lịch sử Ticket.
+- Việc thay đổi Priority phải có quyền phù hợp và được ghi nhận trong lịch sử Ticket; không cho đổi Priority khi Ticket `RESOLVED` hoặc `CLOSED`, kể cả người có quyền ủy quyền.
 
 ### `BR-DUE-02` — Cách tính ngày làm việc và tình trạng thời hạn
 
@@ -87,7 +87,7 @@ UniSupport sử dụng bốn mức độ ưu tiên:
 - Một ngày làm việc được quy đổi thành **08 giờ làm việc** để tính thời lượng SLA.
 - **Thời gian xử lý hợp lệ đã sử dụng** là tổng thời gian làm việc từ lúc Ticket được tạo đến thời điểm hiện tại, sau khi loại trừ toàn bộ khoảng thời gian Ticket ở `WAITING_STUDENT` và các khoảng thời gian ngoài lịch làm việc.
 - Khi Ticket chuyển sang `WAITING_STUDENT`, đồng hồ thời hạn tạm dừng tại thời điểm chuyển trạng thái.
-- Khi sinh viên bổ sung hợp lệ và Ticket quay lại `IN_PROGRESS`, đồng hồ tiếp tục từ đúng lượng thời gian còn lại trước khi tạm dừng; thời gian chờ sinh viên không được cộng vào thời gian đã sử dụng.
+- Khi sinh viên bổ sung hợp lệ và Ticket quay lại `IN_PROGRESS`, đồng hồ tiếp tục từ lượng thời gian còn lại đã lưu; nếu Priority đổi trong lúc chờ thì dùng lượng còn lại đã tính lại ngay khi đổi Priority, không dùng lại mục tiêu cũ. Thời gian chờ sinh viên không được cộng vào thời gian đã sử dụng; Deadline khi tiếp tục được xác định từ thời điểm tiếp tục và lượng còn lại đó.
 - Tỷ lệ sử dụng thời hạn được tính theo công thức:
 
   **Tỷ lệ sử dụng = Thời gian xử lý hợp lệ đã sử dụng / Thời gian mục tiêu hiện tại**
@@ -116,7 +116,7 @@ UniSupport sử dụng bốn mức độ ưu tiên:
 
 ### `BR-LIFE-01` — Chuyển sang RESOLVED
 
-- Ticket chỉ được chuyển từ `IN_PROGRESS` sang `RESOLVED` khi đã có kết quả xử lý.
+- Chỉ Staff phụ trách hoặc Staff có `RESOLVE_OVERRIDE` đúng phạm vi được ghi kết quả/chuyển từ `IN_PROGRESS` sang `RESOLVED`; Management không thực hiện thay. Ticket phải có kết quả xử lý.
 - Nội dung kết quả xử lý là thông tin bắt buộc trước khi Ticket được đánh dấu `RESOLVED`.
 - Khi Ticket chuyển sang `RESOLVED`, sinh viên phải nhận được thông báo và có quyền xem kết quả.
 

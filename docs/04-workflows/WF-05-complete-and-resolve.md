@@ -27,7 +27,7 @@ flowchart TD
 - Nội dung kết quả từ 20 đến 2.000 ký tự.
 - Tài liệu kết quả tối đa 03 file/lần, 10 MB/file, PDF/PNG/JPG/JPEG.
 - `RESOLVED` chưa phải trạng thái kết thúc vòng đời.
-- Staff không có thao tác đóng Ticket độc lập.
+- Chỉ Staff phụ trách hoặc Staff có `RESOLVE_OVERRIDE` đúng phạm vi được ghi kết quả/chuyển `RESOLVED`; Management không ghi kết quả thay. Staff không có thao tác đóng Ticket độc lập.
 - Đóng/mở lại sau `RESOLVED` được xử lý tại WF-06.
 
 ## 4. Tài Liệu Tham Chiếu

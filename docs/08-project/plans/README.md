@@ -15,14 +15,14 @@ Hình minh họa được lưu trong thư mục [images](images/).
 
 ### Đối chiếu Gantt với parent task
 
-Trong `master-schedule.xlsx`, sheet `Gantt MS-04` là chi tiết theo bảy parent task #149–#155: cùng người và ngày với GitHub. Hai hàng 24–25 của `Master Schedule` là nhóm tổng hợp, không phải giao mọi task cho mọi người trong nhóm. `Chi tiết công việc` tách RES-02 (xem kết quả, 20–24/11) khỏi RES-03/REOPEN-01 (phản hồi, 25–30/11), ghi riêng REOPEN-02 phía nhân viên.
+Trong `master-schedule.xlsx`, `Danh sách issue` giữ ngày riêng của 58 parent task; `Gantt MS-04` thể hiện bảy task #149–#155 trong mốc mới 12–25/03/2027. `Master Schedule` là nhóm tổng hợp, không gán toàn bộ giờ nhóm cho từng task. Tra ngày RES-02, RES-03, REOPEN-01/02 từ `Danh sách issue` và `Lịch task-vai trò`, không dùng ví dụ ngày tháng 1 của bản nháp trước.
 
-Đã rà các mốc khác theo ngày và người trong parent task #118–#171: các task có khoảng ngày riêng thuộc nhóm Gantt tương ứng. PERF-01 #171 có DevOps hỗ trợ QA, đã làm rõ ở hàng 33. SEC-02 #128, OBS-01 #129, UI-01 #130, UI-02 #140 và REL-01 #148 được issue khai báo làm song song cả mốc, không có thanh riêng; chúng không phải các task MS-04 bị lệch phân công. Việc thiếu parent task cho phần hoàn thiện thông báo/lịch sử ở hàng 27 được xử lý riêng theo V2-01, không đổi trong V2-02.
+`Lịch task-vai trò` là lịch theo bước × vai trò; `Phân bổ WP` nối giờ về WP–vai trò gốc; `Tải ngày` và `Năng lực tuần` cộng từ cùng lịch đó. Có hoạt động cấp dự án ngoài parent task, buffer kỹ thuật và giữ chỗ rủi ro riêng, không tạo parent task mới. Các bước NOTI-01 và REL-01 có gate từng mốc nhưng parent chỉ hoàn tất ở MS-04. SEC-02 có nền tảng MS-01, kiểm file thật theo chức năng nguồn MS-02…MS-04; không tuyên bố kiểm chức năng tương lai ở MS-01. Đây là ước lượng v1.2 chờ PM/TL rà soát; ngày 25/11/2026 đã đồng bộ và đọc lại 6 milestone, 58 parent task cùng membership/Hạn trên Projects qua [PR #203](https://github.com/trvanluc/docs/pull/203). Không đổi trạng thái hoàn thành hoặc giờ thực tế; đồng bộ không phải phê duyệt kế hoạch.
 
 
 ### Tra từ task về giờ kế hoạch
 
-Mở [wbs.xlsx](wbs.xlsx), sheet `Đối chiếu mã`: tra mã task hoặc số issue để tìm WBS thực, hàng Gantt, dòng công việc chi tiết, WP và hàng ngân sách `Resource`. Sheet `Đối chiếu effort` là cầu nối số giờ giữa hai cách nhóm WBS và WP; 540h chức năng được đối chiếu một lần. Các giờ hiện bên từng task là giờ **gói WBS dùng chung**, không phải effort riêng và không được cộng theo số issue. Xem [phụ lục A.5](../../06-acceptance/traceability-matrix.md#a5-đối-chiếu-wp-với-wbs-và-parent-task) để hiểu ranh giới gói và ví dụ #153.
+Mở [wbs.xlsx](wbs.xlsx), sheet `Đối chiếu mã`: tra mã task hoặc số issue để tìm WBS thực, hàng Gantt, dòng công việc chi tiết, WP và hàng ngân sách `Resource`. Sheet `Đối chiếu effort` là cầu nối số giờ giữa hai cách nhóm WBS và WP; 540h chức năng được đối chiếu một lần. Giờ gói trong bảng crosswalk là **gói WBS dùng chung**, không được cộng theo số issue; giờ riêng từng bước/task mới được phân rã và đối soát ở `Phân bổ WP`/`Lịch task-vai trò`. Xem [phụ lục A.5](../../06-acceptance/traceability-matrix.md#a5-đối-chiếu-wp-với-wbs-và-parent-task) để hiểu ranh giới gói và ví dụ #153.
 
 
 ### Lịch sử phiên bản Word và Excel

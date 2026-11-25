@@ -27,7 +27,7 @@ UniSupport gồm **3 phân hệ chính**. Thông báo, xác thực, RBAC và b�
 - Xem, tìm kiếm và lọc các yêu cầu mới/được giao trong phạm vi quyền.
 - Tiếp nhận, phân loại và phân công yêu cầu.
 - Xác định mức độ ưu tiên và theo dõi thời hạn xử lý.
-- Cập nhật tiến độ và trạng thái Ticket.
+- Cập nhật trạng thái vòng đời; ghi chú xử lý là nội bộ, không tự động công bố cho sinh viên.
 - Yêu cầu sinh viên bổ sung thông tin hoặc giấy tờ.
 - Phân công lại người phụ trách trong cùng phòng ban, chuyển xử lý sang phòng ban phù hợp và thực hiện chuyển cấp khi cần.
 - Ghi nhận kết quả xử lý và chuyển Ticket sang `RESOLVED`.
@@ -47,6 +47,8 @@ UniSupport gồm **3 phân hệ chính**. Thông báo, xác thực, RBAC và b�
 - Tra soát các thao tác quan trọng.
 - Quản lý chính sách lưu trữ dữ liệu cơ bản trong phạm vi hệ thống.
 
+> Staff chỉ ghi kết quả/chuyển `RESOLVED`; Student sở hữu xác nhận hoặc hệ thống hết 03 ngày làm việc mới `CLOSED`. Sinh viên thấy trạng thái, đơn vị/người phụ trách và sự kiện được phép, không thấy ghi chú nội bộ.
+
 > Các chức năng quản trị hệ thống thuộc phạm vi của phân hệ **Management** và được kiểm soát theo quyền của tài khoản Quản lý.
 
 ### 1.4 Năng lực dùng chung — báo giá `Q-03`
@@ -57,7 +59,7 @@ UniSupport gồm **3 phân hệ chính**. Thông báo, xác thực, RBAC và b�
 **Xác thực, bảo mật & phân quyền**
 - Cả 3 phân hệ sử dụng chung cơ chế xác thực.
 - Người dùng đăng nhập bằng tài khoản được cấp.
-- Mỗi người dùng chỉ được xem và thao tác trong phạm vi quyền của mình.
+- Mỗi người dùng chỉ được xem và thao tác trong phạm vi quyền của mình; cấp/thu hồi quyền hữu hạn trên tài khoản theo [Actors & Roles mục 4](actors-and-roles.md#4-danh-mục-quyền-chức-năng-hữu-hạn), không tạo role tùy ý.
 - File đính kèm chỉ người liên quan và có quyền được truy cập.
 - Các thao tác quan trọng được ghi nhận để phục vụ tra soát.
 
@@ -95,7 +97,7 @@ Danh sách gốc ở Proposal mục 2.5 "Out of Scope"; lý do từng mục ở 
 
 ## 4. Ràng Buộc Dự Án (Project Constraints)
 
-- **Thời gian thực hiện**: 14 tuần.
+- **Thời gian thực hiện**: 108 ngày làm việc / 163 ngày lịch; dự kiến 07/12/2026–18/05/2027 theo lịch nghỉ và điều kiện xác nhận tại [Master Plan](../08-project/master-plan.md#thời-điểm-của-dự-án).
 - **Ngân sách**: 300.000.000 VNĐ.
 - **Nghiệm thu chính thức**: 10 ngày làm việc kể từ khi bàn giao.
 - **Bảo hành kỹ thuật**: 30 ngày kể từ ngày hai bên xác nhận nghiệm thu.

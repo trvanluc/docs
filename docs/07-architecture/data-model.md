@@ -42,3 +42,10 @@ erDiagram
 - Audit và Ticket History phục vụ mục đích khác nhau và không được thay thế lẫn nhau.
 
 Kiểu khóa chính, độ dài cột, index và chi tiết vật lý được quyết định khi thiết kế database.
+
+
+## 4. Quyền Chức Năng Trên Tài Khoản
+
+`User` lưu nhóm cố định, phòng ban/phạm vi và tập mã quyền hữu hạn theo [Actors & Roles mục 4](../01-product/actors-and-roles.md#4-danh-mục-quyền-chức-năng-hữu-hạn). Có thể biểu diễn bằng tập cờ hoặc quan hệ User–PermissionGrant với khóa duy nhất (user, permission_code); không có thực thể custom role/quyền tự tạo. Không lưu cờ như quyền vô điều kiện: mọi lần dùng vẫn kiểm nhóm, scope, assignee và state.
+
+Cấp/thu hồi, loại cờ khi đổi nhóm và audit trước/sau phải nguyên tử; kiểm bảo toàn quản trị toàn trường cuối cùng trong cùng giao dịch để chống yêu cầu đồng thời. Mở lại không ghi đè kết quả/tài liệu, thời điểm giải quyết hay lịch sử vòng trước; mô hình phải giữ bằng chứng từng vòng khi có kết quả mới.

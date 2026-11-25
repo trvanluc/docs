@@ -14,6 +14,8 @@ Phân hệ **Staff Operations** cung cấp không gian làm việc để nhân v
 
 ## II. CHI TIẾT CÁC CHỨC NĂNG (FUNCTIONAL REQUIREMENTS)
 
+**Quyền hữu hạn:** áp dụng [Actors & Roles mục 4](../../01-product/actors-and-roles.md#4-danh-mục-quyền-chức-năng-hữu-hạn). Assignee Staff có quyền cơ sở xử lý Ticket mình phụ trách; thao tác thay assignee cần CATEGORY_OVERRIDE, PRIORITY_OVERRIDE, SUPPLEMENT_OVERRIDE hoặc RESOLVE_OVERRIDE tương ứng. Tiếp nhận cho Staff khác/phân công dùng TICKET_ASSIGN; Transfer dùng TICKET_TRANSFER; Escalation dùng ESCALATION_SEND và đích có ESCALATION_RECEIVE. Các cờ không vượt scope/state; Management không resolve. Thu hồi cờ chặn yêu cầu ủy quyền tiếp theo, không xóa lịch sử.
+
 ### [FR-STF-00] Đăng nhập và truy cập Staff Operations
 
 **Priority:** Cao: nhân viên không làm được việc gì nếu không đăng nhập đúng phạm vi. **Mốc giao:** MS-01.
@@ -252,10 +254,13 @@ Cho phép người dùng có quyền thiết lập mức độ ưu tiên của T
 - **FR-STF-03/AC-06:** Người không có quyền đổi Priority: người dùng không thấy thao tác này; nếu gửi trực tiếp tới hệ thống thì nhận thông báo "không có quyền thực hiện" và dữ liệu không đổi.
 - **FR-STF-03/AC-07:** Ticket đã chuyển sang phạm vi khác trước khi lưu: thao tác bị từ chối với thông báo yêu cầu tải lại, Priority và Deadline không đổi.
 - **FR-STF-03/AC-08:** Giá trị Priority ngoài `LOW`/`MEDIUM`/`HIGH`/`URGENT` gửi trực tiếp tới hệ thống bị từ chối, dữ liệu không đổi.
+- **FR-STF-03/AC-09:** Deadline và thời gian SLA dùng lịch trường theo múi giờ Việt Nam, 01 ngày = 08 giờ làm việc; không tiêu hao thời gian vào thứ Bảy, Chủ nhật, ngày nghỉ lễ/nghỉ trường nạp sẵn hoặc khi WAITING_STUDENT; không bổ sung giao diện cấu hình lịch nghỉ.
+- **FR-STF-03/AC-10:** Đổi Priority khi thời gian mục tiêu mới trừ thời gian hợp lệ đã dùng bằng 0 hoặc âm: Ticket chưa RESOLVED/CLOSED được đánh dấu quá hạn ngay khi lưu, không đặt lại đồng hồ và ghi lịch sử trước/sau.
+- **FR-STF-03/AC-11:** Ticket RESOLVED hoặc CLOSED không cho đổi Priority dù có quyền; ẩn thao tác, yêu cầu trực tiếp bị từ chối kèm lý do trạng thái, Priority/Deadline và lịch sử cũ không đổi.
 
 #### 8. Luồng thay thế (Alternative Flows)
 - **A1 — Giảm Priority** (ví dụ `HIGH` → `LOW`): Deadline tính lại bằng mục tiêu mới trừ thời gian hợp lệ đã dùng (`BR-DUE-01`), đồng hồ không đặt lại.
-- **A2 — Đổi Priority khi Ticket đang `WAITING_STUDENT`:** lưu Priority mới, Deadline tính lại khi Ticket quay về `IN_PROGRESS`.
+- **A2 — Đổi Priority khi Ticket đang `WAITING_STUDENT`:** lưu Priority và tính lại thời gian còn lại/Deadline ngay theo `BR-DUE-01`, ghi lịch sử trước–sau; nếu remaining ≤ 0 thì đánh dấu quá hạn ngay khi lưu. Đồng hồ vẫn tạm dừng, không tiêu hao thêm trong thời gian chờ. Khi quay về `IN_PROGRESS`, xác định Deadline từ lượng thời gian còn lại đã cập nhật theo `BR-DUE-02`, không đặt lại mục tiêu hoặc cộng thời gian chờ vào thời gian đã dùng.
 
 #### 9. Ví dụ Edge Case
 - Tỷ lệ sử dụng 79,9%: chưa sắp quá hạn; đúng 80%: sắp quá hạn; đúng 100%: quá hạn (FR-STF-03/AC-03, FR-STF-03/AC-04).
@@ -273,7 +278,7 @@ Cho phép người dùng có quyền thiết lập mức độ ưu tiên của T
 Cho phép nhân viên xử lý Ticket đang phụ trách, ghi nhận tiến độ và yêu cầu sinh viên bổ sung thông tin hoặc tài liệu khi dữ liệu hiện có chưa đủ để tiếp tục xử lý.
 
 #### 2. Actors & Điều kiện tiên quyết
-- **Actor:** Nhân viên phụ trách Ticket.
+- **Actor:** Nhân viên phụ trách Ticket; Staff có SUPPLEMENT_OVERRIDE chỉ được yêu cầu bổ sung thay người phụ trách.
 - **Preconditions:** Ticket đang ở `IN_PROGRESS` và thuộc phạm vi của nhân viên.
 
 #### 3. Quy tắc Dữ liệu & Validation
@@ -303,7 +308,7 @@ Cho phép nhân viên xử lý Ticket đang phụ trách, ghi nhận tiến đ�
 #### 5. Luồng ngoại lệ (lỗi và từ chối)
 - Nội dung yêu cầu bổ sung không hợp lệ: không gửi yêu cầu.
 - Ticket không còn ở `IN_PROGRESS`: từ chối thao tác.
-- Nhân viên không còn là người phụ trách hoặc không còn quyền xử lý: từ chối cập nhật.
+- Không còn là người phụ trách: từ chối cập nhật tiến độ nội bộ; yêu cầu bổ sung chỉ được làm thay khi có SUPPLEMENT_OVERRIDE hợp lệ. Không còn quyền/phạm vi xử lý: từ chối.
 
 #### 6. Quy tắc nghiệp vụ
 - Tuân thủ `BR-SUP-01` và `BR-DUE-02`.
@@ -317,7 +322,7 @@ Cho phép nhân viên xử lý Ticket đang phụ trách, ghi nhận tiến đ�
 - **FR-STF-04/AC-04:** Thời gian xử lý tạm dừng trong `WAITING_STUDENT` và tiếp tục khi Ticket quay về `IN_PROGRESS`.
 - **FR-STF-04/AC-05:** Ticket ngoài `IN_PROGRESS`: không có thao tác yêu cầu bổ sung; yêu cầu gửi trực tiếp bị từ chối với thông báo trạng thái hiện tại, trạng thái không đổi.
 - **FR-STF-04/AC-06:** Nội dung cập nhật tiến độ hoặc yêu cầu bổ sung rỗng, chỉ có khoảng trắng, dưới 10 hoặc trên 1.000 ký tự: thông báo tại trường nội dung, không lưu, trạng thái không đổi.
-- **FR-STF-04/AC-07:** Nhân viên không còn là người phụ trách hoặc đã mất quyền xử lý: cập nhật hoặc yêu cầu bổ sung bị từ chối với thông báo, không ghi lịch sử.
+- **FR-STF-04/AC-07:** Nhân viên không còn là người phụ trách (và không có SUPPLEMENT_OVERRIDE hợp lệ cho thao tác yêu cầu bổ sung) hoặc đã mất quyền xử lý: cập nhật hoặc yêu cầu bổ sung bị từ chối với thông báo, không ghi lịch sử.
 - **FR-STF-04/AC-08:** Yêu cầu bổ sung và phản hồi của sinh viên được giữ nguyên trong lịch sử, kể cả sau nhiều vòng bổ sung.
 - **FR-STF-04/AC-09:** Sau khi sinh viên bổ sung hợp lệ (FR-STU-05/AC-01), Ticket quay về `IN_PROGRESS` và xuất hiện lại trong "Ticket của tôi" của người phụ trách.
 
@@ -431,7 +436,7 @@ Cho phép chuyển Ticket sang **phòng ban khác** khi cần thay đổi đơn 
 Cho phép nhân viên ghi nhận kết quả xử lý chính thức của Ticket và chuyển Ticket sang `RESOLVED` để sinh viên xem và phản hồi.
 
 #### 2. Actors & Điều kiện tiên quyết
-- **Actor:** Nhân viên phụ trách Ticket hoặc Staff/Management có quyền ghi nhận kết quả theo [Actors & Roles](../../01-product/actors-and-roles.md).
+- **Actor:** Nhân viên phụ trách Ticket hoặc Staff có `RESOLVE_OVERRIDE` để ghi nhận kết quả theo [Actors & Roles](../../01-product/actors-and-roles.md).
 - **Preconditions:** Ticket đang ở `IN_PROGRESS` và đã đáp ứng điều kiện nghiệp vụ để có thể ghi nhận kết quả.
 
 #### 3. Quy tắc Dữ liệu & Validation
@@ -486,13 +491,13 @@ Cho phép nhân viên ghi nhận kết quả xử lý chính thức của Ticket
 - **FR-STF-06/AC-06:** Ticket mở lại có người phụ trách cũ còn hợp lệ xuất hiện lại trong danh sách xử lý của người đó và người phụ trách nhận thông báo trong hệ thống.
 - **FR-STF-06/AC-07:** Ticket mở lại không còn người phụ trách hợp lệ xuất hiện trong hàng chờ chưa có người phụ trách của phòng ban hiện tại để được tiếp nhận hoặc phân công lại.
 - **FR-STF-06/AC-08:** File kết quả sai định dạng, trên 10 MB hoặc vượt 03 file: file đó bị loại kèm thông báo nêu lý do, file hợp lệ được giữ.
-- **FR-STF-06/AC-09:** Ticket không còn ở `IN_PROGRESS`, hoặc người dùng không có quyền ghi kết quả: thao tác bị từ chối với thông báo, trạng thái không đổi.
+- **FR-STF-06/AC-09:** Ticket không còn ở `IN_PROGRESS`, hoặc người dùng không có quyền ghi kết quả (bao gồm mọi tài khoản Management): thao tác bị từ chối với thông báo, trạng thái không đổi.
 - **FR-STF-06/AC-10:** Khi Ticket `RESOLVED`, Staff Operations không có chức năng CSAT; sinh viên chỉ thấy form đánh giá sau khi Ticket `CLOSED` (FR-STU-07).
 - **FR-STF-06/AC-11:** Ticket `RESOLVED` chưa kết thúc vòng đời: sinh viên vẫn chấp nhận hoặc mở lại được trong 03 ngày làm việc (FR-STU-06/AC-02, FR-STU-06/AC-03, FR-STU-06/AC-05).
 
 #### 8. Luồng thay thế (Alternative Flows)
 - Luồng B (tiếp tục xử lý Ticket mở lại) ở mục 4 là luồng thay thế sau khi sinh viên mở lại.
-- **A1 — Management ghi kết quả** thay cho Staff đang vắng, nếu có quyền.
+- **A1 — Staff được ủy quyền ghi kết quả** thay cho Staff đang vắng, nếu có `RESOLVE_OVERRIDE` và đúng phạm vi. Management không được ghi kết quả/chuyển `RESOLVED`.
 
 #### 9. Ví dụ Edge Case
 - Nội dung kết quả 19 ký tự: từ chối; 20: chấp nhận.

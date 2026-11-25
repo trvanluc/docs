@@ -116,13 +116,15 @@ Sự cố là sự kiện làm gián đoạn hoặc gây ảnh hưởng đến h
 
 Việc kiểm thử được thực hiện trên môi trường kiểm thử nội bộ do DevOps duy trì. Phiên bản cuối cùng được kiểm tra lại trên môi trường bàn giao. Mỗi lần kiểm thử đều ghi lại phiên bản hệ thống, trình duyệt và thiết bị đã sử dụng.
 
-Theo PRD, môi trường kiểm thử chỉ sử dụng dữ liệu giả lập, không dùng thông tin cá nhân thật. Bộ dữ liệu đại diện cho quy mô khoảng 3.000 sinh viên, có đủ ba nhóm người dùng và ít nhất hai phòng ban để kiểm tra được việc phân quyền. Với các chỉ tiêu cần so sánh số liệu, QA/QC tính trước kết quả đúng từ bộ dữ liệu rồi đối chiếu với số liệu hệ thống hiển thị.
+Theo PRD, môi trường kiểm thử chỉ sử dụng dữ liệu giả lập, không dùng thông tin cá nhân thật. Bộ dữ liệu đại diện cho quy mô khoảng 3.000 sinh viên, có đủ ba nhóm người dùng và ít nhất hai phòng ban để kiểm tra được việc phân quyền. Bắt buộc có cặp cùng nhóm/scope khác cờ chức năng, assignee/không assignee, trước/sau cấp–thu hồi trong phiên mở, quản trị cuối cùng, mỗi trạng thái và truy cập trực tiếp; mẫu cụ thể tại [test-scenarios mục 6](../06-acceptance/test-scenarios.md#6-bộ-mẫu-quyền-phạm-vi-và-trạng-thái). Với các chỉ tiêu cần so sánh số liệu, QA/QC tính trước kết quả đúng từ bộ dữ liệu rồi đối chiếu với số liệu hệ thống hiển thị.
 
 ## 3. Kiểm soát chất lượng (Quality Control – Check)
 
 Kiểm soát chất lượng là kiểm tra trực tiếp sản phẩm để phát hiện lỗi. Việc kiểm thử được chia thành ba trọng tâm theo tiến trình dự án. Mỗi test case đều ghi rõ yêu cầu hoặc kịch bản mà nó kiểm tra và được cập nhật vào ma trận truy xuất yêu cầu (RTM).
 
 ### 3.1. Trọng tâm 1 — Kiểm thử trong quá trình phát triển (MS-01…MS-05)
+
+**Nghiệm thu tăng dần, không thêm task/effort:** MS-01 kiểm audit nền tảng bằng TS-AUTH-05 qua bằng chứng kỹ thuật chỉ đọc được DevOps/TL cấp quyền và che dữ liệu nhạy cảm; không yêu cầu UI tra soát (MS-05, TS-MGT-03/09). Thông báo/lịch sử: MS-02 tạo/tiếp nhận/đọc (TS-STU-03/04), MS-03 bổ sung/Transfer (TS-STU-15), MS-04 resolve/reopen/close và regression đầy đủ (TS-STU-16). Mỗi mốc chỉ đòi sự kiện/chức năng đã xây; kết quả sớm không được diễn giải là đã đạt AC toàn vòng đời. Cấp/thu hồi cấu hình ở MS-01 (TS-MGT-11), thực thi cờ Ticket được kiểm tại mốc chức năng nguồn MS-02/03/04, cờ tra soát/lưu trữ/xuất báo cáo được kiểm ở MS-05 (TS-MGT-03/04/06/09/11), rồi regression MS-06. Giữ 58 parent task, 885h tổng/540h chức năng; nếu BA/TL xác định làm rõ quyền vượt effort hiện hữu phải trình CR trước cam kết.
 
 - **Developer:** viết Unit Test cho các xử lý nghiệp vụ quan trọng như tính thời hạn, chuyển trạng thái Ticket và kiểm tra quyền; tự kiểm tra theo tiêu chí chấp nhận trước khi gửi review.
 - **QA/QC:** kiểm tra từng issue theo tiêu chí chấp nhận của issue đó; khi các chức năng của một luồng nghiệp vụ hoàn thành, kiểm thử tích hợp luồng đó; cuối mỗi mốc, chạy các test case của mốc và chạy lại các chức năng của giai đoạn trước để bảo đảm không bị ảnh hưởng (kiểm thử hồi quy).
@@ -179,7 +181,7 @@ Các rủi ro chính ảnh hưởng đến chất lượng sản phẩm và bi�
 
 | Rủi ro | Ảnh hưởng | Biện pháp kiểm soát và người phụ trách |
 |---|---|---|
-| Phân quyền sai đối với Ticket hoặc file đính kèm | Người dùng xem hoặc sửa được dữ liệu ngoài quyền. | Kiểm tra quyền ở phía máy chủ; kiểm thử phân quyền ngay từ MS-01 và lặp lại ở giai đoạn cuối. Phụ trách: Backend Developer, QA/QC. |
+| Phân quyền sai đối với Ticket hoặc file đính kèm | Người dùng xem hoặc sửa được dữ liệu ngoài quyền. | Kiểm tra quyền ở phía máy chủ; R-01 dùng TS-AUTH-04 tại MS-01 cho auth/chức năng nền tảng (không dùng test UI audit MS-05 làm bằng chứng sớm); mở rộng theo chức năng nguồn và lặp TS-NFR-03/SM-07 cuối kỳ. Phụ trách: Backend Developer, QA/QC. |
 | Tính sai thời hạn xử lý | Cảnh báo sắp quá hạn và quá hạn không chính xác. | Kiểm thử các trường hợp đặc biệt: tạm dừng khi chờ sinh viên bổ sung, ngày nghỉ, thay đổi mức ưu tiên. Phụ trách: Backend Developer, QA/QC. |
 | Thao tác chuyển phòng ban hoặc cập nhật bị lỗi giữa chừng | Dữ liệu dở dang, mất lịch sử xử lý. | Kiểm tra kỹ khi review mã nguồn; kiểm thử các tình huống lỗi giữa chừng. Phụ trách: TL, QA/QC. |
 | Số liệu Dashboard và báo cáo không khớp dữ liệu | Quản lý ra quyết định dựa trên số liệu sai. | Đối chiếu 100% với kết quả đúng tính trước. Phụ trách: Backend Developer, QA/QC. |
