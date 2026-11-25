@@ -187,7 +187,9 @@ Cho phép sinh viên tạo Ticket mới bằng cách chọn một **Nhóm vấn 
 
 ### [FR-STU-03] Xem và theo dõi Ticket
 
-**Priority:** Cao: sinh viên phải theo dõi được Ticket; là mục tiêu minh bạch tiến độ của dự án. **Mốc giao:** MS-02.
+**Priority:** Cao: sinh viên phải theo dõi được Ticket; là mục tiêu minh bạch tiến độ của dự án. **Mốc giao:** MS-02 (nền tảng), MS-03/MS-04 (sự kiện theo chức năng nguồn).
+
+**Nghiệm thu tăng dần của FR-STU-03/04:** MS-02 kiểm tạo/tiếp nhận (NEW → IN_PROGRESS), danh sách/chi tiết, lịch sử và thông báo in-app, mở/đánh dấu đã đọc cùng kiểm quyền. MS-03 thêm yêu cầu/bổ sung thông tin, chuyển phòng ban và thay đổi trạng thái tương ứng; Escalation/ghi chú xử lý vẫn nội bộ. MS-04 thêm kết quả/RESOLVED, mở lại, xác nhận và tự đóng; chạy regression đủ các sự kiện. AC bao quát vòng đời chỉ hoàn tất khi sự kiện cuối được giao, không yêu cầu bổ sung/Transfer/resolve/reopen/close ở MS-02. Không thêm email/SMS. Deadline và kết quả chỉ nghiệm thu khi chức năng nguồn tương ứng đã được giao.
 
 #### 1. Mô tả & Phạm vi
 Cho phép sinh viên xem danh sách Ticket của mình và theo dõi trạng thái, trách nhiệm xử lý, thời hạn và lịch sử cập nhật.
@@ -216,6 +218,7 @@ Cho phép sinh viên xem danh sách Ticket của mình và theo dõi trạng th�
 #### 6. Quy tắc nghiệp vụ
 - Transfer và Escalation là hành động được ghi trong lịch sử xử lý, không phải trạng thái Ticket. Trong Student Portal, sinh viên thấy sự kiện chuyển phòng ban; Escalation là sự kiện nội bộ (`BR-OWN-03`) và không hiển thị cho sinh viên.
 - Lịch sử hiển thị cho sinh viên tối thiểu gồm: tạo Ticket, thay đổi trạng thái, yêu cầu bổ sung, sinh viên bổ sung thông tin/tài liệu, chuyển phòng ban, ghi nhận kết quả, mở lại và đóng Ticket.
+- Ghi chú xử lý là nội bộ, không công bố cho sinh viên. Sinh viên thấy trạng thái vòng đời, đơn vị/người phụ trách, yêu cầu bổ sung/kết quả và sự kiện được phép, không phải toàn bộ trao đổi nội bộ.
 - Các sự kiện quản trị hoặc Audit Trail không liên quan trực tiếp đến quá trình hỗ trợ của sinh viên không hiển thị trong Student Portal.
 
 #### 7. Tiêu chí nghiệm thu
@@ -242,7 +245,7 @@ Cho phép sinh viên xem danh sách Ticket của mình và theo dõi trạng th�
 
 ### [FR-STU-04] Nhận và xem thông báo Ticket
 
-**Priority:** Trung bình: sinh viên vẫn theo dõi được bằng FR-STU-03 khi thông báo chậm; thông báo cải thiện trải nghiệm nhưng không chặn luồng Ticket. **Mốc giao:** MS-02 (hoàn thiện ở MS-04).
+**Priority:** Trung bình: sinh viên vẫn theo dõi được bằng FR-STU-03 khi thông báo chậm; thông báo cải thiện trải nghiệm nhưng không chặn luồng Ticket. **Mốc giao:** MS-02 (nền tảng), MS-03 (bổ sung/Transfer), MS-04 (kết quả/mở lại/đóng và regression đầy đủ).
 
 #### 1. Mô tả & Phạm vi
 Thông báo cho sinh viên khi Ticket của mình có sự kiện nghiệp vụ cần biết hoặc cần hành động.
@@ -413,6 +416,7 @@ Cho phép sinh viên xem nội dung kết quả xử lý và tài liệu kết q
 - **FR-STU-06/AC-06:** Ticket đã `CLOSED` hoặc đã hết thời hạn phản hồi: không còn nút mở lại; yêu cầu mở lại gửi trực tiếp bị từ chối với thông báo "Ticket đã đóng hoặc hết thời hạn phản hồi", trạng thái không đổi.
 - **FR-STU-06/AC-07:** Sinh viên mở hoặc thao tác trên Ticket của người khác: trang "không có quyền truy cập", không hiển thị kết quả, trạng thái Ticket không đổi.
 - **FR-STU-06/AC-08:** Mỗi lần chấp nhận, mở lại và tự động đóng tạo một sự kiện trong lịch sử Ticket, ghi người thực hiện (hoặc "hệ thống") và thời điểm.
+- **FR-STU-06/AC-09:** Mở lại hợp lệ giữ nguyên kết quả, tài liệu kết quả, thời điểm giải quyết và lịch sử của vòng trước; chỉ thêm sự kiện mở lại và bắt đầu/tiếp tục vòng xử lý theo BR-DUE-02, không ghi đè/xóa bằng chứng cũ khi ghi kết quả vòng sau.
 
 #### 8. Luồng thay thế (Alternative Flows)
 - Luồng B (mở lại) và Luồng C (tự động đóng) ở mục 4 là luồng thay thế của Luồng A (chấp nhận kết quả).

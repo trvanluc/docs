@@ -4,6 +4,8 @@
 
 Đơn vị thực hiện: Nhóm 3
 
+**Bản sửa `v1.1-draft` — 25/11/2026 — Chờ PM rà soát.** Chủ sở hữu sản phẩm phía trường dưới đây mới là đề xuất, chưa được trường xác nhận.
+
 ## Mục đích và phạm vi
 
 Kế hoạch này quy định cách quản lý UniSupport với tư cách một sản phẩm, gồm: giá trị sản phẩm mang lại cho người dùng, nguyên tắc ra quyết định về sản phẩm, chỉ số đánh giá sản phẩm, quy trình ra mắt, đo lường và cải tiến, và định hướng phát triển sau khi bàn giao.
@@ -32,6 +34,8 @@ Tiến độ, chi phí, phân công và báo cáo dự án được quy định 
 
 ## 3. Chỉ số đánh giá sản phẩm
 
+**Chủ sở hữu sản phẩm phía trường (đề xuất, chờ Aurora University xác nhận): Trưởng bộ phận/phụ trách điều phối hỗ trợ sinh viên.** Đầu mối này tiếp nhận backlog, quyết định ưu tiên, phê duyệt roadmap và đợt phát hành, chủ trì rà soát chỉ số hằng tháng. Đây là trách nhiệm quản trị phía khách hàng, không phải Sponsor của đơn vị giao hàng và **không tạo vai trò ứng dụng thứ tư** ngoài STUDENT/STAFF/MANAGEMENT. Các phòng ban cung cấp phản hồi và số liệu nghiệp vụ; CNTT trường vận hành kỹ thuật theo phạm vi đã thống nhất.
+
 Sản phẩm được đánh giá qua kết quả người dùng nhận được. Các chỉ số dưới đây được lấy chủ yếu từ Dashboard và báo cáo của UniSupport, giúp nhà trường tự theo dõi sau khi bàn giao.
 
 | Chỉ số | Ý nghĩa | Nguồn số liệu | Mục tiêu năm đầu |
@@ -47,7 +51,7 @@ Sản phẩm được đánh giá qua kết quả người dùng nhận được
 
 Mục tiêu về mức độ sử dụng và số lần hỏi tiến độ theo PRD. Các mục tiêu còn lại là mục tiêu đề xuất, được Aurora University xác nhận khi bàn giao và rà soát sau học kỳ đầu tiên dựa trên số liệu thực tế.
 
-**Phân tích nguyên nhân:** khi một chỉ số không đạt mục tiêu, BA xác định nguyên nhân thuộc quy trình nghiệp vụ của nhà trường hay thuộc sản phẩm, chẳng hạn thông báo không đến người xử lý, phải qua nhiều bước mới tìm được Ticket, hoặc thiếu dấu hiệu nhận biết Ticket cần ưu tiên. Nguyên nhân thuộc sản phẩm được đưa vào danh sách cải tiến; nguyên nhân thuộc quy trình được báo cáo cho Aurora University.
+**Phân tích nguyên nhân:** chủ sở hữu sản phẩm phía trường chủ trì; trong giai đoạn dự án/hỗ trợ theo thỏa thuận, BA phối hợp xác định nguyên nhân thuộc quy trình nghiệp vụ của nhà trường hay thuộc sản phẩm, chẳng hạn thông báo không đến người xử lý, phải qua nhiều bước mới tìm được Ticket, hoặc thiếu dấu hiệu nhận biết Ticket cần ưu tiên. Nguyên nhân thuộc sản phẩm được đưa vào danh sách cải tiến; nguyên nhân thuộc quy trình được báo cáo cho Aurora University.
 
 ## 4. Quy trình quản lý sản phẩm
 
@@ -76,7 +80,7 @@ Các chỉ số tại mục 3 được theo dõi hằng tháng. Phản hồi đ�
 
 **Công cụ phân tích hành vi (đề xuất):** Google Analytics theo dõi lượt truy cập, thiết bị và các trang được sử dụng nhiều; Microsoft Clarity hoặc Hotjar ghi nhận bản đồ nhiệt và phiên thao tác để xác định các bước người dùng gặp khó hoặc bỏ dở. Công cụ chỉ được tích hợp khi Aurora University chấp thuận và phải che toàn bộ dữ liệu cá nhân theo nguyên tắc an toàn người dùng tại mục 2.
 
-Kết quả đo lường và phản hồi được tổng hợp thành danh sách cải tiến sản phẩm (product backlog). Trong 30 ngày bảo hành, nhóm dự án tổng hợp và bàn giao danh sách này cho Aurora University; sau đó nhà trường tiếp tục theo dõi bằng Dashboard, báo cáo của hệ thống và các công cụ phân tích.
+Kết quả đo lường và phản hồi được tổng hợp thành danh sách cải tiến sản phẩm (product backlog). BA bàn giao backlog, cách thu thập phản hồi, định nghĩa/nguồn chỉ số, các ưu tiên còn mở và tài liệu hướng dẫn cho đầu mối phía trường theo biên bản bàn giao. Trong 30 ngày lịch bảo hành sau nghiệm thu, BA hỗ trợ làm rõ và tổng hợp phản hồi trong phạm vi thỏa thuận; bảo hành chỉ bao gồm sửa lỗi kỹ thuật, không bao gồm tự động triển khai cải tiến mới. Kết thúc bảo hành/hỗ trợ đã thỏa thuận, trách nhiệm BA kết thúc; nhà trường tự theo dõi và quản lý backlog. Hỗ trợ tiếp hoặc phát triển mới cần thỏa thuận riêng.
 
 ### 4.3. Đánh giá một thay đổi hoặc tính năng mới
 
@@ -89,11 +93,11 @@ Mọi đề xuất thay đổi, dù đến từ người dùng, nhà trường h
 | Có ảnh hưởng xấu không? | Ảnh hưởng đến an toàn dữ liệu, phân quyền và các chức năng đang vận hành. |
 | Tốn bao nhiêu công sức? | Ước lượng công sức và thời gian; thay đổi trong thời gian dự án được xử lý theo quy trình kiểm soát thay đổi của Kế hoạch quản trị và giám sát. |
 
-Business Analyst là đầu mối đánh giá và sắp xếp ưu tiên danh sách cải tiến; Aurora University quyết định thay đổi được thực hiện và phiên bản phát hành.
+BA phân tích và đề xuất thứ tự ưu tiên trong thời gian dự án/hỗ trợ theo thỏa thuận; chủ sở hữu sản phẩm phía trường (đề xuất, chờ xác nhận) quyết định ưu tiên, thay đổi thực hiện và đợt phát hành trong thẩm quyền nhà trường. PM/TL đánh giá tác động nguồn lực, chi phí và kỹ thuật; không thay quyền phê duyệt của khách hàng.
 
 ## 5. Định hướng phát triển sản phẩm
 
-Phiên bản 1.0 được bàn giao theo phạm vi PRD. Lộ trình dưới đây định hướng các phiên bản tiếp theo, dựa trên các hạng mục ngoài phạm vi trong PRD và nhu cầu dự kiến khi vận hành. Lộ trình không phải cam kết; mỗi hướng được đánh giá theo mục 4.3 và được Aurora University chấp thuận trước khi thực hiện.
+Phiên bản 1.0 được bàn giao theo phạm vi PRD. Lộ trình dưới đây định hướng các phiên bản tiếp theo, dựa trên các hạng mục ngoài phạm vi trong PRD và nhu cầu dự kiến khi vận hành. Chủ sở hữu sản phẩm phía trường (đề xuất, chờ xác nhận) nhận bàn giao, quản lý backlog và phê duyệt roadmap sau khi lấy ý kiến các phòng ban/CNTT. Lộ trình không phải cam kết; mỗi hướng được đánh giá theo mục 4.3 và được Aurora University chấp thuận trước khi thực hiện.
 
 | Giai đoạn | Hướng phát triển | Làm gì | Vì sao | Điều kiện để làm |
 |---|---|---|---|---|

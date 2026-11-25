@@ -30,14 +30,14 @@
 
 ## 2. Các Mục Nằm Ngoài Phạm Vi Hiện Tại (Out of Scope / Non-Goals)
 
-Để đảm bảo dự án hoàn thành đúng tiến độ **14 tuần** và ngân sách **300 triệu VNĐ**, các hạng mục sau **KHÔNG** thuộc phạm vi triển khai của hợp đồng này. Danh sách gốc với khách ở [Proposal.docx](../08-project/Proposal.docx) mục 2.5 "Out of Scope" (decision-log `D-05`); bảng dưới giải thích lý do từng mục, phần được làm ở [product-scope.md](product-scope.md):
+Để giữ phạm vi trong kế hoạch **108 ngày làm việc / 163 ngày lịch** và ngân sách **300 triệu VNĐ**, các hạng mục sau **KHÔNG** thuộc phạm vi triển khai của hợp đồng này. Danh sách gốc với khách ở [Proposal.docx](../08-project/Proposal.docx) mục 2.5 "Out of Scope" (decision-log `D-05`); bảng dưới giải thích lý do từng mục, phần được làm ở [product-scope.md](product-scope.md):
 
 | STT | Hạng Mục Nằm Ngoài Phạm Vi | Lý Do / Giải Thích |
 | :---: | :--- | :--- |
 | **NG-01** | **Mobile App độc lập (iOS / Android)** | Hệ thống chỉ phát triển dạng **Web Application** (Responsive giao diện trên di động). Không phát triển app native trên App Store / Google Play. |
 | **NG-02** | **Tích hợp hệ thống bên thứ ba nâng cao** | Không tích hợp với hệ thống quản lý đào tạo (ERP), phần mềm kế toán, hay hệ thống SSO phức tạp ngoài phạm vi thống nhất. |
 | **NG-03** | **Quản trị hạ tầng máy chủ & Backup tự động** | Đơn vị phát triển bàn giao script/tài liệu cài đặt. Việc thiết lập tự động sao lưu, giám sát hạ tầng máy chủ lâu dài do Aurora University tự đảm nhận. |
-| **NG-04** | **Phân quyền nhiều cấp & Audit Log nâng cao** | Chỉ hỗ trợ mô hình phân quyền 3 vai trò chính (Sinh viên, Nhân viên, Quản lý) và lưu log thao tác cơ bản. Không hỗ trợ phân quyền ma trận đa cấp độ hoặc ghi log chi tiết mức dữ liệu sâu. |
+| **NG-04** | **Phân quyền nhiều cấp & Audit Log nâng cao** | Chỉ hỗ trợ 3 nhóm cố định (Sinh viên, Nhân viên, Quản lý), cấp/thu hồi quyền chức năng hữu hạn trên tài khoản theo [Actors & Roles mục 4](actors-and-roles.md#4-danh-mục-quyền-chức-năng-hữu-hạn), phạm vi dữ liệu và log thao tác cơ bản. Không có trình tạo role/quyền tùy ý hoặc phê duyệt nhiều tầng. Không hỗ trợ phân quyền ma trận đa cấp độ hoặc ghi log chi tiết mức dữ liệu sâu. |
 | **NG-05** | **Chat trực tiếp (Livechat) / Gọi thoại (VoIP)** | Không tích hợp khung chat real-time hoặc gọi điện trực tiếp trong hệ thống. Mọi trao đổi diễn ra qua tính năng nhắn/gửi yêu cầu bổ sung thông tin trên Ticket. |
 | **NG-06** | **Tối ưu chịu tải lớn (> 3.000 sinh viên)** | Hệ thống được thiết kế tối ưu cho quy mô 3.000 sinh viên của Aurora University, không chịu trách nhiệm tối ưu kiến trúc Microservices/Load Balancing phức tạp cho hàng trăm nghìn truy cập đồng thời. |
 | **NG-07** | **Kiểm thử thâm nhập (Pentest) & Chứng nhận bảo mật** | Không bao gồm chi phí thuê bên thứ ba đánh giá an toàn thông tin chuyên sâu hoặc cấp chứng chỉ bảo mật quốc tế (ISO/IEC 27001, SOC2...). |

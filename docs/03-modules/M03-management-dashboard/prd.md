@@ -90,8 +90,10 @@ Cho phép Management có quyền quản trị tạo và cập nhật tài khoả
 - Tài khoản Quản lý phải được xác định phạm vi **toàn trường** hoặc **một phòng ban đang hoạt động**.
 - **Lý do khóa tài khoản:** bắt buộc, từ **10 đến 500 ký tự**.
 - Người thực hiện không được tự khóa chính tài khoản đang đăng nhập.
-- Hệ thống phải luôn còn ít nhất **một tài khoản Quản lý đang hoạt động có quyền quản lý tài khoản và phân quyền**.
-- Người quản trị không được cấp cho tài khoản khác quyền hoặc phạm vi quản lý vượt quá quyền/phạm vi mà chính mình được phép quản lý.
+- Hệ thống phải luôn còn ít nhất **một tài khoản Quản lý toàn trường đang hoạt động có ACCOUNT_MANAGE**.
+- Người quản trị không được cấp cho tài khoản khác quyền hoặc phạm vi quản lý vượt quá thẩm quyền/phạm vi mà chính mình được phép quản lý.
+
+- Quyền chức năng được cấp/thu hồi trên tài khoản từ [danh mục hữu hạn, nhóm đủ điều kiện và mặc định](../../01-product/actors-and-roles.md#4-danh-mục-quyền-chức-năng-hữu-hạn); không tạo role tùy ý. Mặc định không có cờ bổ sung. Quyền cơ sở của assignee không phải quyền ủy quyền. ACCOUNT_MANAGE được ủy quyền cố định để cấp/thu hồi cờ STAFF trong phạm vi, không được sử dụng chúng; cờ MANAGEMENT chỉ được cấp khi chính người cấp đang có cờ đó.
 
 #### 4. Luồng xử lý chi tiết
 
@@ -108,14 +110,20 @@ Cho phép Management có quyền quản trị tạo và cập nhật tài khoả
 1. Management chọn một tài khoản được phép quản trị.
 2. Hệ thống hiển thị thông tin hiện tại.
 3. Người dùng thay đổi nhóm người dùng, phòng ban hoặc phạm vi quyền.
-4. Hệ thống kiểm tra cấu hình mới, bảo đảm người thực hiện không cấp quyền vượt quá phạm vi của mình và thao tác không làm mất toàn bộ tài khoản Quản lý có quyền quản lý tài khoản/phân quyền.
+4. Hệ thống kiểm tra cấu hình mới, bảo đảm người thực hiện không cấp quyền vượt quá phạm vi của mình và thao tác không làm mất toàn bộ tài khoản Quản lý toàn trường đang hoạt động có ACCOUNT_MANAGE.
 5. Nếu hợp lệ, hệ thống lưu thay đổi và áp dụng phạm vi quyền mới.
 6. Hệ thống ghi nhận giá trị trước/sau và người thực hiện vào nhật ký tra soát.
+
+**Luồng D — Cấp/thu hồi quyền chức năng**
+1. Management có `ACCOUNT_MANAGE` mở tài khoản trong phạm vi; chọn cấp/thu hồi từng cờ của danh mục cố định.
+2. Backend kiểm nhóm đủ điều kiện, quyền/phạm vi người cấp, cấm tự tăng quyền và bảo vệ quản trị toàn trường cuối cùng.
+3. Lưu nguyên tử quyền trước/sau và audit; yêu cầu được bảo vệ tiếp theo của phiên đang mở dùng quyền mới. Đổi nhóm đồng thời loại cờ không còn hợp lệ.
+4. Thiếu quyền, mã lạ, sai nhóm hoặc vi phạm giới hạn: thông báo lý do; không lưu thay đổi.
 
 **Luồng C — Khóa hoặc mở khóa**
 1. Management chọn tài khoản.
 2. Người dùng chọn khóa hoặc mở khóa và nhập lý do.
-3. Hệ thống kiểm tra quyền, điều kiện thao tác và bảo đảm việc khóa không làm mất tài khoản Quản lý cuối cùng có quyền quản lý tài khoản/phân quyền.
+3. Hệ thống kiểm tra quyền, điều kiện thao tác và bảo đảm việc khóa không làm mất tài khoản Quản lý toàn trường đang hoạt động cuối cùng có ACCOUNT_MANAGE.
 4. Khi khóa tài khoản Nhân viên, hệ thống kiểm tra các Ticket chưa hoàn tất mà tài khoản đang là người phụ trách chính. Nếu có Ticket ở `NEW`, `IN_PROGRESS` hoặc `WAITING_STUDENT`, hệ thống gỡ người phụ trách hiện tại và đưa các Ticket đó về hàng chờ chưa có người phụ trách của phòng ban đang xử lý để được phân công lại.
 5. Hệ thống khóa tài khoản ngay sau khi hoàn tất việc cập nhật trách nhiệm xử lý Ticket.
 6. Hệ thống ghi nhận lý do khóa, các Ticket bị ảnh hưởng và người thực hiện vào nhật ký tra soát.
@@ -125,8 +133,8 @@ Cho phép Management có quyền quản trị tạo và cập nhật tài khoả
 - Tên đăng nhập/Mã định danh đã tồn tại: từ chối tạo mới.
 - Tài khoản Nhân viên không có phòng ban hợp lệ: từ chối lưu.
 - Người dùng cố tự khóa tài khoản đang đăng nhập: từ chối.
-- Thao tác khóa/hạ quyền sẽ làm hệ thống không còn tài khoản Quản lý đang hoạt động có quyền quản lý tài khoản/phân quyền: từ chối.
-- Người thực hiện cố cấp quyền hoặc phạm vi vượt quá quyền/phạm vi của chính mình: từ chối.
+- Thao tác khóa/hạ quyền sẽ làm hệ thống không còn tài khoản Quản lý toàn trường đang hoạt động có ACCOUNT_MANAGE: từ chối.
+- Người thực hiện cố cấp quyền hoặc phạm vi vượt quá thẩm quyền/phạm vi được phép quản trị của chính mình: từ chối.
 - Người dùng không có quyền quản trị tài khoản: từ chối thao tác.
 
 #### 6. Quy tắc nghiệp vụ
@@ -134,8 +142,8 @@ Cho phép Management có quyền quản trị tạo và cập nhật tài khoả
 - Thay đổi quyền/phạm vi không làm thay đổi lịch sử các Ticket trước đó.
 - Khóa tài khoản Nhân viên có hiệu lực ngay sau khi các Ticket đang được gán cho tài khoản đó được gỡ người phụ trách và đưa về hàng chờ của phòng ban hiện tại.
 - Việc khóa tài khoản không làm thay đổi phòng ban hoặc trạng thái nghiệp vụ của Ticket.
-- Hệ thống luôn phải còn ít nhất một tài khoản Quản lý đang hoạt động có quyền quản lý tài khoản và phân quyền.
-- Người quản trị chỉ được cấp quyền trong giới hạn quyền và phạm vi quản lý của chính mình.
+- Hệ thống luôn phải còn ít nhất một tài khoản Quản lý toàn trường đang hoạt động có ACCOUNT_MANAGE.
+- Người quản trị chỉ được cấp quyền trong giới hạn thẩm quyền và phạm vi quản lý của chính mình.
 - Tạo, thay đổi quyền, khóa và mở khóa tài khoản đều phải được ghi nhận để tra soát.
 
 #### 7. Tiêu chí nghiệm thu
@@ -143,14 +151,20 @@ Cho phép Management có quyền quản trị tạo và cập nhật tài khoả
 - **FR-MGT-01/AC-02:** Tên đăng nhập/Mã định danh đã tồn tại (không phân biệt hoa thường): không tạo tài khoản, thông báo "tên đăng nhập đã tồn tại", số tài khoản không đổi.
 - **FR-MGT-01/AC-03:** Tài khoản Nhân viên không gắn phòng ban đang hoạt động: không lưu, thông báo tại trường phòng ban.
 - **FR-MGT-01/AC-04:** Khóa Nhân viên đang phụ trách Ticket hợp lệ sẽ gỡ người phụ trách và đưa các Ticket liên quan về hàng chờ của phòng ban trước khi tài khoản bị khóa.
-- **FR-MGT-01/AC-05:** Khóa hoặc hạ quyền tài khoản Quản lý cuối cùng có quyền quản lý tài khoản và phân quyền: bị từ chối với thông báo nêu lý do; tài khoản giữ nguyên trạng thái và quyền.
-- **FR-MGT-01/AC-06:** Cấp quyền hoặc phạm vi vượt quá quyền/phạm vi của chính người thực hiện: bị từ chối với thông báo, quyền của tài khoản đích không đổi.
+- **FR-MGT-01/AC-05:** Khóa hoặc hạ quyền tài khoản Quản lý toàn trường đang hoạt động cuối cùng có ACCOUNT_MANAGE: bị từ chối với thông báo nêu lý do; tài khoản giữ nguyên trạng thái và quyền.
+- **FR-MGT-01/AC-06:** Cấp quyền hoặc phạm vi vượt quá thẩm quyền/phạm vi quản trị của chính người thực hiện: bị từ chối với thông báo, quyền của tài khoản đích không đổi.
 - **FR-MGT-01/AC-07:** Mọi lần tạo, thay đổi vai trò/phạm vi, khóa và mở khóa tài khoản được ghi trong nhật ký tra soát với giá trị trước/sau và người thực hiện.
 - **FR-MGT-01/AC-08:** Người dùng không có thao tác khóa cho chính tài khoản đang đăng nhập; yêu cầu tự khóa gửi trực tiếp bị từ chối, tài khoản vẫn hoạt động.
 - **FR-MGT-01/AC-09:** Người không có quyền quản trị tài khoản: người dùng không thấy thao tác này; nếu gửi trực tiếp tới hệ thống thì nhận thông báo "không có quyền thực hiện" và dữ liệu không đổi.
 - **FR-MGT-01/AC-10:** Thay đổi quyền/phạm vi hoặc khóa tài khoản không làm thay đổi lịch sử, phòng ban hay trạng thái của Ticket (ngoài việc gỡ người phụ trách theo FR-MGT-01/AC-04).
 - **FR-MGT-01/AC-11:** Lý do khóa rỗng, dưới 10 hoặc trên 500 ký tự: thông báo tại trường lý do, tài khoản không bị khóa.
 - **FR-MGT-01/AC-12:** Mở khóa đưa tài khoản về trạng thái hoạt động nhưng không tự gán lại các Ticket đã được đưa về hàng chờ trước đó.
+- **FR-MGT-01/AC-13:** Tài khoản mới chỉ có quyền cơ sở theo nhóm/phạm vi; danh sách cấp quyền chỉ chứa danh mục hữu hạn tại Actors & Roles mục 4; không có tạo role/quyền tùy ý.
+- **FR-MGT-01/AC-14:** Cấp rồi thu hồi một cờ hợp lệ trong phạm vi được lưu cùng audit trước/sau, tác nhân và thời điểm; yêu cầu được bảo vệ tiếp theo của phiên đang mở áp dụng cờ mới, thu hồi làm thao tác ủy quyền bị từ chối, không làm mất lịch sử cũ.
+- **FR-MGT-01/AC-15:** Mã quyền ngoài danh mục hoặc cấp cho nhóm không đủ điều kiện (Student có quyền quản trị, Management có RESOLVE_OVERRIDE): bị từ chối kèm lý do, dữ liệu không đổi; đổi nhóm loại cờ không tương thích nguyên tử.
+- **FR-MGT-01/AC-16:** Hai tài khoản cùng nhóm/phạm vi nhưng khác cờ chỉ thực hiện được thao tác ủy quyền khi có cờ; thiếu cờ bị ẩn thao tác và gọi trực tiếp bị từ chối. Quyền assignee cơ sở không cho phép xử lý thay người khác hoặc bỏ qua trạng thái/phạm vi.
+- **FR-MGT-01/AC-17:** Người cấp không được tự tăng quyền/phạm vi hoặc cấp cho người khác quyền vượt thẩm quyền/phạm vi được phép quản trị (bao gồm cờ MANAGEMENT người cấp đang thiếu); yêu cầu trực tiếp cũng bị từ chối kèm lý do, tài khoản đích giữ nguyên.
+- **FR-MGT-01/AC-18:** Thu hồi ACCOUNT_MANAGE, hạ nhóm/phạm vi hoặc khóa quản trị toàn trường đang hoạt động cuối cùng bị từ chối nguyên tử kèm lý do; một quản trị phòng ban không được tính là quản trị toàn trường thay thế.
 
 #### 8. Luồng thay thế (Alternative Flows)
 - Luồng B (cập nhật vai trò/phạm vi) và Luồng C (khóa/mở khóa) ở mục 4 là các luồng thay thế của Luồng A (tạo tài khoản).
@@ -243,7 +257,9 @@ Cho phép Management có quyền cấu hình quản lý danh sách phòng ban v�
 
 ### [FR-MGT-03] Tra soát lịch sử thao tác
 
-**Priority:** Trung bình: nền tảng ghi lịch sử làm từ MS-01; màn hình tra soát phục vụ khiếu nại và sự cố, không chặn luồng Ticket. **Mốc giao:** MS-01 (ghi nhận) và MS-05 (màn hình tra soát).
+**Priority:** Trung bình: nền tảng ghi lịch sử làm từ MS-01; màn hình tra soát phục vụ khiếu nại và sự cố, không chặn luồng Ticket. **Mốc giao:** MS-01 (ghi nhận, kiểm bằng chứng kỹ thuật) và MS-05 (màn hình tra soát).
+
+**Nghiệm thu tăng dần:** TS-AUTH-05 kiểm ghi nhận của các chức năng đã có ở MS-01 qua truy vấn/trích xuất chỉ đọc có phân quyền do DevOps/TL cung cấp, QA đối chiếu actor/thời điểm/trước–sau; che mật khẩu/token/dữ liệu nhạy cảm, không cấp quyền sửa/xóa. Mỗi mốc sau kiểm sự kiện mới khi chức năng tương ứng được giao. TS-MGT-03/09 kiểm UI tra cứu/lọc/phạm vi ở MS-05; không yêu cầu UI audit sớm.
 
 #### 1. Mô tả & Phạm vi
 Cho phép Management có quyền tra soát xem các thao tác quan trọng đã phát sinh trên Ticket và các chức năng quản trị hệ thống.

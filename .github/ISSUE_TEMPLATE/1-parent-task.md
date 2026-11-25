@@ -22,6 +22,6 @@ labels: task
 
 ## Subtask (tuỳ chọn)
 
-<!-- Chuẩn không bắt buộc subtask. Nếu tách, dùng sub-issue của GitHub hoặc liệt kê ở đây. -->
+<!-- Nếu cần tách để quản lý và kiểm chứng đầu ra, dùng sub-issue của GitHub hoặc liệt kê ở đây. -->
 
 - [ ]

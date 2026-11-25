@@ -5,7 +5,7 @@ Thư mục này mô tả kiến trúc kỹ thuật phục vụ việc triển kh
 ## 1. Nguyên Tắc
 
 - UniSupport là **Web Application** phục vụ ba phân hệ M01, M02, M03.
-- Kiến trúc ưu tiên đơn giản, phù hợp quy mô khoảng 3.000 sinh viên và thời gian triển khai 14 tuần.
+- Kiến trúc ưu tiên đơn giản, phù hợp quy mô khoảng 3.000 sinh viên và kế hoạch 108 ngày làm việc / 163 ngày lịch, theo [Master Plan](../08-project/master-plan.md).
 - Thông báo, xác thực, phân quyền và Audit được triển khai như các thành phần kỹ thuật dùng chung cho ba phân hệ.
 - Kiến trúc ưu tiên giải pháp đơn giản, không yêu cầu kiến trúc phân tán phức tạp, auto-scaling hoặc tích hợp bên thứ ba.
 - Công nghệ cụ thể được lựa chọn trong quá trình thiết kế kỹ thuật, với điều kiện đáp ứng PRD, NFR và hạ tầng Aurora University.

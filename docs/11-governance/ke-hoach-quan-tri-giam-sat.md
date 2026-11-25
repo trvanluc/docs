@@ -222,3 +222,15 @@ Báo cáo tình hình dự án tuần được lập theo mẫu dưới đây. C
 | Rủi ro và vấn đề | Rủi ro ở mức cao; vấn đề mới hoặc chưa xử lý xong, người phụ trách, thời hạn. | R-01 phân quyền (mức 15, Cao): đã bổ sung test case truy cập chéo cho hàng chờ. Chậm sinh mã Ticket: TL hỗ trợ BE1, hạn mới 10/11. |
 | Cần quyết định | Nội dung cần PM, nhóm, Nhà tài trợ dự án hoặc Aurora University quyết định. | Không có. |
 | Kế hoạch tuần tới | Các công việc chính và mục tiêu của tuần tiếp theo. | Hoàn thành theo dõi Ticket và thông báo; bắt đầu mức ưu tiên và thời hạn xử lý (MS-03); regression MS-01, MS-02 trước demo cuối mốc 12/11. |
+
+## 7. Trạng thái rà soát trước phát hành — 25/11/2026
+
+Bộ hồ sơ `v1.2-draft` **Chờ PM rà soát**, **chưa gửi khách**, chưa có baseline được khách phê duyệt. Đề xuất gửi 30/11/2026, mục tiêu xác nhận 04/12 và chỉ khởi động 07/12/2026 khi khách xác nhận Proposal/phạm vi, đầu mối và nguồn lực. Lịch dự kiến MS-06 kết thúc 18/05/2027; Ngoài cuối tuần, loại 01/01/2027, 30/04 và 01/05/2027; 08–12/02, 16/04 và nghỉ bù 03/05/2027 là giả định đóng cửa trường phục vụ lập kế hoạch, chờ trường xác nhận (16/04 chưa xác minh lịch âm chính thức), không phải lịch nghỉ chính thức đã được duyệt. Đổi giả định phải tính lại lịch ngày làm việc trước baseline; xem [bộ mốc](../08-project/milestones-and-timeline.md).
+
+Ví dụ `Mô phỏng` tuần 02/11–08/11/2026 ở mục 6.2 được giữ như ví dụ lịch sử theo lịch đề xuất cũ, không phải báo cáo đã thực hiện hoặc lịch hiện hành. Không dùng các số liệu/ngày trong ví dụ làm baseline mới.
+
+PR #199/#202 không có recorded approval trước merge như Charter yêu cầu: ghi nhận khoảng trống quy trình, không tạo/backdate approval, không dùng review sau merge để tuyên bố lịch sử đã tuân thủ. Các PR tiếp theo phải có tối thiểu một reviewer đủ chuyên môn approve trước merge, lưu link và thời điểm bằng chứng; thiếu thì dừng merge. Xem [kiểm soát approval](../08-project/team-charter.md#kiểm-soát-approval-trước-merge).
+
+Phía trường, Trưởng bộ phận/phụ trách điều phối hỗ trợ sinh viên được **đề xuất, chờ xác nhận** làm chủ sở hữu sản phẩm, nhận backlog, ưu tiên, roadmap/đợt phát hành và rà soát chỉ số; không phải Sponsor bên giao hàng hoặc nhóm quyền ứng dụng mới. BA bàn giao theo thỏa thuận và kết thúc trách nhiệm sau hỗ trợ/bảo hành; CNTT trường vận hành kỹ thuật. Các quyền ký xác nhận khách hàng vẫn phải do trường chỉ định; không coi đề xuất đầu mối là đã được ủy quyền ký.
+
+Các thay đổi ngày, DoD và nghiệm thu tăng dần trong task/milestone GitHub **chưa đồng bộ remote**. Mỗi lần thay đổi sau khi được phép cần đối chiếu 58 parent task, 885h tổng, 540h chức năng và giá 300 triệu; không suy diễn giờ gói dùng chung thành giờ riêng từng issue. Kiểm tải từng vai trò ở từng task/ngày/tuần và tuần nghỉ trước khi chốt; không tự giảm giờ để hợp lịch.

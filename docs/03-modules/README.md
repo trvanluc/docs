@@ -48,8 +48,8 @@ Priority của FR là nơi gốc; dòng **Priority** trong parent task trên Git
 | FR-STU-00 | Cao | MS-01 | FR-STF-03 | Cao | MS-03 |
 | FR-STU-01 | Trung bình | MS-02 | FR-STF-04 | Cao | MS-03 |
 | FR-STU-02 | Cao | MS-02 | FR-STF-05 | Cao (Escalation: Trung bình) | MS-03 |
-| FR-STU-03 | Cao | MS-02 | FR-STF-06 | Cao | MS-04 |
-| FR-STU-04 | Trung bình | MS-02 | FR-MGT-00 | Cao | MS-01 |
+| FR-STU-03 | Cao | MS-02 → MS-04 theo sự kiện | FR-STF-06 | Cao | MS-04 |
+| FR-STU-04 | Trung bình | MS-02 → MS-04 theo sự kiện | FR-MGT-00 | Cao | MS-01 |
 | FR-STU-05 | Cao | MS-03 | FR-MGT-01 | Cao | MS-01 |
 | FR-STU-06 | Cao | MS-04 | FR-MGT-02 | Cao | MS-01 |
 | FR-STU-07 | Trung bình | MS-04 | FR-MGT-03 | Trung bình | MS-01, MS-05 |

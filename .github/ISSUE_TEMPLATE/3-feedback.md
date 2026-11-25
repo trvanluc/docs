@@ -5,7 +5,7 @@ title: "[Feedback] "
 labels: feedback
 ---
 
-<!-- Dùng cho phản hồi của client hoặc người dùng (thật hoặc `Mô phỏng`), chủ yếu sau buổi demo cuối mỗi mốc (docs/08-project/master-plan.md, mục "Cách nhận feedback"). Feedback của giảng viên là issue riêng, không dùng mẫu này. -->
+<!-- Dùng cho phản hồi của client hoặc người dùng (thật hoặc `Mô phỏng`), chủ yếu sau buổi demo cuối mỗi mốc (docs/08-project/master-plan.md, mục "Cách nhận feedback"). Nhận xét rà soát tài liệu nội bộ ghi issue riêng, không trình bày như phản hồi khách hàng. -->
 
 **Nguồn:** <!-- ai phản hồi, qua kênh nào; ghi `Mô phỏng` nếu là mô phỏng -->
 **Ngày:**
