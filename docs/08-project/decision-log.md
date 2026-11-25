@@ -39,3 +39,11 @@ Không đổi lịch hoặc số liệu của v1.2 và không sửa các quyết
 - Sửa căn cột metadata dòng v1.2 trong Change log kế hoạch, ghi 885h/300 triệu đúng cột và chờ rà soát đúng cột người duyệt. Proposal đọc độc lập có nhãn khách/Sponsor/đội thực thi Mô phỏng; sổ phiên bản chung ở quotation.xlsx.
 
 Nhánh tài liệu đã được đưa lên PR; **milestone, nội dung parent task và trường Hạn của GitHub Projects chưa được đồng bộ**. Không dùng PR này hoặc bản nháp đã push để suy diễn remote kế hoạch đã khớp, Proposal đã gửi hay khách đã phê duyệt. Các phần chưa áp dụng phải được đọc lại và đối chiếu live trước cập nhật.
+
+## Ghi nhận đồng bộ kế hoạch v1.2.1-draft — 25/11/2026
+
+Ghi nhận sự kiện kỹ thuật sau các trạng thái lịch sử phía trên, không thay một quyết định phê duyệt: đã đồng bộ và đọc lại độc lập 6 milestone (ngày/description), 58 parent task (body/ngày/DoD/gate và mốc hoàn tất), đủ membership cùng 58 Hạn trên [GitHub Projects](https://github.com/users/trvannhan/projects/6). Bốn parent khởi động #183–#186 được thêm vào board nhưng không gắn MS-xx. #139/#148 gắn mốc hoàn tất MS-04; vẫn giữ nghiệm thu từng phần ở các mốc trước theo chức năng nguồn.
+
+Nguồn nội dung đã xuất bản tại commit `dbbe500` trong [Draft PR #203](https://github.com/trvanluc/docs/pull/203). Kiểm đọc lại xác nhận state/labels/assignees, trạng thái checkbox và phụ lục lịch sử issue không đổi; Status hiện hữu và Giờ thực tế trên Projects không bị sửa. Membership mới không được tự gán trạng thái hoàn thành. Có backup trước cập nhật, nhật ký từng thao tác và preview rollback có kiểm xung đột; chưa chạy rollback.
+
+Lịch/885h/540h chức năng/300 triệu không đổi. Đồng bộ không phải baseline được PM/TL/khách duyệt, không tạo actual/test result, không gửi Proposal hoặc merge PR; các xác nhận và khoảng trống approval lịch sử vẫn còn. Các ghi chú “chưa đồng bộ” ở mục trước phản ánh đúng thời điểm trước sự kiện này, không phải trạng thái remote hiện hành.

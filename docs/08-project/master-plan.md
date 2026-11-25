@@ -23,7 +23,7 @@ Trang này giải thích các quyết định của kế hoạch. Số liệu (n
 - Không có báo cáo tiến độ hay số giờ thực tế. Ví dụ báo cáo tuần trong [kế hoạch quản trị mục 6.2](../11-governance/ke-hoach-quan-tri-giam-sat.md#62-mẫu-và-ví-dụ-báo-cáo-tuần) ghi `Mô phỏng`, chỉ minh hoạ mẫu.
 - Chưa đủ điều kiện khởi động thì PM tính lại theo **thứ tự ngày làm việc**, giữ giờ công, kiểm lại thời lượng và phụ thuộc theo năng lực từng vai trò; không cộng offset ngày lịch.
 
-Ngoài cuối tuần, loại 01/01/2027, 30/04 và 01/05/2027; 08–12/02, 16/04 và nghỉ bù 03/05/2027 là giả định đóng cửa trường phục vụ lập kế hoạch, chờ trường xác nhận (16/04 chưa xác minh lịch âm chính thức), không phải lịch nghỉ chính thức đã được duyệt. Đổi ngày nghỉ phải tính lại trước baseline và ghi `Change log`. Excel, Proposal và GitHub phải được đối chiếu; đợt sửa local này **chưa đồng bộ GitHub**.
+Ngoài cuối tuần, loại 01/01/2027, 30/04 và 01/05/2027; 08–12/02, 16/04 và nghỉ bù 03/05/2027 là giả định đóng cửa trường phục vụ lập kế hoạch, chờ trường xác nhận (16/04 chưa xác minh lịch âm chính thức), không phải lịch nghỉ chính thức đã được duyệt. Đổi ngày nghỉ phải tính lại trước baseline và ghi `Change log`. Ngày 25/11/2026 đã đối chiếu và đồng bộ 6 milestone, nội dung/ngày/DoD của 58 parent task, đủ membership và 58 trường Hạn trên GitHub Projects theo nguồn nháp ở [PR #203](https://github.com/trvanluc/docs/pull/203). Đây là đồng bộ kế hoạch chờ review, không phải phê duyệt baseline hoặc bằng chứng đã thực hiện.
 
 ## Cách chia milestone
 
@@ -55,8 +55,8 @@ Parent task trên GitHub ghi cùng người phụ trách. Đổi người làm m
 - `MS-01` → mọi mốc sau: đăng nhập, phân quyền, phòng ban và Category là điều kiện để tạo Ticket.
 - `MS-02` → `MS-03`: xử lý chỉ bắt đầu khi Ticket đã được tiếp nhận và có người phụ trách. Phương án v1.2 không chồng hai mốc: MS-02 kết thúc 17/02, MS-03 bắt đầu 18/02/2027. Trong mỗi mốc, BE/FE chỉ chạy song song khi đã có hợp đồng API/fixture; QA đợi đầu ra cần kiểm.
 - `MS-03` → `MS-04`: ghi kết quả cần Ticket ở `IN_PROGRESS` với thời hạn đã tính đúng.
-- **Task thông báo xuyên mốc NOTI-01 #139:** nền tảng được kiểm ở MS-02, sự kiện bổ sung/chuyển phòng ở MS-03, hoàn tất ở MS-04. Milestone hoàn tất đề xuất của parent task là **MS-04**, không phải MS-02; chỉ đóng task khi đủ DoD toàn vòng đời. MS-02 vẫn nghiệm thu phần nền tảng qua test/bằng chứng bàn giao, không đợi chức năng MS-04 và không giả đóng task sớm. Sheet `Danh sách issue` ghi đích MS-04; việc chuyển milestone của #139 trên GitHub **chưa thực hiện**, nằm trong danh sách chờ đồng bộ.
-- **REL-01 #148:** nền tảng tin cậy ở MS-03; kiểm đủ resolve/reopen ở MS-04, parent hoàn tất MS-04. Không buộc MS-03 phụ thuộc phần hoàn thiện tương lai của chính REL-01; GitHub chờ đồng bộ.
+- **Task thông báo xuyên mốc NOTI-01 #139:** nền tảng được kiểm ở MS-02, sự kiện bổ sung/chuyển phòng ở MS-03, hoàn tất ở MS-04. Milestone hoàn tất đề xuất của parent task là **MS-04**, không phải MS-02; chỉ đóng task khi đủ DoD toàn vòng đời. MS-02 vẫn nghiệm thu phần nền tảng qua test/bằng chứng bàn giao, không đợi chức năng MS-04 và không giả đóng task sớm. Sheet `Danh sách issue` và milestone hoàn tất của #139 trên GitHub đều là MS-04, đã đối chiếu ngày 25/11/2026; task vẫn là kế hoạch, không tự đóng.
+- **REL-01 #148:** nền tảng tin cậy ở MS-03; kiểm đủ resolve/reopen ở MS-04, parent hoàn tất MS-04. Không buộc MS-03 phụ thuộc phần hoàn thiện tương lai của chính REL-01; milestone hoàn tất của #148 trên GitHub đã đối chiếu là MS-04 ngày 25/11/2026, không tự đánh dấu hoàn thành.
 - `MS-04` → `MS-05`: Dashboard, báo cáo thời gian xử lý và CSAT cần dữ liệu của vòng đời đầy đủ.
 - `MS-05` → `MS-06`: tích hợp và kiểm thử hệ thống chạy trên bản đủ chức năng.
 

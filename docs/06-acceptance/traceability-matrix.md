@@ -4,7 +4,7 @@
 
 Ma trận **tổng hợp** chuỗi Báo giá → PRD → Master Plan → Parent task → Kịch bản test theo **từng AC**. Đây không phải nơi gốc để sửa: AC sửa ở `prd.md` của module, kịch bản sửa ở [test-scenarios.md](test-scenarios.md), task và milestone sửa trên GitHub, hạng mục giá sửa ở [quotation.xlsx](../08-project/quotation.xlsx). Khi một nơi gốc thay đổi, người phụ trách nghiệm thu (Team Charter mục 3.2) cập nhật lại bảng này trong cùng PR.
 
-- **Parent task:** các issue GitHub hiện hữu triển khai phần tính năng tại mốc ghi trong dòng; test/AC bao quát nhiều mốc chỉ hoàn tất sau mốc cuối. Không thêm task (vẫn 58); thay đổi DoD/mốc trên remote chỉ là yêu cầu đồng bộ, chưa thực hiện trong lần sửa local này.
+- **Parent task:** các issue GitHub hiện hữu triển khai phần tính năng tại mốc ghi trong dòng; test/AC bao quát nhiều mốc chỉ hoàn tất sau mốc cuối. Không thêm task (vẫn 58). Ngày 25/11/2026 đã đồng bộ và đọc lại DoD/ngày/mốc của 58 parent task, 6 milestone cùng membership/Hạn trên Projects theo bản nháp ở [PR #203](https://github.com/trvanluc/docs/pull/203); #139/#148 gắn mốc hoàn tất MS-04. Không phải bằng chứng đã chạy test, hoàn thành task hoặc phê duyệt baseline.
 - **Báo giá:** `Q-01` M01, `Q-02` M02, `Q-03` M03 và năng lực dùng chung (đăng nhập FR-STU-00, FR-STF-00 dùng xác thực chung nên tính ở `Q-03`). Tích hợp, kiểm thử hệ thống, regression và sửa lỗi của mọi AC thuộc `Q-06`, `Q-07`, `Q-08`.
 - Tổng: 187 AC, 23 NFR; mỗi mã có ít nhất một kịch bản test.
 

@@ -17,7 +17,7 @@ Hình minh họa được lưu trong thư mục [images](images/).
 
 Trong `master-schedule.xlsx`, `Danh sách issue` giữ ngày riêng của 58 parent task; `Gantt MS-04` thể hiện bảy task #149–#155 trong mốc mới 12–25/03/2027. `Master Schedule` là nhóm tổng hợp, không gán toàn bộ giờ nhóm cho từng task. Tra ngày RES-02, RES-03, REOPEN-01/02 từ `Danh sách issue` và `Lịch task-vai trò`, không dùng ví dụ ngày tháng 1 của bản nháp trước.
 
-`Lịch task-vai trò` là lịch theo bước × vai trò; `Phân bổ WP` nối giờ về WP–vai trò gốc; `Tải ngày` và `Năng lực tuần` cộng từ cùng lịch đó. Có hoạt động cấp dự án ngoài parent task, buffer kỹ thuật và giữ chỗ rủi ro riêng, không tạo parent task mới. Các bước NOTI-01 và REL-01 có gate từng mốc nhưng parent chỉ hoàn tất ở MS-04. SEC-02 có nền tảng MS-01, kiểm file thật theo chức năng nguồn MS-02…MS-04; không tuyên bố kiểm chức năng tương lai ở MS-01. Đây là ước lượng v1.2 chờ PM/TL rà soát, remote chưa áp dụng.
+`Lịch task-vai trò` là lịch theo bước × vai trò; `Phân bổ WP` nối giờ về WP–vai trò gốc; `Tải ngày` và `Năng lực tuần` cộng từ cùng lịch đó. Có hoạt động cấp dự án ngoài parent task, buffer kỹ thuật và giữ chỗ rủi ro riêng, không tạo parent task mới. Các bước NOTI-01 và REL-01 có gate từng mốc nhưng parent chỉ hoàn tất ở MS-04. SEC-02 có nền tảng MS-01, kiểm file thật theo chức năng nguồn MS-02…MS-04; không tuyên bố kiểm chức năng tương lai ở MS-01. Đây là ước lượng v1.2 chờ PM/TL rà soát; ngày 25/11/2026 đã đồng bộ và đọc lại 6 milestone, 58 parent task cùng membership/Hạn trên Projects qua [PR #203](https://github.com/trvanluc/docs/pull/203). Không đổi trạng thái hoàn thành hoặc giờ thực tế; đồng bộ không phải phê duyệt kế hoạch.
 
 
 ### Tra từ task về giờ kế hoạch
